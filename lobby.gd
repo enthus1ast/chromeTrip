@@ -28,7 +28,6 @@ signal connection_success()
 signal connection_fail()
 
 func _ready():
-#	
 	eNet = NetworkedMultiplayerENet.new()
 	ipInput.set_text("127.0.0.1")
 #	chatInput.set_max_chars(100)
@@ -50,6 +49,10 @@ func _player_connected(playerId):
 
 #Client sending to host
 func _connected_ok():
+	
+	player_name = get_node("networkPanel/host/name").get_text()
+	if player_name == "":
+		player_name ="unnamed"
 	rpc_id(1, "user_ready", get_tree().get_network_unique_id(), player_name)
 	print("_connected_ok")
 	lobby.set_visible(true)
@@ -64,6 +67,8 @@ remote func user_ready(id, player_name):
 
 remote func register_in_lobby():
 	rpc("register_new_player", get_tree().get_network_unique_id(), player_name)
+	get_node("lobby/Container/info/name").set_text("name: "+player_name)
+	get_node("lobby/Container/info/ip").set_text("ip: "+str(IP.get_local_addresses()[1]))
 #	register_new_player(get_tree().get_network_unique_id(), player_name)
 
 # Register yourself directly ingame
@@ -176,9 +181,11 @@ func addNewListItem(_id,_name):
 		print(lobby.get_node("Container/body/RichTextLabel/VBoxContainer").get_children())
 	
 func _on_host_pressed():
-	player_name ="hihihostname"
 	eNet.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(eNet)
+	player_name = get_node("networkPanel/host/name").get_text()
+	if player_name == "":
+		player_name ="unnamed"
 	lobby.set_visible(true)
 	lobby.get_node("Container/info/ip").set_text("Ip: "+ str(IP.get_local_addresses()[1]))
 	lobby.get_node("Container/info/name").set_text("name: "+player_name)
@@ -189,7 +196,6 @@ func _on_host_pressed():
 func _on_connect_pressed():
 	if !isConnecting:
 		isConnecting = true
-		player_name ="hihiclientname"
 		var ip = ipInput.get_text()
 		eNet.create_client(ip, SERVER_PORT)
 		get_tree().set_network_peer(eNet)
@@ -198,7 +204,6 @@ func _on_connect_pressed():
 	
 func _on_sp_pressed():
 #	game = load("res://game.tscn").instance()
-	player_name ="hihihostname"
 	eNet.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(eNet)
 	register_new_player(1,player_name)
@@ -214,6 +219,7 @@ func _on_leaveLobbyButton_pressed():
 	lobby.set_visible(false)
 	get_tree().set_network_peer(null)
 	eNet.close_connection()
+	eNet = NetworkedMultiplayerENet.new()
 	players={}
 	clearList()
 #	updateList(players)
@@ -252,13 +258,14 @@ func _connected_fail():
 	
 func _server_disconnected():
 	lobby.set_visible(false)
-	get_tree().set_network_peer(null)
 	eNet.close_connection()
+	eNet = NetworkedMultiplayerENet.new()
+	get_tree().set_network_peer(null)
 	players={}
+	clearList()
 	print("server closed")
-	
 #	quit_game()
-	emit_signal("server_ended")
+#	emit_signal("server_ended")
 
 func _on_chatInput_focus_entered():
 #	get_node("lobby/Container/chatInput/chatInput").set_text("")
@@ -276,11 +283,13 @@ remote func sendMessage(_player,_value):
 #	var value = chatInput.get_text()
 	if _value.length() > 0:
 		var message = Label.new()
+		var scrollContainer = get_node("lobby/Container/chat/ScrollContainer") 
 		message.set_text(_player+": "+_value)
-		get_node("lobby/Container/chat/ScrollContainer/VBoxContainer").add_child(message)
-		print(get_node("lobby/Container/chat/ScrollContainer/VBoxContainer").get_rect())
+		scrollContainer.get_node("VBoxContainer").add_child(message)
+		print(scrollContainer.get_node("VBoxContainer").get_rect())
 	#	get_node("lobby/Container/chat/ScrollContainer").get_item_and_children_rect().size.y
-		get_node("lobby/Container/chat/ScrollContainer").set_v_scroll(10000)
+		scrollContainer.set_v_scroll(scrollContainer.get_item_and_children_rect().size.y)
+		scrollContainer.update()
 		chatInput.set_text("")
 
 func _input(event):

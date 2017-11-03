@@ -68,22 +68,21 @@ _sections_unfolded = [ "Anchor" ]
 
 [node name="connect" type="Container" parent="networkPanel"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 89.0
-margin_top = 61.0
+margin_top = 102.0
 margin_right = 277.0
-margin_bottom = 118.0
+margin_bottom = 159.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="ip" type="TextEdit" parent="networkPanel/connect"]
+[node name="ip" type="LineEdit" parent="networkPanel/connect"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -97,14 +96,9 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-highlight_current_line = false
-syntax_highlighting = false
-show_line_numbers = false
-highlight_all_occurrences = false
-override_selected_font_color = false
-smooth_scrolling = false
-v_scroll_speed = 80.0
-caret_block_mode = false
+expand_to_len = false
+focus_mode = 2
+placeholder_alpha = 0.6
 caret_blink = false
 caret_blink_speed = 0.65
 _sections_unfolded = [ "Caret", "Hint" ]
@@ -133,22 +127,21 @@ flat = false
 
 [node name="host" type="Container" parent="networkPanel"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 89.0
-margin_top = 123.0
-margin_right = 277.0
-margin_bottom = 180.0
+margin_left = 90.0
+margin_top = 50.0
+margin_right = 278.0
+margin_bottom = 107.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="name" type="TextEdit" parent="networkPanel/host"]
+[node name="name" type="LineEdit" parent="networkPanel/host"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -156,23 +149,19 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 10.0
 margin_right = 81.0
-margin_bottom = 43.0
+margin_bottom = 42.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-highlight_current_line = false
-syntax_highlighting = false
-show_line_numbers = false
-highlight_all_occurrences = false
-override_selected_font_color = false
-smooth_scrolling = false
-v_scroll_speed = 80.0
-caret_block_mode = false
+expand_to_len = false
+focus_mode = 2
+placeholder_text = "name"
+placeholder_alpha = 0.6
 caret_blink = false
 caret_blink_speed = 0.65
-_sections_unfolded = [ "Caret", "Hint", "custom_constants" ]
+_sections_unfolded = [ "Placeholder" ]
 
 [node name="host" type="Button" parent="networkPanel/host"]
 
@@ -283,6 +272,7 @@ max_lines_visible = -1
 
 [node name="lobby" type="PanelContainer" parent="."]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -541,6 +531,7 @@ _sections_unfolded = [ "Grow Direction", "Hint", "Size Flags" ]
 
 [node name="chat" type="Panel" parent="lobby/Container"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -588,6 +579,7 @@ _sections_unfolded = [ "Rect", "Size Flags", "custom_constants" ]
 
 [node name="chatInput" type="Panel" parent="lobby/Container"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
