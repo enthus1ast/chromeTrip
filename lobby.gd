@@ -5,7 +5,10 @@ extends Control
 # var b = "textvar"
 const SERVER_PORT = 7000
 var eNet
-onready var ipInput = get_node("Panel/Container/ip")
+onready var ipInput = get_node("networkPanel/connect/ip")
+onready var lobby = get_node("lobby")
+onready var chatInput = lobby.get_node("Container/chatInput/TextEdit")
+#onready var playerList = lobby.get_node("Container/body/playerList")
 onready var Player = preload("res://player.tscn")
 onready var Game = preload("res://game.tscn")
 var game
@@ -27,6 +30,9 @@ func _ready():
 #	
 	eNet = NetworkedMultiplayerENet.new()
 	ipInput.set_text("127.0.0.1")
+	chatInput.set_text("type Message here...")
+	
+#	playerList.set_item_text()
 	
 #	server
 	get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -76,7 +82,7 @@ remote func register_new_player(id, name):
 	
 	# Add new player to your player list
 	players[id] = name
-	startGame()
+#	startGame()
 	#	spawnPlayers() 
 	
 #	rpc("startGame")
@@ -87,15 +93,15 @@ func startGame():
 		for p in players:
 #			if p!=1:
 			print(p,"=spawn by client")
-			rpc_id(p, "spawnPlayers")
-			spawnPlayers()
+#			rpc_id(p, "spawnPlayers")
+#			spawnPlayers()
 	print(players)
 
 	
 remote func spawnPlayers():
 	
-	get_node("Panel").set_visible(false)
-	get_node("Panel/DialogWaiting").set_visible(false)
+	get_node("networkPanel").set_visible(false)
+	get_node("networkPanel/DialogWaiting").set_visible(false)
 	if(has_node("game")):
 		pass
 	else:
@@ -140,7 +146,8 @@ func _on_host_pressed():
 	player_name ="hihihostname"
 	eNet.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(eNet)
-	get_node("Panel/DialogWaiting").set_visible(true)
+#	get_node("Panel/DialogWaiting").set_visible(true)
+	lobby.set_visible(true)
 
 func _on_connect_pressed():
 	if !isConnecting:

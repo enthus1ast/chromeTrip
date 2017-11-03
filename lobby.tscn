@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://lobby.gd" type="Script" id=1]
+
+[sub_resource type="Gradient" id=1]
+
+offsets = PoolRealArray( 0, 0.0887574, 0.100592, 0.106509, 0.142012, 0.497041, 0.656805, 0.893491, 0.899408, 0.905325, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0.200756, 0.135815, 0.206644, 1, 0.36096, 0.235336, 0.378906, 1, 0.18969, 0.12894, 0.194745, 1, 0.294355, 0.19396, 0.307288, 1, 0.0546875, 0.0450745, 0.0495806, 1, 0.155936, 0.100287, 0.157048, 1, 0.16618, 0.105873, 0.167921, 1, 0.170936, 0.108466, 0.172969, 1, 0.313434, 0.186172, 0.324219, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+
+gradient = SubResource( 1 )
+width = 2048
 
 [node name="Control" type="Control"]
 
@@ -18,8 +28,28 @@ size_flags_vertical = 1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="Panel" type="Panel" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
 
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1024.0
+margin_bottom = 599.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = SubResource( 2 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Hint", "Rect", "Visibility" ]
+
+[node name="networkPanel" type="Panel" parent="."]
+
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -35,7 +65,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 _sections_unfolded = [ "Anchor" ]
 
-[node name="Container" type="Container" parent="Panel"]
+[node name="connect" type="Container" parent="networkPanel"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -52,7 +82,7 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="ip" type="TextEdit" parent="Panel/Container"]
+[node name="ip" type="TextEdit" parent="networkPanel/connect"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -78,7 +108,7 @@ caret_blink = false
 caret_blink_speed = 0.65
 _sections_unfolded = [ "Caret", "Hint" ]
 
-[node name="connect" type="Button" parent="Panel/Container"]
+[node name="connect" type="Button" parent="networkPanel/connect"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -100,7 +130,7 @@ group = null
 text = "connect"
 flat = false
 
-[node name="Container2" type="Container" parent="Panel"]
+[node name="host" type="Container" parent="networkPanel"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -117,7 +147,7 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="name" type="TextEdit" parent="Panel/Container2"]
+[node name="name" type="TextEdit" parent="networkPanel/host"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -143,7 +173,7 @@ caret_blink = false
 caret_blink_speed = 0.65
 _sections_unfolded = [ "Caret", "Hint", "custom_constants" ]
 
-[node name="host" type="Button" parent="Panel/Container2"]
+[node name="host" type="Button" parent="networkPanel/host"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -165,7 +195,7 @@ group = null
 text = "host"
 flat = false
 
-[node name="sp" type="Button" parent="Panel"]
+[node name="sp" type="Button" parent="networkPanel"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -187,8 +217,9 @@ group = null
 text = "Start SP"
 flat = false
 
-[node name="DialogWaiting" type="Panel" parent="Panel"]
+[node name="DialogWaiting" type="Panel" parent="networkPanel"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -205,7 +236,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 _sections_unfolded = [ "Anchor", "Grow Direction", "Hint", "Margin", "Material", "Popup", "Size Flags" ]
 
-[node name="cancel" type="Button" parent="Panel/DialogWaiting"]
+[node name="cancel" type="Button" parent="networkPanel/DialogWaiting"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -227,7 +258,7 @@ group = null
 text = "cancel"
 flat = false
 
-[node name="Label" type="Label" parent="Panel/DialogWaiting"]
+[node name="Label" type="Label" parent="networkPanel/DialogWaiting"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -249,12 +280,420 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[connection signal="pressed" from="Panel/Container/connect" to="." method="_on_connect_pressed"]
+[node name="lobby" type="PanelContainer" parent="."]
 
-[connection signal="pressed" from="Panel/Container2/host" to="." method="_on_host_pressed"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 250.0
+margin_top = 56.0
+margin_right = 800.0
+margin_bottom = 527.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
 
-[connection signal="pressed" from="Panel/sp" to="." method="_on_sp_pressed"]
+[node name="Container" type="Container" parent="lobby"]
 
-[connection signal="pressed" from="Panel/DialogWaiting/cancel" to="." method="_on_cancel_pressed"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 543.0
+margin_bottom = 464.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect" ]
+
+[node name="info" type="Panel" parent="lobby/Container"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 381.0
+margin_top = 63.0
+margin_right = 527.0
+margin_bottom = 199.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="name" type="Label" parent="lobby/Container/info"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 146.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "your name:"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="ip" type="Label" parent="lobby/Container/info"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 34.0
+margin_right = 146.0
+margin_bottom = 59.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Ip:"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="header" type="Panel" parent="lobby/Container"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 3.0
+margin_top = -2.0
+margin_right = 533.0
+margin_bottom = 43.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 15
+size_flags_vertical = 1
+_sections_unfolded = [ "Anchor", "Grow Direction", "Size Flags" ]
+
+[node name="Label" type="Label" parent="lobby/Container/header"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = -1.0
+margin_right = 265.0
+margin_bottom = 24.0
+rect_scale = Vector2( 2, 2 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Lobby"
+align = 1
+valign = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Anchor", "Margin", "Rect", "Size Flags" ]
+
+[node name="body" type="Panel" parent="lobby/Container"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 3.0
+margin_top = 47.0
+margin_right = 363.0
+margin_bottom = 314.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="RichTextLabel" type="ScrollContainer" parent="lobby/Container/body"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 359.0
+margin_bottom = 266.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+scroll_horizontal = false
+scroll_vertical = true
+_sections_unfolded = [ "Scroll" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="lobby/Container/body/RichTextLabel"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 359.0
+margin_bottom = 140.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 1
+alignment = 0
+_sections_unfolded = [ "Size Flags", "custom_constants" ]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="lobby/Container/body/RichTextLabel/VBoxContainer"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 359.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+_sections_unfolded = [ "Grow Direction", "Margin" ]
+
+[node name="id" type="Label" parent="lobby/Container/body/RichTextLabel/VBoxContainer/HBoxContainer"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 117.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "id"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="name" type="Label" parent="lobby/Container/body/RichTextLabel/VBoxContainer/HBoxContainer"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 121.0
+margin_right = 238.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "name"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Grow Direction", "Margin", "Size Flags" ]
+
+[node name="Label" type="Label" parent="lobby/Container/body/RichTextLabel/VBoxContainer/HBoxContainer"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 242.0
+margin_right = 359.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "ready?"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Grow Direction", "Hint", "Size Flags" ]
+
+[node name="chat" type="Panel" parent="lobby/Container"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1.0
+margin_top = 325.0
+margin_right = 363.0
+margin_bottom = 406.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="lobby/Container/chat"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 363.0
+margin_bottom = 82.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+bbcode_enabled = false
+bbcode_text = "dasist ja wirklich supder dasist ja wirklich supderdasist ja wirklich supderdasist ja wirklich supder
+dasist ja wirklich supderdasist ja wirklich supder
+dasist ja wirklich supder
+dasist ja wirklich supder
+
+dasist ja wirklich supder
+
+dasist ja wirklich supderdasist ja wirklich supderdasist ja wirklich supder"
+visible_characters = -1
+percent_visible = 1.0
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode" ]
+
+[node name="chatInput" type="Panel" parent="lobby/Container"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 417.0
+margin_right = 533.0
+margin_bottom = 457.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="sendButton" type="Button" parent="lobby/Container/chatInput"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 432.0
+margin_top = 5.0
+margin_right = 529.0
+margin_bottom = 35.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Send"
+flat = false
+
+[node name="TextEdit" type="TextEdit" parent="lobby/Container/chatInput"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 429.0
+margin_bottom = 35.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+highlight_current_line = false
+syntax_highlighting = false
+show_line_numbers = false
+highlight_all_occurrences = false
+override_selected_font_color = false
+smooth_scrolling = false
+v_scroll_speed = 80.0
+caret_block_mode = false
+caret_blink = false
+caret_blink_speed = 0.65
+
+[node name="okButton" type="Button" parent="lobby/Container"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 383.0
+margin_top = 267.0
+margin_right = 525.0
+margin_bottom = 318.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Start"
+flat = false
+
+[node name="leaveButton" type="Button" parent="lobby/Container"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 383.0
+margin_top = 337.0
+margin_right = 525.0
+margin_bottom = 388.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "leave"
+flat = false
+
+[connection signal="pressed" from="networkPanel/connect/connect" to="." method="_on_connect_pressed"]
+
+[connection signal="pressed" from="networkPanel/host/host" to="." method="_on_host_pressed"]
+
+[connection signal="pressed" from="networkPanel/sp" to="." method="_on_sp_pressed"]
+
+[connection signal="pressed" from="networkPanel/DialogWaiting/cancel" to="." method="_on_cancel_pressed"]
 
 
