@@ -35,8 +35,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 1024.0
-margin_bottom = 599.0
+margin_left = 1.0
+margin_top = -1.0
+margin_right = 1025.0
+margin_bottom = 598.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -45,11 +47,10 @@ size_flags_vertical = 1
 texture = SubResource( 2 )
 expand = true
 stretch_mode = 0
-_sections_unfolded = [ "Hint", "Rect", "Visibility" ]
+_sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="networkPanel" type="Panel" parent="."]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -282,6 +283,7 @@ max_lines_visible = -1
 
 [node name="lobby" type="PanelContainer" parent="."]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -315,6 +317,7 @@ _sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect" ]
 
 [node name="info" type="Panel" parent="lobby/Container"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -441,16 +444,17 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 scroll_horizontal = false
 scroll_vertical = true
-_sections_unfolded = [ "Scroll" ]
+_sections_unfolded = [ "Scroll", "Size Flags" ]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="lobby/Container/body/RichTextLabel"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 359.0
-margin_bottom = 140.0
+margin_bottom = 14.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -537,7 +541,6 @@ _sections_unfolded = [ "Grow Direction", "Hint", "Size Flags" ]
 
 [node name="chat" type="Panel" parent="lobby/Container"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -552,37 +555,39 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="lobby/Container/chat"]
+[node name="ScrollContainer" type="ScrollContainer" parent="lobby/Container/chat"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 2.0
-margin_top = 2.0
-margin_right = 363.0
-margin_bottom = 82.0
+margin_right = 362.0
+margin_bottom = 80.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-bbcode_enabled = false
-bbcode_text = "dasist ja wirklich supder dasist ja wirklich supderdasist ja wirklich supderdasist ja wirklich supder
-dasist ja wirklich supderdasist ja wirklich supder
-dasist ja wirklich supder
-dasist ja wirklich supder
+scroll_horizontal = false
+scroll_vertical = true
+_sections_unfolded = [ "Anchor", "Margin", "Rect", "Scroll" ]
 
-dasist ja wirklich supder
+[node name="VBoxContainer" type="VBoxContainer" parent="lobby/Container/chat/ScrollContainer"]
 
-dasist ja wirklich supderdasist ja wirklich supderdasist ja wirklich supder"
-visible_characters = -1
-percent_visible = 1.0
-override_selected_font_color = false
-_sections_unfolded = [ "BBCode" ]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 362.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 1
+alignment = 0
+_sections_unfolded = [ "Rect", "Size Flags", "custom_constants" ]
 
 [node name="chatInput" type="Panel" parent="lobby/Container"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -618,7 +623,7 @@ group = null
 text = "Send"
 flat = false
 
-[node name="TextEdit" type="TextEdit" parent="lobby/Container/chatInput"]
+[node name="chatInput" type="LineEdit" parent="lobby/Container/chatInput"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -627,24 +632,22 @@ anchor_bottom = 0.0
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 429.0
-margin_bottom = 35.0
+margin_bottom = 34.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-highlight_current_line = false
-syntax_highlighting = false
-show_line_numbers = false
-highlight_all_occurrences = false
-override_selected_font_color = false
-smooth_scrolling = false
-v_scroll_speed = 80.0
-caret_block_mode = false
+max_length = 100
+expand_to_len = false
+focus_mode = 2
+placeholder_text = "type here..."
+placeholder_alpha = 0.6
 caret_blink = false
 caret_blink_speed = 0.65
+_sections_unfolded = [ "Placeholder" ]
 
-[node name="okButton" type="Button" parent="lobby/Container"]
+[node name="okLobbyButton" type="Button" parent="lobby/Container"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -666,7 +669,7 @@ group = null
 text = "Start"
 flat = false
 
-[node name="leaveButton" type="Button" parent="lobby/Container"]
+[node name="leaveLobbyButton" type="Button" parent="lobby/Container"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -695,5 +698,13 @@ flat = false
 [connection signal="pressed" from="networkPanel/sp" to="." method="_on_sp_pressed"]
 
 [connection signal="pressed" from="networkPanel/DialogWaiting/cancel" to="." method="_on_cancel_pressed"]
+
+[connection signal="pressed" from="lobby/Container/chatInput/sendButton" to="." method="_on_sendButton_pressed"]
+
+[connection signal="focus_entered" from="lobby/Container/chatInput/chatInput" to="." method="_on_chatInput_focus_entered"]
+
+[connection signal="focus_exited" from="lobby/Container/chatInput/chatInput" to="." method="_on_chatInput_focus_exited"]
+
+[connection signal="pressed" from="lobby/Container/leaveLobbyButton" to="." method="_on_leaveLobbyButton_pressed"]
 
 
