@@ -1,6 +1,6 @@
 [gd_scene format=2]
 
-[node name="HBoxContainer2" type="HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -58,7 +58,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Grow Direction", "Margin", "Size Flags" ]
 
-[node name="CheckBox" type="CheckBox" parent="."]
+[node name="readyCheckbox" type="CheckBox" parent="."]
 
 anchor_left = 0.0
 anchor_top = 0.0

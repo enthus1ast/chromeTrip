@@ -15,7 +15,12 @@ onready var Game = preload("res://game.tscn")
 var game
 var players = {}
 var player_name
-var currentPlayer
+var currentPlayer = {
+	"id":null,
+	"name":"",
+	"ready":null,
+	"node":null
+}
 var isConnecting = false
 
 var isJumping = false
@@ -53,11 +58,13 @@ func _connected_ok():
 	player_name = get_node("networkPanel/host/name").get_text()
 	if player_name == "":
 		player_name ="unnamed"
+	currentPlayer.name = player_name
 	rpc_id(1, "user_ready", get_tree().get_network_unique_id(), player_name)
 	print("_connected_ok")
 	lobby.set_visible(true)
 	isConnecting = false
-	
+
+#server responding to Clients connect ok
 remote func user_ready(id, player_name):
 	print(id,player_name," ready")
 	# Only the server can run this!
@@ -88,11 +95,8 @@ remote func register_new_player(id, name):
 			rpc_id(id, "register_new_player", peer_id, players[peer_id])
 #			rpc_id(id,"updateList",players)
 			updateList(players)
-		
-	
 	# Add new player to your player list
-	
-	print(players)
+
 #	startGame()
 	#	spawnPlayers() 
 	
@@ -138,8 +142,6 @@ remote func spawnPlayers():
 		if (p == get_tree().get_network_unique_id()):
 			# Set as master on yourself
 			player.set_network_master(p)
-			print("FAIL")
-			
 #			player.add_child(camera_scene.instance()) # Add camera to your player
 			
 		else:
@@ -149,81 +151,7 @@ remote func spawnPlayers():
 		
 		# Add the player (or you) to the world!
 		game.get_node("players").add_child(player)
-	
-	
-################## button pressed signals
-remote func clearList():
-	var children = lobby.get_node("Container/body/RichTextLabel/VBoxContainer").get_children()
-	for item in children:
-		if item !=lobby.get_node("Container/body/RichTextLabel/VBoxContainer").get_child(0):
-			lobby.get_node("Container/body/RichTextLabel/VBoxContainer").remove_child(item)
-			item.queue_free()
-			
-remote func removeItemFromList(_id):
-	if lobby.get_node("Container/body/RichTextLabel/VBoxContainer").has_node(str(_id)):
-		var item = lobby.get_node("Container/body/RichTextLabel/VBoxContainer").get_node(str(_id))
-		lobby.get_node("Container/body/RichTextLabel/VBoxContainer").remove_child(item)
-		item.queue_free()
-	
-remote func updateList(_list):
-	print("updateList: ",_list)
-#	clearList()
-	for peer_id in _list:
-		addNewListItem(peer_id,_list[peer_id])
-
-func addNewListItem(_id,_name):
-	if !lobby.get_node("Container/body/RichTextLabel/VBoxContainer").has_node(str(_id)):
-		var listItem = PlayerListElement.instance()
-		listItem.get_node("id").set_text(str(_id))
-		listItem.get_node("name").set_text(_name)
-		listItem.set_name(str(_id))
-		lobby.get_node("Container/body/RichTextLabel/VBoxContainer").add_child(listItem)
-		print(lobby.get_node("Container/body/RichTextLabel/VBoxContainer").get_children())
-	
-func _on_host_pressed():
-	eNet.create_server(SERVER_PORT, 4)
-	get_tree().set_network_peer(eNet)
-	player_name = get_node("networkPanel/host/name").get_text()
-	if player_name == "":
-		player_name ="unnamed"
-	lobby.set_visible(true)
-	lobby.get_node("Container/info/ip").set_text("Ip: "+ str(IP.get_local_addresses()[1]))
-	lobby.get_node("Container/info/name").set_text("name: "+player_name)
-	players[get_tree().get_network_unique_id()]=player_name
-	updateList(players)
-	
-
-func _on_connect_pressed():
-	if !isConnecting:
-		isConnecting = true
-		var ip = ipInput.get_text()
-		eNet.create_client(ip, SERVER_PORT)
-		get_tree().set_network_peer(eNet)
-	else:
-		print("I am already trying to connect.")
-	
-func _on_sp_pressed():
-#	game = load("res://game.tscn").instance()
-	eNet.create_server(SERVER_PORT, 4)
-	get_tree().set_network_peer(eNet)
-	register_new_player(1,player_name)
-	
-func _on_cancel_pressed():
-	get_node("Panel/DialogWaiting").set_visible(false)
-	get_tree().set_network_peer(null)
-	eNet.close_connection()
-	pass
-	
-
-func _on_leaveLobbyButton_pressed():
-	lobby.set_visible(false)
-	get_tree().set_network_peer(null)
-	eNet.close_connection()
-	eNet = NetworkedMultiplayerENet.new()
-	players={}
-	clearList()
-#	updateList(players)
-
+		
 ################## disconnected unregister
 	
 func _player_disconnected(_id):
@@ -266,6 +194,80 @@ func _server_disconnected():
 	print("server closed")
 #	quit_game()
 #	emit_signal("server_ended")
+	
+	
+################## button pressed signals
+remote func clearList():
+	var children = lobby.get_node("Container/body/RichTextLabel/VBoxContainer").get_children()
+	for item in children:
+		if item !=lobby.get_node("Container/body/RichTextLabel/VBoxContainer").get_child(0):
+			lobby.get_node("Container/body/RichTextLabel/VBoxContainer").remove_child(item)
+			item.queue_free()
+			
+remote func removeItemFromList(_id):
+	if lobby.get_node("Container/body/RichTextLabel/VBoxContainer").has_node(str(_id)):
+		var item = lobby.get_node("Container/body/RichTextLabel/VBoxContainer").get_node(str(_id))
+		lobby.get_node("Container/body/RichTextLabel/VBoxContainer").remove_child(item)
+		item.queue_free()
+	
+remote func updateList(_list):
+	print("updateList: ",_list)
+#	clearList()
+	for peer_id in _list:
+		addNewListItem(peer_id,_list[peer_id])
+
+func addNewListItem(_id,_name):
+	if !lobby.get_node("Container/body/RichTextLabel/VBoxContainer").has_node(str(_id)):
+		var listItem = PlayerListElement.instance()
+		listItem.get_node("id").set_text(str(_id))
+		listItem.get_node("name").set_text(_name)
+		var ready = listItem.get_node("readyCheckbox").pressed
+		listItem.set_name(str(_id))
+		lobby.get_node("Container/body/RichTextLabel/VBoxContainer").add_child(listItem)
+		print(lobby.get_node("Container/body/RichTextLabel/VBoxContainer").get_children())
+	
+func _on_host_pressed():
+	eNet.create_server(SERVER_PORT, 4)
+	get_tree().set_network_peer(eNet)
+	player_name = get_node("networkPanel/host/name").get_text()
+	if player_name == "":
+		player_name ="unnamed"
+	lobby.set_visible(true)
+	lobby.get_node("Container/info/ip").set_text("Ip: "+ str(IP.get_local_addresses()[1]))
+	lobby.get_node("Container/info/name").set_text("name: "+player_name)
+	players[get_tree().get_network_unique_id()]=player_name
+	updateList(players)
+	
+
+func _on_connect_pressed():
+	if !isConnecting:
+		isConnecting = true
+		var ip = ipInput.get_text()
+		eNet.create_client(ip, SERVER_PORT)
+		get_tree().set_network_peer(eNet)
+	else:
+		print("I am already trying to connect.")
+	
+func _on_sp_pressed():
+#	game = load("res://game.tscn").instance()
+	eNet.create_server(SERVER_PORT, 4)
+	get_tree().set_network_peer(eNet)
+	register_new_player(1,player_name)
+	
+func _on_cancel_pressed():
+	get_node("Panel/DialogWaiting").set_visible(false)
+	get_tree().set_network_peer(null)
+	eNet.close_connection()
+	pass
+
+func _on_leaveLobbyButton_pressed():
+	lobby.set_visible(false)
+	get_tree().set_network_peer(null)
+	eNet.close_connection()
+	eNet = NetworkedMultiplayerENet.new()
+	players={}
+	clearList()
+#	updateList(players)
 
 func _on_chatInput_focus_entered():
 #	get_node("lobby/Container/chatInput/chatInput").set_text("")
