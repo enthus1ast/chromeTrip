@@ -36,6 +36,8 @@ var isConnecting = false
 var isJumping = false
 const SPEED = 200
 
+
+signal killed()
 signal refresh_lobby()
 signal server_ended()
 signal server_error()
@@ -48,7 +50,6 @@ func _ready():
 #	chatInput.set_max_chars(100)
 	
 #	playerList.set_item_text()
-	
 #	server
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
@@ -143,6 +144,9 @@ remote func startGame():
 		print("players:",players[p]," for ",currentPlayer.name)
 	
 ################## disconnected unregister
+	
+
+	
 	
 func _player_disconnected(_id):
 	print("_player_disconnected")

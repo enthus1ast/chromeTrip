@@ -2,9 +2,10 @@ extends RigidBody2D
 
 # Default Character Properties (Should be overwritten)
 var acceleration = 10000
-var top_move_speed_org = 300
+var top_move_speed_org = 200
 var top_move_speed = top_move_speed_org
-var top_jump_speed = 1000
+var top_jump_speed = 800
+var alive = true
 
 # Grounded?
 var grounded = false 
@@ -18,7 +19,7 @@ const DIRECTION = {
     DOWN = Vector2(0, 1)
 }
 
-var FOWARD_MOTION = Vector2(1, 0)
+#var FOWARD_MOTION = Vector2(0, 0)
 
 #define the slave vars. slave var did not worked for me
 sync var slave_pos = Vector2()
@@ -34,7 +35,12 @@ const TOP_JUMP_TIME = 0.1 # in seconds
 
 var keys = [false,false,false,false] # right, left, up, down 
 
+func _killed():
+	print("signal")
 func _ready():
+	var root = get_tree().get_root().get_node("Control")
+	print(root.players)
+	root.connect("killed",self,"_killed")
 	set_process_input(true)
 	rpc("playAnimation","trexAnimRun")
 
@@ -42,7 +48,7 @@ func _integrate_forces(state):
 	var final_force = Vector2()
 	if is_network_master():
 
-		directional_force = DIRECTION.ZERO+FOWARD_MOTION
+		directional_force = DIRECTION.ZERO  # +FOWARD_MOTION
 		apply_force(state)
 		final_force = state.get_linear_velocity() + (directional_force * acceleration)
 	 
@@ -57,7 +63,6 @@ func _integrate_forces(state):
 			final_force.y = -top_jump_speed
 		
 		# set the slave motion values
-		# this will
 		rset("slave_motion",final_force)
 		rset("slave_pos",position)
 	else:
@@ -108,7 +113,7 @@ sync func animSpeed(_speed):
 	get_node("Sprite/AnimationPlayer").set_speed_scale(_speed)
 
 func _input(event):
-	if is_network_master():
+	if is_network_master() and alive:
 		#if keyboard input
 		if event.get_class()=="InputEventKey":
 			
@@ -116,7 +121,6 @@ func _input(event):
 			if event.is_action_pressed("ui_right"):
 				keys[0]=true
 				rpc("animSpeed",1.5)
-				top_move_speed = 500
 #				rpc("playAnimation","trexAnimRun")
 			elif event.is_action_pressed("ui_left"):
 				rpc("animSpeed",0.5)
@@ -127,7 +131,6 @@ func _input(event):
 			if event.is_action_released("ui_right"):
 				rpc("animSpeed",1)
 				keys[0]=false
-				top_move_speed = top_move_speed_org
 #				rpc("playAnimation","trexAnim")
 			elif event.is_action_released("ui_left"):
 				rpc("animSpeed",1)
@@ -141,3 +144,16 @@ func _input(event):
 				keys[2]=false
 				can_jump = false # Prevents the player from jumping more than once while in air
 #				rset("slave_can_jump",can_jump)
+
+remote func killed(_node,_id):
+	print(_node,_id, " hasbeen killed")
+	
+func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
+	if(body.has_node("obstacleShape")):
+#		alive = false
+		
+		if get_tree().is_network_server():
+			killed(self,get_name())
+		else:
+			rpc_id(1,"killed",self,get_name())
+	pass # replace with function body

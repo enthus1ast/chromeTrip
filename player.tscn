@@ -3,6 +3,11 @@
 [ext_resource path="res://player.gd" type="Script" id=1]
 [ext_resource path="res://200-offline-sprite.png" type="Texture" id=2]
 
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 12.2444, 10.7637 )
+
 [sub_resource type="Animation" id=1]
 
 resource_name = "trexAnim"
@@ -39,15 +44,10 @@ tracks/0/keys = {
 "values": [ Rect2( 1855, 1, 85, 96 ), Rect2( 1943, 1, 85, 96 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=3]
-
-custom_solver_bias = 0.0
-extents = Vector2( 12.2444, 10.7637 )
-
 [sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
-extents = Vector2( 10, 10 )
+extents = Vector2( 14.3865, 16.8859 )
 
 [node name="player" type="RigidBody2D"]
 
@@ -56,14 +56,14 @@ input_pickable = false
 collision_layer = 1
 collision_mask = 1
 mode = 2
-mass = 1.0
-friction = 0.0
+mass = 0.01
+friction = 1.0
 bounce = 0.0
 gravity_scale = 30.0
 custom_integrator = false
 continuous_cd = 0
-contacts_reported = 0
-contact_monitor = false
+contacts_reported = 1
+contact_monitor = true
 sleeping = false
 can_sleep = true
 linear_velocity = Vector2( 0, 0 )
@@ -73,8 +73,16 @@ angular_damp = -1.0
 script = ExtResource( 1 )
 _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform" ]
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+position = Vector2( -0.61058, -6.00576 )
+scale = Vector2( 2.54279, 3.95197 )
+shape = SubResource( 3 )
+_sections_unfolded = [ "Material", "Pause", "Transform", "Visibility" ]
+
 [node name="Sprite" type="Sprite" parent="."]
 
+editor/display_folded = true
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 1855, 1, 85, 96 )
@@ -92,18 +100,11 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = "trexAnim"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-
-position = Vector2( -0.61058, -3.35809 )
-scale = Vector2( 2.54279, 4.14434 )
-shape = SubResource( 3 )
-
 [node name="groundcollision" type="Area2D" parent="."]
 
-editor/display_folded = true
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
+gravity = 9.8
 linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
@@ -111,7 +112,7 @@ audio_bus_name = "Master"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="groundcollision"]
 
-position = Vector2( -5.85449, 46.2835 )
+position = Vector2( -3.07397, 43.9002 )
 scale = Vector2( 1.62509, 0.52064 )
 shape = SubResource( 4 )
 
@@ -142,10 +143,11 @@ _sections_unfolded = [ "Focus", "Hint", "Material", "Mouse", "Rect", "Size Flags
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
+visible = false
 offset = Vector2( 500, -60 )
 anchor_mode = 1
 rotating = false
-current = true
+current = false
 zoom = Vector2( 1, 1 )
 limit_left = -10000000
 limit_top = -60
@@ -164,6 +166,8 @@ editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
 _sections_unfolded = [ "Limit" ]
+
+[connection signal="body_shape_entered" from="." to="." method="_on_player_body_shape_entered"]
 
 [connection signal="body_entered" from="groundcollision" to="." method="_on_groundcollision_body_entered"]
 
