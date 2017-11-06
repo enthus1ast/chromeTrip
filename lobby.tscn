@@ -28,17 +28,31 @@ size_flags_vertical = 1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="menu" type="Control" parent="."]
 
-show_behind_parent = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 1.0
 margin_top = -1.0
-margin_right = 1025.0
-margin_bottom = 598.0
+margin_right = 41.0
+margin_bottom = 39.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="TextureRect" type="TextureRect" parent="menu"]
+
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1024.0
+margin_bottom = 599.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -49,16 +63,17 @@ expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Hint", "Rect" ]
 
-[node name="networkPanel" type="Panel" parent="."]
+[node name="networkPanel" type="Panel" parent="menu"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 359.0
-margin_top = 146.0
-margin_right = 695.0
-margin_bottom = 397.0
+margin_left = 358.0
+margin_top = 147.0
+margin_right = 694.0
+margin_bottom = 398.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -66,7 +81,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 _sections_unfolded = [ "Anchor" ]
 
-[node name="connect" type="Container" parent="networkPanel"]
+[node name="connect" type="Container" parent="menu/networkPanel"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -82,7 +97,7 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="ip" type="LineEdit" parent="networkPanel/connect"]
+[node name="ip" type="LineEdit" parent="menu/networkPanel/connect"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -103,7 +118,7 @@ caret_blink = false
 caret_blink_speed = 0.65
 _sections_unfolded = [ "Caret", "Hint" ]
 
-[node name="connect" type="Button" parent="networkPanel/connect"]
+[node name="connect" type="Button" parent="menu/networkPanel/connect"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -125,7 +140,7 @@ group = null
 text = "connect"
 flat = false
 
-[node name="host" type="Container" parent="networkPanel"]
+[node name="host" type="Container" parent="menu/networkPanel"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -141,7 +156,7 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="name" type="LineEdit" parent="networkPanel/host"]
+[node name="name" type="LineEdit" parent="menu/networkPanel/host"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -163,7 +178,7 @@ caret_blink = false
 caret_blink_speed = 0.65
 _sections_unfolded = [ "Placeholder" ]
 
-[node name="host" type="Button" parent="networkPanel/host"]
+[node name="host" type="Button" parent="menu/networkPanel/host"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -185,7 +200,7 @@ group = null
 text = "host"
 flat = false
 
-[node name="sp" type="Button" parent="networkPanel"]
+[node name="sp" type="Button" parent="menu/networkPanel"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -207,7 +222,7 @@ group = null
 text = "Start SP"
 flat = false
 
-[node name="DialogWaiting" type="Panel" parent="networkPanel"]
+[node name="lobby" type="PanelContainer" parent="menu"]
 
 editor/display_folded = true
 visible = false
@@ -215,79 +230,17 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 42.0
-margin_top = 47.0
-margin_right = 306.0
-margin_bottom = 193.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Anchor", "Grow Direction", "Hint", "Margin", "Material", "Popup", "Size Flags" ]
-
-[node name="cancel" type="Button" parent="networkPanel/DialogWaiting"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 105.0
-margin_top = 86.0
-margin_right = 161.0
-margin_bottom = 117.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "cancel"
-flat = false
-
-[node name="Label" type="Label" parent="networkPanel/DialogWaiting"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 28.0
-margin_top = 22.0
-margin_right = 239.0
-margin_bottom = 74.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "wating for players..."
-align = 1
-valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="lobby" type="PanelContainer" parent="."]
-
-editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 250.0
-margin_top = 56.0
-margin_right = 800.0
-margin_bottom = 527.0
+margin_left = 249.0
+margin_top = 57.0
+margin_right = 799.0
+margin_bottom = 528.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="Container" type="Container" parent="lobby"]
+[node name="Container" type="Container" parent="menu/lobby"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -304,7 +257,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 _sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect" ]
 
-[node name="info" type="Panel" parent="lobby/Container"]
+[node name="info" type="Panel" parent="menu/lobby/Container"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -321,7 +274,7 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="name" type="Label" parent="lobby/Container/info"]
+[node name="name" type="Label" parent="menu/lobby/Container/info"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -340,7 +293,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="ip" type="Label" parent="lobby/Container/info"]
+[node name="ip" type="Label" parent="menu/lobby/Container/info"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -360,7 +313,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="header" type="Panel" parent="lobby/Container"]
+[node name="header" type="Panel" parent="menu/lobby/Container"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -378,7 +331,7 @@ size_flags_horizontal = 15
 size_flags_vertical = 1
 _sections_unfolded = [ "Anchor", "Grow Direction", "Size Flags" ]
 
-[node name="Label" type="Label" parent="lobby/Container/header"]
+[node name="Label" type="Label" parent="menu/lobby/Container/header"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -402,9 +355,8 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Anchor", "Margin", "Rect", "Size Flags" ]
 
-[node name="body" type="Panel" parent="lobby/Container"]
+[node name="body" type="Panel" parent="menu/lobby/Container"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -419,8 +371,9 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="RichTextLabel" type="ScrollContainer" parent="lobby/Container/body"]
+[node name="RichTextLabel" type="ScrollContainer" parent="menu/lobby/Container/body"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -435,7 +388,7 @@ scroll_horizontal = false
 scroll_vertical = true
 _sections_unfolded = [ "Scroll", "Size Flags" ]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="lobby/Container/body/RichTextLabel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="menu/lobby/Container/body/RichTextLabel"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -452,7 +405,7 @@ size_flags_vertical = 1
 alignment = 0
 _sections_unfolded = [ "Size Flags", "custom_constants" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="lobby/Container/body/RichTextLabel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="menu/lobby/Container/body/RichTextLabel/VBoxContainer"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -469,7 +422,7 @@ size_flags_vertical = 1
 alignment = 0
 _sections_unfolded = [ "Grow Direction", "Margin" ]
 
-[node name="id" type="Label" parent="lobby/Container/body/RichTextLabel/VBoxContainer/HBoxContainer"]
+[node name="id" type="Label" parent="menu/lobby/Container/body/RichTextLabel/VBoxContainer/HBoxContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -488,7 +441,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="name" type="Label" parent="lobby/Container/body/RichTextLabel/VBoxContainer/HBoxContainer"]
+[node name="name" type="Label" parent="menu/lobby/Container/body/RichTextLabel/VBoxContainer/HBoxContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -508,7 +461,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Grow Direction", "Margin", "Size Flags" ]
 
-[node name="Label" type="Label" parent="lobby/Container/body/RichTextLabel/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="menu/lobby/Container/body/RichTextLabel/VBoxContainer/HBoxContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -528,9 +481,8 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Grow Direction", "Hint", "Size Flags" ]
 
-[node name="chat" type="Panel" parent="lobby/Container"]
+[node name="chat" type="Panel" parent="menu/lobby/Container"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -545,8 +497,9 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="lobby/Container/chat"]
+[node name="ScrollContainer" type="ScrollContainer" parent="menu/lobby/Container/chat"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -561,7 +514,7 @@ scroll_horizontal = false
 scroll_vertical = true
 _sections_unfolded = [ "Anchor", "Margin", "Rect", "Scroll" ]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="lobby/Container/chat/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="menu/lobby/Container/chat/ScrollContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -576,7 +529,31 @@ size_flags_vertical = 1
 alignment = 0
 _sections_unfolded = [ "Rect", "Size Flags", "custom_constants" ]
 
-[node name="chatInput" type="Panel" parent="lobby/Container"]
+[node name="clearChat" type="Button" parent="menu/lobby/Container/chat"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 327.0
+margin_top = 1.0
+margin_right = 370.0
+margin_bottom = 21.0
+rect_scale = Vector2( 0.8, 0.8 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "clear"
+flat = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="chatInput" type="Panel" parent="menu/lobby/Container"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -592,7 +569,7 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="sendButton" type="Button" parent="lobby/Container/chatInput"]
+[node name="sendButton" type="Button" parent="menu/lobby/Container/chatInput"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -614,7 +591,7 @@ group = null
 text = "Send"
 flat = false
 
-[node name="chatInput" type="LineEdit" parent="lobby/Container/chatInput"]
+[node name="chatInput" type="LineEdit" parent="menu/lobby/Container/chatInput"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -638,7 +615,7 @@ caret_blink = false
 caret_blink_speed = 0.65
 _sections_unfolded = [ "Placeholder" ]
 
-[node name="okLobbyButton" type="Button" parent="lobby/Container"]
+[node name="startLobbyButton" type="Button" parent="menu/lobby/Container"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -653,6 +630,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -660,7 +638,7 @@ group = null
 text = "Start"
 flat = false
 
-[node name="leaveLobbyButton" type="Button" parent="lobby/Container"]
+[node name="leaveLobbyButton" type="Button" parent="menu/lobby/Container"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -682,20 +660,109 @@ group = null
 text = "leave"
 flat = false
 
-[connection signal="pressed" from="networkPanel/connect/connect" to="." method="_on_connect_pressed"]
+[node name="DialogWaiting" type="Panel" parent="menu"]
 
-[connection signal="pressed" from="networkPanel/host/host" to="." method="_on_host_pressed"]
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 400.0
+margin_top = 194.0
+margin_right = 664.0
+margin_bottom = 340.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Anchor", "Focus", "Grow Direction", "Hint", "Margin", "Material", "Popup", "Rect", "Size Flags", "Visibility", "custom_styles" ]
 
-[connection signal="pressed" from="networkPanel/sp" to="." method="_on_sp_pressed"]
+[node name="cancel" type="Button" parent="menu/DialogWaiting"]
 
-[connection signal="pressed" from="networkPanel/DialogWaiting/cancel" to="." method="_on_cancel_pressed"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 105.0
+margin_top = 86.0
+margin_right = 161.0
+margin_bottom = 117.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "cancel"
+flat = false
 
-[connection signal="pressed" from="lobby/Container/chatInput/sendButton" to="." method="_on_sendButton_pressed"]
+[node name="Label" type="Label" parent="menu/DialogWaiting"]
 
-[connection signal="focus_entered" from="lobby/Container/chatInput/chatInput" to="." method="_on_chatInput_focus_entered"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 28.0
+margin_top = 22.0
+margin_right = 239.0
+margin_bottom = 74.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "connecting.."
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
-[connection signal="focus_exited" from="lobby/Container/chatInput/chatInput" to="." method="_on_chatInput_focus_exited"]
+[node name="Label2" type="Label" parent="menu/DialogWaiting"]
 
-[connection signal="pressed" from="lobby/Container/leaveLobbyButton" to="." method="_on_leaveLobbyButton_pressed"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 28.0
+margin_top = 22.0
+margin_right = 239.0
+margin_bottom = 74.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "connecting.."
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[connection signal="pressed" from="menu/networkPanel/connect/connect" to="." method="_on_connect_pressed"]
+
+[connection signal="pressed" from="menu/networkPanel/host/host" to="." method="_on_host_pressed"]
+
+[connection signal="pressed" from="menu/networkPanel/sp" to="." method="_on_sp_pressed"]
+
+[connection signal="pressed" from="menu/lobby/Container/chat/clearChat" to="." method="_on_clearChat_pressed"]
+
+[connection signal="pressed" from="menu/lobby/Container/chatInput/sendButton" to="." method="_on_sendButton_pressed"]
+
+[connection signal="focus_entered" from="menu/lobby/Container/chatInput/chatInput" to="." method="_on_chatInput_focus_entered"]
+
+[connection signal="focus_exited" from="menu/lobby/Container/chatInput/chatInput" to="." method="_on_chatInput_focus_exited"]
+
+[connection signal="pressed" from="menu/lobby/Container/startLobbyButton" to="." method="_on_startLobbyButton_pressed"]
+
+[connection signal="pressed" from="menu/lobby/Container/leaveLobbyButton" to="." method="_on_leaveLobbyButton_pressed"]
+
+[connection signal="pressed" from="menu/DialogWaiting/cancel" to="." method="_on_cancel_pressed"]
 
 

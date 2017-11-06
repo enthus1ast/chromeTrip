@@ -16,10 +16,9 @@ const DIRECTION = {
 }
 slave var slave_pos = Vector2()
 slave var slave_motion = Vector2()
-slave var slave_is_jumping = false
+#slave var slave_is_jumping = false
 
 var name
-var savedState
  
 # Jumping
 var can_jump = true
@@ -29,12 +28,10 @@ func _integrate_forces(state):
 #	print(self.get_name())
 	var final_force = Vector2()
 	var pos
-#	if str(get_tree().get_network_unique_id())==get_name():
-	
+#	if get_tree().get_network_unique_id()==int(get_name()):
 	if is_network_master():
 #		print(self.get_name())
-#		savedState = state
-		
+#		print(self,self.get_name(),get_network_master())
 		directional_force = DIRECTION.ZERO
 		apply_force(state)
 #		rpc("apply_force",state)
@@ -52,37 +49,40 @@ func _integrate_forces(state):
 		pos = position
 		rset("slave_motion",final_force)
 		rset("slave_pos",pos)
-		print(slave_pos)
+#		print(slave_pos)
 	else:
+		
 		position = slave_pos
-		print(slave_pos)
+#		print(slave_pos)
 		final_force = slave_motion
 	state.set_linear_velocity(final_force)
 	
 # Apply force
 func apply_force(state):
     # Move Left
-	if(Input.is_action_pressed("ui_left")):
-		directional_force += DIRECTION.LEFT
-		pass
-     
-    # Move Right
-	if(Input.is_action_pressed("ui_right")):
-		directional_force += DIRECTION.RIGHT
-		pass
-     
-    # Jump
-	if Input.is_action_pressed("ui_select"):
-		if jump_time < TOP_JUMP_TIME and can_jump:
-			directional_force += DIRECTION.UP
-			jump_time += state.get_step()
-	elif(Input.is_action_just_released("ui_select")):
-		can_jump = false # Prevents the player from jumping more than once while in air
-     
-    # While on the ground
-	if(grounded):
-		can_jump = true
-		jump_time = 0
+	if is_network_master() and get_tree().get_network_unique_id()==int(get_name()): #fancy workaround =(
+		if(Input.is_action_pressed("ui_left")):
+			print("input on ", get_name())
+			directional_force += DIRECTION.LEFT
+			pass
+	     
+	    # Move Right
+		if(Input.is_action_pressed("ui_right")):
+			directional_force += DIRECTION.RIGHT
+			pass
+	     
+	    # Jump
+		if Input.is_action_pressed("ui_select"):
+			if jump_time < TOP_JUMP_TIME and can_jump:
+				directional_force += DIRECTION.UP
+				jump_time += state.get_step()
+		elif(Input.is_action_just_released("ui_select")):
+			can_jump = false # Prevents the player from jumping more than once while in air
+	     
+	    # While on the ground
+		if(grounded):
+			can_jump = true
+			jump_time = 0
  
 func _on_groundcollision_body_entered( body ):
 	if body.get_name()=="ground":

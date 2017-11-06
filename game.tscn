@@ -25,6 +25,9 @@ script = ExtResource( 1 )
 
 [node name="players" type="Node2D" parent="."]
 
+position = Vector2( 51.2639, 47.1628 )
+_sections_unfolded = [ "Transform" ]
+
 [node name="ground" type="StaticBody2D" parent="."]
 
 editor/display_folded = true

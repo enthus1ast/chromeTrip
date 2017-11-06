@@ -1,24 +1,32 @@
 extends Control
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
 const SERVER_PORT = 7000
-var eNet
-onready var ipInput = get_node("networkPanel/connect/ip")
-onready var lobby = get_node("lobby")
+const INSTANT_READY = false
+const REQUIRED_PLAYERS = 2
+
+onready var lobby = get_node("menu/lobby")
+onready var startButton = lobby.get_node("Container/startLobbyButton")
 onready var chatInput = lobby.get_node("Container/chatInput/chatInput")
+
+onready var networkPanel = get_node("menu/networkPanel")
+onready var ipInput = networkPanel.get_node("connect/ip")
+
+onready var dialogWaiting = get_node("menu/DialogWaiting")
+
 #onready var playerList = lobby.get_node("Container/body/playerList")
 onready var PlayerListElement = preload("res://playerListElement.tscn")
 onready var Player = preload("res://player.tscn")
 onready var Game = preload("res://game.tscn")
+
+var allReady = false
+var eNet
 var game
 var players = {}
 var player_name
 var currentPlayer = {
 	"id":null,
 	"name":"",
-	"ready":null,
+	"isReady":null,
 	"node":null
 }
 var isConnecting = false
@@ -45,7 +53,7 @@ func _ready():
 	get_tree().connect("connected_to_server", self, "_connected_ok")
 	get_tree().connect("connection_failed", self, "_connected_fail")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
-#	set_process(true)
+	set_process(false)
 	set_process_input(true)
 
 
@@ -55,103 +63,82 @@ func _player_connected(playerId):
 #Client sending to host
 func _connected_ok():
 	
-	player_name = get_node("networkPanel/host/name").get_text()
-	if player_name == "":
-		player_name ="unnamed"
-	currentPlayer.name = player_name
-	rpc_id(1, "user_ready", get_tree().get_network_unique_id(), player_name)
-	print("_connected_ok")
+	currentPlayer.name = networkPanel.get_node("host/name").get_text()
+	if currentPlayer.name == "":
+		currentPlayer.name ="unnamed"
+	currentPlayer.isReady = false
+	currentPlayer.id = get_tree().get_network_unique_id()
+	rpc_id(1, "user_ready", currentPlayer)
+	print("_connected_ok",currentPlayer.id)
 	lobby.set_visible(true)
+	dialogWaiting.set_visible(false)
 	isConnecting = false
 
 #server responding to Clients connect ok
-remote func user_ready(id, player_name):
-	print(id,player_name," ready")
+remote func user_ready(_player):
+#	print(_id,_player_name," ready")
 	# Only the server can run this!
 	if(get_tree().is_network_server()):
-		rpc_id(id, "register_in_lobby")
-		players[id] = player_name
+		players[_player.id] = {}
+		players[_player.id].id = _player.id
+		players[_player.id].name = _player.name
+		players[_player.id].isReady = _player.isReady
+		print(players,_player.id,"BUG")
+		rpc_id(_player.id, "register_in_lobby")
 
 remote func register_in_lobby():
-	rpc("register_new_player", get_tree().get_network_unique_id(), player_name)
-	get_node("lobby/Container/info/name").set_text("name: "+player_name)
-	get_node("lobby/Container/info/ip").set_text("ip: "+str(IP.get_local_addresses()[1]))
+	rpc("register_new_player", currentPlayer)
+	lobby.get_node("Container/info/name").set_text("name: "+currentPlayer.name)
+	lobby.get_node("Container/info/ip").set_text("ip: "+str(IP.get_local_addresses()[1]))
 #	register_new_player(get_tree().get_network_unique_id(), player_name)
 
 # Register yourself directly ingame
-remote func register_in_game():
-	rpc("register_new_player", get_tree().get_network_unique_id(), player_name)
-	register_new_player(get_tree().get_network_unique_id(), player_name)
+#remote func register_in_game():
+#	rpc("register_new_player", get_tree().get_network_unique_id(), currentPlayer)
+#	register_new_player(get_tree().get_network_unique_id(), currentPlayer)
 
-remote func register_new_player(id, name):
-	players[id] = name
+remote func register_new_player(_player):
+	players[_player.id] = {}
+	players[_player.id].id = _player.id
+	players[_player.id].name = _player.name
+	players[_player.id].isReady = _player.isReady
+	
 # This runs only once from server
 	if get_tree().is_network_server():
 		# Send info about server to new player
 		rpc("updateList",players)
 		# Send the new player info about the other players
 		for peer_id in players:
-#			if peer_id!=1:
-			rpc_id(id, "register_new_player", peer_id, players[peer_id])
-#			rpc_id(id,"updateList",players)
+			rpc_id(_player.id, "register_new_player", players[peer_id])
 			updateList(players)
-	# Add new player to your player list
+			
+	#	switch the startbutton to disabled
+		areAllReady()
 
-#	startGame()
-	#	spawnPlayers() 
-	
-#	rpc("startGame")
-	
-func startGame():
-	if get_tree().is_network_server():
-		for p in players:
-#			if p!=1:
-			print(p,"=spawn by client")
-#			rpc_id(p, "spawnPlayers")
-#			spawnPlayers()
-	print(players)
+remote func startGame():
 
-	
-remote func spawnPlayers():
-	
-	get_node("networkPanel").set_visible(false)
-	get_node("networkPanel/DialogWaiting").set_visible(false)
 	if(has_node("game")):
 		pass
 	else:
 		game = Game.instance()
 		add_child(game)
-
-	print(players)
-	
-	if get_tree().is_network_server():
-		currentPlayer = Player.instance()
-		currentPlayer.get_node("Label").set_text(player_name)
-		game.get_node("players").add_child(currentPlayer)
-		currentPlayer.set_network_master(1)
-		currentPlayer.set_name(str(1))
-	
-	for p in players:# Create player instance
-		var player = Player.instance()
-		player.get_node("Label").set_text(player_name)
+		
+	for p in players:
+		players[p].node = Player.instance()
+		players[p].node.get_node("Label").set_text(players[p].name)
 		# Set Player ID as node name - Unique for each player!
-		player.set_name(str(p))
-		
-		# Set spawn position for the player (on a spawn point from the map)		
+		players[p].node.set_name(str(p))
 		# If the new player is you
-		if (p == get_tree().get_network_unique_id()):
+		game.get_node("players").add_child(players[p].node)
+		if (players[p].id == currentPlayer.id and players[p].name == currentPlayer.name):
+			currentPlayer.node = players[p].node
 			# Set as master on yourself
-			player.set_network_master(p)
-#			player.add_child(camera_scene.instance()) # Add camera to your player
-			
-		else:
-			
-			# Add player name
-			player.get_node("Label").set_text(str(players[p]))
-		
+			currentPlayer.node.set_network_master(players[p].id)
+#			player.add_child(camera_scene.instance()) # Add camera to your player	
 		# Add the player (or you) to the world!
-		game.get_node("players").add_child(player)
 		
+		print("players:",players[p]," for ",currentPlayer.name)
+	
 ################## disconnected unregister
 	
 func _player_disconnected(_id):
@@ -170,15 +157,14 @@ remote func unregister_player(_id):
 	else:
 		# Remove from lobby
 		removeItemFromList(_id)
-#		rpc("removeItemFromList",_id)
 		players.erase(_id)
-#		rpc("updateList",players)
 		updateList(players)
 #		get_node("game/players/" + str(id)).queue_free()
 		emit_signal("refresh_lobby")
 
 func _connected_fail():
 	isConnecting = false
+	dialogWaiting.set_visible(false)
 	get_tree().set_network_peer(null)
 	eNet.close_connection()
 	print("connection failed")
@@ -187,10 +173,11 @@ func _connected_fail():
 func _server_disconnected():
 	lobby.set_visible(false)
 	eNet.close_connection()
-	eNet = NetworkedMultiplayerENet.new()
+	eNet = NetworkedMultiplayerENet.new() #workaround
 	get_tree().set_network_peer(null)
 	players={}
 	clearList()
+	clearChat()
 	print("server closed")
 #	quit_game()
 #	emit_signal("server_ended")
@@ -213,34 +200,99 @@ remote func removeItemFromList(_id):
 remote func updateList(_list):
 	print("updateList: ",_list)
 #	clearList()
-	for peer_id in _list:
-		addNewListItem(peer_id,_list[peer_id])
+	for peer in _list:
+		addNewListItem(_list[peer])
 
-func addNewListItem(_id,_name):
-	if !lobby.get_node("Container/body/RichTextLabel/VBoxContainer").has_node(str(_id)):
+func addNewListItem(_peer):
+	if !lobby.get_node("Container/body/RichTextLabel/VBoxContainer").has_node(str(_peer.id)):
 		var listItem = PlayerListElement.instance()
-		listItem.get_node("id").set_text(str(_id))
-		listItem.get_node("name").set_text(_name)
-		var ready = listItem.get_node("readyCheckbox").pressed
-		listItem.set_name(str(_id))
+		listItem.get_node("id").set_text(str(_peer.id))
+		listItem.get_node("name").set_text(_peer.name)
+		if currentPlayer.id!=_peer.id:
+			listItem.get_node("readyCheckbox").disabled=true
+			if _peer.isReady:
+				listItem.get_node("readyCheckbox").pressed=true
+		listItem.set_name(str(_peer.id))
 		lobby.get_node("Container/body/RichTextLabel/VBoxContainer").add_child(listItem)
-		print(lobby.get_node("Container/body/RichTextLabel/VBoxContainer").get_children())
-	
+		listItem.get_node("readyCheckbox").connect("pressed",self,"_on_checkbox_pressed")
+
+func areAllReady():
+	if get_tree().is_network_server():
+		var isReadyCount = 0
+		var playerCount = players.size()
+		for peer in players:
+			if players[peer].isReady:
+				isReadyCount+=1
+		if isReadyCount == playerCount:
+			print("all ready")
+			allReady = true
+			rpc("toggleStartButton",allReady)
+		else:
+			print("waiting for all to be ready")
+			allReady = false
+			rpc("toggleStartButton",allReady)
+
+sync func toggleStartButton(_mode):
+	if _mode:
+		startButton.disabled = false
+	else:
+		startButton.disabled = true
+
+remote func setChecked(_id):
+	var _checkbox = lobby.get_node("Container/body/RichTextLabel/VBoxContainer").get_node(str(_id)).get_node("readyCheckbox")
+	if _checkbox.pressed:
+		players[_id].isReady=false
+		_checkbox.pressed=false
+	else:
+		players[_id].isReady=true
+		_checkbox.pressed=true
+	areAllReady()
+
+remote func changeReady(_id):
+	if get_tree().is_network_server():
+		if _id!=1:
+			setChecked(_id)
+		elif !players[_id].isReady:
+			currentPlayer.isReady=true
+			players[_id].isReady=true
+		elif players[_id].isReady:
+			currentPlayer.isReady=false
+			players[_id].isReady=false
+			
+		for peer in players:
+			if peer!=1 and players[peer].id!=_id:
+				rpc_id(peer,"setChecked",_id)
+
+#if client send a request to server
+func _on_checkbox_pressed():
+	if get_tree().is_network_server():
+		changeReady(currentPlayer.id)
+		areAllReady()
+	else:
+		rpc_id(1,"changeReady",currentPlayer.id)
+
+
 func _on_host_pressed():
 	eNet.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(eNet)
-	player_name = get_node("networkPanel/host/name").get_text()
-	if player_name == "":
-		player_name ="unnamed"
+	currentPlayer.name = networkPanel.get_node("host/name").get_text()
+	if currentPlayer.name == "":
+		currentPlayer.name ="unnamed"
+	currentPlayer.id = 1
+	currentPlayer.isReady = false
+	var id = get_tree().get_network_unique_id()
 	lobby.set_visible(true)
 	lobby.get_node("Container/info/ip").set_text("Ip: "+ str(IP.get_local_addresses()[1]))
-	lobby.get_node("Container/info/name").set_text("name: "+player_name)
-	players[get_tree().get_network_unique_id()]=player_name
+	lobby.get_node("Container/info/name").set_text("name: "+currentPlayer.name)
+	players[id] = {}
+	players[id].name = currentPlayer.name
+	players[id].id = id
+	players[id].isReady = currentPlayer.isReady
 	updateList(players)
-	
 
 func _on_connect_pressed():
 	if !isConnecting:
+		dialogWaiting.set_visible(true)
 		isConnecting = true
 		var ip = ipInput.get_text()
 		eNet.create_client(ip, SERVER_PORT)
@@ -252,12 +304,14 @@ func _on_sp_pressed():
 #	game = load("res://game.tscn").instance()
 	eNet.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(eNet)
-	register_new_player(1,player_name)
+	register_new_player(1,currentPlayer)
 	
 func _on_cancel_pressed():
-	get_node("Panel/DialogWaiting").set_visible(false)
+	dialogWaiting.set_visible(false)
 	get_tree().set_network_peer(null)
 	eNet.close_connection()
+	isConnecting = false
+	eNet = NetworkedMultiplayerENet.new()
 	pass
 
 func _on_leaveLobbyButton_pressed():
@@ -267,35 +321,96 @@ func _on_leaveLobbyButton_pressed():
 	eNet = NetworkedMultiplayerENet.new()
 	players={}
 	clearList()
+	clearChat()
 #	updateList(players)
 
 func _on_chatInput_focus_entered():
-#	get_node("lobby/Container/chatInput/chatInput").set_text("")
 	pass
 	
 func _on_chatInput_focus_exited():
 	pass
 
 func _on_sendButton_pressed():
-	rpc("sendMessage",player_name,chatInput.get_text())
-	sendMessage(player_name,chatInput.get_text())
+	rpc("sendMessage",currentPlayer.name,chatInput.get_text())
+	sendMessage(currentPlayer.name,chatInput.get_text())
 
 remote func sendMessage(_player,_value):
-
-#	var value = chatInput.get_text()
 	if _value.length() > 0:
 		var message = Label.new()
-		var scrollContainer = get_node("lobby/Container/chat/ScrollContainer") 
+		var scrollContainer = lobby.get_node("Container/chat/ScrollContainer") 
 		message.set_text(_player+": "+_value)
 		scrollContainer.get_node("VBoxContainer").add_child(message)
-		print(scrollContainer.get_node("VBoxContainer").get_rect())
-	#	get_node("lobby/Container/chat/ScrollContainer").get_item_and_children_rect().size.y
 		scrollContainer.set_v_scroll(scrollContainer.get_item_and_children_rect().size.y)
 		scrollContainer.update()
 		chatInput.set_text("")
+		
+func _on_clearChat_pressed():
+	clearChat()
+	pass # replace with function body
+	
+func clearChat():
+	var vBox = lobby.get_node("Container/chat/ScrollContainer/VBoxContainer")
+	for child in vBox.get_children():
+		vBox.remove_child(child)
+		child.queue_free()
+
+var countdown
+var countdownActive = false
+var countdownRemaining = 3
+
+remote func _on_startLobbyButton_pressed():
+	if get_tree().is_network_server():
+		if allReady and !countdownActive:
+			countdownRemaining = 3
+			countdownActive=true
+			countdown = Timer.new()
+			startButton.add_child(countdown)
+			countdown.connect("timeout",self,"_countdown_timeout")
+			rpc("sendMessage","SERVER","Starting in "+str(countdownRemaining))
+			sendMessage("SERVER","Starting in "+str(countdownRemaining))
+			rpc("setStartButtonText",str(countdownRemaining))
+			countdown.wait_time = 1
+			countdown.start()
+	else:
+		rpc_id(1,"_on_startLobbyButton_pressed")
+		
+func _countdown_timeout():
+	if get_tree().is_network_server():
+		if allReady:
+			if countdownRemaining > 1:
+				countdownRemaining-=1
+				rpc("sendMessage","SERVER","Starting in "+str(countdownRemaining))
+				sendMessage("SERVER","Starting in "+str(countdownRemaining))
+				rpc("setStartButtonText",str(countdownRemaining))
+			elif countdownRemaining==1:
+				rpc("setStartButtonText","Start")
+				rpc("prepareGame")
+		else:
+			rpc("setStartButtonText","Start")
+			rpc("sendMessage","SERVER","Aborted by user.")
+			sendMessage("SERVER","Aborted by user.")
+			countdown.disconnect("timeout",self,"_countdown_timeout")
+			countdown.queue_free()
+			countdownRemaining = 3
+			countdownActive = false
+
+sync func setStartButtonText(_string):
+	startButton.set_text(_string)
+
+sync func prepareGame():
+	lobby.set_visible(false)
+	networkPanel.set_visible(false)
+	if get_tree().is_network_server():
+		countdown.disconnect("timeout",self,"_countdown_timeout")
+		countdown.queue_free()
+		countdownRemaining = 3
+		countdownActive = false
+		startGame()
+		rpc("startGame")
+
+############################ _input, _process
 
 func _input(event):
 	if event.is_action_pressed("ui_enter") and chatInput.has_focus():
-		rpc("sendMessage",player_name,chatInput.get_text())
-		sendMessage(player_name,chatInput.get_text())
-
+		rpc("sendMessage",currentPlayer.name,chatInput.get_text())
+		sendMessage(currentPlayer.name,chatInput.get_text())
