@@ -1,12 +1,26 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
-[ext_resource path="res://200-offline-sprite.png" type="Texture" id=2]
+[ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://ground.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=3]
+
+size = 30
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 2 )
+_sections_unfolded = [ "Extra Spacing", "Settings" ]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 15.4942, 10 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
 
 [node name="game" type="Control"]
 
@@ -23,8 +37,94 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 script = ExtResource( 1 )
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="points" type="Label" parent="CanvasLayer"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 820.0
+margin_top = 10.0
+margin_right = 1018.0
+margin_bottom = 39.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.325439, 0.325439, 0.325439, 1 )
+text = "000000000"
+align = 2
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect", "Size Flags", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
+
+[node name="players" type="Node2D" parent="."]
+
+position = Vector2( 51.2639, 47.1628 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="ground" type="StaticBody2D" parent="."]
+
+editor/display_folded = true
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 0.0
+bounce = 0.0
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="ground"]
+
+position = Vector2( 11935.8, 375.303 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 20000, 26 )
+_sections_unfolded = [ "Material", "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground"]
+
+position = Vector2( 15139.6, 400 )
+scale = Vector2( 1000, 1.75012 )
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="leftBlock" type="StaticBody2D" parent="."]
+
+editor/display_folded = true
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="leftBlock"]
+
+position = Vector2( -20, 110 )
+scale = Vector2( 1.65385, 27.9423 )
+shape = SubResource( 2 )
+
 [node name="Camera2D" type="Camera2D" parent="."]
 
+visible = false
 position = Vector2( 510, 300 )
 anchor_mode = 1
 rotating = false
@@ -46,36 +146,5 @@ drag_margin_bottom = 0.2
 editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
-
-[node name="players" type="Node2D" parent="."]
-
-position = Vector2( 51.2639, 47.1628 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="ground" type="StaticBody2D" parent="."]
-
-editor/display_folded = true
-input_pickable = false
-collision_layer = 1
-collision_mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
-_sections_unfolded = [ "Transform" ]
-
-[node name="Sprite" type="Sprite" parent="ground"]
-
-position = Vector2( 1199.68, 370.324 )
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 2, 103, 2400, 25 )
-_sections_unfolded = [ "Material", "Region", "Transform" ]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ground"]
-
-position = Vector2( 1200, 400 )
-scale = Vector2( 77.3979, 1.75012 )
-shape = SubResource( 1 )
 
 

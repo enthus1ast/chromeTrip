@@ -42,7 +42,7 @@ tracks/0/keys = {
 [sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
-extents = Vector2( 10, 10 )
+extents = Vector2( 12.2444, 10.7637 )
 
 [sub_resource type="RectangleShape2D" id=4]
 
@@ -57,9 +57,9 @@ collision_layer = 1
 collision_mask = 1
 mode = 2
 mass = 1.0
-friction = 1.0
+friction = 0.0
 bounce = 0.0
-gravity_scale = 10.0
+gravity_scale = 30.0
 custom_integrator = false
 continuous_cd = 0
 contacts_reported = 0
@@ -94,7 +94,7 @@ autoplay = "trexAnim"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-position = Vector2( -4.57173, 4.56421 )
+position = Vector2( -0.61058, -3.35809 )
 scale = Vector2( 2.54279, 4.14434 )
 shape = SubResource( 3 )
 
@@ -139,6 +139,31 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Focus", "Hint", "Material", "Mouse", "Rect", "Size Flags", "Theme", "Visibility", "custom_colors", "custom_constants", "custom_styles" ]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+offset = Vector2( 500, -60 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -60
+limit_right = 10000000
+limit_bottom = -60
+limit_smoothed = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = false
+smoothing_enabled = false
+smoothing_speed = 5.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+_sections_unfolded = [ "Limit" ]
 
 [connection signal="body_entered" from="groundcollision" to="." method="_on_groundcollision_body_entered"]
 

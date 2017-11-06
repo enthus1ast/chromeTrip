@@ -1,8 +1,11 @@
 extends RigidBody2D
+
 # Default Character Properties (Should be overwritten)
 var acceleration = 10000
-var top_move_speed = 300
-var top_jump_speed = 400
+var top_move_speed_org = 300
+var top_move_speed = top_move_speed_org
+var top_jump_speed = 1000
+
 # Grounded?
 var grounded = false 
 # Movement Vars
@@ -20,6 +23,7 @@ var FOWARD_MOTION = Vector2(1, 0)
 #define the slave vars. slave var did not worked for me
 sync var slave_pos = Vector2()
 sync var slave_motion = Vector2()
+sync var slave_can_jump = true
 
 onready var animPlayer = get_node("Sprite/AnimationPlayer")
  
@@ -32,12 +36,13 @@ var keys = [false,false,false,false] # right, left, up, down
 
 func _ready():
 	set_process_input(true)
+	rpc("playAnimation","trexAnimRun")
 
 func _integrate_forces(state):
 	var final_force = Vector2()
 	if is_network_master():
 
-		directional_force = DIRECTION.ZERO
+		directional_force = DIRECTION.ZERO+FOWARD_MOTION
 		apply_force(state)
 		final_force = state.get_linear_velocity() + (directional_force * acceleration)
 	 
@@ -58,6 +63,7 @@ func _integrate_forces(state):
 	else:
 		position = slave_pos
 		final_force = slave_motion
+		slave_can_jump = can_jump
 		
 	state.set_linear_velocity(final_force)
 	
@@ -74,16 +80,17 @@ func apply_force(state):
 		directional_force += DIRECTION.LEFT
      
     # Jump
-	if Input.is_action_pressed("ui_select"):
+	if keys[2]:
 		if jump_time < TOP_JUMP_TIME and can_jump:
 			directional_force += DIRECTION.UP
 			jump_time += state.get_step()
-	elif(Input.is_action_just_released("ui_select")):
-		can_jump = false # Prevents the player from jumping more than once while in air
+			rset("slave_can_jump",can_jump)
+		
      
     # While on the ground
 	if(grounded):
 		can_jump = true
+		rset("slave_can_jump",can_jump)
 		jump_time = 0
  
 func _on_groundcollision_body_entered( body ):
@@ -95,25 +102,42 @@ func _on_groundcollision_body_exited( body ):
 	grounded = false
 
 sync func playAnimation(_string):
-#	if is_network_master():
 	get_node("Sprite/AnimationPlayer").play(_string)
-#	else:
-#		rpc("playAnimation",_string)
 	
+sync func animSpeed(_speed):
+	get_node("Sprite/AnimationPlayer").set_speed_scale(_speed)
+
 func _input(event):
 	if is_network_master():
+		#if keyboard input
 		if event.get_class()=="InputEventKey":
+			
+			# left or right keypressevent
 			if event.is_action_pressed("ui_right"):
 				keys[0]=true
-				rpc("playAnimation","trexAnimRun")
+				rpc("animSpeed",1.5)
+				top_move_speed = 500
+#				rpc("playAnimation","trexAnimRun")
 			elif event.is_action_pressed("ui_left"):
+				rpc("animSpeed",0.5)
 				keys[1]=true
-				rpc("playAnimation","trexAnimRun")
-				
-			if event.is_action_released("ui_right"):
-				keys[0]=false
-				rpc("playAnimation","trexAnim")
-			if event.is_action_released("ui_left"):
-				keys[1]=false
-				rpc("playAnimation","trexAnim")
+#				rpc("playAnimation","trexAnimRun")
 			
+			# left or right keyreleaseevent
+			if event.is_action_released("ui_right"):
+				rpc("animSpeed",1)
+				keys[0]=false
+				top_move_speed = top_move_speed_org
+#				rpc("playAnimation","trexAnim")
+			elif event.is_action_released("ui_left"):
+				rpc("animSpeed",1)
+				keys[1]=false
+#				rpc("playAnimation","trexAnim")
+			
+			#jumping keyevents
+			if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_select"):
+				keys[2]=true
+			if event.is_action_released("ui_up") or event.is_action_released("ui_select"):
+				keys[2]=false
+				can_jump = false # Prevents the player from jumping more than once while in air
+#				rset("slave_can_jump",can_jump)
