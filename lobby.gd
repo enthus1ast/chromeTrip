@@ -3,8 +3,10 @@ extends Control
 const SERVER_PORT = 7000
 const INSTANT_READY = false
 const REQUIRED_PLAYERS = 2
+const GAME_COUNTDOWN = 1 #time to start in lobby
 
-onready var lobby = get_node("menu/lobby")
+onready var menu = get_node("menu")
+onready var lobby = menu.get_node("lobby")
 onready var startButton = lobby.get_node("Container/startLobbyButton")
 onready var chatInput = lobby.get_node("Container/chatInput/chatInput")
 
@@ -128,12 +130,13 @@ remote func startGame():
 		players[p].node.get_node("Label").set_text(players[p].name)
 		# Set Player ID as node name - Unique for each player!
 		players[p].node.set_name(str(p))
+		players[p].node.set_network_master(0)
 		# If the new player is you
 		game.get_node("players").add_child(players[p].node)
 		if (players[p].id == currentPlayer.id and players[p].name == currentPlayer.name):
-			currentPlayer.node = players[p].node
+#			currentPlayer.node = players[p].node
 			# Set as master on yourself
-			currentPlayer.node.set_network_master(players[p].id)
+			players[p].node.set_network_master(players[p].id)
 #			player.add_child(camera_scene.instance()) # Add camera to your player	
 		# Add the player (or you) to the world!
 		
@@ -172,12 +175,16 @@ func _connected_fail():
 	
 func _server_disconnected():
 	lobby.set_visible(false)
+	menu.set_visible(true)
+	remove_child(game)
+	game.queue_free()
 	eNet.close_connection()
 	eNet = NetworkedMultiplayerENet.new() #workaround
 	get_tree().set_network_peer(null)
 	players={}
 	clearList()
 	clearChat()
+	
 	print("server closed")
 #	quit_game()
 #	emit_signal("server_ended")
@@ -356,12 +363,12 @@ func clearChat():
 
 var countdown
 var countdownActive = false
-var countdownRemaining = 3
+var countdownRemaining = GAME_COUNTDOWN
 
 remote func _on_startLobbyButton_pressed():
 	if get_tree().is_network_server():
 		if allReady and !countdownActive:
-			countdownRemaining = 3
+			countdownRemaining = GAME_COUNTDOWN
 			countdownActive=true
 			countdown = Timer.new()
 			startButton.add_child(countdown)
@@ -391,19 +398,18 @@ func _countdown_timeout():
 			sendMessage("SERVER","Aborted by user.")
 			countdown.disconnect("timeout",self,"_countdown_timeout")
 			countdown.queue_free()
-			countdownRemaining = 3
+			countdownRemaining = GAME_COUNTDOWN
 			countdownActive = false
 
 sync func setStartButtonText(_string):
 	startButton.set_text(_string)
 
 sync func prepareGame():
-	lobby.set_visible(false)
-	networkPanel.set_visible(false)
+	menu.set_visible(false)
 	if get_tree().is_network_server():
 		countdown.disconnect("timeout",self,"_countdown_timeout")
 		countdown.queue_free()
-		countdownRemaining = 3
+		countdownRemaining = GAME_COUNTDOWN
 		countdownActive = false
 		startGame()
 		rpc("startGame")

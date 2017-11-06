@@ -75,10 +75,9 @@ _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform"
 
 [node name="Sprite" type="Sprite" parent="."]
 
-editor/display_folded = true
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 1679, 1, 85, 96 )
+region_rect = Rect2( 1855, 1, 85, 96 )
 _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
