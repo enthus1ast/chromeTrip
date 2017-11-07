@@ -15,20 +15,19 @@ var placeholderScoreSize
 var spriteWidth
 
 
-var obstaclesCount = 30
-
+var obstaclesCount = 5
 
 onready var playersNode = get_node("players")
-onready var ground = get_node("ground")
-onready var groundSprites = ground.get_node("Node2D")
+onready var spritesNode = get_node("sprites")
+onready var constMoveNode = spritesNode.get_node("constantMovement")
+onready var obstaclesNode = constMoveNode.get_node("obstacles")
+onready var groundSprites = constMoveNode.get_node("ground")
 onready var groundSprite1 = groundSprites.get_node("Sprite1")
 onready var groundSprite2 = groundSprites.get_node("Sprite2")
 #onready var camera = get_node("Camera2D")
 onready var pointsLabel = get_node("CanvasLayer/points")
 #
 func _ready():
-	
-	
 	
 	spriteWidth = groundSprite1.get_texture().get_size().x
 	placeholderScore = pointsLabel.text
@@ -41,30 +40,28 @@ func _ready():
 #	print("Viewportsize: ",viewportSize)
 #	ground.constant_linear_velocity(-1,0)
 #	set_process(true)
-	mapGen()
+	obstaclesGen()
 	pass
 	
 	
-func mapGen():
+func obstaclesGen():
 	var i = 0
 	while i < obstaclesCount:
 		var obstacle = Obstacles.instance()
 		obstacle.choice("kaktuss",round(rand_range(1,7)))
-		obstacle.position=Vector2(rand_range(400,10000),rand_range(340,400))
+		obstacle.global_position=Vector2(i*1000+rand_range(1024,2000)-obstaclesNode.global_position.x,rand_range(350,390))
 		var scale = rand_range(0.8,1.2)
 		obstacle.scale = Vector2(scale,scale)
-		groundSprites.add_child(obstacle)
+		obstaclesNode.add_child(obstacle)
+		print(obstacle.global_position.x)
 		i += 1
 	i = 0
 	
 	
-	
-	
 func _process(delta):
-	groundSprites.position.x-=fakeSpeed*delta
-	
-	score+=delta+0.4
-	pointsLabel.text=str(round(score))
+	constMoveNode.position.x-=fakeSpeed*delta
+	score = round(abs(constMoveNode.position.x)/10) # scoring from walked distance
+	pointsLabel.text=str(score)
 	
 	
 	
@@ -88,10 +85,15 @@ func _process(delta):
 #
 #		camera.position.x = midpoint.x + offsetX
 
+# two ground-tiles for seamless infinite maps
+# everytime a tile hast left the screen, position.x is updating and new obstacles are generating
 func _on_VisibilityNotifier2D_screen_exited():
+	
 	if groundSprite1.position.x<groundSprite2.position.x:
 		groundSprite1.position.x = groundSprite2.position.x + spriteWidth*groundSprite1.scale.x
 	else:
+		groundSprites.position.x=0
 		groundSprite2.position.x = groundSprite1.position.x + spriteWidth*groundSprite1.scale.x
-	mapGen()
+		
+	obstaclesGen()
 	pass # replace with function body

@@ -12,7 +12,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Extra Spacing", "Settings" ]
 
-[sub_resource type="LineShape2D" id=4]
+[sub_resource type="LineShape2D" id=2]
 
 custom_solver_bias = 0.0
 normal = Vector2( 0, -1 )
@@ -76,7 +76,44 @@ _sections_unfolded = [ "Rect", "Size Flags", "custom_colors", "custom_constants"
 position = Vector2( 51.2639, 47.1628 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="ground" type="StaticBody2D" parent="."]
+[node name="sprites" type="Node2D" parent="."]
+
+[node name="constantMovement" type="Node2D" parent="sprites"]
+
+[node name="ground" type="Node2D" parent="sprites/constantMovement"]
+
+editor/display_folded = true
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite1" type="Sprite" parent="sprites/constantMovement/ground"]
+
+editor/display_folded = true
+position = Vector2( 2400, 380 )
+texture = ExtResource( 3 )
+offset = Vector2( -1200, 1 )
+region_rect = Rect2( 0, 0, 2500, 26 )
+_sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="sprites/constantMovement/ground/Sprite1"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
+[node name="Sprite2" type="Sprite" parent="sprites/constantMovement/ground"]
+
+editor/display_folded = true
+position = Vector2( 4800, 380 )
+texture = ExtResource( 3 )
+offset = Vector2( -1200, 1 )
+region_rect = Rect2( 0, 0, 2500, 26 )
+_sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="sprites/constantMovement/ground/Sprite2"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
+[node name="obstacles" type="Node2D" parent="sprites/constantMovement"]
+
+[node name="groundCollision" type="StaticBody2D" parent="."]
 
 input_pickable = false
 collision_layer = 1
@@ -87,43 +124,15 @@ friction = 1.0
 bounce = 0.0
 _sections_unfolded = [ "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="groundCollision"]
 
 position = Vector2( 2258.02, 383.062 )
 scale = Vector2( 30.2855, 1.74003 )
-shape = SubResource( 4 )
+shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_lock_": true
 }
-
-[node name="Node2D" type="Node2D" parent="ground"]
-
-[node name="Sprite1" type="Sprite" parent="ground/Node2D"]
-
-position = Vector2( 2872.7, 374.5 )
-scale = Vector2( 1.2, 1.2 )
-texture = ExtResource( 3 )
-offset = Vector2( -1200, 0.7 )
-region_rect = Rect2( 0, 0, 2500, 26 )
-_sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
-
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="ground/Node2D/Sprite1"]
-
-rect = Rect2( -10, -10, 20, 20 )
-
-[node name="Sprite2" type="Sprite" parent="ground/Node2D"]
-
-position = Vector2( 5740, 374.5 )
-scale = Vector2( 1.2, 1.2 )
-texture = ExtResource( 3 )
-offset = Vector2( -1200, 0.7 )
-region_rect = Rect2( 0, 0, 2500, 26 )
-_sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
-
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="ground/Node2D/Sprite2"]
-
-rect = Rect2( -10, -10, 20, 20 )
 
 [node name="leftBlock" type="StaticBody2D" parent="."]
 
@@ -133,7 +142,7 @@ collision_layer = 1
 collision_mask = 1
 constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
-friction = 1.0
+friction = 0.0
 bounce = 0.0
 __meta__ = {
 "_edit_lock_": true
@@ -144,10 +153,27 @@ __meta__ = {
 position = Vector2( -20, 110 )
 scale = Vector2( 1.65385, 27.9423 )
 shape = SubResource( 3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="rightBlock" type="StaticBody2D" parent="."]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 0.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="rightBlock"]
+
+position = Vector2( 1040.72, 111.706 )
+scale = Vector2( 1.65385, 27.9423 )
+shape = SubResource( 3 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-visible = false
 position = Vector2( 510, 300 )
 anchor_mode = 1
 rotating = false
@@ -170,8 +196,8 @@ editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
 
-[connection signal="screen_exited" from="ground/Node2D/Sprite1/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="screen_exited" from="sprites/constantMovement/ground/Sprite1/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
-[connection signal="screen_exited" from="ground/Node2D/Sprite2/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="screen_exited" from="sprites/constantMovement/ground/Sprite2/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
 

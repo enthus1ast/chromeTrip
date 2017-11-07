@@ -91,7 +91,7 @@ func apply_force(state):
 			jump_time += state.get_step()
 			rset("slave_can_jump",can_jump)
 		
-     
+		
     # While on the ground
 	if(grounded):
 		can_jump = true
@@ -99,7 +99,7 @@ func apply_force(state):
 		jump_time = 0
  
 func _on_groundcollision_body_entered( body ):
-	if body.get_name()=="ground":
+	if body.get_name()=="groundCollision":
 		grounded = true
 
 func _on_groundcollision_body_exited( body ):
@@ -151,7 +151,6 @@ remote func killed(_node,_id):
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape")):
 #		alive = false
-		
 		if get_tree().is_network_server():
 			killed(self,get_name())
 		else:
