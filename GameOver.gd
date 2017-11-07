@@ -28,3 +28,13 @@ func _on_Button_pressed():
 func _on_Button_mouse_exited():
 	get_node("ButRestart/ImgRestart").modulate = "ffffff"
 	print("exited")
+
+
+func _on_GameOverScreen_visibility_changed():
+	print("visibility_changed")
+	pass # replace with function body
+
+
+func _on_GameOverScreen_hide():
+	print("hide called")
+	pass # replace with function body

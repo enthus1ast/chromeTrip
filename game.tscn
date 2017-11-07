@@ -243,6 +243,8 @@ position = Vector2( 523, 345 )
 
 [node name="GameOverScreen" parent="." instance=ExtResource( 5 )]
 
+visible = false
+
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 
 [connection signal="screen_exited" from="sprites/constantMovement/ground/Sprite1/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

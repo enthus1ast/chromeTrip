@@ -196,6 +196,10 @@ blend_times = [  ]
 autoplay = ""
 _sections_unfolded = [ "playback" ]
 
+[connection signal="hide" from="." to="." method="_on_GameOverScreen_hide"]
+
+[connection signal="visibility_changed" from="." to="." method="_on_GameOverScreen_visibility_changed"]
+
 [connection signal="mouse_entered" from="ButRestart" to="." method="_on_Button_mouse_entered"]
 
 [connection signal="mouse_exited" from="ButRestart" to="." method="_on_Button_mouse_exited"]

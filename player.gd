@@ -201,11 +201,25 @@ func reanimate(atPosition):
 #	RPCreanimate(self, self.get_name(), atPosition)	
 	rpc("RPCreanimate", get_name(), atPosition)
 #	rset("slave_pos", atPosition)
+
+func allPlayersKilled():
+	for player in get_tree().get_nodes_in_group("players"):
+		if player.alive: return false
+	return true
 	
-	
+sync func showGameOverScreen():
+	get_tree().get_root().get_node("Control/game/GameOverScreen").set_visible(true)
+#	get_tree().get_root().get_node("Control/game/GameOverScreen/AnimationPlayer").set_visible(true)
+#	get_tree().get_root().get_node("Control/game/hud").set_visible(false)	
+
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape") or body.has_node("enemyShape")):
-		rpc("killed", get_name())
+		if get_tree().is_network_server():
+			rpc("killed", get_name())
+			if allPlayersKilled():
+				rpc("showGameOverScreen")
+
+			
 #		if get_tree().is_network_server():
 #			# server noticed collision 
 ##			killed(get_name())
