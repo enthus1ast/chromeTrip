@@ -5,7 +5,6 @@ var acceleration = 10000
 var top_move_speed_org = 200
 var top_move_speed = top_move_speed_org
 var top_jump_speed = 800
-var alive = true
 
 # Grounded?
 var grounded = false 
@@ -25,6 +24,7 @@ const DIRECTION = {
 sync var slave_pos = Vector2()
 sync var slave_motion = Vector2()
 sync var slave_can_jump = true
+sync var alive = true
 
 onready var animPlayer = get_node("Sprite/AnimationPlayer")
  
@@ -35,12 +35,9 @@ const TOP_JUMP_TIME = 0.1 # in seconds
 
 var keys = [false,false,false,false] # right, left, up, down 
 
-func _killed():
-	print("signal")
 func _ready():
 	var root = get_tree().get_root().get_node("Control")
 	print(root.players)
-	root.connect("killed",self,"_killed")
 	set_process_input(true)
 	rpc("playAnimation","trexAnimRun")
 
@@ -144,15 +141,28 @@ func _input(event):
 				keys[2]=false
 				can_jump = false # Prevents the player from jumping more than once while in air
 #				rset("slave_can_jump",can_jump)
+	elif is_network_master() and !alive: # not alive
+		keys[2] = false # reset jumping
+		can_jump = false
 
 remote func killed(_node,_id):
 	print(_node,_id, " hasbeen killed")
+#	_node.alive = false
+	get_parent().get_node(str(_id)).alive = false
+	get_parent().get_node(str(_id)).can_jump = false
+	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
 	
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape")):
 #		alive = false
 		if get_tree().is_network_server():
+			# server noticed collision 
+			# kills playerFoo
+			# tell all that playerFoo is killed 
 			killed(self,get_name())
+			rpc("killed",self, get_name())
 		else:
+			# client noticed collision
+			# and kills itself
 			rpc_id(1,"killed",self,get_name())
 	pass # replace with function body

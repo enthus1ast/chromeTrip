@@ -25,7 +25,7 @@ onready var groundSprites = constMoveNode.get_node("ground")
 onready var groundSprite1 = groundSprites.get_node("Sprite1")
 onready var groundSprite2 = groundSprites.get_node("Sprite2")
 #onready var camera = get_node("Camera2D")
-onready var pointsLabel = get_node("CanvasLayer/points")
+onready var pointsLabel = get_node("hud/points")
 #
 func _ready():
 	
@@ -63,6 +63,10 @@ func _process(delta):
 	score = round(abs(constMoveNode.position.x)/10) # scoring from walked distance
 	pointsLabel.text=str(score)
 	
+	var playersText = "" 
+	for player in get_tree().get_nodes_in_group("players"):
+		playersText += player.get_name() + " " + str(player.alive) + "\n"
+	get_node("hud/players").text = playersText
 	
 	
 	
@@ -97,3 +101,18 @@ func _on_VisibilityNotifier2D_screen_exited():
 		
 	obstaclesGen()
 	pass # replace with function body
+func endGame():
+	get_parent().remove_child(self)
+	queue_free()
+
+func _on_menu_pressed():
+	pass # replace with function body
+	var controlNode = get_tree().get_root().get_node("Control")
+	get_tree().set_network_peer(null)
+	controlNode.eNet.close_connection()
+	controlNode.eNet = NetworkedMultiplayerENet.new()
+	controlNode.get_node("menu").set_visible(true)
+	endGame()
+	
+	
+	
