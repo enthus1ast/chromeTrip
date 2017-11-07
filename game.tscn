@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://ground.png" type="Texture" id=3]
 [ext_resource path="res://restartPoint.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GameOver.tscn" type="PackedScene" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -129,6 +130,7 @@ __meta__ = {
 
 [node name="sprites" type="Node2D" parent="."]
 
+editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -237,6 +239,8 @@ _sections_unfolded = [ "Transform" ]
 [node name="restartPoint" parent="." instance=ExtResource( 4 )]
 
 position = Vector2( 523, 345 )
+
+[node name="GameOverScreen" parent="." instance=ExtResource( 5 )]
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 
