@@ -48,10 +48,15 @@ func _integrate_forces(state):
 #	if alive:
 	if is_network_master():
 		
+		if !alive:
+			state.set_sleep_state(true)
+		
 		if reviving:
+#			state.set_sleep_state(true)
 			state.set_transform( Transform2D( Vector2(), Vector2(), slave_pos) )
 			reviving = false
-			
+			state.set_sleep_state(false)
+		
 #		print(position)
 		directional_force = DIRECTION.ZERO  # +FOWARD_MOTION
 		apply_force(state)

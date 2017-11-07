@@ -15,8 +15,8 @@ var placeholderScoreSize
 var spriteWidth
 
 
-var obstaclesCount = 5
-var enemysCount = 15
+var obstaclesCount = 4
+var enemysCount = 4
 
 onready var playersNode = get_node("players")
 onready var spritesNode = get_node("sprites")
