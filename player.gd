@@ -40,34 +40,36 @@ func _ready():
 	print(root.players)
 	set_process_input(true)
 	rpc("playAnimation","trexAnimRun")
+	
 
 func _integrate_forces(state):
-	var final_force = Vector2()
-	if is_network_master():
-
-		directional_force = DIRECTION.ZERO  # +FOWARD_MOTION
-		apply_force(state)
-		final_force = state.get_linear_velocity() + (directional_force * acceleration)
-	 
-		if(final_force.x > top_move_speed):
-			final_force.x = top_move_speed
-		elif(final_force.x < -top_move_speed):
-			final_force.x = -top_move_speed
+	if alive:
+		var final_force = Vector2()
+		if is_network_master():
 	
-		if(final_force.y > top_jump_speed):
-			final_force.y = top_jump_speed
-		elif(final_force.y < -top_jump_speed):
-			final_force.y = -top_jump_speed
+			directional_force = DIRECTION.ZERO  # +FOWARD_MOTION
+			apply_force(state)
+			final_force = state.get_linear_velocity() + (directional_force * acceleration)
+		 
+			if(final_force.x > top_move_speed):
+				final_force.x = top_move_speed
+			elif(final_force.x < -top_move_speed):
+				final_force.x = -top_move_speed
 		
-		# set the slave motion values
-		rset("slave_motion",final_force)
-		rset("slave_pos",position)
-	else:
-		position = slave_pos
-		final_force = slave_motion
-		slave_can_jump = can_jump
-		
-	state.set_linear_velocity(final_force)
+			if(final_force.y > top_jump_speed):
+				final_force.y = top_jump_speed
+			elif(final_force.y < -top_jump_speed):
+				final_force.y = -top_jump_speed
+			
+			# set the slave motion values
+			rset("slave_motion",final_force)
+			rset("slave_pos",position)
+		else:
+			position = slave_pos
+			final_force = slave_motion
+			slave_can_jump = can_jump
+			
+		state.set_linear_velocity(final_force)
 	
 # Apply force
 func apply_force(state):
@@ -147,30 +149,33 @@ func _input(event):
 
 remote func killed(_node,_id):
 	print(_node,_id, " hasbeen killed")
-#	_node.alive = false
 	get_parent().get_node(str(_id)).alive = false
 	get_parent().get_node(str(_id)).can_jump = false
 	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
 
-remote func reanimate(_node,_id):
+sync func RPCreanimate(_node,_id, atPosition):
 	print(_node,_id, " hasbeen reanimated")
-#	_node.alive = false
 	get_parent().get_node(str(_id)).alive = true
 	get_parent().get_node(str(_id)).can_jump = true
 	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnim")
+	get_parent().get_node(str(_id)).position = atPosition
+	get_parent().get_node(str(_id)).slave_pos = atPosition
+	
+
+func reanimate(atPosition):
+	print("Should reanimate at:", atPosition)
+#	rpc("reanimate", player, player.get_name(), position + Vector2(0, -250))	
+#	RPCreanimate(self, self.get_name(), atPosition)	
+	rpc("RPCreanimate", self, self.get_name(), atPosition)
+#	rset("slave_pos", atPosition)
 	
 	
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape")):
-#		alive = false
 		if get_tree().is_network_server():
 			# server noticed collision 
-			# kills playerFoo
-			# tell all that playerFoo is killed 
 			killed(self,get_name())
 			rpc("killed",self, get_name())
 		else:
 			# client noticed collision
-			# and kills itself
 			rpc_id(1,"killed",self,get_name())
-	pass # replace with function body

@@ -27,11 +27,14 @@ sync func doRespawn():
 		print(player)
 		if ! player.alive:
 			print("reanimating player:", player)
-			player.position = position + Vector2(0, -50)
-#			player.slave_pos = position + Vector2(0, -50)
-			player.alive = true
-			player.can_jump = true
-			player.get_node("Sprite/AnimationPlayer").play("trexAnimRun")
+			player.reanimate(position + Vector2(0, -250))
+#			player.position = position + Vector2(0, -250)
+#			emit_signal("player_reanimate", player, player.get_name(), position + Vector2(0, -250))
+		
+#			player.slave_pos = position + Vector2(0, -250)
+#			player.alive = true
+#			player.can_jump = true
+#			player.get_node("Sprite/AnimationPlayer").play("trexAnimRun")
 			
 			#
 			#rset("slave_motion",final_force)
