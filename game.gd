@@ -40,6 +40,7 @@ func _ready():
 #	print("Viewportsize: ",viewportSize)
 #	ground.constant_linear_velocity(-1,0)
 #	set_process(true)
+	seed(0)
 	obstaclesGen()
 	pass
 	
