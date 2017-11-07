@@ -151,6 +151,14 @@ remote func killed(_node,_id):
 	get_parent().get_node(str(_id)).alive = false
 	get_parent().get_node(str(_id)).can_jump = false
 	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
+
+remote func reanimate(_node,_id):
+	print(_node,_id, " hasbeen reanimated")
+#	_node.alive = false
+	get_parent().get_node(str(_id)).alive = true
+	get_parent().get_node(str(_id)).can_jump = true
+	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnim")
+	
 	
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape")):
