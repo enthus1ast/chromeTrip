@@ -204,7 +204,7 @@ func reanimate(atPosition):
 	
 	
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
-	if(body.has_node("obstacleShape")):
+	if(body.has_node("obstacleShape") or body.has_node("enemyShape")):
 		rpc("killed", get_name())
 #		if get_tree().is_network_server():
 #			# server noticed collision 

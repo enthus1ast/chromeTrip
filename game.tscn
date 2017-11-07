@@ -41,6 +41,7 @@ script = ExtResource( 1 )
 
 [node name="hud" type="CanvasLayer" parent="."]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -136,6 +137,7 @@ __meta__ = {
 
 [node name="ground" type="Node2D" parent="sprites/constantMovement"]
 
+editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite1" type="Sprite" parent="sprites/constantMovement/ground"]
@@ -165,6 +167,8 @@ _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
 rect = Rect2( -10, -10, 20, 20 )
 
 [node name="obstacles" type="Node2D" parent="sprites/constantMovement"]
+
+[node name="enemys" type="Node2D" parent="sprites"]
 
 [node name="groundCollision" type="StaticBody2D" parent="."]
 

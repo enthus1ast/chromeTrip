@@ -125,10 +125,17 @@ remote func startGame():
 	else:
 		game = Game.instance()
 		add_child(game)
-		
+	var cnt = 0
 	for p in players:
+		
 		players[p].node = Player.instance()
 		players[p].node.get_node("Label").set_text(players[p].name)
+		
+		# Set initial position, not spawning behind each other 
+		players[p].node.position = Vector2(10 + cnt, 0)
+		print(players[p].node.get_node("Sprite").get_region_rect())
+		cnt+= 5 +  players[p].node.get_node("Sprite").get_region_rect().size.x * players[p].node.get_node("Sprite").scale.x
+	
 		# Set Player ID as node name - Unique for each player!
 		players[p].node.set_name(str(p))
 		players[p].node.set_network_master(0)
@@ -144,10 +151,7 @@ remote func startGame():
 		print("players:",players[p]," for ",currentPlayer.name)
 	
 ################## disconnected unregister
-	
 
-	
-	
 func _player_disconnected(_id):
 	print("_player_disconnected")
 	# If I am server, send a signal to inform that an player disconnected

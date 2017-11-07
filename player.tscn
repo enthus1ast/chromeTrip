@@ -7,7 +7,7 @@
 
 custom_solver_bias = 0.0
 radius = 10.0
-height = 5.38083
+height = 4.45322
 
 [sub_resource type="Animation" id=2]
 
@@ -94,9 +94,9 @@ _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-position = Vector2( 1.48649, 3.21228 )
-rotation = 0.357743
-scale = Vector2( 1.92142, 2.27494 )
+position = Vector2( 2.56813, 4.27007 )
+rotation = 0.484136
+scale = Vector2( 2.02785, 2.23475 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility" ]
 
@@ -128,7 +128,7 @@ autoplay = "trexAnim"
 
 [node name="groundcollision" type="Area2D" parent="."]
 
-position = Vector2( -57.8188, 75.6508 )
+position = Vector2( 0.540375, 6.48438 )
 scale = Vector2( 0.72265, 0.72265 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -137,12 +137,14 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
+_sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="groundcollision"]
 
-position = Vector2( 77.6832, -66.0193 )
+position = Vector2( -3.07397, 28.1973 )
 scale = Vector2( 1.62509, 0.52064 )
 shape = SubResource( 5 )
+one_way_collision = true
 
 [node name="Label" type="Label" parent="."]
 
@@ -168,32 +170,6 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Focus", "Hint", "Material", "Mouse", "Rect", "Size Flags", "Theme", "Visibility", "custom_colors", "custom_constants", "custom_styles" ]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-
-visible = false
-offset = Vector2( 500, -60 )
-anchor_mode = 1
-rotating = false
-current = false
-zoom = Vector2( 1, 1 )
-limit_left = -10000000
-limit_top = -60
-limit_right = 10000000
-limit_bottom = -60
-limit_smoothed = true
-drag_margin_h_enabled = true
-drag_margin_v_enabled = false
-smoothing_enabled = false
-smoothing_speed = 5.0
-drag_margin_left = 0.2
-drag_margin_top = 0.2
-drag_margin_right = 0.2
-drag_margin_bottom = 0.2
-editor_draw_screen = true
-editor_draw_limits = false
-editor_draw_drag_margin = false
-_sections_unfolded = [ "Limit" ]
 
 [connection signal="body_shape_entered" from="." to="." method="_on_player_body_shape_entered"]
 

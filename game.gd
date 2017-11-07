@@ -2,8 +2,8 @@ extends Control
 var offsetX
 var offsetY = -50
 
-
 onready var Obstacles = preload("res://assets/obstacles.tscn")
+onready var Enemys = preload("res://assets/enemys.tscn")
 onready var viewportSize = get_viewport().size
 
 var fakeSpeed=300
@@ -16,9 +16,11 @@ var spriteWidth
 
 
 var obstaclesCount = 5
+var enemysCount = 15
 
 onready var playersNode = get_node("players")
 onready var spritesNode = get_node("sprites")
+onready var enemysNode = spritesNode.get_node("enemys")
 onready var constMoveNode = spritesNode.get_node("constantMovement")
 onready var obstaclesNode = constMoveNode.get_node("obstacles")
 onready var groundSprites = constMoveNode.get_node("ground")
@@ -36,15 +38,29 @@ func _ready():
 #	offsetX = get_viewport_rect().size.x/2
 #	print(get_viewport_rect().size.x)
 #	camera.position.y = camera.position.y + offsetY
-	set_physics_process(true)
+	set_process(true)
 #	print("Viewportsize: ",viewportSize)
 #	ground.constant_linear_velocity(-1,0)
 #	set_process(true)
 	seed(0)
-	obstaclesGen()
+	mapGen()
 	pass
 	
-	
+func mapGen():
+	obstaclesGen()
+	enemysGen()
+func enemysGen():
+	var i = 0
+	while i < enemysCount:
+		var enemy = Enemys.instance()
+		enemy.choice("enemy",round(rand_range(1,1))) ##only one available
+		enemy.global_position=Vector2(i*800+rand_range(1024,2000)-enemysNode.global_position.x,rand_range(10,250))
+		var scale = rand_range(0.3,1)
+		enemy.scale = Vector2(scale,scale)
+		enemysNode.add_child(enemy)
+#		print(obstacle.global_position.x)
+		i += 1
+	i = 0
 func obstaclesGen():
 	var i = 0
 	while i < obstaclesCount:
@@ -61,6 +77,7 @@ func obstaclesGen():
 	
 func _process(delta):
 	constMoveNode.position.x-=fakeSpeed*delta
+	enemysNode.position.x-=fakeSpeed*delta*1.5
 	score = round(abs(constMoveNode.position.x)/10) # scoring from walked distance
 	pointsLabel.text=str(score)
 	
@@ -100,7 +117,7 @@ func _on_VisibilityNotifier2D_screen_exited():
 		groundSprites.position.x=0
 		groundSprite2.position.x = groundSprite1.position.x + spriteWidth*groundSprite1.scale.x
 		
-	obstaclesGen()
+	mapGen()
 	pass # replace with function body
 func endGame():
 	get_parent().remove_child(self)
