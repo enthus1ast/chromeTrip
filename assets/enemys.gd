@@ -2,7 +2,7 @@ extends Node2D
 
 func choice(_class,_id):
 	get_node(_class+str(_id)).set_visible(true)
-	get_node(_class+str(_id)).get_node("obstacleShape").disabled=false
+	get_node(_class+str(_id)).get_node("enemyShape").disabled=false
 	
 	
 func _ready():
@@ -20,6 +20,11 @@ func _ready():
 
 
 func _on_ObstacleScreenExitNotifier_screen_exited():
+
+	pass # replace with function body
+
+
+func _on_EnemyScreenExitNotifier_screen_exited():
 	get_parent().remove_child(self)
 	queue_free()
 	pass # replace with function body
