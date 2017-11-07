@@ -3,10 +3,11 @@
 [ext_resource path="res://player.gd" type="Script" id=1]
 [ext_resource path="res://200-offline-sprite.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 12.2444, 10.7637 )
+radius = 10.0
+height = 5.38083
 
 [sub_resource type="Animation" id=2]
 
@@ -63,7 +64,7 @@ tracks/0/keys = {
 [sub_resource type="RectangleShape2D" id=5]
 
 custom_solver_bias = 0.0
-extents = Vector2( 14.3865, 16.8859 )
+extents = Vector2( 8.70709, 16.8859 )
 
 [node name="player" type="RigidBody2D" groups=[
 "players",
@@ -93,17 +94,24 @@ _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-position = Vector2( -0.61058, -6.00576 )
-scale = Vector2( 2.54279, 3.95197 )
+position = Vector2( 1.48649, 3.21228 )
+rotation = 0.357743
+scale = Vector2( 1.92142, 2.27494 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility" ]
 
 [node name="Sprite" type="Sprite" parent="."]
 
+position = Vector2( -2.2629, 29.6091 )
+scale = Vector2( 0.531413, 0.531413 )
 texture = ExtResource( 2 )
+offset = Vector2( 6.09799, -42.0819 )
 region_enabled = true
 region_rect = Rect2( 2118, 1, 85, 96 )
 _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 
@@ -120,6 +128,8 @@ autoplay = "trexAnim"
 
 [node name="groundcollision" type="Area2D" parent="."]
 
+position = Vector2( -57.8188, 75.6508 )
+scale = Vector2( 0.72265, 0.72265 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 9.8
@@ -130,7 +140,7 @@ audio_bus_name = "Master"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="groundcollision"]
 
-position = Vector2( -3.07397, 43.9002 )
+position = Vector2( 77.6832, -66.0193 )
 scale = Vector2( 1.62509, 0.52064 )
 shape = SubResource( 5 )
 
