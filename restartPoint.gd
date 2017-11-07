@@ -14,7 +14,7 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
-sync func doRespawn():
+func doRespawn():
 	## - informs everybody that the restart
 	##   point was reached.
 	## - safes the random seed
@@ -26,8 +26,8 @@ sync func doRespawn():
 	for player in get_tree().get_nodes_in_group("players"):
 		print(player)
 		if ! player.alive:
-			print("reanimating player:", player)
-			player.reanimate(position + Vector2(0, -250))
+			print("reanimating player:", position + Vector2(0, -400))
+			player.reanimate(position + Vector2(0, -400))
 #			player.position = position + Vector2(0, -250)
 #			emit_signal("player_reanimate", player, player.get_name(), position + Vector2(0, -250))
 		
@@ -49,7 +49,7 @@ func _on_Area2D_body_entered( body ):
 	pass # replace with function body
 	if get_tree().is_network_server():
 		print(body, " body entered respawn point")
-		rpc("doRespawn")
+		doRespawn()
 
 
 func _on_Area2D_body_shape_entered( body_id, body, body_shape, area_shape ):

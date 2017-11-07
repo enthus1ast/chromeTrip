@@ -25,6 +25,7 @@ sync var slave_pos = Vector2()
 sync var slave_motion = Vector2()
 sync var slave_can_jump = true
 sync var alive = true
+var reviving = false
 
 onready var animPlayer = get_node("Sprite/AnimationPlayer")
  
@@ -43,33 +44,38 @@ func _ready():
 	
 
 func _integrate_forces(state):
-	if alive:
-		var final_force = Vector2()
-		if is_network_master():
-	
-			directional_force = DIRECTION.ZERO  # +FOWARD_MOTION
-			apply_force(state)
-			final_force = state.get_linear_velocity() + (directional_force * acceleration)
-		 
-			if(final_force.x > top_move_speed):
-				final_force.x = top_move_speed
-			elif(final_force.x < -top_move_speed):
-				final_force.x = -top_move_speed
+	var final_force = Vector2()
+#	if alive:
+	if is_network_master():
 		
-			if(final_force.y > top_jump_speed):
-				final_force.y = top_jump_speed
-			elif(final_force.y < -top_jump_speed):
-				final_force.y = -top_jump_speed
+		if reviving:
+			state.set_transform( Transform2D( Vector2(), Vector2(), slave_pos) )
+			reviving = false
 			
-			# set the slave motion values
-			rset("slave_motion",final_force)
-			rset("slave_pos",position)
-		else:
-			position = slave_pos
-			final_force = slave_motion
-			slave_can_jump = can_jump
-			
-		state.set_linear_velocity(final_force)
+#		print(position)
+		directional_force = DIRECTION.ZERO  # +FOWARD_MOTION
+		apply_force(state)
+		final_force = state.get_linear_velocity() + (directional_force * acceleration)
+	 
+		if(final_force.x > top_move_speed):
+			final_force.x = top_move_speed
+		elif(final_force.x < -top_move_speed):
+			final_force.x = -top_move_speed
+	
+		if(final_force.y > top_jump_speed):
+			final_force.y = top_jump_speed
+		elif(final_force.y < -top_jump_speed):
+			final_force.y = -top_jump_speed
+		
+		# set the slave motion values
+		rset("slave_motion",final_force)
+		rset("slave_pos",position)
+	else:
+		position = slave_pos
+		final_force = slave_motion
+		slave_can_jump = can_jump
+		
+	state.set_linear_velocity(final_force)
 	
 # Apply force
 func apply_force(state):
@@ -144,38 +150,66 @@ func _input(event):
 				can_jump = false # Prevents the player from jumping more than once while in air
 #				rset("slave_can_jump",can_jump)
 	elif is_network_master() and !alive: # not alive
-		keys[2] = false # reset jumping
+		keys = [false,false,false,false]
 		can_jump = false
 
-remote func killed(_node,_id):
-	print(_node,_id, " hasbeen killed")
+sync func killed(_id):
+	print(_id, " hasbeen killed")
 	get_parent().get_node(str(_id)).alive = false
 	get_parent().get_node(str(_id)).can_jump = false
 	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
 
-sync func RPCreanimate(_node,_id, atPosition):
-	print(_node,_id, " hasbeen reanimated")
-	get_parent().get_node(str(_id)).alive = true
-	get_parent().get_node(str(_id)).can_jump = true
-	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnim")
+sync func RPCreanimate(_id, atPosition):
+	print(_id, " hasbeen reanimated")
+#	get_parent().get_node(str(_id)).
+	get_parent().get_node(str(_id)).can_jump = false
+	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimRun")
 	get_parent().get_node(str(_id)).position = atPosition
 	get_parent().get_node(str(_id)).slave_pos = atPosition
+	if is_network_master():
+		can_jump = false
+		grounded = false
+		position = atPosition
+		slave_pos = atPosition
+		slave_motion = Vector2(0,0)
+	get_parent().get_node(str(_id)).alive = true
+	get_parent().get_node(str(_id)).reviving = true
+#	print("as master at: ",atPosition)
+	
+	
+#	if is_network_master():
+##		rset("slave_motion",final_force)
+#		print("as master at: ",atPosition)
+#		rset("slave_pos",atPosition)
+#		position = atPosition
+#		slave_pos = atPosition
+#
+#
+#	else:	
+#		position = slave_pos
+#		print("as master at: ",atPosition)
+		
+#		slave_pos = atPosition
+#	get_parent().get_node(str(_id)).final_force = Vector2(0,0)
+#	rset("slave_motion",Vector2(0,0))
+#	rset("slave_pos",atPosition)	
 	
 
 func reanimate(atPosition):
 	print("Should reanimate at:", atPosition)
 #	rpc("reanimate", player, player.get_name(), position + Vector2(0, -250))	
 #	RPCreanimate(self, self.get_name(), atPosition)	
-	rpc("RPCreanimate", self, self.get_name(), atPosition)
+	rpc("RPCreanimate", get_name(), atPosition)
 #	rset("slave_pos", atPosition)
 	
 	
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape")):
-		if get_tree().is_network_server():
-			# server noticed collision 
-			killed(self,get_name())
-			rpc("killed",self, get_name())
-		else:
-			# client noticed collision
-			rpc_id(1,"killed",self,get_name())
+		rpc("killed", get_name())
+#		if get_tree().is_network_server():
+#			# server noticed collision 
+##			killed(get_name())
+#			rpc("killed", get_name())
+#		else:
+#			# client noticed collision
+#			rpc_id(1,"killed",get_name())

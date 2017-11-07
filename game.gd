@@ -54,7 +54,7 @@ func obstaclesGen():
 		var scale = rand_range(0.8,1.2)
 		obstacle.scale = Vector2(scale,scale)
 		obstaclesNode.add_child(obstacle)
-		print(obstacle.global_position.x)
+#		print(obstacle.global_position.x)
 		i += 1
 	i = 0
 	
