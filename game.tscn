@@ -137,6 +137,8 @@ __meta__ = {
 
 [node name="constantMovement" type="Node2D" parent="sprites"]
 
+editor/display_folded = true
+
 [node name="ground" type="Node2D" parent="sprites/constantMovement"]
 
 editor/display_folded = true
@@ -174,15 +176,14 @@ rect = Rect2( -10, -10, 20, 20 )
 
 [node name="groundCollision" type="StaticBody2D" parent="."]
 
-editor/display_folded = true
 input_pickable = false
-collision_layer = 1
+collision_layer = 3
 collision_mask = 1
 constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Collision", "Pickable", "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="groundCollision"]
 

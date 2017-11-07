@@ -130,11 +130,12 @@ autoplay = "trexAnim"
 
 position = Vector2( 0.540375, 6.48438 )
 scale = Vector2( 0.72265, 0.72265 )
-input_pickable = true
+input_pickable = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 9.8
 linear_damp = 0.1
 angular_damp = 1.0
+collision_layer = 2
 audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility" ]
@@ -145,6 +146,7 @@ position = Vector2( -3.07397, 28.1973 )
 scale = Vector2( 1.62509, 0.52064 )
 shape = SubResource( 5 )
 one_way_collision = true
+_sections_unfolded = [ "Transform" ]
 
 [node name="Label" type="Label" parent="."]
 

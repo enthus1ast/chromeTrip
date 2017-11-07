@@ -38,17 +38,19 @@ func _ready():
 #	offsetX = get_viewport_rect().size.x/2
 #	print(get_viewport_rect().size.x)
 #	camera.position.y = camera.position.y + offsetY
-	set_process(true)
 #	print("Viewportsize: ",viewportSize)
 #	ground.constant_linear_velocity(-1,0)
 #	set_process(true)
 	seed(0)
 	mapGen()
+	set_process(true)
 	pass
 	
 func mapGen():
 	obstaclesGen()
 	enemysGen()
+	pass
+	
 func enemysGen():
 	var i = 0
 	while i < enemysCount:
