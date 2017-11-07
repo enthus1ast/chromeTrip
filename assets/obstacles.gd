@@ -2,7 +2,7 @@ extends Node2D
 
 func choice(_class,_id):
 	get_node(_class+str(_id)).set_visible(true)
-	get_node(_class+str(_id)).get_node("obstacleShape").disabled=false
+	get_node(_class+str(_id)).get_node("enemyShape").disabled=false
 	
 	
 func _ready():
