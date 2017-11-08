@@ -8,7 +8,7 @@ var jumpSound = load("res://sounds/jump.ogg")
 var killedSound = load("res://sounds/killed.ogg")
 var soundPlayer = AudioStreamPlayer.new()
 
-onready var collisionShape = get_node("CollisionShape2D")
+onready var collisionShape = get_node("playerShape")
 # Grounded?
 var grounded = false 
 # Movement Vars
@@ -110,12 +110,11 @@ func apply_force(state):
 		jump_time = 0
  
 func _on_groundcollision_body_entered( body ):
-	if body.get_name()=="groundCollision":
+	if body.get_name()=="groundCollision" or body.get_node("playerShape").get_name()=="playerShape":
 		grounded = true
 
 func _on_groundcollision_body_exited( body ):
-#	if body.get_name()!="ground":
-	if body.get_name()=="groundCollision":
+	if body.get_name()=="groundCollision" or body.get_node("playerShape").get_name()=="playerShape":
 		grounded = false
 
 sync func playAnimation(_string):
@@ -146,15 +145,16 @@ func _input(event):
 #				rpc("playAnimation","trexAnim")
 			elif event.is_action_released("ui_left"):
 				rpc("animSpeed",1)
-				keys[1]=false
+				keys[1] = false
 #				rpc("playAnimation","trexAnim")
 
 			# Duck and Cover!
 			if event.is_action_pressed("ui_down"):
-				keys[3]=true
+				keys[3] = true
+				rpc("playAnimation","trexAnimDuck")
 			elif event.is_action_released("ui_down"):
-				rpc("animSpeed",1)
-				keys[3]=false
+				rpc("playAnimation","trexAnimRun")
+				keys[3] = false
 #				rpc("playAnimation","trexAnim")
 			
 			
@@ -179,7 +179,7 @@ func _sound_finished():
 	soundPlayer.stop()
 	
 sync func killed(_id):
-	get_parent().get_node(str(_id)).get_node("CollisionShape2D").disabled=true
+	get_parent().get_node(str(_id)).get_node("playerShape").disabled=true
 	get_parent().get_node(str(_id)).alive = false
 	get_parent().get_node(str(_id)).can_jump = false
 	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
@@ -189,8 +189,8 @@ sync func RPCreanimate(_id, atPosition):
 	
 	var transMatrix = Transform2D(Vector2(),Vector2(), atPosition)
 	print(_id,transMatrix, " hasbeen reanimated")
-	get_parent().get_node(str(_id)).get_node("CollisionShape2D").disabled=false
-	get_parent().get_node(str(_id)).get_node("CollisionShape2D").update()
+	get_parent().get_node(str(_id)).get_node("playerShape").disabled=false
+	get_parent().get_node(str(_id)).get_node("playerShape").update()
 #	get_parent().get_node(str(_id)).
 	get_parent().get_node(str(_id)).can_jump = false
 	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimRun")
@@ -220,6 +220,7 @@ sync func showGameOverScreen():
 	get_tree().get_root().get_node("Control/game/GameOverScreen").set_visible(true)
 
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
+
 	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive:
 		soundPlayer.stream = killedSound
 		soundPlayer.play(0.0)
@@ -229,3 +230,9 @@ func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 				get_parent().get_parent().allDead = true
 				rpc("showGameOverScreen")
 
+
+
+func _on_player_body_shape_exited( body_id, body, body_shape, local_shape ):
+#	if body.get_node("playerShape").get_name()=="playerShape":
+#		can_jump=false
+	pass # replace with function body

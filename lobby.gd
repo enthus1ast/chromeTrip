@@ -117,7 +117,7 @@ remote func register_new_player(_player):
 
 remote func startGame():
 	print("startGame was called")
-	if(has_node("game")):
+	if has_node("game"):
 		pass
 	else:
 		game = Game.instance()
