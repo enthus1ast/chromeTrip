@@ -121,6 +121,9 @@ rotation = 0.484136
 scale = Vector2( 2.02785, 2.23475 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 
@@ -161,6 +164,9 @@ collision_layer = 2
 audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="groundcollision"]
 
@@ -169,6 +175,9 @@ scale = Vector2( 1.62509, 0.52064 )
 shape = SubResource( 5 )
 one_way_collision = true
 _sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Label" type="Label" parent="."]
 
