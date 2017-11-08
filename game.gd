@@ -8,14 +8,11 @@ onready var Wolke = preload("res://Wolke.tscn")
 onready var viewportSize = get_viewport().size
 
 var fakeSpeed=300
-
 var players
 var score = 0
 var placeholderScore
 var placeholderScoreSize
 var spriteWidth
-
-
 var obstaclesCount = 4
 var enemysCount = 4
 var wolkenCount = 4
@@ -29,9 +26,8 @@ onready var wolkenNode = spritesNode.get_node("wolken")
 onready var groundSprites = constMoveNode.get_node("ground")
 onready var groundSprite1 = groundSprites.get_node("Sprite1")
 onready var groundSprite2 = groundSprites.get_node("Sprite2")
-#onready var camera = get_node("Camera2D")
 onready var pointsLabel = get_node("hud/points")
-#
+
 func _ready():
 	spriteWidth = groundSprite1.get_texture().get_size().x
 	placeholderScore = pointsLabel.text
@@ -46,14 +42,11 @@ func _ready():
 	seed(0)
 	mapGen()
 	set_process(true)
-#	 "restartGame"
-	pass
 	
 func mapGen():
 	obstaclesGen()
 	enemysGen()
 	wolkenGen()
-	pass
 	
 func enemysGen():
 	var i = 0
@@ -64,9 +57,9 @@ func enemysGen():
 		var scale = rand_range(0.3,1)
 		enemy.scale = Vector2(scale,scale)
 		enemysNode.add_child(enemy)
-#		print(obstacle.global_position.x)
 		i += 1
 	i = 0
+	
 func obstaclesGen():
 	var i = 0
 	while i < obstaclesCount:
@@ -76,37 +69,28 @@ func obstaclesGen():
 		var scale = rand_range(0.8,1.2)
 		obstacle.scale = Vector2(scale,scale)
 		obstaclesNode.add_child(obstacle)
-#		print(obstacle.global_position.x)
 		i += 1
 	i = 0
+	
 func wolkenGen():
 	var i = 0
 	while i < wolkenCount:
 		var wolke = Wolke.instance()
 		wolke.wideness = rand_range(1, 3)
-#		enemy.choice("enemy",round(rand_range(1,1))) ##only one available
-		wolke.position=Vector2(i*500+rand_range(1024,1500)-wolkenNode.position.x,rand_range(-400,250))
-#		wolkenNode.
-#		var scale = rand_range(0.3,1)
-#		enemy.scale = Vector2(scale,scale)
+		wolke.position=Vector2(i*800+rand_range(1024,1800)-wolkenNode.position.x,rand_range(-400,250))
 		wolkenNode.add_child(wolke)
-#		print(obstacle.global_position.x)
 		i += 1
 	i = 0	
-	
 	
 func _process(delta):
 	constMoveNode.position.x-=fakeSpeed*delta
 	enemysNode.position.x-=fakeSpeed*delta*1.5
 	score = round(abs(constMoveNode.position.x)/10) # scoring from walked distance
 	pointsLabel.text=str(score)
-	
 	var playersText = "" 
 	for player in get_tree().get_nodes_in_group("players"):
 		playersText += player.get_name() + " " + str(player.alive) + "\n"
 	get_node("hud/players").text = playersText
-	
-	
 	
 #func _physics_process(delta):
 #	groundSprite.position.x-=fakeSpeed*delta
@@ -130,15 +114,13 @@ func _process(delta):
 # two ground-tiles for seamless infinite maps
 # everytime a tile hast left the screen, position.x is updating and new obstacles are generating
 func _on_VisibilityNotifier2D_screen_exited():
-	
 	if groundSprite1.position.x<groundSprite2.position.x:
 		groundSprite1.position.x = groundSprite2.position.x + spriteWidth*groundSprite1.scale.x
 	else:
 		groundSprites.position.x=0
 		groundSprite2.position.x = groundSprite1.position.x + spriteWidth*groundSprite1.scale.x
-		
 	mapGen()
-	pass # replace with function body
+	
 func endGame():
 	get_parent().remove_child(self)
 	queue_free()
@@ -152,20 +134,5 @@ func _on_menu_pressed():
 	controlNode.get_node("menu").set_visible(true)
 	endGame()
 	
-	
-	
-
 func _on_GameOverScreen_restartGame():
-#	pass # replace with function body
-#	var myroot = get_tree().get_root()
-#	print(get_tree())
-#	print(get_tree().get_root())
-#	print(get_tree().get_root().get_node("Control"))
-#	print(get_tree().get_root().get_node("Control"))
-	
-
 	get_tree().get_root().get_node("Control").askForRestartGame()
-
-	
-	
-#	start_game
