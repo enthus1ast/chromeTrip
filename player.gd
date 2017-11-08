@@ -1,10 +1,12 @@
 extends RigidBody2D
-
 # Default Character Properties (Should be overwritten)
 var acceleration = 10000
 var top_move_speed_org = 200
 var top_move_speed = top_move_speed_org
 var top_jump_speed = 800
+var jumpSound = load("res://sounds/jump.ogg")
+var killedSound = load("res://sounds/killed.ogg")
+var soundPlayer = AudioStreamPlayer.new()
 
 # Grounded?
 var grounded = false 
@@ -37,9 +39,10 @@ const TOP_JUMP_TIME = 0.1 # in seconds
 var keys = [false,false,false,false] # right, left, up, down 
 
 func _ready():
+	print(jumpSound)
 	var root = get_tree().get_root().get_node("Control")
-	print(root.players)
 	set_process_input(true)
+	add_child(soundPlayer)
 	rpc("playAnimation","trexAnimRun")
 	
 
@@ -100,6 +103,7 @@ func apply_force(state):
 			directional_force += DIRECTION.UP
 			jump_time += state.get_step()
 			rset("slave_can_jump",can_jump)
+			
 		
 		
     # While on the ground
@@ -150,6 +154,9 @@ func _input(event):
 			#jumping keyevents
 			if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_select"):
 				keys[2]=true
+				if grounded or can_jump:
+					soundPlayer.stream = jumpSound
+					soundPlayer.play()
 			if event.is_action_released("ui_up") or event.is_action_released("ui_select"):
 				keys[2]=false
 				can_jump = false # Prevents the player from jumping more than once while in air
@@ -159,10 +166,10 @@ func _input(event):
 		can_jump = false
 
 sync func killed(_id):
-	print(_id, " hasbeen killed")
 	get_parent().get_node(str(_id)).alive = false
 	get_parent().get_node(str(_id)).can_jump = false
 	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
+	print(_id, " hasbeen killed")
 
 sync func RPCreanimate(_id, atPosition):
 	print(_id, " hasbeen reanimated")
@@ -218,7 +225,9 @@ sync func showGameOverScreen():
 #	get_tree().get_root().get_node("Control/game/hud").set_visible(false)	
 
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
-	if(body.has_node("obstacleShape") or body.has_node("enemyShape")):
+	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive:
+		soundPlayer.stream = killedSound
+		soundPlayer.play()
 		if get_tree().is_network_server():
 			rpc("killed", get_name())
 			if allPlayersKilled():
