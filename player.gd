@@ -233,6 +233,7 @@ func allPlayersKilled():
 	return true
 	
 sync func showGameOverScreen():
+	get_parent().get_parent().allDead = true
 	get_tree().get_root().get_node("Control/game/GameOverScreen").set_visible(true)
 
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
@@ -240,7 +241,6 @@ func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive:
 		soundPlayer.stream = killedSound
 		soundPlayer.play(0.0)
-		get_parent().get_parent().allDead = true
 		if get_tree().is_network_server():
 			rpc("killed", get_name())
 			if allPlayersKilled():

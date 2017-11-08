@@ -3,13 +3,13 @@
 [ext_resource path="res://player.gd" type="Script" id=1]
 [ext_resource path="res://200-offline-sprite.png" type="Texture" id=2]
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=1]
 
 custom_solver_bias = 0.0
 radius = 12.5938
 height = 11.8958
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 8.70709, 16.8859 )
@@ -202,7 +202,7 @@ _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform"
 position = Vector2( 3.40043, 2.68738 )
 rotation = 0.484135
 scale = Vector2( 1.77437, 1.87565 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z" ]
 
 [node name="groundSensor" type="Area2D" parent="."]
@@ -226,7 +226,7 @@ __meta__ = {
 
 position = Vector2( 0.22403, 6.02573 )
 scale = Vector2( 1.62509, 0.52064 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 one_way_collision = true
 _sections_unfolded = [ "Transform" ]
 
