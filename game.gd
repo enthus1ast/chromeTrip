@@ -2,6 +2,7 @@ extends Control
 var offsetX
 var offsetY = -50
 
+onready var Restartpoint = preload("res://restartPoint.tscn")
 onready var Obstacles = preload("res://assets/obstacles.tscn")
 onready var Enemys = preload("res://assets/enemys.tscn")
 onready var Wolke = preload("res://Wolke.tscn")
@@ -22,6 +23,7 @@ onready var playersNode = get_node("players")
 onready var spritesNode = get_node("sprites")
 onready var enemysNode = spritesNode.get_node("enemys")
 onready var constMoveNode = spritesNode.get_node("constantMovement")
+onready var restartPointsNode = constMoveNode.get_node("restartPoints")
 onready var obstaclesNode = constMoveNode.get_node("obstacles")
 onready var wolkenNode = spritesNode.get_node("wolken")
 onready var groundSprites = constMoveNode.get_node("ground")
@@ -46,8 +48,15 @@ func _ready():
 	
 func mapGen():
 	obstaclesGen()
+	respawnpointGen()
 	enemysGen()
 	wolkenGen()
+	
+func respawnpointGen():
+	var restartPoint = Restartpoint.instance()
+	restartPointsNode.add_child(restartPoint)
+	restartPointsNode.position = Vector2( 2000,get_node("groundCollision/CollisionShape2D").position.y)
+#	return restartPoint
 	
 func enemysGen():
 	var i = 0
