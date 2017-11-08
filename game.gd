@@ -16,6 +16,7 @@ var spriteWidth
 var obstaclesCount = 4
 var enemysCount = 4
 var wolkenCount = 4
+var allDead = false
 
 onready var playersNode = get_node("players")
 onready var spritesNode = get_node("sprites")
@@ -85,7 +86,8 @@ func wolkenGen():
 func _process(delta):
 	constMoveNode.position.x-=fakeSpeed*delta
 	enemysNode.position.x-=fakeSpeed*delta*1.5
-	score = round(abs(constMoveNode.position.x)/10) # scoring from walked distance
+	if !allDead:
+		score = round(abs(constMoveNode.position.x)/10) # scoring from walked distance
 	pointsLabel.text=str(score)
 	var playersText = "" 
 	for player in get_tree().get_nodes_in_group("players"):
