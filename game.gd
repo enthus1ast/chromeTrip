@@ -4,6 +4,7 @@ var offsetY = -50
 
 onready var Obstacles = preload("res://assets/obstacles.tscn")
 onready var Enemys = preload("res://assets/enemys.tscn")
+onready var Wolke = preload("res://Wolke.tscn")
 onready var viewportSize = get_viewport().size
 
 var fakeSpeed=300
@@ -17,12 +18,14 @@ var spriteWidth
 
 var obstaclesCount = 4
 var enemysCount = 4
+var wolkenCount = 10
 
 onready var playersNode = get_node("players")
 onready var spritesNode = get_node("sprites")
 onready var enemysNode = spritesNode.get_node("enemys")
 onready var constMoveNode = spritesNode.get_node("constantMovement")
 onready var obstaclesNode = constMoveNode.get_node("obstacles")
+onready var wolkenNode = spritesNode.get_node("wolken")
 onready var groundSprites = constMoveNode.get_node("ground")
 onready var groundSprite1 = groundSprites.get_node("Sprite1")
 onready var groundSprite2 = groundSprites.get_node("Sprite2")
@@ -49,6 +52,7 @@ func _ready():
 func mapGen():
 	obstaclesGen()
 	enemysGen()
+	wolkenGen()
 	pass
 	
 func enemysGen():
@@ -75,6 +79,20 @@ func obstaclesGen():
 #		print(obstacle.global_position.x)
 		i += 1
 	i = 0
+func wolkenGen():
+	var i = 0
+	while i < wolkenCount:
+		var wolke = Wolke.instance()
+		wolke.wideness = rand_range(1, 3)
+#		enemy.choice("enemy",round(rand_range(1,1))) ##only one available
+		wolke.position=Vector2(i*500+rand_range(1024,1500)-wolkenNode.position.x,rand_range(-400,250))
+#		wolkenNode.
+#		var scale = rand_range(0.3,1)
+#		enemy.scale = Vector2(scale,scale)
+		wolkenNode.add_child(wolke)
+#		print(obstacle.global_position.x)
+		i += 1
+	i = 0	
 	
 	
 func _process(delta):

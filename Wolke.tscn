@@ -21,7 +21,9 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -4 ), Vector2( 0, 0 ) ]
 }
 
-[node name="Wolke" type="Node2D"]
+[node name="Wolke" type="Node2D" groups=[
+"wolken",
+]]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
@@ -49,5 +51,11 @@ playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = "wackeln"
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+
+rect = Rect2( -10, -10, 20, 20 )
+
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
 

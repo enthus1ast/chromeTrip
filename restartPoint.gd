@@ -14,14 +14,15 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
-func doRespawn():
+func doRespawn(collider):
 	## - informs everybody that the restart
 	##   point was reached.
 	## - safes the random seed
 	## - position all killed bodies nearby
 	##   the respawn point
 	print("respawn point reached")
-	
+#	if collider
+	if not collider.alive: true
 	# get all killed players.
 	for player in get_tree().get_nodes_in_group("players"):
 		print(player)
@@ -49,7 +50,7 @@ func _on_Area2D_body_entered( body ):
 	pass # replace with function body
 	if get_tree().is_network_server():
 		print(body, " body entered respawn point")
-		doRespawn()
+		doRespawn(body)
 
 
 func _on_Area2D_body_shape_entered( body_id, body, body_shape, area_shape ):

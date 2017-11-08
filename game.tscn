@@ -2,10 +2,10 @@
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://ground.png" type="Texture" id=3]
-[ext_resource path="res://restartPoint.tscn" type="PackedScene" id=4]
-[ext_resource path="res://GameOver.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Wolke.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Wolke.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ground.png" type="Texture" id=4]
+[ext_resource path="res://restartPoint.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GameOver.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -120,20 +120,27 @@ group = null
 text = "menu"
 flat = false
 
-[node name="players" type="Node2D" parent="."]
-
-position = Vector2( 51.2639, 47.1628 )
-_sections_unfolded = [ "Transform" ]
-__meta__ = {
-"_edit_lock_": true
-}
-
 [node name="sprites" type="Node2D" parent="."]
 
-editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="wolken" type="Node2D" parent="sprites"]
+
+[node name="Wolke" parent="sprites/wolken" instance=ExtResource( 3 )]
+
+position = Vector2( 879.245, 165.964 )
+
+[node name="Wolke2" parent="sprites/wolken" instance=ExtResource( 3 )]
+
+position = Vector2( 751.121, 140.34 )
+wideness = 2
+
+[node name="Wolke3" parent="sprites/wolken" instance=ExtResource( 3 )]
+
+position = Vector2( 622.997, 75.5239 )
+wideness = 3
 
 [node name="constantMovement" type="Node2D" parent="sprites"]
 
@@ -148,7 +155,7 @@ _sections_unfolded = [ "Transform" ]
 
 editor/display_folded = true
 position = Vector2( 2400, 380 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -161,7 +168,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 editor/display_folded = true
 position = Vector2( 4800, 380 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -173,6 +180,14 @@ rect = Rect2( -10, -10, 20, 20 )
 [node name="obstacles" type="Node2D" parent="sprites/constantMovement"]
 
 [node name="enemys" type="Node2D" parent="sprites"]
+
+[node name="players" type="Node2D" parent="."]
+
+position = Vector2( 51.2639, 47.1628 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="groundCollision" type="StaticBody2D" parent="."]
 
@@ -237,17 +252,13 @@ scale = Vector2( 1.65385, 27.9423 )
 shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="restartPoint" parent="." instance=ExtResource( 4 )]
+[node name="restartPoint" parent="." instance=ExtResource( 5 )]
 
 position = Vector2( 523, 345 )
 
-[node name="GameOverScreen" parent="." instance=ExtResource( 5 )]
+[node name="GameOverScreen" parent="." instance=ExtResource( 6 )]
 
 visible = false
-
-[node name="Wolke" parent="." instance=ExtResource( 6 )]
-
-position = Vector2( 879.245, 165.964 )
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 
