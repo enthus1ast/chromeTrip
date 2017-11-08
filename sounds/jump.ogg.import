@@ -1,0 +1,10 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/jump.ogg-de8df8640ff526968292c23fe5ec784f.oggstr"
+
+[params]
+
+loop=false
+loop_offset=0

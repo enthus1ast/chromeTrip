@@ -36,8 +36,6 @@ var isConnecting = false
 var isJumping = false
 const SPEED = 200
 
-
-signal killed()
 signal refresh_lobby()
 signal server_ended()
 signal server_error()
