@@ -23,17 +23,14 @@ script = ExtResource( 1 )
 rect = Rect2( -10, -10, 20, 20 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z" ]
 
-[node name="kaktuss1" type="StaticBody2D" parent="."]
+[node name="kaktuss1" type="KinematicBody2D" parent="."]
 
 visible = false
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
-_sections_unfolded = [ "Collision", "Pickable", "Transform" ]
+collision/safe_margin = 0.08
+_sections_unfolded = [ "Collision", "Pickable", "Transform", "collision" ]
 
 [node name="Sprite" type="Sprite" parent="kaktuss1"]
 
@@ -50,16 +47,13 @@ shape = SubResource( 1 )
 disabled = true
 _sections_unfolded = [ "Transform" ]
 
-[node name="kaktuss2" type="StaticBody2D" parent="."]
+[node name="kaktuss2" type="KinematicBody2D" parent="."]
 
 visible = false
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
+collision/safe_margin = 0.08
 
 [node name="Sprite" type="Sprite" parent="kaktuss2"]
 
@@ -75,16 +69,13 @@ scale = Vector2( 1, 1.73913 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="kaktuss3" type="StaticBody2D" parent="."]
+[node name="kaktuss3" type="KinematicBody2D" parent="."]
 
 visible = false
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
+collision/safe_margin = 0.08
 
 [node name="Sprite" type="Sprite" parent="kaktuss3"]
 
@@ -100,16 +91,13 @@ scale = Vector2( 1, 1.73913 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="kaktuss4" type="StaticBody2D" parent="."]
+[node name="kaktuss4" type="KinematicBody2D" parent="."]
 
 visible = false
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
+collision/safe_margin = 0.08
 
 [node name="Sprite" type="Sprite" parent="kaktuss4"]
 
@@ -125,16 +113,13 @@ scale = Vector2( 1, 1.73913 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="kaktuss5" type="StaticBody2D" parent="."]
+[node name="kaktuss5" type="KinematicBody2D" parent="."]
 
 visible = false
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
+collision/safe_margin = 0.08
 
 [node name="Sprite" type="Sprite" parent="kaktuss5"]
 
@@ -150,16 +135,13 @@ scale = Vector2( 1.09025, 1.3782 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="kaktuss6" type="StaticBody2D" parent="."]
+[node name="kaktuss6" type="KinematicBody2D" parent="."]
 
 visible = false
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
+collision/safe_margin = 0.08
 
 [node name="Sprite" type="Sprite" parent="kaktuss6"]
 
@@ -175,16 +157,13 @@ scale = Vector2( 1.11269, 1.3782 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="kaktuss7" type="StaticBody2D" parent="."]
+[node name="kaktuss7" type="KinematicBody2D" parent="."]
 
 visible = false
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
+collision/safe_margin = 0.08
 
 [node name="Sprite" type="Sprite" parent="kaktuss7"]
 

@@ -68,15 +68,12 @@ script = ExtResource( 1 )
 rect = Rect2( -10, -10, 20, 20 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z" ]
 
-[node name="enemy1" type="StaticBody2D" parent="."]
+[node name="enemy1" type="KinematicBody2D" parent="."]
 
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
+collision/safe_margin = 0.08
 _sections_unfolded = [ "Collision", "Pickable", "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="enemy1"]
@@ -101,7 +98,7 @@ autoplay = "enemyBirdFly"
 [node name="enemyShape" type="CollisionShape2D" parent="enemy1"]
 
 position = Vector2( -0.913778, -9.02121 )
-rotation = -6.05978
+rotation = 0.223405
 scale = Vector2( 4.16979, 2.41413 )
 shape = SubResource( 2 )
 disabled = true
