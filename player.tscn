@@ -157,7 +157,7 @@ texture = ExtResource( 2 )
 offset = Vector2( 6.09799, -42.0819 )
 region_enabled = true
 region_rect = Rect2( 1855, 1, 85, 96 )
-_sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
+_sections_unfolded = [ "Animation", "Offset", "Region", "Transform", "Visibility" ]
 __meta__ = {
 "_edit_lock_": true
 }

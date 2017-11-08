@@ -152,6 +152,10 @@ remote func startGame():
 		players[p].node.position = Vector2(10 + cnt, 0)
 		print(players[p].node.get_node("Sprite").get_region_rect())
 		cnt+= 5 +  players[p].node.get_node("Sprite").get_region_rect().size.x * players[p].node.get_node("Sprite").scale.x
+		
+		
+#		Sprite
+		players[p].node.get_node("Sprite").modulate =  computeColor(players[p].name)
 	
 		# Set Player ID as node name - Unique for each player!
 		players[p].node.set_name(str(p))
