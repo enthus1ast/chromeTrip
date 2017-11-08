@@ -25,12 +25,12 @@ tracks/0/keys = {
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
-speed = 10
+wideness = 1
 
 [node name="Sprite" type="Sprite" parent="."]
 
 self_modulate = Color( 0.964355, 0.964355, 0.964355, 1 )
-position = Vector2( 0, -0.684895 )
+position = Vector2( 0, -2.76341 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 164, 0, 96, 50 )

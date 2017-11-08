@@ -4,12 +4,14 @@ extends Node2D
 # var a = 2
 # var b = "textvar"
 
-#export var wid
-export var speed = 10
+export var wideness = 1
+var speed = 0
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	speed = wideness * 10
+	scale = Vector2(wideness, wideness)
 	pass
 
 func _process(delta):
