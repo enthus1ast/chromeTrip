@@ -22,7 +22,7 @@ step = 0.1
 [sub_resource type="Animation" id=3]
 
 resource_name = "s"
-length = 3.0
+length = 2.5
 loop = false
 step = 0.1
 tracks/0/type = "value"
@@ -53,7 +53,7 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/keys = {
-"times": PoolRealArray( 1.8, 2.5 ),
+"times": PoolRealArray( 1.8, 2.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( -130.952, 347.21 ), Vector2( 171.952, 347.21 ) ]
@@ -64,10 +64,32 @@ tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/keys = {
-"times": PoolRealArray( 1.8, 2.5 ),
+"times": PoolRealArray( 1.8, 2.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 1150.01, 344.421 ), Vector2( 847.014, 344.421 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ButRestart:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/keys = {
+"times": PoolRealArray( 0, 2.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("OVER:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 368, 610 ), Vector2( 368, 477 ) ]
 }
 
 [node name="GameOverScreen" type="Node2D"]
@@ -86,7 +108,7 @@ _sections_unfolded = [ "Region", "Textures", "Transform" ]
 
 [node name="DinoLeft" type="Sprite" parent="."]
 
-position = Vector2( 171.952, 347.21 )
+position = Vector2( -130.952, 347.21 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 2 )
 region_enabled = true
@@ -95,7 +117,7 @@ _sections_unfolded = [ "Region", "Transform" ]
 
 [node name="DinoRight" type="Sprite" parent="."]
 
-position = Vector2( 847.014, 344.421 )
+position = Vector2( 1150.01, 344.421 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 2 )
 flip_h = true
@@ -110,9 +132,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 361.0
-margin_top = 92.0
 margin_right = 663.0
-margin_bottom = 184.0
+margin_bottom = 92.0
+rect_scale = Vector2( 0, 0 )
 rect_pivot_offset = Vector2( 155.559, 73.7997 )
 rect_clip_content = false
 mouse_filter = 2
@@ -133,9 +155,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 368.0
-margin_top = 477.0
+margin_top = 610.0
 margin_right = 670.0
-margin_bottom = 569.0
+margin_bottom = 702.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -147,10 +169,11 @@ text = "OVER"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "custom_colors", "custom_fonts" ]
+_sections_unfolded = [ "Rect", "custom_colors", "custom_fonts" ]
 
 [node name="ButRestart" type="Button" parent="."]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
