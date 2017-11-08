@@ -136,11 +136,6 @@ remote func register_new_player(_player):
 
 remote func startGame():
 	print("startGame was called")
-	if has_node("game"):
-		pass
-	else:
-		game = Game.instance()
-		add_child(game)
 	var cnt = 0
 	for p in players:
 		players[p].node = Player.instance()
@@ -161,7 +156,7 @@ remote func startGame():
 		players[p].node.set_name(str(p))
 		players[p].node.set_network_master(0)
 		# If the new player is you
-		game.get_node("players").add_child(players[p].node)
+#		game.get_node("players").add_child(players[p].node)
 		if (players[p].id == currentPlayer.id and players[p].name == currentPlayer.name):
 #			currentPlayer.node = players[p].node
 			# Set as master on yourself
@@ -169,6 +164,16 @@ remote func startGame():
 #			player.add_child(camera_scene.instance()) # Add camera to your player	
 		# Add the player (or you) to the world!
 		print("players:",players[p]," for ",currentPlayer.name)
+	
+	
+	if has_node("game"):
+		pass
+	else:
+		game = Game.instance()
+		for p in players:
+			game.get_node("players").add_child(players[p].node)
+		add_child(game)
+	
 	
 ################## disconnected unregister
 

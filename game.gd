@@ -31,6 +31,28 @@ onready var groundSprite1 = groundSprites.get_node("Sprite1")
 onready var groundSprite2 = groundSprites.get_node("Sprite2")
 onready var pointsLabel = get_node("hud/points")
 
+func everyPlayerReady():
+	for player in playersNode.get_children():
+		if not player.readyToPlay: 
+			return false
+	return true
+
+remote func setReadyToPlay(playerid):
+	# mark player ready
+	# when every player ready emit "gogo" event.
+	print("playerNodeC", playersNode.get_children())
+	playersNode.get_node(playerid).readyToPlay = true
+	if everyPlayerReady():
+		mapGen()
+		rpc("gogo")
+
+sync func gogo():
+	# server emits this to start the game when everybody 
+	# has loaded and is ready.
+	get_tree().set_pause(false)
+	set_process(true)
+	
+
 func _ready():
 	spriteWidth = groundSprite1.get_texture().get_size().x
 	placeholderScore = pointsLabel.text
@@ -43,8 +65,15 @@ func _ready():
 #	ground.constant_linear_velocity(-1,0)
 #	set_process(true)
 	seed(0)
-	mapGen()
-	set_process(true)
+	if get_tree().is_network_server():
+		pass
+#		playersNode.get_node("1").readyToPlay = true
+		get_tree().set_pause(true)
+		setReadyToPlay("1")
+		
+	else:
+		rpc_id(1, "setReadyToPlay", str(get_tree().get_network_unique_id()))
+		get_tree().set_pause(true) # server unpauses us when every player is ready
 	
 func mapGen():
 	if get_tree().is_network_server():
@@ -53,7 +82,7 @@ func mapGen():
 #		enemysGen()
 #		wolkenGen()
 
-#
+
 #sync func rpcRespawnpoint(_position):
 #	print("created RESPAWN at", _position)
 #	var restartPoint = Restartpoint.instance()

@@ -7,6 +7,7 @@ var top_jump_speed = 800
 var jumpSound = load("res://sounds/jump.ogg")
 var killedSound = load("res://sounds/killed.ogg")
 var soundPlayer = AudioStreamPlayer.new()
+var readyToPlay = false # this gets set to true when the player has loaded the playscene 
 
 onready var playerColShape = get_node("playerShape")
 # Grounded?
