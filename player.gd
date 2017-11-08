@@ -8,7 +8,7 @@ var jumpSound = load("res://sounds/jump.ogg")
 var killedSound = load("res://sounds/killed.ogg")
 var soundPlayer = AudioStreamPlayer.new()
 
-
+onready var collisionShape = get_node("CollisionShape2D")
 # Grounded?
 var grounded = false 
 # Movement Vars
@@ -54,11 +54,12 @@ func _integrate_forces(state):
 	if is_network_master():
 		if !alive:
 			state.set_sleep_state(true)
-		
+			collisionShape.disabled=true
 		if reviving:
 #			state.set_sleep_state(true)
 			state.set_transform( Transform2D( Vector2(), Vector2(), slave_pos) )
 			reviving = false
+			collisionShape.disabled=false
 			state.set_sleep_state(false)
 		
 #		print(position)
