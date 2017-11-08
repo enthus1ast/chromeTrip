@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Wolke.tscn" type="PackedScene" id=3]
-[ext_resource path="res://ground.png" type="Texture" id=4]
-[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=5]
-[ext_resource path="res://GameOver.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ground.png" type="Texture" id=3]
+[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GameOver.tscn" type="PackedScene" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -15,15 +14,15 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Extra Spacing", "Settings" ]
 
-[sub_resource type="Gradient" id=7]
+[sub_resource type="Gradient" id=2]
 
 offsets = PoolRealArray( 0, 0.701044, 0.89295 )
 colors = PoolColorArray( 0.984234, 0.984234, 0.984234, 1, 0.648438, 1, 0.942322, 1, 0.679688, 1, 0.924927, 1 )
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="GradientTexture" id=5]
+[sub_resource type="GradientTexture" id=3]
 
-gradient = SubResource( 7 )
+gradient = SubResource( 2 )
 width = 2048
 
 [sub_resource type="Gradient" id=4]
@@ -32,18 +31,18 @@ offsets = PoolRealArray( 0, 0.701044, 0.89295 )
 colors = PoolColorArray( 0.984234, 0.984234, 0.984234, 1, 1, 0.966064, 0.457031, 1, 0.933594, 0.799971, 0.444916, 1 )
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="GradientTexture" id=6]
+[sub_resource type="GradientTexture" id=5]
 
 gradient = SubResource( 4 )
 width = 2048
 
-[sub_resource type="LineShape2D" id=2]
+[sub_resource type="LineShape2D" id=6]
 
 custom_solver_bias = 0.0
 normal = Vector2( 0, -1 )
 d = 0.0
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=7]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
@@ -148,7 +147,7 @@ flat = false
 position = Vector2( 1053.87, 185.287 )
 rotation = -1.5708
 scale = Vector2( 0.181828, 1072.69 )
-texture = SubResource( 5 )
+texture = SubResource( 3 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
 
@@ -157,34 +156,17 @@ _sections_unfolded = [ "Region", "Transform" ]
 position = Vector2( -11.7661, 515.242 )
 rotation = 1.5708
 scale = Vector2( 0.0915936, 1084.42 )
-texture = SubResource( 6 )
+texture = SubResource( 5 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
 
 [node name="sprites" type="Node2D" parent="."]
 
-editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="wolken" type="Node2D" parent="sprites"]
-
-editor/display_folded = true
-
-[node name="Wolke" parent="sprites/wolken" instance=ExtResource( 3 )]
-
-position = Vector2( 879.245, 165.964 )
-
-[node name="Wolke2" parent="sprites/wolken" instance=ExtResource( 3 )]
-
-position = Vector2( 751.121, 140.34 )
-wideness = 2
-
-[node name="Wolke3" parent="sprites/wolken" instance=ExtResource( 3 )]
-
-position = Vector2( 622.997, 75.5239 )
-wideness = 3
 
 [node name="constantMovement" type="Node2D" parent="sprites"]
 
@@ -199,7 +181,7 @@ _sections_unfolded = [ "Transform" ]
 
 editor/display_folded = true
 position = Vector2( 2400, 380 )
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -212,7 +194,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 editor/display_folded = true
 position = Vector2( 4800, 380 )
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -227,7 +209,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 [node name="enemys" type="Node2D" parent="sprites"]
 
-[node name="parallaxForeground" parent="sprites" instance=ExtResource( 5 )]
+[node name="parallaxForeground" parent="sprites" instance=ExtResource( 4 )]
 
 [node name="players" type="Node2D" parent="."]
 
@@ -253,7 +235,7 @@ _sections_unfolded = [ "Collision", "Pickable", "Transform" ]
 
 position = Vector2( 2258.02, 383.062 )
 scale = Vector2( 30.2855, 1.74003 )
-shape = SubResource( 2 )
+shape = SubResource( 6 )
 _sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_lock_": true
@@ -277,7 +259,7 @@ __meta__ = {
 
 position = Vector2( -20, 110 )
 scale = Vector2( 1.65385, 27.9423 )
-shape = SubResource( 3 )
+shape = SubResource( 7 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="rightBlock" type="StaticBody2D" parent="."]
@@ -298,10 +280,10 @@ __meta__ = {
 
 position = Vector2( 1040.72, 111.706 )
 scale = Vector2( 1.65385, 27.9423 )
-shape = SubResource( 3 )
+shape = SubResource( 7 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="GameOverScreen" parent="." instance=ExtResource( 6 )]
+[node name="GameOverScreen" parent="." instance=ExtResource( 5 )]
 
 editor/display_folded = true
 visible = false

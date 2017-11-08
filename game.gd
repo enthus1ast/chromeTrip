@@ -16,7 +16,7 @@ var placeholderScoreSize
 var spriteWidth
 var obstaclesCount = 8
 var enemysCount = 8
-var wolkenCount = 8
+var wolkenMaxCount = 10
 var allDead = false
 
 onready var playersNode = get_node("players")
@@ -93,14 +93,20 @@ func obstaclesGen():
 	i = 0
 	
 func wolkenGen():
-	var i = 0
-	while i < wolkenCount:
+	var currentCount = get_tree().get_nodes_in_group("wolken").size()
+	if currentCount < wolkenMaxCount:
 		var wolke = Wolke.instance()
-		wolke.wideness = rand_range(1, 3)
-		wolke.position=Vector2(i*800+rand_range(1024,1800)-wolkenNode.position.x,rand_range(-400,250))
+		wolke.wideness = rand_range(1, 4)
+		wolke.position=Vector2(rand_range(1024,1400)-wolkenNode.position.x,rand_range(0,250))
 		wolkenNode.add_child(wolke)
-		i += 1
-	i = 0	
+#	var i = 0
+#	while i < wolkenCount:
+#		var wolke = Wolke.instance()
+#		wolke.wideness = rand_range(1, 3)
+#		wolke.position=Vector2(i*800+rand_range(1024,1800)-wolkenNode.position.x,rand_range(-400,250))
+#		wolkenNode.add_child(wolke)
+#		i += 1
+#	i = 0	
 	
 func _process(delta):
 	constMoveNode.position.x-=fakeSpeed*delta

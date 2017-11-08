@@ -13,6 +13,8 @@ func _process(delta):
 	position = position - (Vector2( speed * delta, 0 ) )
 
 func _on_VisibilityNotifier2D_screen_exited():
-	get_parent().remove_child(self)
-	print("cloud deleted")
+	set_process(false)
+#	get_parent().call_deferred("remove_child",self)
+#	call_deferred("queue_free")
 	queue_free()
+	print("cloud deleted")

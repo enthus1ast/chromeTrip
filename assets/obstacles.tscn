@@ -193,6 +193,7 @@ disabled = true
 
 [node name="kaktuss8" type="KinematicBody2D" parent="."]
 
+editor/display_folded = true
 visible = false
 input_pickable = false
 collision_layer = 1

@@ -16,7 +16,8 @@ func _ready():
 
 func _on_ObstacleScreenExitNotifier_screen_exited():
 	print("obstacle deleted")
-	get_parent().remove_child(self)
-	queue_free()
+#	get_parent().remove_child(self)
 #	get_parent().call_deferred("remove_child",self)
+#	call_deferred("queue_free")
+	queue_free()
 	pass # replace with function body

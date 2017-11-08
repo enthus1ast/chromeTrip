@@ -10,20 +10,16 @@ var speed = 300
 var isInitial = true
 var time = 0
 
-
 func _ready():
 	texture = childrenArray[0].get_texture()
 	set_process(true)
-	pass
 	
 func genPos():
 	var posX
 	var posY
 	if isInitial:
 		posX = rand_range(1200,2000)
-		
 	else:
-#		isInitial = false
 		posX = rand_range(1200,2000)
 	posY = rand_range(480,700)
 	return Vector2(posX,posY)
@@ -38,7 +34,6 @@ func genScale(_posY):
 	return myscale
 
 func newSprite():
-
 	var sprite = Sprite.new()
 	sprite.texture = texture
 	sprite.region_enabled=true;
@@ -55,11 +50,11 @@ func _process(delta):
 	if count > parentNode.get_child_count() and time > 1:
 		time = 0
 		newSprite()
-		
 	for object in parentNode.get_children():
 		object.position.x -= delta * genSpeed(object.position.y)
 		if object.position.x<-100 and !object.is_queued_for_deletion():
-			get_parent().remove_child(object)
-			print("prallaxforground sprite deleted")
+#			get_parent().call_deferred("remove_child",object)
+#			call_deferred("queue_free")
 			object.queue_free()
+			print("prallaxforground sprite deleted")
 	
