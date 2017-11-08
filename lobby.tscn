@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://lobby.gd" type="Script" id=1]
+[ext_resource path="res://PlayerAnim.tscn" type="PackedScene" id=2]
 
 [sub_resource type="Gradient" id=1]
 
@@ -70,7 +71,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 1024.0
+margin_left = 1.0
+margin_right = 1025.0
 margin_bottom = 599.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -89,10 +91,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 358.0
-margin_top = 147.0
-margin_right = 694.0
-margin_bottom = 398.0
+margin_left = 348.0
+margin_top = 197.0
+margin_right = 684.0
+margin_bottom = 448.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -240,6 +242,10 @@ shortcut = null
 group = null
 text = "Start SP"
 flat = false
+
+[node name="LogoAnim" parent="menu/networkPanel" instance=ExtResource( 2 )]
+
+position = Vector2( -310, -131 )
 
 [node name="lobby" type="PanelContainer" parent="menu"]
 

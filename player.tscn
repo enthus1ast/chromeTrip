@@ -149,7 +149,7 @@ anims/trexAnimRun = SubResource( 4 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
-autoplay = "trexAnim"
+autoplay = ""
 
 [node name="groundcollision" type="Area2D" parent="."]
 

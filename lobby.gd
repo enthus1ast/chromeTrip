@@ -63,7 +63,6 @@ func _player_connected(playerId):
 
 #Client sending to host
 func _connected_ok():
-	
 	currentPlayer.name = networkPanel.get_node("host/name").get_text()
 	if currentPlayer.name == "":
 		currentPlayer.name ="unnamed"

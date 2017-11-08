@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://player.tscn" type="PackedScene" id=1]
+
+[node name="LogoAnim" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource( 1 )]
+
+position = Vector2( 113.098, 265.853 )
+
+
