@@ -26,7 +26,7 @@ const DIRECTION = {
 #define the slave vars. slave var did not worked for me
 sync var slave_pos = Vector2()
 sync var slave_motion = Vector2()
-sync var slave_can_jump = true
+#sync var slave_can_jump = true
 sync var alive = true
 var reviving = false
 
@@ -85,7 +85,7 @@ func _integrate_forces(state):
 	else:
 		position = slave_pos
 		final_force = slave_motion
-		slave_can_jump = can_jump
+#		slave_can_jump = can_jump
 		
 	state.set_linear_velocity(final_force)
 	
@@ -106,14 +106,14 @@ func apply_force(state):
 		if jump_time < TOP_JUMP_TIME and can_jump:
 			directional_force += DIRECTION.UP
 			jump_time += state.get_step()
-			rset("slave_can_jump",can_jump)
+#			rset("slave_can_jump",can_jump)
 			
 		
 		
     # While on the ground
 	if(grounded):
 		can_jump = true
-		rset("slave_can_jump",can_jump)
+#		rset("slave_can_jump",can_jump)
 		jump_time = 0
  
 func _on_groundcollision_body_entered( body ):
@@ -122,7 +122,8 @@ func _on_groundcollision_body_entered( body ):
 
 func _on_groundcollision_body_exited( body ):
 #	if body.get_name()!="ground":
-	grounded = false
+	if body.get_name()=="groundCollision":
+		grounded = false
 
 sync func playAnimation(_string):
 	animPlayer.play(_string)
@@ -245,6 +246,7 @@ func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 		if get_tree().is_network_server():
 			rpc("killed", get_name())
 			if allPlayersKilled():
+				get_parent().get_parent().allDead = true
 				rpc("showGameOverScreen")
 
 			

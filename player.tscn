@@ -3,13 +3,18 @@
 [ext_resource path="res://player.gd" type="Script" id=1]
 [ext_resource path="res://200-offline-sprite.png" type="Texture" id=2]
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8.70709, 16.8859 )
+
+[sub_resource type="CapsuleShape2D" id=2]
 
 custom_solver_bias = 0.0
 radius = 10.0
 height = 4.45322
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=3]
 
 length = 1.0
 loop = false
@@ -26,9 +31,8 @@ tracks/0/keys = {
 "values": [ Rect2( 1679, 1, 85, 96 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 
-resource_name = "trexAnimKilled"
 length = 1.5
 loop = false
 step = 0.1
@@ -55,7 +59,7 @@ tracks/1/keys = {
 "values": [ Vector2( -2.2629, 29.6091 ), Vector2( -2.2629, 0 ), Vector2( -2.2629, 500 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 
 length = 0.2
 loop = true
@@ -83,11 +87,6 @@ tracks/1/keys = {
 "values": [ Vector2( -2.2629, 29.6091 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=5]
-
-custom_solver_bias = 0.0
-extents = Vector2( 8.70709, 16.8859 )
-
 [node name="player" type="RigidBody2D" groups=[
 "players",
 ]]
@@ -102,7 +101,7 @@ friction = 1.0
 bounce = 0.0
 gravity_scale = 30.0
 custom_integrator = false
-continuous_cd = 0
+continuous_cd = 2
 contacts_reported = 1
 contact_monitor = true
 sleeping = false
@@ -114,13 +113,38 @@ angular_damp = -1.0
 script = ExtResource( 1 )
 _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform" ]
 
+[node name="groundcollision" type="Area2D" parent="."]
+
+position = Vector2( 0.540375, 6.48438 )
+scale = Vector2( 0.72265, 0.72265 )
+input_pickable = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 2
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="groundcollision"]
+
+position = Vector2( -3.07397, 28.562 )
+scale = Vector2( 1.62509, 0.52064 )
+shape = SubResource( 1 )
+one_way_collision = true
+_sections_unfolded = [ "Transform" ]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 position = Vector2( 2.56813, 4.27007 )
 rotation = 0.484136
 scale = Vector2( 2.02785, 2.23475 )
-shape = SubResource( 1 )
-_sections_unfolded = [ "Material", "Pause", "Transform", "Visibility" ]
+shape = SubResource( 2 )
+_sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z" ]
 __meta__ = {
 "_edit_lock_": true
 }
@@ -143,41 +167,14 @@ __meta__ = {
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/trexAnim = SubResource( 2 )
-anims/trexAnimKilled = SubResource( 3 )
-anims/trexAnimRun = SubResource( 4 )
+anims/trexAnim = SubResource( 3 )
+anims/trexAnimKilled = SubResource( 4 )
+anims/trexAnimRun = SubResource( 5 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = "trexAnim"
-
-[node name="groundcollision" type="Area2D" parent="."]
-
-position = Vector2( 0.540375, 6.48438 )
-scale = Vector2( 0.72265, 0.72265 )
-input_pickable = false
-gravity_vec = Vector2( 0, 1 )
-gravity = 9.8
-linear_damp = 0.1
-angular_damp = 1.0
-collision_layer = 2
-audio_bus_override = false
-audio_bus_name = "Master"
-_sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility" ]
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="groundcollision"]
-
-position = Vector2( -3.07397, 28.1973 )
-scale = Vector2( 1.62509, 0.52064 )
-shape = SubResource( 5 )
-one_way_collision = true
-_sections_unfolded = [ "Transform" ]
-__meta__ = {
-"_edit_lock_": true
-}
+_sections_unfolded = [ "Playback Options", "playback" ]
 
 [node name="Label" type="Label" parent="."]
 

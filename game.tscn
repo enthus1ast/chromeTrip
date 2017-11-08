@@ -258,6 +258,7 @@ position = Vector2( 523, 345 )
 
 [node name="GameOverScreen" parent="." instance=ExtResource( 6 )]
 
+editor/display_folded = true
 visible = false
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
