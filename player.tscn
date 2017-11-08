@@ -71,6 +71,17 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Rect2( 1855, 1, 85, 96 ), Rect2( 1943, 1, 85, 96 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 6.09799, -42.0819 ) ]
+}
 
 [sub_resource type="RectangleShape2D" id=5]
 
@@ -113,7 +124,7 @@ _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility" ]
 
 [node name="Sprite" type="Sprite" parent="."]
 
-position = Vector2( -2.2629, 29.6091 )
+position = Vector2( -2.2629, 0 )
 scale = Vector2( 0.531413, 0.531413 )
 texture = ExtResource( 2 )
 offset = Vector2( 6.09799, -42.0819 )

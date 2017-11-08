@@ -56,7 +56,7 @@ func enemysGen():
 	while i < enemysCount:
 		var enemy = Enemys.instance()
 		enemy.choice("enemy",round(rand_range(1,1))) ##only one available
-		enemy.global_position=Vector2(i*800+rand_range(1024,2000)-enemysNode.global_position.x,rand_range(10,250))
+		enemy.position=Vector2(i*800+rand_range(1024,2000)-enemysNode.position.x,rand_range(10,250))
 		var scale = rand_range(0.3,1)
 		enemy.scale = Vector2(scale,scale)
 		enemysNode.add_child(enemy)

@@ -8,6 +8,7 @@ var jumpSound = load("res://sounds/jump.ogg")
 var killedSound = load("res://sounds/killed.ogg")
 var soundPlayer = AudioStreamPlayer.new()
 
+
 # Grounded?
 var grounded = false 
 # Movement Vars
@@ -39,7 +40,8 @@ const TOP_JUMP_TIME = 0.1 # in seconds
 var keys = [false,false,false,false] # right, left, up, down 
 
 func _ready():
-	print(jumpSound)
+	
+	soundPlayer.connect("finished",self,"_sound_finished")
 	var root = get_tree().get_root().get_node("Control")
 	set_process_input(true)
 	add_child(soundPlayer)
@@ -50,7 +52,6 @@ func _integrate_forces(state):
 	var final_force = Vector2()
 #	if alive:
 	if is_network_master():
-		
 		if !alive:
 			state.set_sleep_state(true)
 		
@@ -155,8 +156,10 @@ func _input(event):
 			if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_select"):
 				keys[2]=true
 				if grounded or can_jump:
-					soundPlayer.stream = jumpSound
-					soundPlayer.play()
+					if !soundPlayer.is_playing():
+						if soundPlayer.get_stream() != jumpSound:
+							soundPlayer.set_stream(jumpSound)
+						soundPlayer.play(0.0)
 			if event.is_action_released("ui_up") or event.is_action_released("ui_select"):
 				keys[2]=false
 				can_jump = false # Prevents the player from jumping more than once while in air
@@ -164,7 +167,12 @@ func _input(event):
 	elif is_network_master() and !alive: # not alive
 		keys = [false,false,false,false]
 		can_jump = false
-
+		
+func _sound_finished():
+	print("sound finished")
+	soundPlayer.seek(0.0)
+	soundPlayer.stop()
+	
 sync func killed(_id):
 	get_parent().get_node(str(_id)).alive = false
 	get_parent().get_node(str(_id)).can_jump = false
@@ -227,7 +235,7 @@ sync func showGameOverScreen():
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive:
 		soundPlayer.stream = killedSound
-		soundPlayer.play()
+		soundPlayer.play(0.0)
 		if get_tree().is_network_server():
 			rpc("killed", get_name())
 			if allPlayersKilled():
