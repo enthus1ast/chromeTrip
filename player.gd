@@ -24,7 +24,7 @@ const DIRECTION = {
 #var FOWARD_MOTION = Vector2(0, 0)
 
 #define the slave vars. slave var did not worked for me
-sync var slave_pos = Vector2()
+sync var slave_pos = Transform2D()
 sync var slave_motion = Vector2()
 #sync var slave_can_jump = true
 sync var alive = true
@@ -59,7 +59,7 @@ func _integrate_forces(state):
 			
 		if reviving:
 			reviving = false
-			state.set_transform( Transform2D( Vector2(), Vector2(), slave_pos) )
+			state.set_transform( (slave_pos) )
 #			state.set_sleep_state(false)
 #			state.set_sleep_state(false)
 			
@@ -81,9 +81,9 @@ func _integrate_forces(state):
 		
 		# set the slave motion values
 		rset("slave_motion",final_force)
-		rset("slave_pos",position)
+		rset("slave_pos",state.get_transform())
 	else:
-		position = slave_pos
+		state.set_transform(slave_pos)
 		final_force = slave_motion
 #		slave_can_jump = can_jump
 		
@@ -183,6 +183,9 @@ sync func killed(_id):
 	print(_id, " hasbeen killed")
 
 sync func RPCreanimate(_id, atPosition):
+	
+	var transMatrix = Transform2D(Vector2(),Vector2(),atPosition)
+	
 	print(_id, " hasbeen reanimated")
 	get_parent().get_node(str(_id)).get_node("CollisionShape2D").disabled=false
 	get_parent().get_node(str(_id)).get_node("CollisionShape2D").update()

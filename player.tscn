@@ -192,19 +192,6 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="groundcollision"]
-
-position = Vector2( -3.07397, 28.1973 )
-scale = Vector2( 1.62509, 0.52064 )
-shape = SubResource( 5 )
-one_way_collision = true
-_sections_unfolded = [ "Transform" ]
-__meta__ = {
-"_edit_lock_": true
-}
-autoplay = "trexAnim"
-_sections_unfolded = [ "Playback Options", "playback" ]
-
 [node name="Label" type="Label" parent="."]
 
 anchor_left = 0.0
