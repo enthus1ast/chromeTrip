@@ -18,7 +18,7 @@ var spriteWidth
 
 var obstaclesCount = 4
 var enemysCount = 4
-var wolkenCount = 10
+var wolkenCount = 4
 
 onready var playersNode = get_node("players")
 onready var spritesNode = get_node("sprites")
