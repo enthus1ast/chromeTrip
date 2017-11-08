@@ -184,23 +184,23 @@ sync func killed(_id):
 
 sync func RPCreanimate(_id, atPosition):
 	
-	var transMatrix = Transform2D(Vector2(),Vector2(),atPosition)
+	var transMatrix = Transform2D(Vector2(),Vector2(), atPosition)
 	
-	print(_id, " hasbeen reanimated")
+	print(_id,transMatrix, " hasbeen reanimated")
 	get_parent().get_node(str(_id)).get_node("CollisionShape2D").disabled=false
 	get_parent().get_node(str(_id)).get_node("CollisionShape2D").update()
 #	get_parent().get_node(str(_id)).
 	get_parent().get_node(str(_id)).can_jump = false
 	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimRun")
-	get_parent().get_node(str(_id)).position = atPosition
-	get_parent().get_node(str(_id)).slave_pos = atPosition
+#	get_parent().get_node(str(_id)).position = atPosition
+	get_parent().get_node(str(_id)).slave_pos = transMatrix
 	if is_network_master():
 		collisionShape.disabled=false
 		alive = true
 		can_jump = false
 		grounded = false
 		position = atPosition
-		slave_pos = atPosition
+		slave_pos = transMatrix
 		slave_motion = Vector2(0,0)
 	get_parent().get_node(str(_id)).alive = true
 	get_parent().get_node(str(_id)).reviving = true
