@@ -47,11 +47,11 @@ func doRespawn():
 
 func _on_Area2D_body_entered( body ):
 	pass # replace with function body
-	if get_tree().is_network_server():
-		print(body, " body entered respawn point")
-		doRespawn()
+	
 
 
 func _on_Area2D_body_shape_entered( body_id, body, body_shape, area_shape ):
-	pass # replace with function body
-	print(body, "body_shape entered respawn point")
+	if get_tree().is_network_server() and body.get_parent().get_name()=="players":
+		print( body_id, body.get_name(), body_shape, area_shape, "body_shape entered respawn point")
+		doRespawn()
+	

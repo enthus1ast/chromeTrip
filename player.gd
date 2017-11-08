@@ -53,14 +53,14 @@ func _integrate_forces(state):
 #	if alive:
 	if is_network_master():
 		if !alive:
-#			state.set_sleep_state(true)
+			state.set_sleep_state(true)
 			collisionShape.disabled=true
 			collisionShape.update()
 		if reviving:
-#			state.set_sleep_state(true)
-#			state.set_sleep_state(false)
-			state.set_transform( Transform2D( Vector2(), Vector2(), slave_pos) )
 			reviving = false
+			state.set_transform( Transform2D( Vector2(), Vector2(), slave_pos) )
+			state.set_sleep_state(false)
+#			state.set_sleep_state(false)			
 			collisionShape.disabled=false
 			collisionShape.update()
 			
