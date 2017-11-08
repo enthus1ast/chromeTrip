@@ -14,5 +14,5 @@ func _on_EnemyScreenExitNotifier_screen_exited():
 #	get_parent().call_deferred("remove_child",self)
 #	call_deferred("queue_free")
 	queue_free()
-	print("enemy deleted")
+#	print("enemy deleted")
 

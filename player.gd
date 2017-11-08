@@ -7,7 +7,9 @@ var top_jump_speed = 800
 var jumpSound = load("res://sounds/jump.ogg")
 var killedSound = load("res://sounds/killed.ogg")
 var soundPlayer = AudioStreamPlayer.new()
-var readyToPlay = false # this gets set to true when the player has loaded the playscene 
+var readyToPlay = false # this gets set to true when the player has loaded the playscene
+var killprotectTimer = Timer.new()
+var isKillProtected = false
 
 onready var playerColShape = get_node("playerShape")
 # Grounded?
@@ -32,6 +34,7 @@ sync var alive = true
 var reviving = false
 
 onready var animPlayer = get_node("Sprite/AnimationPlayer")
+onready var powerUpPlayer = get_node("Sprite/AnimationPlayerPowerUps")
  
 # Jumping
 var can_jump = true
@@ -41,29 +44,39 @@ const TOP_JUMP_TIME = 0.1 # in seconds
 var keys = [false,false,false,false] # right, left, up, down 
 
 func _ready():
-	
+	add_child ( killprotectTimer )
+	killprotectTimer.wait_time = 10
+	killprotectTimer.connect("timeout",self,"_killprotectTimeout")
 	soundPlayer.connect("finished",self,"_sound_finished")
 	var root = get_tree().get_root().get_node("Control")
 	set_process_input(true)
 	add_child(soundPlayer)
 	rpc("playAnimation","trexAnimRun")
-	
 
+func rpcPowerUps(_id,_string):
+	get_parent().get_node(str(_id)).powerUpPlayer.play(_string)
+	
+sync func rpcKillProtectRequest(_id):
+	get_parent().get_node(str(_id)).isKillProtected = false
+	get_parent().get_node(str(_id)).powerUpPlayer.stop()
+#	get_parent().get_node(str(_id)).powerUpPlayer.wait_time = 3
+	get_parent().get_node(str(_id)).rpcPowerUps(_id,"default")
+	print(_id,"is no longer protected!")
+
+func _killprotectTimeout():
+	rpc("rpcKillProtectRequest",get_name())
+	
 func _integrate_forces(state):
 	var final_force = Vector2()
-#	if alive:
 	if is_network_master():
 		
 		if !alive:
 			pass
-#			state.set_sleep_state(true)
 			
 		if reviving:
 			reviving = false
 			state.set_transform( slave_pos )
-#			state.set_sleep_state(false)
-#			state.set_sleep_state(false)
-#		print(position)
+
 		directional_force = DIRECTION.ZERO  # +FOWARD_MOTION
 		apply_force(state)
 		final_force = state.get_linear_velocity() + (directional_force * acceleration)
@@ -123,17 +136,6 @@ func _on_groundSensor_body_exited( body ):
 			grounded = false
 	elif body.get_name()=="groundCollision":
 		grounded = false
- 
-#func _on_groundcollision_body_entered( body ):
-##	if body.has_node("playerShape"):
-##		body.get_node("playerShape").get_name()=="playerShape"
-##		grounded = true
-#
-#
-#func _on_groundcollision_body_exited( body ):
-##	if body.has_node("playerShape"):
-##		body.get_node("playerShape").get_name()=="playerShape"
-##		grounded = false
 
 
 sync func playAnimation(_string):
@@ -196,13 +198,17 @@ func _sound_finished():
 	soundPlayer.stop()
 	
 sync func killed(_id):
-	get_parent().get_node(str(_id)).get_node("playerShape").disabled=true
-	get_parent().get_node(str(_id)).alive = false
-	get_parent().get_node(str(_id)).can_jump = false
-	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
-	print(_id, " hasbeen killed")
+	if !isKillProtected:
+		get_parent().get_node(str(_id)).get_node("playerShape").disabled=true
+		get_parent().get_node(str(_id)).alive = false
+		get_parent().get_node(str(_id)).can_jump = false
+		get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
+		print(_id, " hasbeen killed")
 
 sync func RPCreanimate(_id, atPosition):
+	get_parent().get_node(str(_id)).powerUpPlayer.play("killProtected")
+	get_parent().get_node(str(_id)).isKillProtected = true
+	get_parent().get_node(str(_id)).killprotectTimer.start()
 	
 	var transMatrix = Transform2D(Vector2(),Vector2(), atPosition)
 	print(_id,transMatrix, " hasbeen reanimated")
@@ -215,6 +221,7 @@ sync func RPCreanimate(_id, atPosition):
 	get_parent().get_node(str(_id)).slave_pos = transMatrix
 	if is_network_master():
 		playerColShape.disabled=false
+		isKillProtected = true
 		alive = true
 		can_jump = false
 		grounded = false
@@ -239,15 +246,13 @@ sync func showGameOverScreen():
 
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 
-	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive:
+	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive and !isKillProtected:
 		soundPlayer.stream = killedSound
 		soundPlayer.play(0.0)
 		if get_tree().is_network_server():
 			rpc("killed", get_name())
 			if allPlayersKilled():
 				rpc("showGameOverScreen")
-
-
 
 func _on_player_body_shape_exited( body_id, body, body_shape, local_shape ):
 #	if body.get_node("playerShape").get_name()=="playerShape":

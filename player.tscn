@@ -1,4 +1,5 @@
-[gd_scene load_steps=10 format=2]
+
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://player.gd" type="Script" id=1]
 [ext_resource path="res://200-offline-sprite.png" type="Texture" id=2]
@@ -172,6 +173,42 @@ tracks/4/keys = {
 "values": [ Vector2( -2.2629, 29.6091 ) ]
 }
 
+[sub_resource type="Animation" id=8]
+
+resource_name = "default"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+
+resource_name = "killProtected"
+length = 0.6
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.231171, 0.789062, 0.749836, 0.292824 ) ]
+}
+
 [node name="player" type="RigidBody2D" groups=[
 "players",
 ]]
@@ -238,8 +275,8 @@ scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
 offset = Vector2( 6.09799, -42.0819 )
 region_enabled = true
-region_rect = Rect2( 1855, 1, 85, 96 )
-_sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
+region_rect = Rect2( 1943, 1, 85, 96 )
+_sections_unfolded = [ "Animation", "Material", "Offset", "Region", "Transform", "Visibility", "Z" ]
 __meta__ = {
 "_edit_lock_": true
 }
@@ -260,6 +297,18 @@ anims/trexAnim = SubResource( 3 )
 anims/trexAnimDuck = SubResource( 4 )
 anims/trexAnimKilled = SubResource( 5 )
 anims/trexAnimRun = SubResource( 6 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="AnimationPlayerPowerUps" type="AnimationPlayer" parent="Sprite"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/default = SubResource( 8 )
+anims/killProtected = SubResource( 7 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]

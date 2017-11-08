@@ -11,7 +11,7 @@ func doRespawn(collider):
 	## - safes the random seed
 	## - position all killed bodies nearby
 	##   the respawn point
-	print("respawn point reached")
+#	print("respawn point reached")
 	if not collider.alive: return true
 	# get all killed players.
 	for player in get_tree().get_nodes_in_group("players"):
