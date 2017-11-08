@@ -52,25 +52,15 @@ sync func gogo():
 	get_tree().set_pause(false)
 	set_process(true)
 	
-
 func _ready():
 	spriteWidth = groundSprite1.get_texture().get_size().x
 	placeholderScore = pointsLabel.text
 	placeholderScoreSize = placeholderScore.length()
-#	print(placeholderScore,placeholderScoreSize)
-#	offsetX = get_viewport_rect().size.x/2
-#	print(get_viewport_rect().size.x)
-#	camera.position.y = camera.position.y + offsetY
-#	print("Viewportsize: ",viewportSize)
-#	ground.constant_linear_velocity(-1,0)
-#	set_process(true)
 	seed(0)
 	if get_tree().is_network_server():
 		pass
-#		playersNode.get_node("1").readyToPlay = true
 		get_tree().set_pause(true)
 		setReadyToPlay("1")
-		
 	else:
 		rpc_id(1, "setReadyToPlay", str(get_tree().get_network_unique_id()))
 		get_tree().set_pause(true) # server unpauses us when every player is ready
@@ -78,45 +68,22 @@ func _ready():
 func mapGen():
 	if get_tree().is_network_server():
 		obstaclesGen()
-#		respawnpointGen()
-#		enemysGen()
-#		wolkenGen()
+		respawnpointGen()
+		enemysGen()
+		wolkenGen()
 
-
-#sync func rpcRespawnpoint(_position):
-#	print("created RESPAWN at", _position)
-#	var restartPoint = Restartpoint.instance()
-#	restartPointsNode.add_child(respawnPoint.instance())
-#
-#func respawnpointGen():
-#	var distance = 1500
-#	var restartPoint = Restartpoint.instance()
-#	restartPointsNode.position.x=0
-#	restartPoint.global_position = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)#get_node("groundCollision/CollisionShape2D").position.y
-#	var pos = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)
-#	rpc("rpcRespawnpoint", pos)
-##	restartPointsNode.add_child(restartPoint)
-#
-
-
-sync func rpcRespawnpoint():
+sync func rpcRespawnpoint(pos):
 	print("created RESPAWN ")
-	var distance = 1500
 	var restartPoint = Restartpoint.instance()
 	restartPointsNode.position.x=0
 	restartPointsNode.add_child(restartPoint)
-	restartPoint.global_position = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)#get_node("groundCollision/CollisionShape2D").position.y	
-	
+	restartPoint.global_position = pos
+
 func respawnpointGen():
-#	var distance = 1500
-#	var restartPoint = Restartpoint.instance()
-#	restartPointsNode.position.x=0
-#	restartPoint.global_position = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)#get_node("groundCollision/CollisionShape2D").position.y
-	rpc("rpcRespawnpoint")  #, restartPoint.pack())
-#	restartPointsNode.add_child(restartPoint)
-#	print(restartPoint,restartPoint.position,restartPointsNode.position)
-#	return restartPoint
-	
+	var distance = 1500
+	var restartPoint = Restartpoint.instance()
+	var pos = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)
+	rpc("rpcRespawnpoint", pos)
 	
 sync func rpcEnemy(pos, scale, choice):#	
 	var enemy = Enemys.instance()
@@ -124,7 +91,7 @@ sync func rpcEnemy(pos, scale, choice):#
 	enemy.position = pos
 	enemy.scale = scale
 	enemysNode.add_child(enemy)
-	
+
 func enemysGen():
 	var i = 0
 	while i < enemysCount:
@@ -163,23 +130,20 @@ func obstaclesGen():
 		rpc("rpcObstacles", pos, flipped, scale, choice)
 		i += 1
 	i = 0
+
+sync func rpcWolken(pos, wideness):
+	var wolke = Wolke.instance()
+	wolke.wideness = wideness
+	wolke.position=pos
+	wolkenNode.add_child(wolke)
 	
 func wolkenGen():
 	var currentCount = get_tree().get_nodes_in_group("wolken").size()
 	if currentCount < wolkenMaxCount:
-		var wolke = Wolke.instance()
-		wolke.wideness = rand_range(1, 4)
-		wolke.position=Vector2(rand_range(1024,1400)-wolkenNode.position.x,rand_range(0,250))
-		wolkenNode.add_child(wolke)
-#	var i = 0
-#	while i < wolkenCount:
-#		var wolke = Wolke.instance()
-#		wolke.wideness = rand_range(1, 3)
-#		wolke.position=Vector2(i*800+rand_range(1024,1800)-wolkenNode.position.x,rand_range(-400,250))
-#		wolkenNode.add_child(wolke)
-#		i += 1
-#	i = 0	
-	
+		var pos = Vector2(rand_range(1024,1400)-wolkenNode.position.x,rand_range(0,250))
+		var wideness = rand_range(1, 4)
+		rpc("rpcWolken", pos, wideness)
+
 func _process(delta):
 	constMoveNode.position.x-=fakeSpeed*delta
 	enemysNode.position.x-=fakeSpeed*delta*1.5
