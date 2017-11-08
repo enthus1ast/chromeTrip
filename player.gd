@@ -8,7 +8,7 @@ var jumpSound = load("res://sounds/jump.ogg")
 var killedSound = load("res://sounds/killed.ogg")
 var soundPlayer = AudioStreamPlayer.new()
 
-onready var collisionShape = get_node("playerShape")
+onready var playerColShape = get_node("playerShape")
 # Grounded?
 var grounded = false 
 # Movement Vars
@@ -109,28 +109,28 @@ func apply_force(state):
 		can_jump = true
 		jump_time = 0
 		
-func _on_groundcollision_body_shape_entered( body_id, body, body_shape, area_shape ):
-	print("haaaaalllooo" ,body_id, body, body_shape, area_shape)
-	pass # replace with function body
-
-
-func _on_groundcollision_body_shape_exited( body_id, body, body_shape, area_shape ):
-	print("haaaaalllooo" ,body_id, body, body_shape, area_shape)
-	pass # replace with function body
- 
-func _on_groundcollision_body_entered( body ):
-#	if body.has_node("playerShape"):
-#		body.get_node("playerShape").get_name()=="playerShape"
-#		grounded = true
+func _on_groundSensor_body_entered( body ):
+	print("haalloo: ",body.get_name())
 	if body.get_name()=="groundCollision":
+		
 		grounded = true
 
-func _on_groundcollision_body_exited( body ):
-#	if body.has_node("playerShape"):
-#		body.get_node("playerShape").get_name()=="playerShape"
-#		grounded = false
+func _on_groundSensor_body_exited( body ):
+	print("haalloo: ",body.get_name())
 	if body.get_name()=="groundCollision":
 		grounded = false
+ 
+#func _on_groundcollision_body_entered( body ):
+##	if body.has_node("playerShape"):
+##		body.get_node("playerShape").get_name()=="playerShape"
+##		grounded = true
+#
+#
+#func _on_groundcollision_body_exited( body ):
+##	if body.has_node("playerShape"):
+##		body.get_node("playerShape").get_name()=="playerShape"
+##		grounded = false
+
 
 sync func playAnimation(_string):
 	animPlayer.play(_string)
@@ -172,8 +172,6 @@ func _input(event):
 				keys[3] = false
 #				rpc("playAnimation","trexAnim")
 			
-			
-			
 			#jumping keyevents
 			if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_select"):
 				keys[2]=true
@@ -212,7 +210,7 @@ sync func RPCreanimate(_id, atPosition):
 #	get_parent().get_node(str(_id)).position = atPosition
 	get_parent().get_node(str(_id)).slave_pos = transMatrix
 	if is_network_master():
-		collisionShape.disabled=false
+		playerColShape.disabled=false
 		alive = true
 		can_jump = false
 		grounded = false
@@ -251,6 +249,3 @@ func _on_player_body_shape_exited( body_id, body, body_shape, local_shape ):
 #	if body.get_node("playerShape").get_name()=="playerShape":
 #		can_jump=false
 	pass # replace with function body
-
-
-
