@@ -306,6 +306,9 @@ func _on_connect_pressed():
 	if !isConnecting:
 		dialogWaiting.set_visible(true)
 		isConnecting = true
+		
+#		resolve_hostname( String host, Type ip_type=3 )
+		
 		var ip = ipInput.get_text()
 		eNet.create_client(ip, SERVER_PORT)
 		get_tree().set_network_peer(eNet)

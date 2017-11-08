@@ -1,8 +1,5 @@
 extends Node2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -29,18 +26,6 @@ func doRespawn(collider):
 		if ! player.alive:
 			print("reanimating player:", position + Vector2(0, -400))
 			player.reanimate(position + Vector2(0, -400))
-#			player.position = position + Vector2(0, -250)
-#			emit_signal("player_reanimate", player, player.get_name(), position + Vector2(0, -250))
-		
-#			player.slave_pos = position + Vector2(0, -250)
-#			player.alive = true
-#			player.can_jump = true
-#			player.get_node("Sprite/AnimationPlayer").play("trexAnimRun")
-			
-			#
-			#rset("slave_motion",final_force)
-			#rset("slave_pos",position)			
-			
 	
 	# get position of respawn point
 	# places all killed players to resp point 
@@ -55,3 +40,9 @@ func _on_Area2D_body_shape_entered( body_id, body, body_shape, area_shape ):
 		print( body_id, body.get_name(), body_shape, area_shape, "body_shape entered respawn point")
 		doRespawn(body)
 	
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	get_parent().call_deferred("remove_child",self)
+	queue_free()
+	pass # replace with function body

@@ -115,6 +115,7 @@ _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform"
 
 [node name="groundcollision" type="Area2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( 0.540375, 6.48438 )
 scale = Vector2( 0.72265, 0.72265 )
 input_pickable = false
