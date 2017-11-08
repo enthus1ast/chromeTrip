@@ -22,7 +22,7 @@ func doRespawn(collider):
 	##   the respawn point
 	print("respawn point reached")
 #	if collider
-	if not collider.alive: true
+	if not collider.alive: return true
 	# get all killed players.
 	for player in get_tree().get_nodes_in_group("players"):
 		print(player)
@@ -53,5 +53,5 @@ func _on_Area2D_body_entered( body ):
 func _on_Area2D_body_shape_entered( body_id, body, body_shape, area_shape ):
 	if get_tree().is_network_server() and body.get_parent().get_name()=="players":
 		print( body_id, body.get_name(), body_shape, area_shape, "body_shape entered respawn point")
-		doRespawn()
+		doRespawn(body)
 	
