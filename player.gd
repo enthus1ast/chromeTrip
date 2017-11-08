@@ -108,13 +108,28 @@ func apply_force(state):
 	if(grounded):
 		can_jump = true
 		jump_time = 0
+		
+func _on_groundcollision_body_shape_entered( body_id, body, body_shape, area_shape ):
+	print("haaaaalllooo" ,body_id, body, body_shape, area_shape)
+	pass # replace with function body
+
+
+func _on_groundcollision_body_shape_exited( body_id, body, body_shape, area_shape ):
+	print("haaaaalllooo" ,body_id, body, body_shape, area_shape)
+	pass # replace with function body
  
 func _on_groundcollision_body_entered( body ):
-	if body.get_name()=="groundCollision" or body.get_node("playerShape").get_name()=="playerShape":
+#	if body.has_node("playerShape"):
+#		body.get_node("playerShape").get_name()=="playerShape"
+#		grounded = true
+	if body.get_name()=="groundCollision":
 		grounded = true
 
 func _on_groundcollision_body_exited( body ):
-	if body.get_name()=="groundCollision" or body.get_node("playerShape").get_name()=="playerShape":
+#	if body.has_node("playerShape"):
+#		body.get_node("playerShape").get_name()=="playerShape"
+#		grounded = false
+	if body.get_name()=="groundCollision":
 		grounded = false
 
 sync func playAnimation(_string):
@@ -236,3 +251,6 @@ func _on_player_body_shape_exited( body_id, body, body_shape, local_shape ):
 #	if body.get_node("playerShape").get_name()=="playerShape":
 #		can_jump=false
 	pass # replace with function body
+
+
+

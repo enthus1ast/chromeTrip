@@ -49,7 +49,7 @@ tracks/0/keys = {
 "values": [ Rect2( 2204, 1, 115, 96 ), Rect2( 2322, 1, 115, 96 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("../CollisionShape2D:position")
+tracks/1/path = NodePath("../playerShape:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -60,7 +60,7 @@ tracks/1/keys = {
 "values": [ Vector2( -1.01272, 15.1961 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("../CollisionShape2D:rotation_deg")
+tracks/2/path = NodePath("../playerShape:rotation_deg")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -71,7 +71,7 @@ tracks/2/keys = {
 "values": [ 2.82287 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("../CollisionShape2D:scale")
+tracks/3/path = NodePath("../playerShape:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -138,7 +138,7 @@ tracks/1/keys = {
 "values": [ Vector2( -2.2629, 29.6091 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("../CollisionShape2D:position")
+tracks/2/path = NodePath("../playerShape:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -149,7 +149,7 @@ tracks/2/keys = {
 "values": [ Vector2( 2.56813, 4.27007 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("../CollisionShape2D:rotation_deg")
+tracks/3/path = NodePath("../playerShape:rotation_deg")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -160,7 +160,7 @@ tracks/3/keys = {
 "values": [ 27.7389 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("../CollisionShape2D:scale")
+tracks/4/path = NodePath("../playerShape:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -171,7 +171,7 @@ tracks/4/keys = {
 "values": [ Vector2( 2.02785, 2.23475 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("../groundcollision/playerShape:position")
+tracks/5/path = NodePath("../groundcollision/:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -226,7 +226,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="playerShape" type="CollisionShape2D" parent="groundcollision"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="groundcollision"]
 
 position = Vector2( -3.07397, 28.562 )
 scale = Vector2( 1.62509, 0.52064 )
@@ -234,7 +234,7 @@ shape = SubResource( 1 )
 one_way_collision = true
 _sections_unfolded = [ "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="playerShape" type="CollisionShape2D" parent="."]
 
 position = Vector2( -1.01272, 15.1961 )
 rotation = 0.0492684
