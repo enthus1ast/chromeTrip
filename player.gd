@@ -52,17 +52,16 @@ func _integrate_forces(state):
 	var final_force = Vector2()
 #	if alive:
 	if is_network_master():
+		
 		if !alive:
-			state.set_sleep_state(true)
-			collisionShape.disabled=true
-			collisionShape.update()
+			pass
+#			state.set_sleep_state(true)
+			
 		if reviving:
 			reviving = false
 			state.set_transform( Transform2D( Vector2(), Vector2(), slave_pos) )
-			state.set_sleep_state(false)
-#			state.set_sleep_state(false)			
-			collisionShape.disabled=false
-			collisionShape.update()
+#			state.set_sleep_state(false)
+#			state.set_sleep_state(false)
 			
 		
 #		print(position)
@@ -173,11 +172,10 @@ func _input(event):
 		can_jump = false
 		
 func _sound_finished():
-	print("sound finished")
-	soundPlayer.seek(0.0)
 	soundPlayer.stop()
 	
 sync func killed(_id):
+	get_parent().get_node(str(_id)).get_node("CollisionShape2D").disabled=true
 	get_parent().get_node(str(_id)).alive = false
 	get_parent().get_node(str(_id)).can_jump = false
 	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
@@ -185,17 +183,21 @@ sync func killed(_id):
 
 sync func RPCreanimate(_id, atPosition):
 	print(_id, " hasbeen reanimated")
+	get_parent().get_node(str(_id)).get_node("CollisionShape2D").disabled=false
+	get_parent().get_node(str(_id)).get_node("CollisionShape2D")
 #	get_parent().get_node(str(_id)).
 	get_parent().get_node(str(_id)).can_jump = false
 	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimRun")
 	get_parent().get_node(str(_id)).position = atPosition
 	get_parent().get_node(str(_id)).slave_pos = atPosition
-	if is_network_master():
-		can_jump = false
-		grounded = false
-		position = atPosition
-		slave_pos = atPosition
-		slave_motion = Vector2(0,0)
+#	if is_network_master():
+#		collisionShape.disabled=false
+#		alive = true
+#		can_jump = false
+#		grounded = false
+#		position = atPosition
+#		slave_pos = atPosition
+#		slave_motion = Vector2(0,0)
 	get_parent().get_node(str(_id)).alive = true
 	get_parent().get_node(str(_id)).reviving = true
 #	print("as master at: ",atPosition)
