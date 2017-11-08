@@ -27,7 +27,6 @@ __meta__ = {
 
 [node name="Area2D" type="Area2D" parent="."]
 
-editor/display_folded = true
 position = Vector2( -0.0690308, -312.541 )
 scale = Vector2( 1.00216, 10.7669 )
 input_pickable = true

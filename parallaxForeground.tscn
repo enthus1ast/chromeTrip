@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://parallaxForeground.gd" type="Script" id=1]
+[ext_resource path="res://200-offline-sprite.png" type="Texture" id=2]
+
+[node name="parallaxForeground" type="Node2D"]
+
+script = ExtResource( 1 )
+
+[node name="Sprites" type="Node2D" parent="."]
+
+pause_mode = 1
+visible = false
+_sections_unfolded = [ "Pause" ]
+
+[node name="Sprite1" type="Sprite" parent="Sprites"]
+
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 802, 3, 48, 98 )
+_sections_unfolded = [ "Region" ]
+
+[node name="Sprite2" type="Sprite" parent="Sprites"]
+
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 850, 3, 102, 98 )
+_sections_unfolded = [ "Region" ]
+
+[node name="Sprite3" type="Sprite" parent="Sprites"]
+
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 446, 3, 34, 68 )
+_sections_unfolded = [ "Region" ]
+
+[node name="Sprite4" type="Sprite" parent="Sprites"]
+
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 515, 3, 32, 68 )
+_sections_unfolded = [ "Region" ]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+

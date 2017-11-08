@@ -4,7 +4,7 @@
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Wolke.tscn" type="PackedScene" id=3]
 [ext_resource path="res://ground.png" type="Texture" id=4]
-[ext_resource path="res://restartPoint.tscn" type="PackedScene" id=5]
+[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=5]
 [ext_resource path="res://GameOver.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=1]
@@ -123,12 +123,13 @@ flat = false
 
 [node name="sprites" type="Node2D" parent="."]
 
-editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="wolken" type="Node2D" parent="sprites"]
+
+editor/display_folded = true
 
 [node name="Wolke" parent="sprites/wolken" instance=ExtResource( 3 )]
 
@@ -146,8 +147,11 @@ wideness = 3
 
 [node name="constantMovement" type="Node2D" parent="sprites"]
 
+editor/display_folded = true
+
 [node name="ground" type="Node2D" parent="sprites/constantMovement"]
 
+editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite1" type="Sprite" parent="sprites/constantMovement/ground"]
@@ -182,6 +186,8 @@ rect = Rect2( -10, -10, 20, 20 )
 
 [node name="enemys" type="Node2D" parent="sprites"]
 
+[node name="parallaxForeground" parent="sprites" instance=ExtResource( 5 )]
+
 [node name="players" type="Node2D" parent="."]
 
 position = Vector2( 51.2639, 47.1628 )
@@ -192,6 +198,7 @@ __meta__ = {
 
 [node name="groundCollision" type="StaticBody2D" parent="."]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 3
 collision_mask = 1
@@ -252,11 +259,6 @@ position = Vector2( 1040.72, 111.706 )
 scale = Vector2( 1.65385, 27.9423 )
 shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
-
-[node name="restartPoint" parent="." instance=ExtResource( 5 )]
-
-visible = false
-position = Vector2( 523, 345 )
 
 [node name="GameOverScreen" parent="." instance=ExtResource( 6 )]
 

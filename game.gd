@@ -53,9 +53,12 @@ func mapGen():
 	wolkenGen()
 	
 func respawnpointGen():
+	var distance = 1500
 	var restartPoint = Restartpoint.instance()
+	restartPointsNode.position.x=0
 	restartPointsNode.add_child(restartPoint)
-	restartPointsNode.position = Vector2( 2000,get_node("groundCollision/CollisionShape2D").position.y)
+	restartPoint.global_position = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)#get_node("groundCollision/CollisionShape2D").position.y
+#	print(restartPoint,restartPoint.position,restartPointsNode.position)
 #	return restartPoint
 	
 func enemysGen():

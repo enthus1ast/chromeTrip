@@ -110,14 +110,17 @@ func apply_force(state):
 		jump_time = 0
 		
 func _on_groundSensor_body_entered( body ):
-	print("haalloo: ",body.get_name())
-	if body.get_name()=="groundCollision":
-		
+	if body.has_node("playerShape"):
+		if body.get_name()!=get_name():
+			grounded = true
+	elif body.get_name()=="groundCollision":
 		grounded = true
 
 func _on_groundSensor_body_exited( body ):
-	print("haalloo: ",body.get_name())
-	if body.get_name()=="groundCollision":
+	if body.has_node("playerShape"):
+		if body.get_name()!=get_name():
+			grounded = false
+	elif body.get_name()=="groundCollision":
 		grounded = false
  
 #func _on_groundcollision_body_entered( body ):
@@ -237,10 +240,10 @@ func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive:
 		soundPlayer.stream = killedSound
 		soundPlayer.play(0.0)
+		get_parent().get_parent().allDead = true
 		if get_tree().is_network_server():
 			rpc("killed", get_name())
 			if allPlayersKilled():
-				get_parent().get_parent().allDead = true
 				rpc("showGameOverScreen")
 
 

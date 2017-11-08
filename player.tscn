@@ -146,7 +146,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1.77437, 1.9554 ) ]
+"values": [ Vector2( 1.77437, 1.87565 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("../playerShape:position")
@@ -157,7 +157,18 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 2.56813, 4.27007 ) ]
+"values": [ Vector2( 3.40043, 2.68738 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2.2629, 29.6091 ) ]
 }
 
 [node name="player" type="RigidBody2D" groups=[
@@ -166,7 +177,7 @@ tracks/3/keys = {
 
 position = Vector2( 114.098, 265.853 )
 input_pickable = false
-collision_layer = 1
+collision_layer = 5
 collision_mask = 1
 mode = 2
 mass = 0.01
@@ -188,9 +199,9 @@ _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform"
 
 [node name="playerShape" type="CollisionShape2D" parent="."]
 
-position = Vector2( -1.01272, 15.1961 )
-rotation = 0.0492684
-scale = Vector2( 2.33423, 1.22343 )
+position = Vector2( 3.40043, 2.68738 )
+rotation = 0.484135
+scale = Vector2( 1.77437, 1.87565 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z" ]
 
@@ -203,7 +214,7 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 9.8
 linear_damp = 0.1
 angular_damp = 1.0
-collision_layer = 2
+collision_layer = 6
 audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility" ]
@@ -226,7 +237,7 @@ scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
 offset = Vector2( 6.09799, -42.0819 )
 region_enabled = true
-region_rect = Rect2( 2204, 1, 115, 96 )
+region_rect = Rect2( 1855, 1, 85, 96 )
 _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
 __meta__ = {
 "_edit_lock_": true
