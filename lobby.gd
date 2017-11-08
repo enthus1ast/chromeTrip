@@ -180,7 +180,9 @@ func _connected_fail():
 func _server_disconnected():
 	lobby.set_visible(false)
 	menu.set_visible(true)
-	remove_child(game)
+	call_deferred("remove_child",game)
+	
+#	remove_child(game)
 	game.queue_free()
 	eNet.close_connection()
 	eNet = NetworkedMultiplayerENet.new() #workaround
