@@ -14,15 +14,9 @@ func _ready():
 	# Initialization here
 	pass
 
-
-
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
-
-
 func _on_ObstacleScreenExitNotifier_screen_exited():
+	print("obstacle deleted")
+	get_parent().remove_child(self)
 	queue_free()
 #	get_parent().call_deferred("remove_child",self)
 	pass # replace with function body

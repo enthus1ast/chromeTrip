@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/obstacles.gd" type="Script" id=1]
 [ext_resource path="res://200-offline-sprite.png" type="Texture" id=2]
@@ -13,6 +13,11 @@ height = 10.6334
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+
+custom_solver_bias = 0.0
+points = PoolVector2Array( 0, -10, 8.66025, 5, -8.66025, 5 )
 
 [node name="obstacle" type="Node2D"]
 
@@ -185,6 +190,52 @@ position = Vector2( 0.291985, -0.875975 )
 scale = Vector2( 3.15574, 3.09959 )
 shape = SubResource( 2 )
 disabled = true
+
+[node name="kaktuss8" type="KinematicBody2D" parent="."]
+
+visible = false
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+
+[node name="Sprite2" type="Sprite" parent="kaktuss8"]
+
+position = Vector2( -34.725, 23.9678 )
+rotation = -0.0977568
+scale = Vector2( 0.75029, 0.667407 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 582, 3, 33, 68 )
+_sections_unfolded = [ "Region", "Transform" ]
+
+[node name="Sprite3" type="Sprite" parent="kaktuss8"]
+
+position = Vector2( 21.4198, 20.1838 )
+rotation = -0.0252033
+scale = Vector2( 0.831159, 0.708963 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 582, 3, 33, 68 )
+_sections_unfolded = [ "Region", "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="kaktuss8"]
+
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 802, 3, 48, 98 )
+_sections_unfolded = [ "Region", "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="obstacleShape" type="CollisionShape2D" parent="kaktuss8"]
+
+position = Vector2( -2.16679, 17.0149 )
+scale = Vector2( 7.01755, 6.56351 )
+shape = SubResource( 3 )
+disabled = true
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="screen_exited" from="ObstacleScreenExitNotifier" to="." method="_on_ObstacleScreenExitNotifier_screen_exited"]
 

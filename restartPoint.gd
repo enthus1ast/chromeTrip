@@ -41,9 +41,8 @@ func _on_Area2D_body_shape_entered( body_id, body, body_shape, area_shape ):
 		doRespawn(body)
 	
 
-
 func _on_VisibilityNotifier2D_screen_exited():
-
+	get_parent().remove_child(self)
 #	get_parent().call_deferred("remove_child",self)
 	queue_free()
 	pass # replace with function body

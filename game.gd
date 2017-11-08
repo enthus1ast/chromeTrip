@@ -14,9 +14,9 @@ var score = 0
 var placeholderScore
 var placeholderScoreSize
 var spriteWidth
-var obstaclesCount = 4
-var enemysCount = 4
-var wolkenCount = 4
+var obstaclesCount = 8
+var enemysCount = 8
+var wolkenCount = 8
 var allDead = false
 
 onready var playersNode = get_node("players")
@@ -77,11 +77,18 @@ func obstaclesGen():
 	var i = 0
 	while i < obstaclesCount:
 		var obstacle = Obstacles.instance()
-		obstacle.choice("kaktuss",round(rand_range(1,7)))
+		var id = round(rand_range(1,8))
+		obstacle.choice("kaktuss",id)
 		obstacle.global_position=Vector2(i*1000+rand_range(1024,2000)-obstaclesNode.global_position.x,rand_range(350,390))
 		var scale = rand_range(0.8,1.2)
 		obstacle.scale = Vector2(scale,scale)
+		if rand_range(0,2) > 1:
+			print("flipped")
+			obstacle.get_node("kaktuss"+str(id)).get_node("Sprite").flip_h = true
+		else:
+			print("normal")
 		obstaclesNode.add_child(obstacle)
+			
 		i += 1
 	i = 0
 	
@@ -128,12 +135,13 @@ func _process(delta):
 # two ground-tiles for seamless infinite maps
 # everytime a tile hast left the screen, position.x is updating and new obstacles are generating
 func _on_VisibilityNotifier2D_screen_exited():
+	
 	if groundSprite1.position.x<groundSprite2.position.x:
 		groundSprite1.position.x = groundSprite2.position.x + spriteWidth*groundSprite1.scale.x
 	else:
 		groundSprites.position.x=0
 		groundSprite2.position.x = groundSprite1.position.x + spriteWidth*groundSprite1.scale.x
-	mapGen()
+		mapGen()
 	
 func endGame():
 	get_parent().remove_child(self)
