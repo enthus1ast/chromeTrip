@@ -251,4 +251,6 @@ visible = false
 
 [connection signal="screen_exited" from="sprites/constantMovement/ground/Sprite2/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
+[connection signal="restartGame" from="GameOverScreen" to="." method="_on_GameOverScreen_restartGame"]
+
 

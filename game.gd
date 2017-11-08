@@ -30,7 +30,6 @@ onready var groundSprite2 = groundSprites.get_node("Sprite2")
 onready var pointsLabel = get_node("hud/points")
 #
 func _ready():
-	
 	spriteWidth = groundSprite1.get_texture().get_size().x
 	placeholderScore = pointsLabel.text
 	placeholderScoreSize = placeholderScore.length()
@@ -44,6 +43,7 @@ func _ready():
 	seed(0)
 	mapGen()
 	set_process(true)
+#	 "restartGame"
 	pass
 	
 func mapGen():
@@ -136,3 +136,18 @@ func _on_menu_pressed():
 	
 	
 	
+
+func _on_GameOverScreen_restartGame():
+#	pass # replace with function body
+#	var myroot = get_tree().get_root()
+#	print(get_tree())
+#	print(get_tree().get_root())
+#	print(get_tree().get_root().get_node("Control"))
+#	print(get_tree().get_root().get_node("Control"))
+	
+
+	get_tree().get_root().get_node("Control").askForRestartGame()
+
+	
+	
+#	start_game

@@ -119,7 +119,7 @@ remote func register_new_player(_player):
 		areAllReady()
 
 remote func startGame():
-
+	print("startGame was called")
 	if(has_node("game")):
 		pass
 	else:
@@ -127,7 +127,6 @@ remote func startGame():
 		add_child(game)
 	var cnt = 0
 	for p in players:
-		
 		players[p].node = Player.instance()
 		players[p].node.get_node("Label").set_text(players[p].name)
 		
@@ -147,7 +146,6 @@ remote func startGame():
 			players[p].node.set_network_master(players[p].id)
 #			player.add_child(camera_scene.instance()) # Add camera to your player	
 		# Add the player (or you) to the world!
-		
 		print("players:",players[p]," for ",currentPlayer.name)
 	
 ################## disconnected unregister
@@ -428,3 +426,19 @@ func _input(event):
 	if event.is_action_pressed("ui_enter") and chatInput.has_focus():
 		rpc("sendMessage",currentPlayer.name,chatInput.get_text())
 		sendMessage(currentPlayer.name,chatInput.get_text())
+
+func askForRestartGame():
+	rpc("restartGame")
+
+sync func restartGame():
+#	var myroot = get_tree().get_root()
+#	print(myroot.get_node("Control"))
+#	var co = get_tree().get_root().get_node("Control") #.remove_child("game")
+#	var ga = get_tree().get_root().get_node("Control/game")
+#	co.remove_child(ga)
+	remove_child(game)
+	game.queue_free()	
+	if get_tree().is_network_server():
+		startGame()
+		rpc("startGame")	
+	
