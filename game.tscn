@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://ground.png" type="Texture" id=3]
-[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=4]
-[ext_resource path="res://GameOver.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/berge/berg1.png" type="Texture" id=3]
+[ext_resource path="res://ground.png" type="Texture" id=4]
+[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GameOver.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -151,6 +152,30 @@ texture = SubResource( 3 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
 
+[node name="Gebirge" type="Node2D" parent="."]
+
+position = Vector2( 219.788, 299.122 )
+scale = Vector2( 5, 5 )
+
+[node name="Sprite" type="Sprite" parent="Gebirge"]
+
+modulate = Color( 1, 1, 1, 0.988941 )
+scale = Vector2( 1, 1 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="Sprite2" type="Sprite" parent="Gebirge"]
+
+modulate = Color( 1, 1, 1, 0.988941 )
+position = Vector2( 82.7714, 7.64497 )
+scale = Vector2( 1, 1 )
+texture = ExtResource( 3 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 0, 0, 100, 20 )
+region_filter_clip = true
+_sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
+
 [node name="gradientGround" type="Sprite" parent="."]
 
 position = Vector2( -11.7661, 515.242 )
@@ -181,7 +206,7 @@ _sections_unfolded = [ "Transform" ]
 
 editor/display_folded = true
 position = Vector2( 2400, 380 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -194,7 +219,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 editor/display_folded = true
 position = Vector2( 4800, 380 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -209,7 +234,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 [node name="enemys" type="Node2D" parent="sprites"]
 
-[node name="parallaxForeground" parent="sprites" instance=ExtResource( 4 )]
+[node name="parallaxForeground" parent="sprites" instance=ExtResource( 5 )]
 
 [node name="players" type="Node2D" parent="."]
 
@@ -283,7 +308,7 @@ scale = Vector2( 1.65385, 27.9423 )
 shape = SubResource( 7 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="GameOverScreen" parent="." instance=ExtResource( 5 )]
+[node name="GameOverScreen" parent="." instance=ExtResource( 6 )]
 
 editor/display_folded = true
 visible = false
