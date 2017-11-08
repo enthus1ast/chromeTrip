@@ -53,14 +53,15 @@ func _integrate_forces(state):
 #	if alive:
 	if is_network_master():
 		if !alive:
-			state.set_sleep_state(true)
+#			state.set_sleep_state(true)
 			collisionShape.disabled=true
 		if reviving:
 #			state.set_sleep_state(true)
+			state.set_sleep_state(false)
 			state.set_transform( Transform2D( Vector2(), Vector2(), slave_pos) )
 			reviving = false
 			collisionShape.disabled=false
-			state.set_sleep_state(false)
+			
 		
 #		print(position)
 		directional_force = DIRECTION.ZERO  # +FOWARD_MOTION
@@ -123,7 +124,7 @@ func _on_groundcollision_body_exited( body ):
 	grounded = false
 
 sync func playAnimation(_string):
-	get_node("Sprite/AnimationPlayer").play(_string)
+	animPlayer.play(_string)
 	
 sync func animSpeed(_speed):
 	get_node("Sprite/AnimationPlayer").set_speed_scale(_speed)
