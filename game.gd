@@ -42,9 +42,15 @@ remote func setReadyToPlay(playerid):
 	# when every player ready emit "gogo" event.
 	print("playerNodeC", playersNode.get_children())
 	playersNode.get_node(playerid).readyToPlay = true
+	
 	if everyPlayerReady():
 		mapGen()
 		rpc("gogo")
+
+
+func _player_disconnected(playerid):
+	setReadyToPlay(str(playerid)) # test
+
 
 sync func gogo():
 	# server emits this to start the game when everybody 
@@ -58,6 +64,7 @@ func _ready():
 	placeholderScoreSize = placeholderScore.length()
 	seed(0)
 	if get_tree().is_network_server():
+		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 		pass
 		get_tree().set_pause(true)
 		setReadyToPlay("1")
