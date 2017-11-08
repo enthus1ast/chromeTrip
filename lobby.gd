@@ -42,7 +42,26 @@ signal server_error()
 signal connection_success()
 signal connection_fail()
 
+func computeColor(st):
+  # computes rgb froms string
+  var commulated=0;
+  for ch in st:
+    commulated = commulated + ch.to_ascii()[0]
+  var communist = commulated%235 + 20
+  #  return "rgb("+communist+","+Math.pow(communist,2)%255+","+Math.pow(communist,3)%255+")"
+  return Color( 
+	"%x" % [communist] +
+	"%x" % [int(pow(int(communist),2)) % 255] +
+	"%x" % [int(pow(int(communist),3)) % 255] 
+#	255
+	#128, 128,128,128
+#	"d69b9b"
+  )
+
 func _ready():
+	print("%x" %[128] )
+	print("sn0re: ", computeColor("sn0re"))
+#	get_node("Label").add_font_override()
 	eNet = NetworkedMultiplayerENet.new()
 	ipInput.set_text("127.0.0.1")
 #	chatInput.set_max_chars(100)
@@ -126,6 +145,8 @@ remote func startGame():
 	for p in players:
 		players[p].node = Player.instance()
 		players[p].node.get_node("Label").set_text(players[p].name)
+#		players[p].node.get_node("Label").set("custom_colors/font_color" ,computeColor(players[p].name))
+		players[p].node.get_node("Label").add_color_override("font_color" ,computeColor(players[p].name))
 		
 		# Set initial position, not spawning behind each other 
 		players[p].node.position = Vector2(10 + cnt, 0)
@@ -218,8 +239,11 @@ remote func updateList(_list):
 func addNewListItem(_peer):
 	if !lobby.get_node("Container/body/RichTextLabel/VBoxContainer").has_node(str(_peer.id)):
 		var listItem = PlayerListElement.instance()
+		
 		listItem.get_node("id").set_text(str(_peer.id))
 		listItem.get_node("name").set_text(_peer.name)
+		listItem.get_node("name").add_color_override("font_color" ,computeColor(_peer.name))
+		 
 		if currentPlayer.id!=_peer.id:
 			listItem.get_node("readyCheckbox").disabled=true
 			if _peer.isReady:
@@ -351,6 +375,7 @@ remote func sendMessage(_player,_value):
 		var message = Label.new()
 		var scrollContainer = lobby.get_node("Container/chat/ScrollContainer") 
 		message.set_text(_player+": "+_value)
+		message.add_color_override("font_color" ,computeColor(_player))
 		scrollContainer.get_node("VBoxContainer").add_child(message)
 		scrollContainer.set_v_scroll(scrollContainer.get_item_and_children_rect().size.y)
 		scrollContainer.update()
