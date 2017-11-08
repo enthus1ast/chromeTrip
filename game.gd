@@ -47,48 +47,91 @@ func _ready():
 	set_process(true)
 	
 func mapGen():
-	obstaclesGen()
-	respawnpointGen()
-	enemysGen()
-	wolkenGen()
-	
-func respawnpointGen():
+	if get_tree().is_network_server():
+		obstaclesGen()
+#		respawnpointGen()
+#		enemysGen()
+#		wolkenGen()
+
+#
+#sync func rpcRespawnpoint(_position):
+#	print("created RESPAWN at", _position)
+#	var restartPoint = Restartpoint.instance()
+#	restartPointsNode.add_child(respawnPoint.instance())
+#
+#func respawnpointGen():
+#	var distance = 1500
+#	var restartPoint = Restartpoint.instance()
+#	restartPointsNode.position.x=0
+#	restartPoint.global_position = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)#get_node("groundCollision/CollisionShape2D").position.y
+#	var pos = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)
+#	rpc("rpcRespawnpoint", pos)
+##	restartPointsNode.add_child(restartPoint)
+#
+
+
+sync func rpcRespawnpoint():
+	print("created RESPAWN ")
 	var distance = 1500
 	var restartPoint = Restartpoint.instance()
 	restartPointsNode.position.x=0
 	restartPointsNode.add_child(restartPoint)
-	restartPoint.global_position = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)#get_node("groundCollision/CollisionShape2D").position.y
+	restartPoint.global_position = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)#get_node("groundCollision/CollisionShape2D").position.y	
+	
+func respawnpointGen():
+#	var distance = 1500
+#	var restartPoint = Restartpoint.instance()
+#	restartPointsNode.position.x=0
+#	restartPoint.global_position = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)#get_node("groundCollision/CollisionShape2D").position.y
+	rpc("rpcRespawnpoint")  #, restartPoint.pack())
+#	restartPointsNode.add_child(restartPoint)
 #	print(restartPoint,restartPoint.position,restartPointsNode.position)
 #	return restartPoint
+	
+	
+sync func rpcEnemy(pos, scale, choice):#	
+	var enemy = Enemys.instance()
+	enemy.choice("enemy",choice) ##only one available
+	enemy.position = pos
+	enemy.scale = scale
+	enemysNode.add_child(enemy)
 	
 func enemysGen():
 	var i = 0
 	while i < enemysCount:
-		var enemy = Enemys.instance()
-		enemy.choice("enemy",round(rand_range(1,1))) ##only one available
-		enemy.position=Vector2(i*800+rand_range(1024,2000)-enemysNode.position.x,rand_range(10,250))
-		var scale = rand_range(0.3,1)
-		enemy.scale = Vector2(scale,scale)
-		enemysNode.add_child(enemy)
+#		var enemy = Enemys.instance()
+		var choice = round(rand_range(1,1)) ##only one available
+		var pos = Vector2(i*800+rand_range(1024,2000)-enemysNode.position.x,rand_range(10,250))
+		var scaleDice = rand_range(0.3,1)
+		var scale = Vector2(scaleDice,scaleDice)
+		rpc("rpcEnemy", pos, scale, choice)
 		i += 1
 	i = 0
-	
+
+sync func rpcObstacles(pos, flipped, scale ,choice):
+	var obstacle = Obstacles.instance()
+	obstacle.choice("kaktuss",choice)
+	obstacle.global_position= pos
+	obstacle.scale = Vector2(scale,scale)
+	if flipped:
+		print("flipped")
+		obstacle.get_node("kaktuss"+str(choice)).get_node("Sprite").flip_h = true
+	else:
+		print("normal")
+	obstaclesNode.add_child(obstacle)
+
 func obstaclesGen():
 	var i = 0
 	while i < obstaclesCount:
-		var obstacle = Obstacles.instance()
-		var id = round(rand_range(1,8))
-		obstacle.choice("kaktuss",id)
-		obstacle.global_position=Vector2(i*1000+rand_range(1024,2000)-obstaclesNode.global_position.x,rand_range(350,390))
+		var pos = Vector2(i*1000+rand_range(1024,2000)-obstaclesNode.global_position.x,rand_range(350,390))
+		var flipped
+		var choice = round(rand_range(1,8))
 		var scale = rand_range(0.8,1.2)
-		obstacle.scale = Vector2(scale,scale)
 		if rand_range(0,2) > 1:
-			print("flipped")
-			obstacle.get_node("kaktuss"+str(id)).get_node("Sprite").flip_h = true
+			flipped = true
 		else:
-			print("normal")
-		obstaclesNode.add_child(obstacle)
-			
+			flipped = false
+		rpc("rpcObstacles", pos, flipped, scale, choice)
 		i += 1
 	i = 0
 	
