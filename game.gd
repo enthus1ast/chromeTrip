@@ -5,23 +5,28 @@ var offsetY = -50
 onready var Restartpoint = preload("res://restartPoint.tscn")
 onready var Obstacles = preload("res://assets/obstacles.tscn")
 onready var Enemys = preload("res://assets/enemys.tscn")
+onready var Collectables = preload("res://assets/collectables.tscn")
 onready var Wolke = preload("res://Wolke.tscn")
 onready var viewportSize = get_viewport().size
 
 var fakeSpeed=300
 var players
 var score = 0
+var finalScore = 0
+var distanceWalked = 0
 var placeholderScore
 var placeholderScoreSize
 var spriteWidth
 var obstaclesCount = 8
 var enemysCount = 8
 var wolkenMaxCount = 10
+var collectablesCount = 8
 var allDead = false
 
 onready var playersNode = get_node("players")
 onready var spritesNode = get_node("sprites")
 onready var enemysNode = spritesNode.get_node("enemys")
+onready var collectablesNode = spritesNode.get_node("collectables")
 onready var constMoveNode = spritesNode.get_node("constantMovement")
 onready var restartPointsNode = constMoveNode.get_node("restartPoints")
 onready var obstaclesNode = constMoveNode.get_node("obstacles")
@@ -80,6 +85,7 @@ func mapGen():
 		respawnpointGen()
 		enemysGen()
 		wolkenGen()
+		collectablesGen()
 
 sync func rpcRespawnpoint(pos):
 	print("created RESPAWN ")
@@ -93,6 +99,22 @@ func respawnpointGen():
 	var restartPoint = Restartpoint.instance()
 	var pos = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)
 	rpc("rpcRespawnpoint", pos)
+	
+sync func rpcCollectable(pos):
+	var collectable = Collectables.instance()
+	collectable.position = pos
+#	collectable.scale = scale
+	collectablesNode.add_child(collectable)
+
+func collectablesGen():
+	var i = 0
+	while i < collectablesCount:
+#		var enemy = Enemys.instance()
+		var pos = Vector2(i*400+rand_range(1024,2000)-collectablesNode.position.x,rand_range(10,330))
+		rpc("rpcCollectable", pos)
+		i += 1
+	i = 0
+
 	
 sync func rpcEnemy(pos, scale, choice):#	
 	var enemy = Enemys.instance()
@@ -156,9 +178,11 @@ func wolkenGen():
 func _process(delta):
 	constMoveNode.position.x-=fakeSpeed*delta
 	enemysNode.position.x-=fakeSpeed*delta*1.5
+	collectablesNode.position.x-=fakeSpeed*delta*1.5
 	if !allDead:
-		score = round(abs(constMoveNode.position.x)/10) # scoring from walked distance
-	pointsLabel.text=str(score)
+		distanceWalked = round(abs(constMoveNode.position.x)/10) # scoring from walked distance
+		finalScore = distanceWalked + score
+	pointsLabel.text=str(finalScore)
 	var playersText = "" 
 	playersLabel.bbcode_text = ""
 	for player in get_tree().get_nodes_in_group("players"):

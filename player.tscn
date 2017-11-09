@@ -301,6 +301,7 @@ _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform"
 
 [node name="particleSystems" type="Node2D" parent="."]
 
+editor/display_folded = true
 _sections_unfolded = [ "Material", "Transform", "Visibility" ]
 
 [node name="jumpParticles" type="Particles2D" parent="particleSystems"]
@@ -375,6 +376,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="."]
 
+editor/display_folded = true
 position = Vector2( -2.2629, 29.6091 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )

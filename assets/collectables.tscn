@@ -1,0 +1,107 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://assets/collectables.gd" type="Script" id=1]
+[ext_resource path="res://assets/heartSpriteAnim/0001.png" type="Texture" id=2]
+[ext_resource path="res://assets/heartSpriteAnim/0002.png" type="Texture" id=3]
+[ext_resource path="res://assets/heartSpriteAnim/0003.png" type="Texture" id=4]
+[ext_resource path="res://assets/heartSpriteAnim/0004.png" type="Texture" id=5]
+[ext_resource path="res://assets/heartSpriteAnim/0005.png" type="Texture" id=6]
+[ext_resource path="res://assets/heartSpriteAnim/0006.png" type="Texture" id=7]
+[ext_resource path="res://assets/heartSpriteAnim/0007.png" type="Texture" id=8]
+[ext_resource path="res://assets/heartSpriteAnim/0008.png" type="Texture" id=9]
+[ext_resource path="res://assets/heartSpriteAnim/0009.png" type="Texture" id=10]
+[ext_resource path="res://assets/heartSpriteAnim/0010.png" type="Texture" id=11]
+[ext_resource path="res://assets/heartSpriteAnim/0011.png" type="Texture" id=12]
+[ext_resource path="res://assets/heartSpriteAnim/0012.png" type="Texture" id=13]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[sub_resource type="SpriteFrames" id=2]
+
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "default",
+"speed": 15.0
+} ]
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="Animation" id=3]
+
+resource_name = "collectablesSwing"
+length = 2.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1.5 ),
+"transitions": PoolRealArray( 0.560243, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -10 ), Vector2( 0, 10 ) ]
+}
+
+[node name="collectable" type="Node2D"]
+
+script = ExtResource( 1 )
+
+[node name="sprites" type="Node2D" parent="."]
+
+position = Vector2( 0, 6.64484 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="heartArea" type="Area2D" parent="sprites"]
+
+editor/display_folded = true
+scale = Vector2( 0.356363, 0.356363 )
+input_pickable = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Audio Bus", "Collision", "Material", "Pickable", "Transform", "Visibility", "Z" ]
+
+[node name="heartCollShape" type="CollisionShape2D" parent="sprites/heartArea"]
+
+position = Vector2( 0, 5 )
+scale = Vector2( 3.84615, 4.23077 )
+shape = SubResource( 1 )
+
+[node name="heartAnimatedSprite" type="AnimatedSprite" parent="sprites/heartArea"]
+
+editor/display_folded = true
+modulate = Color( 1, 0.300781, 0.300781, 1 )
+frames = SubResource( 2 )
+animation = "default"
+frame = 1
+playing = true
+_sections_unfolded = [ "Material", "Visibility" ]
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="sprites/heartArea/heartAnimatedSprite"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="sprites"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/collectablesSwing = SubResource( 3 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "collectablesSwing"
+
+[connection signal="body_entered" from="sprites/heartArea" to="." method="_on_heartArea_body_entered"]
+
+[connection signal="screen_exited" from="sprites/heartArea/heartAnimatedSprite/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+
+

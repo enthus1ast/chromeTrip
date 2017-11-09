@@ -56,5 +56,5 @@ func _process(delta):
 #			get_parent().call_deferred("remove_child",object)
 #			call_deferred("queue_free")
 			object.queue_free()
-			print("prallaxforground sprite deleted")
+#			print("prallaxforground sprite deleted")
 	

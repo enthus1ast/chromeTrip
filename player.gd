@@ -250,6 +250,7 @@ sync func showGameOverScreen():
 	get_tree().get_root().get_node("Control/game/GameOverScreen").set_visible(true)
 
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
+	print("contact all: ",body_id, body, body_shape, local_shape )
 
 	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive and !isKillProtected:
 		soundPlayer.stream = killedSound
