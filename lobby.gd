@@ -11,6 +11,7 @@ onready var startButton = lobby.get_node("Container/startLobbyButton")
 onready var chatInput = lobby.get_node("Container/chatInput/chatInput")
 
 onready var networkPanel = get_node("menu/networkPanel")
+onready var highscore = get_node("menu/Highscore")
 onready var ipInput = networkPanel.get_node("connect/ip")
 onready var version = get_node("menu/Version")
 onready var mainMenu = get_node("menu/MainMenu")
@@ -483,6 +484,7 @@ func _on_name_text_changed( text ):
 
 func _on_back_pressed():
 	networkPanel.hide()
+	highscore.hide()
 	mainMenu.show()
 	
 	

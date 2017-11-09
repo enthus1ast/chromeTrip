@@ -4,7 +4,7 @@
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://ButtonQuit.tscn" type="PackedScene" id=3]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=1]
 
 size = 16
 use_mipmaps = false
@@ -57,7 +57,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.379899, 0.933594, 0.0364685, 1 )
 toggle_mode = false
 enabled_focus_mode = 2
@@ -81,7 +81,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.816406, 0.787879, 0.0861053, 1 )
 disabled = true
 toggle_mode = false
@@ -92,7 +92,7 @@ text = "Settings"
 flat = false
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
-[node name="Profile" type="Button" parent="VBoxContainer"]
+[node name="HighScore" type="Button" parent="VBoxContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -106,14 +106,13 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.123688, 0.576657, 0.753906, 1 )
-disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Profile"
+text = "HighScore"
 flat = false
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
@@ -123,7 +122,7 @@ _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_ButtonRestart_pressed"]
 
-[connection signal="pressed" from="VBoxContainer/Profile" to="." method="_on_ButtonMenu_pressed"]
+[connection signal="pressed" from="VBoxContainer/HighScore" to="." method="_on_HighScore_pressed"]
 
 [connection signal="pressed" from="VBoxContainer/ButtonQuit" to="." method="_on_ButtonQuit_pressed"]
 
