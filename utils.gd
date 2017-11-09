@@ -21,3 +21,36 @@ func computeColor(st):
     pad2(("%x" % [int(pow(int(communist),3)) % 255])) #+ 
   )
   return co
+
+#func putHighscore(score, team): 
+#	# puts a line into the crypted highscore file.
+#	var file = File.new()
+#	file.open_encrypted_with_pass( "user://highscore.dat", file.READ_WRITE, "code0" )
+#	var tup = [score, team]
+#	var line = to_json(tup)
+#	print("Line:", line)
+#	file.store_line(line)
+#	file.close()
+#
+#func getHighscore(cnt):
+#	# returns the sorted highscore items
+#	var file = File.new()
+#	file.open_encrypted_with_pass( "user://highscore.dat", file.READ, "code0" )
+#	while(not file.eof_reached()):
+#		print(file.get_line())
+#	file.close()
+#
+#func _ready():
+#	putHighscore(1000, ["Foo", "Baa"])
+#	putHighscore(1100, ["Foo", "Baa"])
+#	putHighscore(1120, ["Foo", "Baa"])
+#	getHighscore(1)
+#  func save(content):
+#
+#
+#  func load():
+#      var file = File.new()
+#      file.open("user://save_game.dat", file.READ)
+#      var content = file.get_as_text()
+#      file.close()
+#      return content
