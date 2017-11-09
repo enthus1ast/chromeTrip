@@ -133,6 +133,8 @@ func _on_groundSensor_body_entered( body ):
 			grounded = true
 	elif body.get_name()=="groundCollision":
 		grounded = true
+		if alive:
+			cameraNode.landRumble(linear_velocity.y)
 
 func _on_groundSensor_body_exited( body ):
 	if body.has_node("playerShape"):
@@ -190,7 +192,7 @@ func _input(event):
 				keys[2]=true
 				if grounded or can_jump:
 					rpc("rpcJumpParticles",get_name())
-#					cameraNode.rumble(1)
+					cameraNode.jumpRumble()
 					
 
 					if !soundPlayer.is_playing():
@@ -210,6 +212,7 @@ func _sound_finished():
 	
 sync func killed(_id):
 	if !isKillProtected:
+		cameraNode.killedRumble()
 		get_parent().get_node(str(_id)).get_node("playerShape").disabled=true
 		get_parent().get_node(str(_id)).alive = false
 		get_parent().get_node(str(_id)).can_jump = false

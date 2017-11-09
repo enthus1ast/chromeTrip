@@ -52,7 +52,7 @@ width = 2048
 
 [sub_resource type="Gradient" id=7]
 
-offsets = PoolRealArray( 0.00159236, 0.0159236, 0.701044, 0.89295 )
+offsets = PoolRealArray( 0.00159236, 0.0159236, 0.463668, 0.726644 )
 colors = PoolColorArray( 1, 0.971924, 0.28125, 1, 0.984234, 0.984234, 0.984234, 1, 1, 0.966064, 0.457031, 1, 0.933594, 0.799971, 0.444916, 1 )
 _sections_unfolded = [ "Resource" ]
 
@@ -99,6 +99,7 @@ margin_bottom = 137.0
 
 [node name="hud" type="CanvasLayer" parent="."]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -187,26 +188,20 @@ margin_bottom = 98.0
 
 [node name="sprites" type="Node2D" parent="."]
 
-editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="world" type="Node2D" parent="sprites"]
 
-editor/display_folded = true
-
 [node name="gradientSky" type="Sprite" parent="sprites/world"]
 
-position = Vector2( 1053.87, 185.287 )
+position = Vector2( 1052.72, 182.43 )
 rotation = -1.5708
-scale = Vector2( 0.181828, 1072.69 )
+scale = Vector2( 0.20658, 2168.35 )
 texture = SubResource( 4 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Gebirge2" type="Node2D" parent="sprites/world"]
 
@@ -270,24 +265,21 @@ _sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
 
 [node name="mist" type="Sprite" parent="sprites/world"]
 
-position = Vector2( -14.1394, 193.858 )
+position = Vector2( -13.0456, 193.858 )
 rotation = 1.5708
-scale = Vector2( 0.183399, 1076.43 )
+scale = Vector2( 0.183399, 2114.18 )
 texture = SubResource( 6 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Material", "Transform", "Visibility" ]
 
 [node name="gradientGround" type="Sprite" parent="sprites/world"]
 
-position = Vector2( -14.6481, 494.827 )
+position = Vector2( -13.5201, 529.45 )
 rotation = 1.5708
-scale = Vector2( 0.112034, 1078.67 )
+scale = Vector2( 0.145033, 2149.04 )
 texture = SubResource( 8 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="wolken" type="Node2D" parent="sprites"]
 
@@ -418,6 +410,8 @@ _sections_unfolded = [ "Transform" ]
 
 editor/display_folded = true
 visible = false
+
+[node name="cameraNode" parent="." instance=ExtResource( 12 )]
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 
