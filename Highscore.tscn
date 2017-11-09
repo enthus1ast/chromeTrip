@@ -18,14 +18,30 @@ size_flags_vertical = 1
 script = ExtResource( 1 )
 highscoreCount = 500
 
+[node name="Panel" type="Panel" parent="."]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 730.0
+margin_bottom = 402.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 721.0
-margin_bottom = 397.0
+margin_left = 13.0
+margin_top = 10.0
+margin_right = 713.0
+margin_bottom = 394.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1

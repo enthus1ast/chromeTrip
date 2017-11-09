@@ -92,6 +92,7 @@ position = Vector2( 38, 66 )
 [node name="networkPanel" type="Panel" parent="menu"]
 
 editor/display_folded = true
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -796,7 +797,6 @@ max_lines_visible = -1
 
 [node name="MainMenu" parent="menu" instance=ExtResource( 3 )]
 
-visible = false
 margin_left = 128.0
 margin_top = 182.0
 margin_right = 168.0
@@ -849,10 +849,10 @@ _sections_unfolded = [ "BBCode", "custom_fonts" ]
 [node name="Highscore" parent="menu" instance=ExtResource( 5 )]
 
 visible = false
-margin_left = 213.0
-margin_top = 160.0
-margin_right = 253.0
-margin_bottom = 200.0
+margin_left = 144.0
+margin_top = 147.0
+margin_right = 184.0
+margin_bottom = 187.0
 
 [connection signal="pressed" from="menu/networkPanel/connect/connect" to="." method="_on_connect_pressed"]
 

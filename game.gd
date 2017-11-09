@@ -230,7 +230,7 @@ func _on_menu_pressed():
 #	controlNode.eNet = NetworkedMultiplayerENet.new()
 #	controlNode.get_node("menu").set_visible(true)
 #	endGame()
-	get_node("PopupMenu").showMenu()
+	get_node("hud/PopupMenu").showMenu()
 	
 func _on_GameOverScreen_restartGame():
 	get_tree().get_root().get_node("Control").askForRestartGame()
