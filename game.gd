@@ -59,6 +59,7 @@ sync func gogo():
 	set_process(true)
 	
 func _ready():
+	set_process_input(true)
 	spriteWidth = groundSprite1.get_texture().get_size().x
 	placeholderScore = pointsLabel.text
 	placeholderScoreSize = placeholderScore.length()
@@ -197,13 +198,27 @@ func endGame():
 	queue_free()
 
 func _on_menu_pressed():
-	pass # replace with function body
-	var controlNode = get_tree().get_root().get_node("Control")
-	get_tree().set_network_peer(null)
-	controlNode.eNet.close_connection()
-	controlNode.eNet = NetworkedMultiplayerENet.new()
-	controlNode.get_node("menu").set_visible(true)
-	endGame()
+#	pass # replace with function body
+#	var controlNode = get_tree().get_root().get_node("Control")
+#	get_tree().set_network_peer(null)
+#	controlNode.eNet.close_connection()
+#	controlNode.eNet = NetworkedMultiplayerENet.new()
+#	controlNode.get_node("menu").set_visible(true)
+#	endGame()
+	get_node("PopupMenu").showMenu()
 	
 func _on_GameOverScreen_restartGame():
 	get_tree().get_root().get_node("Control").askForRestartGame()
+
+
+func _on_PopupMenu_restartGame():
+	get_tree().get_root().get_node("Control").askForRestartGame()
+
+func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		var popup = self.get_node("PopupMenu")
+		if popup.visible:
+			popup.hideMenu()
+		else:
+			popup.showMenu()
+

@@ -1,11 +1,14 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/berge/berg1.png" type="Texture" id=3]
-[ext_resource path="res://ground.png" type="Texture" id=4]
-[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=5]
-[ext_resource path="res://GameOver.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/berge/berg2.png" type="Texture" id=4]
+[ext_resource path="res://assets/berge/vulkan1.png" type="Texture" id=5]
+[ext_resource path="res://PopupMenu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ground.png" type="Texture" id=7]
+[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=8]
+[ext_resource path="res://GameOver.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -26,13 +29,24 @@ _sections_unfolded = [ "Resource" ]
 gradient = SubResource( 2 )
 width = 2048
 
-[sub_resource type="Gradient" id=4]
+[sub_resource type="Gradient" id=9]
 
-offsets = PoolRealArray( 0, 0.701044, 0.89295 )
-colors = PoolColorArray( 0.984234, 0.984234, 0.984234, 1, 1, 0.966064, 0.457031, 1, 0.933594, 0.799971, 0.444916, 1 )
+offsets = PoolRealArray( 0, 0.582031, 0.96875 )
+colors = PoolColorArray( 0.984234, 0.984234, 0.984234, 0, 0.999485, 0.999485, 0.999485, 0.955804, 0.999961, 0.999961, 0.999961, 1 )
 _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="GradientTexture" id=5]
+
+gradient = SubResource( 9 )
+width = 2048
+
+[sub_resource type="Gradient" id=4]
+
+offsets = PoolRealArray( 0.00159236, 0.0159236, 0.701044, 0.89295 )
+colors = PoolColorArray( 1, 0.971924, 0.28125, 1, 0.984234, 0.984234, 0.984234, 1, 1, 0.966064, 0.457031, 1, 0.933594, 0.799971, 0.444916, 1 )
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="GradientTexture" id=8]
 
 gradient = SubResource( 4 )
 width = 2048
@@ -65,7 +79,6 @@ script = ExtResource( 1 )
 
 [node name="hud" type="CanvasLayer" parent="."]
 
-editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -129,7 +142,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 763.0
 margin_top = 12.0
-margin_right = 804.0
+margin_right = 812.0
 margin_bottom = 32.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -151,20 +164,27 @@ scale = Vector2( 0.181828, 1072.69 )
 texture = SubResource( 3 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Gebirge" type="Node2D" parent="."]
+[node name="Gebirge1" type="Node2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( 219.788, 299.122 )
 scale = Vector2( 5, 5 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Sprite" type="Sprite" parent="Gebirge"]
+[node name="Sprite" type="Sprite" parent="Gebirge1"]
 
 modulate = Color( 1, 1, 1, 0.988941 )
 scale = Vector2( 1, 1 )
 texture = ExtResource( 3 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="Sprite2" type="Sprite" parent="Gebirge"]
+[node name="Sprite2" type="Sprite" parent="Gebirge1"]
 
 modulate = Color( 1, 1, 1, 0.988941 )
 position = Vector2( 82.7714, 7.64497 )
@@ -176,17 +196,62 @@ region_rect = Rect2( 0, 0, 100, 20 )
 region_filter_clip = true
 _sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
 
-[node name="gradientGround" type="Sprite" parent="."]
+[node name="Sprite3" type="Sprite" parent="Gebirge1"]
 
-position = Vector2( -11.7661, 515.242 )
+modulate = Color( 1, 1, 1, 0.988941 )
+position = Vector2( 106.888, 7.44009 )
+scale = Vector2( 1.43859, 0.770555 )
+texture = ExtResource( 4 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 0, 0, 100, 20 )
+region_filter_clip = true
+_sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
+
+[node name="Gebirge2" type="Node2D" parent="."]
+
+editor/display_folded = true
+visible = false
+
+[node name="Sprite4" type="Sprite" parent="Gebirge2"]
+
+modulate = Color( 1, 1, 1, 0.530392 )
+position = Vector2( 311.099, 160.335 )
+scale = Vector2( 7.19293, 3.85277 )
+texture = ExtResource( 5 )
+_sections_unfolded = [ "Visibility" ]
+
+[node name="mist" type="Sprite" parent="Gebirge2"]
+
+position = Vector2( -5.67307, 335.444 )
 rotation = 1.5708
-scale = Vector2( 0.0915936, 1084.42 )
+scale = Vector2( 0.0416394, 1093.33 )
 texture = SubResource( 5 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
 
+[node name="Control" parent="Gebirge2/mist" instance=ExtResource( 6 )]
+
+margin_left = -2359.79
+margin_top = -0.382729
+margin_right = -2319.79
+margin_bottom = 39.6173
+
+[node name="gradientGround" type="Sprite" parent="."]
+
+position = Vector2( -14.6481, 494.827 )
+rotation = 1.5708
+scale = Vector2( 0.112034, 1078.67 )
+texture = SubResource( 8 )
+offset = Vector2( -25.2217, -0.498946 )
+_sections_unfolded = [ "Region", "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
 [node name="sprites" type="Node2D" parent="."]
 
+editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -206,7 +271,7 @@ _sections_unfolded = [ "Transform" ]
 
 editor/display_folded = true
 position = Vector2( 2400, 380 )
-texture = ExtResource( 4 )
+texture = ExtResource( 7 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -219,7 +284,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 editor/display_folded = true
 position = Vector2( 4800, 380 )
-texture = ExtResource( 4 )
+texture = ExtResource( 7 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -234,7 +299,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 [node name="enemys" type="Node2D" parent="sprites"]
 
-[node name="parallaxForeground" parent="sprites" instance=ExtResource( 5 )]
+[node name="parallaxForeground" parent="sprites" instance=ExtResource( 8 )]
 
 [node name="players" type="Node2D" parent="."]
 
@@ -255,6 +320,9 @@ constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
 _sections_unfolded = [ "Collision", "Pickable", "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="groundCollision"]
 
@@ -308,10 +376,18 @@ scale = Vector2( 1.65385, 27.9423 )
 shape = SubResource( 7 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="GameOverScreen" parent="." instance=ExtResource( 6 )]
+[node name="GameOverScreen" parent="." instance=ExtResource( 9 )]
 
 editor/display_folded = true
 visible = false
+
+[node name="PopupMenu" parent="." instance=ExtResource( 6 )]
+
+visible = false
+margin_left = 108.0
+margin_top = 58.0
+margin_right = 148.0
+margin_bottom = 98.0
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 
@@ -320,5 +396,7 @@ visible = false
 [connection signal="screen_exited" from="sprites/constantMovement/ground/Sprite2/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
 [connection signal="restartGame" from="GameOverScreen" to="." method="_on_GameOverScreen_restartGame"]
+
+[connection signal="restartGame" from="PopupMenu" to="." method="_on_PopupMenu_restartGame"]
 
 
