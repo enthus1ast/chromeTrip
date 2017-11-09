@@ -21,7 +21,9 @@ func _on_Button_mouse_exited():
 
 func _on_GameOverScreen_visibility_changed():
 	print("visibility_changed")
-	get_node("AnimationPlayer").play("s")
+	if self.visible == true:
+		utils.putHighscore( utils.getScore(), utils.getTeam() )
+		get_node("AnimationPlayer").play("s")
 	pass # replace with function body
 
 func _on_GameOverScreen_hide():
