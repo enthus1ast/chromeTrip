@@ -3,6 +3,7 @@ extends Node
 var version = 0.1 # general version of this game
 const HIGHSCORE_PATH = "user://highscore.dat" # where the highscore is safed on the filesystem.
 const HIGHSCORE_PW = "code0"
+#const HIGHSCORE_PW = ""
 func pad2(st):
 	# pads the string with one 0
 	if st.length() < 2:
@@ -23,29 +24,43 @@ func computeColor(st):
   )
   return co
 
-func createFile(path):
+func computeColorBB(toColor, text):
+	## returns a line in bb encoding
+	## colors it with computed color of color string
+	var color = computeColor(toColor)
+	return "[color=#" + color.to_html(false) + "]" + text + "[/color]"
+
+func createFile(path, password = ""):
 	# Create the file if its not here
 	var file = File.new()
 	if file.file_exists(path):
 		return
 	else:
-		file.open( path, file.WRITE)
+		if password == "":
+			file.open( path, file.WRITE)
+		else:
+			file.open_encrypted_with_pass(path, file.WRITE, password)
 		file.close()
 
 func putHighscore(score, team): 
 	# puts a line into the crypted highscore file.
-	createFile(HIGHSCORE_PATH)
+#	createFile(HIGHSCORE_PATH)
 	var file = File.new()
-#	file.open_encrypted_with_pass( HIGHSCORE_PATH, file.READ_WRITE, HIGHSCORE_PW )
-	file.open( HIGHSCORE_PATH, file.READ_WRITE) #, "code0" )
+	print("PUT ERROR: " + str( file.open_encrypted_with_pass( HIGHSCORE_PATH, file.READ_WRITE, HIGHSCORE_PW) ))
+#	file.open( HIGHSCORE_PATH, file.READ_WRITE) #, "code0" )
 	var tup = {}
 	tup["score"] = score
 	tup["team"] = team
 	tup["date"] = OS.get_datetime(true)
 	var line = to_json(tup)
+	var cont = file.get_as_text()
 #	print("Line:", line)
-	file.seek_end()
-	file.store_line(line)
+#	file.
+#	file.store_line(line)
+	file.close()
+	
+	file.open_encrypted_with_pass( HIGHSCORE_PATH, file.WRITE, HIGHSCORE_PW) 
+	file.store_string(cont + line + "\n")
 	file.close()
 
 func cmp(elemA, elemB):
@@ -72,16 +87,22 @@ func getScore():
 
 func getHighscore(cnt):
 	# returns the sorted highscore items
-	createFile(HIGHSCORE_PATH)
+	createFile(HIGHSCORE_PATH, HIGHSCORE_PW)
 	var file = File.new()
-	file.open_encrypted_with_pass( HIGHSCORE_PATH, file.READ, HIGHSCORE_PW )
-	file.open( HIGHSCORE_PATH, file.READ ) #, "code0" )
+	print("get ERROR: " + str( file.open_encrypted_with_pass( HIGHSCORE_PATH, file.READ, HIGHSCORE_PW )))
+#	file.open( HIGHSCORE_PATH, file.READ ) #, "code0" )
 	var line = ""
 	var obj
 	var result = []
 	# Read jsonl file
-	while(not file.eof_reached()):
-		line = file.get_line()
+	
+	var cont = file.get_as_text()
+	var lines = cont.split("\n")
+	
+	for line in lines:
+#	while true:
+#		if file.eof_reached(): break
+#		line = file.get_line()
 		if validate_json(line) == "":
 			obj = parse_json(line)
 			result.append(obj)
@@ -92,6 +113,7 @@ func getHighscore(cnt):
 			
 func _ready():
 	pass
+	createFile(HIGHSCORE_PATH, HIGHSCORE_PW)
 #	putHighscore(5000, ["Foo1", "Baa"])
 #	putHighscore(1100, ["Foo2", "Baa"])
 #	putHighscore(1120, ["Foo3", "Baa"])
