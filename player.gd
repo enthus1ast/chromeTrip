@@ -46,7 +46,7 @@ var keys = [false,false,false,false] # right, left, up, down
 
 func _ready():
 	add_child ( killprotectTimer )
-	killprotectTimer.wait_time = 10
+	killprotectTimer.wait_time = 3
 	killprotectTimer.connect("timeout",self,"_killprotectTimeout")
 	soundPlayer.connect("finished",self,"_sound_finished")
 	var root = get_tree().get_root().get_node("Control")

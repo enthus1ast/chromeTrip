@@ -14,6 +14,10 @@ var players
 var score = 0
 var finalScore = 0
 var distanceWalked = 0
+
+var stage = 1 # each 5000 points one stage
+var nextLevel = 5000
+
 var placeholderScore
 var placeholderScoreSize
 var spriteWidth
@@ -175,6 +179,9 @@ func wolkenGen():
 		var wideness = rand_range(1, 4)
 		rpc("rpcWolken", pos, wideness)
 
+sync func setNewSpeed(_speed):
+	fakeSpeed +=_speed
+	
 func _process(delta):
 	constMoveNode.position.x-=fakeSpeed*delta
 	enemysNode.position.x-=fakeSpeed*delta*1.5
@@ -182,9 +189,14 @@ func _process(delta):
 	if !allDead:
 		distanceWalked = round(abs(constMoveNode.position.x)/10) # scoring from walked distance
 		finalScore = distanceWalked + score
+		if finalScore > nextLevel: # staging here
+			nextLevel+= nextLevel
+			stage+=1
+			print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<next stage")
+			rpc("setNewSpeed",50)
 	pointsLabel.text=str(finalScore)
 	var playersText = "" 
-	playersLabel.bbcode_text = ""
+	playersLabel.bbcode_text = "Stage: "+str(stage)+"\n"
 	for player in get_tree().get_nodes_in_group("players"):
 		var playerName = get_parent().players[int(player.get_name())].name
 		var line = str(int(player.alive))+ " " + playerName
