@@ -1,5 +1,7 @@
 extends Node
 
+var version = 0.1
+
 func computeColor(st):
   # computes rgb froms string
   var commulated=0;
