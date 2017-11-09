@@ -119,10 +119,12 @@ _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
 [node name="ButtonQuit" parent="VBoxContainer" instance=ExtResource( 3 )]
 
-[connection signal="pressed" from="VBoxContainer/ButtonNewGame" to="." method="_on_ButtonResume_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonNewGame" to="." method="_on_ButtonNewGame_pressed"]
 
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_ButtonRestart_pressed"]
 
 [connection signal="pressed" from="VBoxContainer/Profile" to="." method="_on_ButtonMenu_pressed"]
+
+[connection signal="pressed" from="VBoxContainer/ButtonQuit" to="." method="_on_ButtonQuit_pressed"]
 
 

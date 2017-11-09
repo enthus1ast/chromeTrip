@@ -82,6 +82,7 @@ position = Vector2( 38, 66 )
 
 [node name="networkPanel" type="Panel" parent="menu"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -763,9 +764,8 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="PopupMenu" parent="menu" instance=ExtResource( 3 )]
+[node name="MainMenu" parent="menu" instance=ExtResource( 3 )]
 
-visible = false
 margin_left = 128.0
 margin_top = 182.0
 margin_right = 168.0
