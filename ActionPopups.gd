@@ -21,7 +21,7 @@ func _ready():
 
 func showStage(val):
 	## shows big x2 
-	label.bbcode_text = "[color=red][b]STAGE[/b][/color]"
+	label.bbcode_text = "STAGE" #"[color=red][b]STAGE[/b][/color]"
 	label2.bbcode_text = str(val)
 #	player.play("stage")
 	

@@ -13,6 +13,7 @@ onready var chatInput = lobby.get_node("Container/chatInput/chatInput")
 onready var networkPanel = get_node("menu/networkPanel")
 onready var ipInput = networkPanel.get_node("connect/ip")
 onready var version = get_node("menu/Version")
+onready var mainMenu = get_node("menu/MainMenu")
 
 onready var dialogWaiting = get_node("menu/DialogWaiting")
 
@@ -321,9 +322,6 @@ func _on_connect_pressed():
 	if !isConnecting:
 		dialogWaiting.set_visible(true)
 		isConnecting = true
-		
-#		resolve_hostname( String host, Type ip_type=3 )
-		
 		var ip = ipInput.get_text()
 		eNet.create_client(ip, SERVER_PORT)
 		get_tree().set_network_peer(eNet)
@@ -332,9 +330,24 @@ func _on_connect_pressed():
 	
 func _on_sp_pressed():
 #	game = load("res://game.tscn").instance()
+#	eNet.create_server(SERVER_PORT, 4)
+#	get_tree().set_network_peer(eNet)
+#	register_new_player(1,currentPlayer)
 	eNet.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(eNet)
-	register_new_player(1,currentPlayer)
+	currentPlayer.name = networkPanel.get_node("host/name").get_text()
+	if currentPlayer.name == "":
+		currentPlayer.name ="unnamed"
+	currentPlayer.id = 1
+	currentPlayer.isReady = false
+	var id = get_tree().get_network_unique_id()
+#	lobby.set_visible(true)
+	players[id] = {}
+	players[id].name = currentPlayer.name
+	players[id].id = id
+	players[id].isReady = currentPlayer.isReady
+	updateList(players)
+	startGame()
 	
 func _on_cancel_pressed():
 	dialogWaiting.set_visible(false)
@@ -465,4 +478,11 @@ func _on_name_text_changed( text ):
 	pass # replace with function body
 	var name = get_node("menu/networkPanel/host/name")
 	name.set("custom_colors/font_color", utils.computeColor(text))
+	
+
+
+func _on_back_pressed():
+	networkPanel.hide()
+	mainMenu.show()
+	
 	
