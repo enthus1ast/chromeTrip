@@ -261,7 +261,7 @@ func _on_PopupMenu_restartGame():
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		var popup = self.get_node("PopupMenu")
+		var popup = self.get_node("hud/PopupMenu")
 		if popup.visible:
 			popup.hideMenu()
 		else:
