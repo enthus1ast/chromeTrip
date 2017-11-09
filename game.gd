@@ -38,6 +38,7 @@ onready var wolkenNode = spritesNode.get_node("wolken")
 onready var groundSprites = constMoveNode.get_node("ground")
 onready var groundSprite1 = groundSprites.get_node("Sprite1")
 onready var groundSprite2 = groundSprites.get_node("Sprite2")
+onready var actionPopup = get_node("hud/actionPopup")
 onready var pointsLabel = get_node("hud/points")
 onready var playersLabel = get_node("hud/players")
 
@@ -55,6 +56,7 @@ remote func setReadyToPlay(playerid):
 	if everyPlayerReady():
 		mapGen()
 		rpc("gogo")
+		rpc("rpcShowActionStage",1)
 
 func _player_disconnected(playerid):
 	setReadyToPlay(str(playerid)) # test
@@ -64,6 +66,9 @@ sync func gogo():
 	# has loaded and is ready.
 	get_tree().set_pause(false)
 	set_process(true)
+
+sync func rpcShowActionStage(_stage):
+	actionPopup.showStage(_stage)
 	
 func _ready():
 	set_process_input(true)
@@ -189,6 +194,7 @@ func _process(delta):
 		if finalScore > nextLevel: # staging here
 			nextLevel+= nextLevel*0.75
 			stage+=1
+			rpc("rpcShowActionStage",stage)
 			print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<next stage")
 			rpc("setNewSpeed",10)
 	pointsLabel.text=str(finalScore)
