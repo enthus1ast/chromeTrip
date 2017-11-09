@@ -1,12 +1,12 @@
 extends Node2D
 
-
 onready var disabledSprites = get_node("Sprites")
 onready var childrenArray = disabledSprites.get_children()
 onready var parentNode = get_node("Node2D")
+onready var game = get_tree().get_root().get_node("Control/game")
 var texture
 var count = 20
-var speed = 300
+
 var isInitial = true
 var time = 0
 
@@ -25,7 +25,7 @@ func genPos():
 	return Vector2(posX,posY)
 	
 func genSpeed(_posY):
-	var speedY = _posY
+	var speedY = _posY*game.fakeSpeed/300
 	return speedY
 	
 func genScale(_posY):

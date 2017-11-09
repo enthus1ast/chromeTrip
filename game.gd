@@ -185,15 +185,15 @@ sync func setNewSpeed(_speed):
 func _process(delta):
 	constMoveNode.position.x-=fakeSpeed*delta
 	enemysNode.position.x-=fakeSpeed*delta*1.5
-	collectablesNode.position.x-=fakeSpeed*delta*1.5
+#	collectablesNode.position.x-=fakeSpeed*delta*1.5
 	if !allDead:
 		distanceWalked = round(abs(constMoveNode.position.x)/10) # scoring from walked distance
 		finalScore = distanceWalked + score
 		if finalScore > nextLevel: # staging here
-			nextLevel+= nextLevel
+			nextLevel+= nextLevel*0.75
 			stage+=1
 			print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<next stage")
-			rpc("setNewSpeed",50)
+			rpc("setNewSpeed",10)
 	pointsLabel.text=str(finalScore)
 	var playersText = "" 
 	playersLabel.bbcode_text = "Stage: "+str(stage)+"\n"
