@@ -461,3 +461,10 @@ sync func restartGame():
 		startGame()
 		rpc("startGame")	
 	
+
+func _on_name_text_changed( text ):
+	print(text)
+	pass # replace with function body
+	var name = get_node("menu/networkPanel/host/name")
+	name.set("custom_colors/font_color", utils.computeColor(text))
+	
