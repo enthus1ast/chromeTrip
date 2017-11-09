@@ -1,27 +1,21 @@
 extends Control
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
-onready var player = get_node("AnimationPlayer")
-onready var label = get_node("RichTextLabel1")
-onready var label2 = get_node("RichTextLabel2")
+onready var animationPlayer = get_node("AnimationPlayer")
+onready var label1 = get_node("Node2D/RichTextLabel1")
+#onready var label2 = get_node("RichTextLabel2")
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
+	animationPlayer.connect("animation_finished",self,"_animation_finished")
 	pass
-	showStage(10)
-
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+	
+func _animation_finished(_string):
+	set_visible(false)
 
 func showStage(val):
+	set_visible(true)
+	animationPlayer.play("actionPopupStage")
 	## shows big x2 
-	label.bbcode_text = "STAGE" #"[color=red][b]STAGE[/b][/color]"
-	label2.bbcode_text = str(val)
+	label1.bbcode_text = "STAGE " #"[color=red][b]STAGE[/b][/color]"
+	label1.bbcode_text += str(val)
 #	player.play("stage")
 	

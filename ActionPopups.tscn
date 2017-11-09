@@ -1,119 +1,101 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://ActionPopups.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=1]
 
-size = 200
+size = 50
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="Animation" id=2]
 
-size = 100
-use_mipmaps = false
-use_filter = false
-font_data = ExtResource( 2 )
-_sections_unfolded = [ "Font", "Settings" ]
-
-[sub_resource type="Animation" id=5]
-
-resource_name = "stage"
-length = 2.0
-loop = true
+resource_name = "actionPopupStage"
+length = 2.5
+loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("RichTextLabel1:percent_visible")
+tracks/0/path = NodePath("Node2D:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 1 ),
-"transitions": PoolRealArray( 0.0373213, 1, 1, 0.0676156, 1 ),
+"times": PoolRealArray( 0, 0.8, 1.7, 2.5 ),
+"transitions": PoolRealArray( 2.22165, 0.15455, -1.92559, 1 ),
 "update": 0,
-"values": [ 0.0, 1.0, 0.0, 0.5, 1.0 ]
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 1, 1 ), Vector2( 1.2, 1.2 ), Vector2( 4, 4 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("RichTextLabel2:percent_visible")
+tracks/1/path = NodePath("Node2D/RichTextLabel1:custom_colors/default_color")
 tracks/1/interp = 1
-tracks/1/loop_wrap = false
+tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1, 1.6 ),
-"transitions": PoolRealArray( 16.6561, 1, -4 ),
+"times": PoolRealArray( 0, 0.8, 2.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 0.0, 1.0 ]
+"values": [ Color( 0.246094, 0.246094, 0.246094, 0 ), Color( 0.246094, 0.246094, 0.246094, 1 ), Color( 0.246094, 0.246094, 0.246094, 0 ) ]
 }
 
-[node name="ActionPopups" type="Control"]
+[node name="actionPopup" type="Control"]
 
+editor/display_folded = true
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 1.0
-margin_right = 157.0
-margin_bottom = 174.0
+margin_right = 1020.0
+margin_bottom = 600.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 script = ExtResource( 1 )
-_sections_unfolded = [ "Rect" ]
 
-[node name="RichTextLabel1" type="RichTextLabel" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
 
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 766.0
-margin_bottom = 200.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-custom_fonts/normal_font = SubResource( 4 )
-bbcode_enabled = false
-bbcode_text = "STAGE"
-visible_characters = 4
-percent_visible = 0.898259
-override_selected_font_color = true
-_sections_unfolded = [ "BBCode", "Rect", "Size Flags", "custom_colors", "custom_fonts" ]
+editor/display_folded = true
+position = Vector2( 520, 280 )
+scale = Vector2( 1e-05, 1e-05 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+[node name="RichTextLabel1" type="RichTextLabel" parent="Node2D"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 235.0
-margin_top = 175.0
-margin_right = 463.0
-margin_bottom = 279.0
+margin_left = -120.0
+margin_top = -20.0
+margin_right = 140.0
+margin_bottom = 30.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/normal_font = SubResource( 3 )
-custom_colors/default_color = Color( 0.878906, 0.0720978, 0.0720978, 1 )
-bbcode_enabled = false
-bbcode_text = "100"
-visible_characters = 0
-percent_visible = 0.169568
+custom_fonts/normal_font = SubResource( 1 )
+custom_colors/default_color = Color( 0.246094, 0.246094, 0.246094, 0 )
+bbcode_enabled = true
+bbcode_text = "Stage"
+visible_characters = -1
+percent_visible = 1.0
 override_selected_font_color = false
-_sections_unfolded = [ "BBCode", "Grow Direction", "Rect", "Size Flags", "custom_colors", "custom_fonts" ]
+_sections_unfolded = [ "Anchor", "BBCode", "Grow Direction", "Margin", "Rect", "Size Flags", "custom_colors", "custom_fonts" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/stage = SubResource( 5 )
+anims/actionPopupStage = SubResource( 2 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
