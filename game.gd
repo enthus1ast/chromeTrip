@@ -28,6 +28,7 @@ var collectablesCount = 8
 var allDead = false
 
 onready var playersNode = get_node("players")
+onready var cameraNode = get_node("cameraNode")
 onready var spritesNode = get_node("sprites")
 onready var enemysNode = spritesNode.get_node("enemys")
 onready var collectablesNode = spritesNode.get_node("collectables")
@@ -194,9 +195,9 @@ func _process(delta):
 		if finalScore > nextLevel: # staging here
 			nextLevel+= nextLevel*0.75
 			stage+=1
-			rpc("rpcShowActionStage",stage)
-			print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<next stage")
-			rpc("setNewSpeed",10)
+			if get_tree().is_network_server():
+				rpc("rpcShowActionStage",stage)
+				rpc("setNewSpeed",10)
 	pointsLabel.text=str(finalScore)
 	var playersText = "" 
 	playersLabel.bbcode_text = "Stage: "+str(stage)+"\n"
@@ -205,27 +206,6 @@ func _process(delta):
 		var line = str(int(player.alive))+ " " + playerName
 		playersLabel.bbcode_text += "[color=#" + utils.computeColor(playerName).to_html() + "]"+line+"[/color]\n"
 		
-#	get_node("hud/players").text = playersText
-	
-	
-#func _physics_process(delta):
-#	groundSprite.position.x-=fakeSpeed*delta
-#	# camera do follow the midpoint between players
-#	players = playersNode.get_children()
-#	if players.size()>0:
-#		var midpoint
-#		if players.size()==1:
-#			midpoint = players[0].position
-#		elif players.size()==2:
-#			midpoint = (players[0].position +players[1].position)/2
-#
-#		elif players.size()>2:
-#			midpoint = players[0].position
-#			for p in range(players):
-#				if p!=players.size():
-#					midpoint = (midpoint + players[p+1].position)/2
-#
-#		camera.position.x = midpoint.x + offsetX
 
 # two ground-tiles for seamless infinite maps
 # everytime a tile hast left the screen, position.x is updating and new obstacles are generating

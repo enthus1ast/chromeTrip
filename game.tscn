@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://PopupMenu.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://ground.png" type="Texture" id=9]
 [ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=10]
 [ext_resource path="res://GameOver.tscn" type="PackedScene" id=11]
+[ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -180,6 +181,7 @@ flat = false
 
 [node name="sprites" type="Node2D" parent="."]
 
+editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -416,6 +418,8 @@ margin_left = 108.0
 margin_top = 58.0
 margin_right = 148.0
 margin_bottom = 98.0
+
+[node name="cameraNode" parent="." instance=ExtResource( 12 )]
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 

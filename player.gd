@@ -33,6 +33,8 @@ sync var slave_motion = Vector2()
 sync var alive = true
 var reviving = false
 
+var cameraNode
+onready var game = get_tree().get_root().get_node("Control/game")
 onready var animPlayer = get_node("Sprite/AnimationPlayer")
 onready var powerUpPlayer = get_node("Sprite/AnimationPlayerPowerUps")
 onready var particleAnimPlayer = get_node("particleSystems/particleAnimPlayer")
@@ -45,6 +47,7 @@ const TOP_JUMP_TIME = 0.1 # in seconds
 var keys = [false,false,false,false] # right, left, up, down 
 
 func _ready():
+	cameraNode = game.get_node("cameraNode")
 	add_child ( killprotectTimer )
 	killprotectTimer.wait_time = 3
 	killprotectTimer.connect("timeout",self,"_killprotectTimeout")
@@ -187,6 +190,9 @@ func _input(event):
 				keys[2]=true
 				if grounded or can_jump:
 					rpc("rpcJumpParticles",get_name())
+#					cameraNode.rumble(1)
+					
+
 					if !soundPlayer.is_playing():
 						if soundPlayer.get_stream() != jumpSound:
 							soundPlayer.set_stream(jumpSound)
