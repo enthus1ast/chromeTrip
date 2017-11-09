@@ -1,0 +1,21 @@
+David
+- Highscore counter
+- Crypted highscore file
+(- Online highscore)
+- Config file (ini)
+  Fullscreen
+  name
+  defaultServer
+  custom look (haare etc)
+- Fix disconnect bug.
+- Debug modus
+  positionen
+  collision shapes
+- Archivements/Badges
+  online list mit badges
+- Name des spieler object hinzufügen
+- Spiel anhalten beim pause drücken SP/MP
+- Stage informer is above main menu
+
+
+
