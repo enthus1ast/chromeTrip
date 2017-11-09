@@ -35,6 +35,7 @@ var reviving = false
 
 onready var animPlayer = get_node("Sprite/AnimationPlayer")
 onready var powerUpPlayer = get_node("Sprite/AnimationPlayerPowerUps")
+onready var particleAnimPlayer = get_node("particleSystems/particleAnimPlayer")
  
 # Jumping
 var can_jump = true
@@ -143,6 +144,9 @@ sync func playAnimation(_string):
 	
 sync func animSpeed(_speed):
 	get_node("Sprite/AnimationPlayer").set_speed_scale(_speed)
+	
+sync func rpcJumpParticles(_id):
+	get_parent().get_node(_id).particleAnimPlayer.play("particleJump")
 
 func _input(event):
 	if is_network_master() and alive:
@@ -182,6 +186,7 @@ func _input(event):
 			if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_select"):
 				keys[2]=true
 				if grounded or can_jump:
+					rpc("rpcJumpParticles",get_name())
 					if !soundPlayer.is_playing():
 						if soundPlayer.get_stream() != jumpSound:
 							soundPlayer.set_stream(jumpSound)
