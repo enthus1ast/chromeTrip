@@ -53,8 +53,5 @@ func _process(delta):
 	for object in parentNode.get_children():
 		object.position.x -= delta * genSpeed(object.position.y)
 		if object.position.x<-100 and !object.is_queued_for_deletion():
-#			get_parent().call_deferred("remove_child",object)
-#			call_deferred("queue_free")
 			object.queue_free()
-#			print("prallaxforground sprite deleted")
 	

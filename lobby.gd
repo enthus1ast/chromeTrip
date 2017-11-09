@@ -85,7 +85,6 @@ remote func user_ready(_player):
 		players[_player.id].id = _player.id
 		players[_player.id].name = _player.name
 		players[_player.id].isReady = _player.isReady
-		print(players,_player.id,"BUG")
 		rpc_id(_player.id, "register_in_lobby")
 
 remote func register_in_lobby():
@@ -463,7 +462,6 @@ sync func restartGame():
 	
 
 func _on_name_text_changed( text ):
-	print(text)
 	pass # replace with function body
 	var name = get_node("menu/networkPanel/host/name")
 	name.set("custom_colors/font_color", utils.computeColor(text))
