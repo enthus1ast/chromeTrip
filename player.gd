@@ -190,7 +190,7 @@ func _input(event):
 			#jumping keyevents
 			if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_select"):
 				keys[2]=true
-				if grounded or can_jump:
+				if (grounded or can_jump) and alive:
 					rpc("rpcJumpParticles",get_name())
 					cameraNode.jumpRumble()
 					
@@ -212,7 +212,6 @@ func _sound_finished():
 	
 sync func killed(_id):
 	if !isKillProtected:
-		cameraNode.killedRumble()
 		get_parent().get_node(str(_id)).get_node("playerShape").disabled=true
 		get_parent().get_node(str(_id)).alive = false
 		get_parent().get_node(str(_id)).can_jump = false
@@ -265,6 +264,7 @@ func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 		soundPlayer.play(0.0)
 		if get_tree().is_network_server():
 			rpc("killed", get_name())
+			cameraNode.killedRumble()
 			if allPlayersKilled():
 				rpc("showGameOverScreen")
 

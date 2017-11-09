@@ -29,24 +29,26 @@ var tweendCount = 0
 var positionTween = Tween.new()
 
 func killedRumble():
-	cnt += 3
-	displace = 700
+	if !isQuaking:
+		cnt += 10
+		displace = 400
 
 func bigHit():
 	cnt += 10
 	hitDisplace = 250
 
 func quake(): #medium quake
+	isQuaking = true
 	cnt += 650
-	quakeDisplace = 350
+	quakeDisplace = 180
 	
 func jumpRumble():
 	cnt += 10
-	displace = 70
+	displace = 60
 	
 func landRumble(_velocity):
 	cnt += 12
-	displace = 160
+	displace = 100
 	
 
 func _ready():
@@ -76,10 +78,9 @@ func _process(delta):
 			addForce = Vector2(rand_range(-quakeDisplace, quakeDisplace), rand_range(-quakeDisplace, quakeDisplace))
 
 		cam.offset = (addForce+off) * delta
-	elif isQuaking:
-		isQuaking=false
-		addForce = Vector2(0,0)
 	else:
+		addForce = Vector2(0,0)
+		isQuaking = false
 		cam.offset = Vector2(0,0)
 
 
