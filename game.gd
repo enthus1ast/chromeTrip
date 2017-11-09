@@ -30,6 +30,7 @@ onready var groundSprites = constMoveNode.get_node("ground")
 onready var groundSprite1 = groundSprites.get_node("Sprite1")
 onready var groundSprite2 = groundSprites.get_node("Sprite2")
 onready var pointsLabel = get_node("hud/points")
+onready var playersLabel = get_node("hud/players")
 
 func everyPlayerReady():
 	for player in playersNode.get_children():
@@ -159,9 +160,14 @@ func _process(delta):
 		score = round(abs(constMoveNode.position.x)/10) # scoring from walked distance
 	pointsLabel.text=str(score)
 	var playersText = "" 
+	playersLabel.bbcode_text = ""
 	for player in get_tree().get_nodes_in_group("players"):
-		playersText += player.get_name() + " " + str(player.alive) + "\n"
-	get_node("hud/players").text = playersText
+		var playerName = get_parent().players[int(player.get_name())].name
+		var line = str(int(player.alive))+ " " + playerName
+		playersLabel.bbcode_text += "[color=#" + utils.computeColor(playerName).to_html() + "]"+line+"[/color]\n"
+		
+#	get_node("hud/players").text = playersText
+	
 	
 #func _physics_process(delta):
 #	groundSprite.position.x-=fakeSpeed*delta

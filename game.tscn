@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
@@ -18,6 +18,14 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Extra Spacing", "Settings" ]
 
+[sub_resource type="DynamicFont" id=11]
+
+size = 25
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 2 )
+_sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
+
 [sub_resource type="Gradient" id=2]
 
 offsets = PoolRealArray( 0, 0.701044, 0.89295 )
@@ -29,7 +37,7 @@ _sections_unfolded = [ "Resource" ]
 gradient = SubResource( 2 )
 width = 2048
 
-[sub_resource type="Gradient" id=9]
+[sub_resource type="Gradient" id=4]
 
 offsets = PoolRealArray( 0, 0.582031, 0.96875 )
 colors = PoolColorArray( 0.984234, 0.984234, 0.984234, 0, 0.999485, 0.999485, 0.999485, 0.955804, 0.999961, 0.999961, 0.999961, 1 )
@@ -37,27 +45,27 @@ _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="GradientTexture" id=5]
 
-gradient = SubResource( 9 )
+gradient = SubResource( 4 )
 width = 2048
 
-[sub_resource type="Gradient" id=4]
+[sub_resource type="Gradient" id=6]
 
 offsets = PoolRealArray( 0.00159236, 0.0159236, 0.701044, 0.89295 )
 colors = PoolColorArray( 1, 0.971924, 0.28125, 1, 0.984234, 0.984234, 0.984234, 1, 1, 0.966064, 0.457031, 1, 0.933594, 0.799971, 0.444916, 1 )
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="GradientTexture" id=8]
+[sub_resource type="GradientTexture" id=7]
 
-gradient = SubResource( 4 )
+gradient = SubResource( 6 )
 width = 2048
 
-[sub_resource type="LineShape2D" id=6]
+[sub_resource type="LineShape2D" id=8]
 
 custom_solver_bias = 0.0
 normal = Vector2( 0, -1 )
 d = 0.0
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=9]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
@@ -109,30 +117,29 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "Size Flags", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
 
-[node name="players" type="Label" parent="hud"]
+[node name="players" type="RichTextLabel" parent="hud"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 666.0
-margin_top = 73.0
-margin_right = 864.0
-margin_bottom = 102.0
+margin_left = 718.0
+margin_top = 39.0
+margin_right = 1435.0
+margin_bottom = 328.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 0.325439, 0.325439, 0.325439, 1 )
-text = "000000000"
-align = 2
-valign = 1
+custom_fonts/normal_font = SubResource( 11 )
+custom_constants/line_separation = -6
+bbcode_enabled = true
+bbcode_text = "Dankrad awdawdawdfalse
+Dreaded-gnu fasle"
+visible_characters = -1
 percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "Size Flags", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode", "Grow Direction", "Rect", "Size Flags", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
 
 [node name="menu" type="Button" parent="hud"]
 
@@ -180,7 +187,6 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="Gebirge1"]
 
 modulate = Color( 1, 1, 1, 0.988941 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 3 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
@@ -188,7 +194,6 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 modulate = Color( 1, 1, 1, 0.988941 )
 position = Vector2( 82.7714, 7.64497 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 3 )
 flip_h = true
 region_enabled = true
@@ -242,7 +247,7 @@ margin_bottom = 39.6173
 position = Vector2( -14.6481, 494.827 )
 rotation = 1.5708
 scale = Vector2( 0.112034, 1078.67 )
-texture = SubResource( 8 )
+texture = SubResource( 7 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
 __meta__ = {
@@ -328,7 +333,7 @@ __meta__ = {
 
 position = Vector2( 2258.02, 383.062 )
 scale = Vector2( 30.2855, 1.74003 )
-shape = SubResource( 6 )
+shape = SubResource( 8 )
 _sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_lock_": true
@@ -352,7 +357,7 @@ __meta__ = {
 
 position = Vector2( -20, 110 )
 scale = Vector2( 1.65385, 27.9423 )
-shape = SubResource( 7 )
+shape = SubResource( 9 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="rightBlock" type="StaticBody2D" parent="."]
@@ -373,7 +378,7 @@ __meta__ = {
 
 position = Vector2( 1040.72, 111.706 )
 scale = Vector2( 1.65385, 27.9423 )
-shape = SubResource( 7 )
+shape = SubResource( 9 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="GameOverScreen" parent="." instance=ExtResource( 9 )]

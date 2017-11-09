@@ -14,6 +14,10 @@ config/name="chromeTrip"
 run/main_scene="res://lobby.tscn"
 config/icon="res://raw/chromeTrip.png"
 
+[autoload]
+
+utils="*res://utils.gd"
+
 [gdnative]
 
 singletons=[  ]
