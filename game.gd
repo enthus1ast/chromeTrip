@@ -51,16 +51,13 @@ remote func setReadyToPlay(playerid):
 	# mark player ready
 	# when every player ready emit "gogo" event.
 #	print("playerNodeC", playersNode.get_children())
-	playersNode.get_node(playerid).readyToPlay = true
-	
+	playersNode.get_node(playerid).readyToPlay = true	
 	if everyPlayerReady():
 		mapGen()
 		rpc("gogo")
 
-
 func _player_disconnected(playerid):
 	setReadyToPlay(str(playerid)) # test
-
 
 sync func gogo():
 	# server emits this to start the game when everybody 
