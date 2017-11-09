@@ -1,9 +1,20 @@
 extends Node
 
+
+########################################################################################################
+# Global game variables
+########################################################################################################
 var version = 0.1 # general version of this game
 const HIGHSCORE_PATH = "user://highscore.dat" # where the highscore is safed on the filesystem.
 const HIGHSCORE_PW = "code0"
-#const HIGHSCORE_PW = ""
+const CONFIG_PATH = "user://config.ini"
+var config # the global game userconfig
+
+
+
+########################################################################################################
+# Global game/helper functions
+########################################################################################################
 func pad2(st):
 	# pads the string with one 0
 	if st.length() < 2:
@@ -44,7 +55,7 @@ func createFile(path, password = ""):
 
 func putHighscore(score, team): 
 	# puts a line into the crypted highscore file.
-#	createFile(HIGHSCORE_PATH)
+	# info: crypto cannot append line atm...
 	var file = File.new()
 	print("PUT ERROR: " + str( file.open_encrypted_with_pass( HIGHSCORE_PATH, file.READ_WRITE, HIGHSCORE_PW) ))
 #	file.open( HIGHSCORE_PATH, file.READ_WRITE) #, "code0" )
@@ -54,9 +65,6 @@ func putHighscore(score, team):
 	tup["date"] = OS.get_datetime(true)
 	var line = to_json(tup)
 	var cont = file.get_as_text()
-#	print("Line:", line)
-#	file.
-#	file.store_line(line)
 	file.close()
 	
 	file.open_encrypted_with_pass( HIGHSCORE_PATH, file.WRITE, HIGHSCORE_PW) 
@@ -86,44 +94,53 @@ func getScore():
 	return get_tree().get_root().get_node("Control/game").finalScore
 
 func getHighscore(cnt):
-	# returns the sorted highscore items
+	# returns the N sorted highscore items
+	# info: crypto cannot append line atm...
 	createFile(HIGHSCORE_PATH, HIGHSCORE_PW)
 	var file = File.new()
 	print("get ERROR: " + str( file.open_encrypted_with_pass( HIGHSCORE_PATH, file.READ, HIGHSCORE_PW )))
 #	file.open( HIGHSCORE_PATH, file.READ ) #, "code0" )
-	var line = ""
 	var obj
 	var result = []
-	# Read jsonl file
-	
-	var cont = file.get_as_text()
-	var lines = cont.split("\n")
-	
+	var lines = file.get_as_text().split("\n")
 	for line in lines:
-#	while true:
-#		if file.eof_reached(): break
-#		line = file.get_line()
 		if validate_json(line) == "":
 			obj = parse_json(line)
 			result.append(obj)
 	file.close()
 	sortHighscore(result)
-	result.resize(cnt) # only the first n elements
+	if result.size() >= cnt:
+		result.resize(cnt) # only the first n elements, rest is NULL!
 	return result
 			
 func _ready():
-	pass
+	print("READY FROM UTILS")
+	## Create highscore file.
 	createFile(HIGHSCORE_PATH, HIGHSCORE_PW)
-#	putHighscore(5000, ["Foo1", "Baa"])
-#	putHighscore(1100, ["Foo2", "Baa"])
-#	putHighscore(1120, ["Foo3", "Baa"])
-#	print( getHighscore(20) )
-#  func save(content):
-#
-#
-#  func load():
-#      var file = File.new()
-#      file.open("user://save_game.dat", file.READ)
-#      var content = file.get_as_text()
-#      file.close()
-#      return content
+	#	putHighscore(5000, ["Foo1", "Baa"])
+	#	putHighscore(1100, ["Foo2", "Baa"])
+	#	putHighscore(1120, ["Foo3", "Baa"])
+	#	print( getHighscore(20) )
+
+	createFile(CONFIG_PATH)	
+	config = ConfigFile.new()
+	var err = config.load(CONFIG_PATH)
+	if err == OK: # if not, something went wrong with the file loading
+		# Look for the display/width pair, and default to 1024 if missing
+#		var playerName = config.get_value("player", "name", "lol")
+#		print(playerName)
+		
+		if not config.has_section_key("player", "defaultname"):
+			config.set_value("player", "defaultname", "unknown")		
+		if not config.has_section_key("player", "defaultserver"):
+			config.set_value("player", "defaultserver", "127.0.0.1")					
+		# Store a variable if and only if it hasn't been defined yet
+		if not config.has_section_key("audio", "mute"):
+			config.set_value("audio", "mute", false)
+		# Save the changes by overwriting the previous file
+		config.save(CONFIG_PATH)
+	else:
+		print("could not load userconfig from: " + CONFIG_PATH)
+
+	
+	#

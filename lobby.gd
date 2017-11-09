@@ -9,12 +9,13 @@ onready var menu = get_node("menu")
 onready var lobby = menu.get_node("lobby")
 onready var startButton = lobby.get_node("Container/startLobbyButton")
 onready var chatInput = lobby.get_node("Container/chatInput/chatInput")
-
 onready var networkPanel = get_node("menu/networkPanel")
+onready var mainMenu = get_node("menu/MainMenu")
+onready var nameInput = networkPanel.get_node("host/name")
 onready var highscore = get_node("menu/Highscore")
 onready var ipInput = networkPanel.get_node("connect/ip")
 onready var version = get_node("menu/Version")
-onready var mainMenu = get_node("menu/MainMenu")
+
 
 onready var dialogWaiting = get_node("menu/DialogWaiting")
 
@@ -46,8 +47,13 @@ signal connection_success()
 signal connection_fail()
 
 func _ready():
+#	OS.set_low_processor_usage_mode(true)
 	eNet = NetworkedMultiplayerENet.new()
-	ipInput.set_text("127.0.0.1")
+	
+	# load params from config
+	ipInput.set_text( utils.config.get_value("player", "defaultserver", ""))
+	nameInput.set_text( utils.config.get_value("player", "defaultname") )
+	
 	version.set_text(version.text + str(utils.version))
 #	chatInput.set_max_chars(100)
 	
@@ -67,7 +73,7 @@ func _player_connected(playerId):
 
 #Client sending to host
 func _connected_ok():
-	currentPlayer.name = networkPanel.get_node("host/name").get_text()
+	currentPlayer.name = nameInput.get_text()
 	if currentPlayer.name == "":
 		currentPlayer.name ="unnamed"
 	currentPlayer.isReady = false
@@ -120,6 +126,12 @@ remote func register_new_player(_player):
 
 remote func startGame():
 	print("startGame was called")
+	
+	## Safe new config values
+	utils.config.set_value("player", "defaultname", nameInput.get_text())					
+	utils.config.set_value("player", "defaultserver", ipInput.get_text())					
+	utils.config.save(utils.CONFIG_PATH)
+	
 	var cnt = 0
 	for p in players:
 		players[p].node = Player.instance()
@@ -304,7 +316,7 @@ func _on_checkbox_pressed():
 func _on_host_pressed():
 	eNet.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(eNet)
-	currentPlayer.name = networkPanel.get_node("host/name").get_text()
+	currentPlayer.name = nameInput.get_text()
 	if currentPlayer.name == "":
 		currentPlayer.name ="unnamed"
 	currentPlayer.id = 1
@@ -336,7 +348,7 @@ func _on_sp_pressed():
 #	register_new_player(1,currentPlayer)
 	eNet.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(eNet)
-	currentPlayer.name = networkPanel.get_node("host/name").get_text()
+	currentPlayer.name = nameInput.get_text()
 	if currentPlayer.name == "":
 		currentPlayer.name ="unnamed"
 	currentPlayer.id = 1

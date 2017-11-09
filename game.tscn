@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://PopupMenu.tscn" type="PackedScene" id=2]
@@ -155,6 +155,8 @@ percent_visible = 1.0
 override_selected_font_color = false
 _sections_unfolded = [ "BBCode", "Grow Direction", "Rect", "Size Flags", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
 
+[node name="actionPopup" parent="hud" instance=ExtResource( 4 )]
+
 [node name="menu" type="Button" parent="hud"]
 
 anchor_left = 0.0
@@ -176,8 +178,6 @@ shortcut = null
 group = null
 text = "menu"
 flat = false
-
-[node name="actionPopup" parent="hud" instance=ExtResource( 4 )]
 
 [node name="PopupMenu" parent="hud" instance=ExtResource( 2 )]
 
