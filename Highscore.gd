@@ -10,6 +10,7 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	var hi = highscoreItem.instance()
+#	hi.init("foo")
 	
 	
 	
