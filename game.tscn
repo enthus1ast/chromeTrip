@@ -132,7 +132,7 @@ mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/normal_font = SubResource( 2 )
-custom_constants/line_separation = -6
+custom_constants/line_separation = 0
 bbcode_enabled = true
 bbcode_text = "Dankrad awdawdawdfalse
 Dreaded-gnu fasle"

@@ -12,6 +12,7 @@ onready var chatInput = lobby.get_node("Container/chatInput/chatInput")
 
 onready var networkPanel = get_node("menu/networkPanel")
 onready var ipInput = networkPanel.get_node("connect/ip")
+onready var version = get_node("menu/Version")
 
 onready var dialogWaiting = get_node("menu/DialogWaiting")
 
@@ -45,6 +46,7 @@ signal connection_fail()
 func _ready():
 	eNet = NetworkedMultiplayerENet.new()
 	ipInput.set_text("127.0.0.1")
+	version.set_text(version.text + str(utils.version))
 #	chatInput.set_max_chars(100)
 	
 #	playerList.set_item_text()
@@ -458,4 +460,11 @@ sync func restartGame():
 	if get_tree().is_network_server():
 		startGame()
 		rpc("startGame")	
+	
+
+func _on_name_text_changed( text ):
+	print(text)
+	pass # replace with function body
+	var name = get_node("menu/networkPanel/host/name")
+	name.set("custom_colors/font_color", utils.computeColor(text))
 	

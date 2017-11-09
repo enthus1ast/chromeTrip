@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://lobby.gd" type="Script" id=1]
 [ext_resource path="res://PlayerAnim.tscn" type="PackedScene" id=2]
+[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="Gradient" id=1]
 
@@ -12,6 +14,14 @@ colors = PoolColorArray( 0, 0, 0, 1, 0.200756, 0.135815, 0.206644, 1, 0.36096, 0
 
 gradient = SubResource( 1 )
 width = 2048
+
+[sub_resource type="DynamicFont" id=3]
+
+size = 16
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 4 )
+_sections_unfolded = [ "Font" ]
 
 [node name="Control" type="Control"]
 
@@ -52,8 +62,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_left = -3.0
+margin_top = -2.0
 margin_right = 1024.0
-margin_bottom = 599.0
+margin_bottom = 601.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -64,9 +76,13 @@ expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Hint", "Rect" ]
 
+[node name="LogoAnim" parent="menu" instance=ExtResource( 2 )]
+
+position = Vector2( 38, 66 )
+
 [node name="networkPanel" type="Panel" parent="menu"]
 
-editor/display_folded = true
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -84,6 +100,7 @@ _sections_unfolded = [ "Anchor" ]
 
 [node name="connect" type="Container" parent="menu/networkPanel"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -177,7 +194,7 @@ placeholder_text = "name"
 placeholder_alpha = 0.6
 caret_blink = false
 caret_blink_speed = 0.65
-_sections_unfolded = [ "Placeholder" ]
+_sections_unfolded = [ "Placeholder", "custom_colors" ]
 
 [node name="host" type="Button" parent="menu/networkPanel/host"]
 
@@ -222,10 +239,6 @@ shortcut = null
 group = null
 text = "Start SP"
 flat = false
-
-[node name="LogoAnim" parent="menu/networkPanel" instance=ExtResource( 2 )]
-
-position = Vector2( -310, -131 )
 
 [node name="lobby" type="PanelContainer" parent="menu"]
 
@@ -750,7 +763,38 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[node name="MainMenu" parent="menu" instance=ExtResource( 3 )]
+
+margin_left = 128.0
+margin_top = 182.0
+margin_right = 168.0
+margin_bottom = 222.0
+
+[node name="Version" type="Label" parent="menu"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 910.0
+margin_top = 575.0
+margin_right = 985.0
+margin_bottom = 589.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Version: "
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
 [connection signal="pressed" from="menu/networkPanel/connect/connect" to="." method="_on_connect_pressed"]
+
+[connection signal="text_changed" from="menu/networkPanel/host/name" to="." method="_on_name_text_changed"]
 
 [connection signal="pressed" from="menu/networkPanel/host/host" to="." method="_on_host_pressed"]
 
