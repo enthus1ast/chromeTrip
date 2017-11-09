@@ -1,0 +1,97 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/smoke/smoke.png" type="Texture" id=1]
+
+[sub_resource type="Gradient" id=1]
+
+offsets = PoolRealArray( 0, 0.512987, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0.363281, 0.363281, 0.363281, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=6]
+
+gradient = SubResource( 1 )
+width = 2048
+
+[sub_resource type="Curve" id=4]
+
+min_value = 0.0
+max_value = 4.38
+bake_resolution = 100
+_data = [ Vector2( 0, 1 ), 0.0, -1.08614, 0, 0, Vector2( 1, 2.19 ), -10.1108, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+
+width = 2048
+curve = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+
+render_priority = 0
+trail_divisor = 1
+emission_shape = 1
+emission_sphere_radius = 11.04
+flag_align_y = false
+flag_rotate_y = false
+flag_disable_z = true
+spread = 20.0
+flatness = 0.0
+gravity = Vector3( 90, 0, 0 )
+initial_velocity = 12.91
+initial_velocity_random = 0.21
+angular_velocity = 50.0
+angular_velocity_random = 0.11
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 30.0
+linear_accel_random = 0.0
+radial_accel = 22.79
+radial_accel_random = 0.58
+tangential_accel = 32.11
+tangential_accel_random = 0.0
+damping = 20.0
+damping_random = 0.0
+angle = 0.0
+angle_random = 0.0
+scale = 0.61
+scale_random = 0.78
+scale_curve = SubResource( 5 )
+color_ramp = SubResource( 6 )
+hue_variation = 0.0
+hue_variation_random = 0.0
+anim_speed = 0.0
+anim_speed_random = 0.0
+anim_offset = 0.0
+anim_offset_random = 0.0
+anim_loop = true
+_sections_unfolded = [ "Angular Velocity", "Animation", "Color", "Damping", "Emission Shape", "Flags", "Gravity", "Hue Variation", "Initial Velocity", "Linear Accel", "Orbit Velocity", "Radial Accel", "Scale", "Spread", "Tangential Accel", "Trail" ]
+
+[node name="Node2D" type="Node2D"]
+
+show_behind_parent = true
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
+
+[node name="Particles2D" type="Particles2D" parent="."]
+
+show_behind_parent = true
+rotation = -1.47218
+emitting = true
+amount = 50
+lifetime = 4.0
+one_shot = false
+preprocess = 30.0
+speed_scale = 0.1
+explosiveness = 0.0
+randomness = 0.2
+fixed_fps = 0
+fract_delta = true
+visibility_rect = Rect2( -100, -100, 200, 200 )
+local_coords = true
+draw_order = 0
+process_material = SubResource( 7 )
+texture = ExtResource( 1 )
+normal_map = null
+h_frames = 1
+v_frames = 1
+_sections_unfolded = [ "Drawing", "Material", "Process Material", "Textures", "Time", "Transform", "Visibility" ]
+
+
