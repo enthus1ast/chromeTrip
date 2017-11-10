@@ -52,7 +52,6 @@ func everyPlayerReady():
 remote func setReadyToPlay(playerid):
 	# mark player ready
 	# when every player ready emit "gogo" event.
-#	print("playerNodeC", playersNode.get_children())
 	playersNode.get_node(playerid).readyToPlay = true	
 	if everyPlayerReady():
 		mapGen()
@@ -96,7 +95,6 @@ func mapGen():
 		collectablesGen()
 
 sync func rpcRespawnpoint(pos):
-#	print("created RESPAWN ")
 	var restartPoint = Restartpoint.instance()
 	restartPointsNode.position.x=0
 	restartPointsNode.add_child(restartPoint)
@@ -150,7 +148,6 @@ sync func rpcObstacles(pos, flipped, scale ,choice):
 	if flipped:
 		obstacle.get_node("kaktuss"+str(choice)).get_node("Sprite").flip_h = true
 	else:
-#		print("normal")
 		pass
 	obstaclesNode.add_child(obstacle)
 

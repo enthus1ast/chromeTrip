@@ -10,7 +10,6 @@ func _ready():
 	header.rect_min_size.y = 30
 	cont.add_child(header)
 	var highscore = utils.getHighscore(highscoreCount)
-	print(highscore)
 	var idx = 0
 	for scoreLine in highscore:	
 		idx += 1

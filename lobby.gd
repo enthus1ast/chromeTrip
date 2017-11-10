@@ -122,7 +122,7 @@ remote func startGame():
 		
 		# Set initial position, not spawning behind each other 
 		players[p].node.position = Vector2(10 + cnt, 0)
-		print(players[p].node.get_node("Sprite").get_region_rect())
+#		print(players[p].node.get_node("Sprite").get_region_rect())
 		cnt+= 5 +  players[p].node.get_node("Sprite").get_region_rect().size.x * players[p].node.get_node("Sprite").scale.x
 		
 #		Sprite
@@ -133,7 +133,7 @@ remote func startGame():
 		players[p].node.set_network_master(0)
 		if (players[p].id == currentPlayer.id and players[p].name == currentPlayer.name):
 			players[p].node.set_network_master(players[p].id)
-		print("players:",players[p]," for ",currentPlayer.name)
+#		print("players:",players[p]," for ",currentPlayer.name)
 	if has_node("game"):
 		pass
 	else:

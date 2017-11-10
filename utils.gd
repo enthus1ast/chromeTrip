@@ -7,6 +7,7 @@ var version = 0.1 # general version of this game
 const HIGHSCORE_PATH = "user://highscore.dat" # where the highscore is safed on the filesystem.
 const HIGHSCORE_PW = "code0"
 const CONFIG_PATH = "user://config.ini"
+const HOW_MANY_HIGHSCORES = 500 
 var config # the global game userconfig
 
 
@@ -64,6 +65,15 @@ func putHighscore(score, team):
 	tup["stage"] = "todo"
 	var line = to_json(tup)
 	var cont = file.get_as_text()
+#	var lines = cont.split("\n")
+	
+	
+	# Only store max count of highscore entries.
+	var oldHighscore = getHighscore(-1)
+	if oldHighscore.size() > HOW_MANY_HIGHSCORES:
+		sortHighscore(oldHighscore) # highest first
+		oldHighscore.resize(HOW_MANY_HIGHSCORES) # remove rest
+		
 	file.close()
 	file.open_encrypted_with_pass( HIGHSCORE_PATH, file.WRITE, HIGHSCORE_PW) 
 	file.store_string(cont + line + "\n")
@@ -94,6 +104,7 @@ func getScore():
 func getHighscore(cnt):
 	# returns the N sorted highscore items
 	# info: crypto cannot append line atm...
+	# if cnt == -1 all items are returned
 	createFile(HIGHSCORE_PATH, HIGHSCORE_PW)
 	var file = File.new()
 	print("get ERROR: " + str( file.open_encrypted_with_pass( HIGHSCORE_PATH, file.READ, HIGHSCORE_PW )))
@@ -107,7 +118,7 @@ func getHighscore(cnt):
 			result.append(obj)
 	file.close()
 	sortHighscore(result)
-	if result.size() >= cnt:
+	if result.size() >= cnt and cnt != -1:
 		result.resize(cnt) # only the first n elements, rest is NULL!
 	return result
 			
