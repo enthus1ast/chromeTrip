@@ -16,7 +16,6 @@ onready var highscore = get_node("menu/Highscore")
 onready var ipInput = networkPanel.get_node("connect/ip")
 onready var version = get_node("menu/Version")
 
-
 onready var dialogWaiting = get_node("menu/DialogWaiting")
 
 #onready var playerList = lobby.get_node("Container/body/playerList")

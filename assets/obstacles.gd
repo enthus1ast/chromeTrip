@@ -12,14 +12,8 @@ func _ready():
 	for child in get_children():
 		if typeof(child)==typeof(KinematicBody2D):
 			child.pause_mode=1
-	# Called every time the node is added to the scene.
-	# Initialization here
 	pass
 
 func _on_ObstacleScreenExitNotifier_screen_exited():
-#	print("obstacle deleted")
-#	get_parent().remove_child(self)
-#	get_parent().call_deferred("remove_child",self)
-#	call_deferred("queue_free")
 	queue_free()
-	pass # replace with function body
+	pass
