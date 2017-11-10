@@ -10,9 +10,7 @@ var soundPlayer = AudioStreamPlayer.new()
 var readyToPlay = false # this gets set to true when the player has loaded the playscene
 var killprotectTimer = Timer.new()
 var isKillProtected = false
-
-
-var needForFood = 10# speed of getting hungry
+var needForFood = 1# speed of getting hungry
 
 onready var playerColShape = get_node("playerShape")
 # Grounded?
