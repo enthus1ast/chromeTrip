@@ -34,7 +34,7 @@ remote func calcPointsFromHeight(_height): #ony server shoud run this
 
 func _on_heartArea_body_entered( body ):
 	if body.is_in_group("players") and !isCollected:
-		rpc("rpcScoreAdd",calcPointsFromHeight(position.y),control.currentPlayer.name)
+		rpc("rpcScoreAdd",calcPointsFromHeight(position.y),control.players[int(body.get_name())].name)
 		pass
 
 sync func rpcScoreAdd(_value,_player):
