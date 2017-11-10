@@ -14,7 +14,5 @@ func _process(delta):
 
 func _on_VisibilityNotifier2D_screen_exited():
 	set_process(false)
-#	get_parent().call_deferred("remove_child",self)
-#	call_deferred("queue_free")
 	queue_free()
 	print("cloud deleted")

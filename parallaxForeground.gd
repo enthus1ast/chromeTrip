@@ -6,7 +6,6 @@ onready var parentNode = get_node("Node2D")
 onready var game = get_tree().get_root().get_node("Control/game")
 var texture
 var count = 20
-
 var isInitial = true
 var time = 0
 
