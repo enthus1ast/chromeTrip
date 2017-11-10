@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://assets/collectables.gd" type="Script" id=1]
 [ext_resource path="res://assets/heartSpriteAnim/0001.png" type="Texture" id=2]
@@ -13,6 +13,28 @@
 [ext_resource path="res://assets/heartSpriteAnim/0010.png" type="Texture" id=11]
 [ext_resource path="res://assets/heartSpriteAnim/0011.png" type="Texture" id=12]
 [ext_resource path="res://assets/heartSpriteAnim/0012.png" type="Texture" id=13]
+[ext_resource path="res://assets/meatSpriteAnim/0001.png" type="Texture" id=14]
+[ext_resource path="res://assets/meatSpriteAnim/0002.png" type="Texture" id=15]
+[ext_resource path="res://assets/meatSpriteAnim/0003.png" type="Texture" id=16]
+[ext_resource path="res://assets/meatSpriteAnim/0004.png" type="Texture" id=17]
+[ext_resource path="res://assets/meatSpriteAnim/0005.png" type="Texture" id=18]
+[ext_resource path="res://assets/meatSpriteAnim/0006.png" type="Texture" id=19]
+[ext_resource path="res://assets/meatSpriteAnim/0007.png" type="Texture" id=20]
+[ext_resource path="res://assets/meatSpriteAnim/0008.png" type="Texture" id=21]
+[ext_resource path="res://assets/meatSpriteAnim/0009.png" type="Texture" id=22]
+[ext_resource path="res://assets/meatSpriteAnim/0010.png" type="Texture" id=23]
+[ext_resource path="res://assets/meatSpriteAnim/0011.png" type="Texture" id=24]
+[ext_resource path="res://assets/meatSpriteAnim/0012.png" type="Texture" id=25]
+[ext_resource path="res://assets/meatSpriteAnim/0013.png" type="Texture" id=26]
+[ext_resource path="res://assets/meatSpriteAnim/0014.png" type="Texture" id=27]
+[ext_resource path="res://assets/meatSpriteAnim/0015.png" type="Texture" id=28]
+[ext_resource path="res://assets/meatSpriteAnim/0016.png" type="Texture" id=29]
+[ext_resource path="res://assets/meatSpriteAnim/0017.png" type="Texture" id=30]
+[ext_resource path="res://assets/meatSpriteAnim/0018.png" type="Texture" id=31]
+[ext_resource path="res://assets/meatSpriteAnim/0019.png" type="Texture" id=32]
+[ext_resource path="res://assets/meatSpriteAnim/0020.png" type="Texture" id=33]
+[ext_resource path="res://assets/meatSpriteAnim/0021.png" type="Texture" id=34]
+[ext_resource path="res://assets/meatSpriteAnim/0022.png" type="Texture" id=35]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -25,9 +47,23 @@ animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "default",
-"speed": 15.0
+"speed": 16.0
 } ]
 _sections_unfolded = [ "Resource" ]
+
+[sub_resource type="RectangleShape2D" id=4]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[sub_resource type="SpriteFrames" id=5]
+
+animations = [ {
+"frames": [ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ), ExtResource( 35 ) ],
+"loop": true,
+"name": "default",
+"speed": 12.0
+} ]
 
 [sub_resource type="Animation" id=3]
 
@@ -51,14 +87,14 @@ tracks/0/keys = {
 
 script = ExtResource( 1 )
 
-[node name="sprites" type="Node2D" parent="."]
+[node name="spriteNode" type="Node2D" parent="."]
 
-editor/display_folded = true
 position = Vector2( 0, 2.48 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="heartArea" type="Area2D" parent="sprites"]
+[node name="heartArea" type="Area2D" parent="spriteNode"]
 
+visible = false
 scale = Vector2( 0.356363, 0.356363 )
 input_pickable = false
 gravity_vec = Vector2( 0, 1 )
@@ -67,29 +103,50 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-_sections_unfolded = [ "Audio Bus", "Collision", "Material", "Pickable", "Transform", "Visibility", "Z" ]
+_sections_unfolded = [ "Audio Bus", "Collision", "Material", "Pause", "Pickable", "Transform", "Visibility", "Z" ]
 
-[node name="heartCollShape" type="CollisionShape2D" parent="sprites/heartArea"]
+[node name="collectableShape" type="CollisionShape2D" parent="spriteNode/heartArea"]
 
 position = Vector2( 0, 5 )
 scale = Vector2( 3.84615, 4.23077 )
 shape = SubResource( 1 )
+disabled = true
 
-[node name="heartAnimatedSprite" type="AnimatedSprite" parent="sprites/heartArea"]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="spriteNode/heartArea"]
 
-editor/display_folded = true
 modulate = Color( 1, 0.300781, 0.300781, 1 )
 frames = SubResource( 2 )
 animation = "default"
-frame = 1
+frame = 5
 playing = true
-_sections_unfolded = [ "Material", "Visibility" ]
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="sprites/heartArea/heartAnimatedSprite"]
+[node name="meatArea" type="Area2D" parent="spriteNode"]
 
-rect = Rect2( -10, -10, 20, 20 )
+visible = false
+scale = Vector2( 0.507725, 0.507725 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="sprites"]
+[node name="collectableShape" type="CollisionShape2D" parent="spriteNode/meatArea"]
+
+scale = Vector2( 2.94929, 2.94929 )
+shape = SubResource( 4 )
+disabled = true
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="spriteNode/meatArea"]
+
+frames = SubResource( 5 )
+animation = "default"
+frame = 18
+playing = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="spriteNode"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
@@ -100,8 +157,15 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = "collectablesSwing"
 
-[connection signal="body_entered" from="sprites/heartArea" to="." method="_on_heartArea_body_entered"]
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="spriteNode"]
 
-[connection signal="screen_exited" from="sprites/heartArea/heartAnimatedSprite/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+scale = Vector2( 0.356363, 0.356363 )
+rect = Rect2( -10, -10, 20, 20 )
+
+[connection signal="body_entered" from="spriteNode/heartArea" to="." method="_on_heartArea_body_entered"]
+
+[connection signal="body_entered" from="spriteNode/meatArea" to="." method="_on_meatArea_body_entered"]
+
+[connection signal="screen_exited" from="spriteNode/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
 

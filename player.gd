@@ -10,8 +10,8 @@ var soundPlayer = AudioStreamPlayer.new()
 var readyToPlay = false # this gets set to true when the player has loaded the playscene
 var killprotectTimer = Timer.new()
 var isKillProtected = false
-var hunger = 0
-var needForFood = 1 # speef of getting hungry
+var hunger = 0 # hunger level
+var needForFood = 2# speed of getting hungry
 
 onready var playerColShape = get_node("playerShape")
 # Grounded?
@@ -38,7 +38,7 @@ onready var animPlayer = get_node("Sprite/AnimationPlayer")
 onready var powerUpPlayer = get_node("Sprite/AnimationPlayerPowerUps")
 onready var particleAnimPlayer = get_node("particleSystems/particleAnimPlayer")
 
-onready var progressBarHungry = game.get_node("hud/progressBar")
+onready var progressBarHungry = game.get_node("hud/progressBar/TextureProgress")
  
 # Jumping
 var can_jump = true
@@ -70,6 +70,20 @@ sync func rpcKillProtectRequest(_id):
 
 func _killprotectTimeout():
 	rpc("rpcKillProtectRequest",get_name())
+	
+func _process(delta):
+	if hunger<100 and hunger>=0 and alive:
+		hunger += delta*needForFood
+		progressBarHungry.value=100-hunger
+	elif hunger>=100:
+		hunger = 0
+		#death by starving
+		rpc("killed", get_name())
+		if allPlayersKilled():
+				rpc("showGameOverScreen")
+	else:
+		hunger = 0
+		pass
 	
 func _integrate_forces(state):
 	var final_force = Vector2()
@@ -208,6 +222,7 @@ sync func RPCreanimate(_id, atPosition):
 	get_parent().get_node(str(_id)).can_jump = false
 	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimRun")
 	get_parent().get_node(str(_id)).slave_pos = transMatrix
+	get_parent().get_node(str(_id)).hunger = false
 	if is_network_master():
 		playerColShape.disabled=false
 		isKillProtected = true
@@ -217,6 +232,7 @@ sync func RPCreanimate(_id, atPosition):
 		position = atPosition
 		slave_pos = transMatrix
 		slave_motion = Vector2(0,0)
+		hunger = 0
 	get_parent().get_node(str(_id)).alive = true
 	get_parent().get_node(str(_id)).reviving = true
 

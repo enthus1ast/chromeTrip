@@ -20,10 +20,12 @@ func _animation_finished(_string):
 	pass
 #	queue_free()
 
-func showPointsAt(_val,_pos,_player): ## how much points, position whre has been hit, player who hit
+func showPointsAt(_val,_string,_pos,_player): ## how much points, position whre has been hit, player who hit
 	set_visible(true)
+	if _val == null:
+		_val = ""
 	node2D.position=_pos +Vector2(0,20)
-	label1.bbcode_text = "[color=#"+ utils.computeColor(_player).to_html()  + "][center]" + str(_val) + " Points[center]"
+	label1.bbcode_text = "[color=#"+ utils.computeColor(_player).to_html()  + "][center]" + str(_val) +_string+ "[center]"
 	animationPlayer.play("flashMessageCollected")
 	tweenToTop.interpolate_property(
 		node2D,

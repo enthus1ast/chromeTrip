@@ -9,6 +9,8 @@ onready var Collectables = preload("res://assets/collectables.tscn")
 onready var Wolke = preload("res://Wolke.tscn")
 onready var viewportSize = get_viewport().size
 
+var collectablesStrings = ["heart","meat"]
+
 var fakeSpeed=300
 var players
 var score = 0
@@ -107,18 +109,24 @@ func respawnpointGen():
 	var pos = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)
 	rpc("rpcRespawnpoint", pos)
 	
-sync func rpcCollectable(pos):
+sync func rpcCollectable(pos,choice):
 	var collectable = Collectables.instance()
+	collectable.choice(choice)
 	collectable.position = pos
-#	collectable.scale = scale
 	collectablesNode.add_child(collectable)
 
 func collectablesGen():
 	var i = 0
+	var choice
+	## decide which obstacle
+
 	while i < collectablesCount:
-#		var enemy = Enemys.instance()
+		if 30 < rand_range(0,100):
+			choice = collectablesStrings[0]
+		else:
+			choice = collectablesStrings[1]
 		var pos = Vector2(i*400+rand_range(1024,2000)-collectablesNode.position.x,rand_range(10,330))
-		rpc("rpcCollectable", pos)
+		rpc("rpcCollectable", pos, choice)
 		i += 1
 	i = 0
 	
@@ -132,7 +140,6 @@ sync func rpcEnemy(pos, scale, choice):#
 func enemysGen():
 	var i = 0
 	while i < enemysCount:
-#		var enemy = Enemys.instance()
 		var choice = round(rand_range(1,1)) ##only one available
 		var pos = Vector2(i*800+rand_range(1024,2000)-enemysNode.position.x,rand_range(10,250))
 		var scaleDice = rand_range(0.3,1)
