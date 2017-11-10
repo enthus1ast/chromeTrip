@@ -23,6 +23,9 @@ onready var PlayerListElement = preload("res://playerListElement.tscn")
 onready var Player = preload("res://player.tscn")
 onready var Game = preload("res://game.tscn")
 
+var countdown
+var countdownActive = false
+var countdownRemaining = GAME_COUNTDOWN
 var allReady = false
 var eNet
 var game
@@ -48,16 +51,11 @@ signal connection_fail()
 func _ready():
 #	OS.set_low_processor_usage_mode(true)
 	eNet = NetworkedMultiplayerENet.new()
-	
 	# load params from config
 	ipInput.set_text( utils.config.get_value("player", "defaultserver", ""))
 	nameInput.set_text( utils.config.get_value("player", "defaultname") )
-	
 	version.set_text(version.text + str(utils.version))
 #	chatInput.set_max_chars(100)
-	
-#	playerList.set_item_text()
-#	server
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_ok")
@@ -65,7 +63,6 @@ func _ready():
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 	set_process(false)
 	set_process_input(true)
-
 
 func _player_connected(playerId):
 	print("player has connected")
@@ -85,8 +82,6 @@ func _connected_ok():
 
 #server responding to Clients connect ok
 remote func user_ready(_player):
-#	print(_id,_player_name," ready")
-	# Only the server can run this!
 	if(get_tree().is_network_server()):
 		players[_player.id] = {}
 		players[_player.id].id = _player.id
@@ -98,12 +93,6 @@ remote func register_in_lobby():
 	rpc("register_new_player", currentPlayer)
 	lobby.get_node("Container/info/name").set_text("name: "+currentPlayer.name)
 	lobby.get_node("Container/info/ip").set_text("ip: "+str(IP.get_local_addresses()[1]))
-#	register_new_player(get_tree().get_network_unique_id(), player_name)
-
-# Register yourself directly ingame
-#remote func register_in_game():
-#	rpc("register_new_player", get_tree().get_network_unique_id(), currentPlayer)
-#	register_new_player(get_tree().get_network_unique_id(), currentPlayer)
 
 remote func register_new_player(_player):
 	players[_player.id] = {}
@@ -111,26 +100,19 @@ remote func register_new_player(_player):
 	players[_player.id].name = _player.name
 	players[_player.id].isReady = _player.isReady
 	
-# This runs only once from server
 	if get_tree().is_network_server():
-		# Send info about server to new player
 		rpc("updateList",players)
-		# Send the new player info about the other players
 		for peer_id in players:
 			rpc_id(_player.id, "register_new_player", players[peer_id])
 			updateList(players)
-			
-	#	switch the startbutton to disabled
 		areAllReady()
 
 remote func startGame():
 	print("startGame was called")
-	
 	## Safe new config values
 	utils.config.set_value("player", "defaultname", nameInput.get_text())					
 	utils.config.set_value("player", "defaultserver", ipInput.get_text())					
 	utils.config.save(utils.CONFIG_PATH)
-	
 	var cnt = 0
 	for p in players:
 		players[p].node = Player.instance()
@@ -143,24 +125,15 @@ remote func startGame():
 		print(players[p].node.get_node("Sprite").get_region_rect())
 		cnt+= 5 +  players[p].node.get_node("Sprite").get_region_rect().size.x * players[p].node.get_node("Sprite").scale.x
 		
-		
 #		Sprite
 		players[p].node.get_node("Sprite").modulate =  utils.computeColor(players[p].name)
 	
 		# Set Player ID as node name - Unique for each player!
 		players[p].node.set_name(str(p))
 		players[p].node.set_network_master(0)
-		# If the new player is you
-#		game.get_node("players").add_child(players[p].node)
 		if (players[p].id == currentPlayer.id and players[p].name == currentPlayer.name):
-#			currentPlayer.node = players[p].node
-			# Set as master on yourself
 			players[p].node.set_network_master(players[p].id)
-#			player.add_child(camera_scene.instance()) # Add camera to your player	
-		# Add the player (or you) to the world!
 		print("players:",players[p]," for ",currentPlayer.name)
-	
-	
 	if has_node("game"):
 		pass
 	else:
@@ -168,9 +141,6 @@ remote func startGame():
 		for p in players:
 			game.get_node("players").add_child(players[p].node)
 		add_child(game)
-	
-	
-################## disconnected unregister
 
 func _player_disconnected(_id):
 	print("_player_disconnected")
@@ -179,7 +149,6 @@ func _player_disconnected(_id):
 	rpc("unregister_player", _id)
 
 remote func unregister_player(_id):
-	# If the game is running
 	if(has_node("game")):
 		# Remove player from game
 		if(has_node("game/players/" + str(_id))):
@@ -190,7 +159,6 @@ remote func unregister_player(_id):
 		removeItemFromList(_id)
 		players.erase(_id)
 		updateList(players)
-#		get_node("game/players/" + str(id)).queue_free()
 		emit_signal("refresh_lobby")
 
 func _connected_fail():
@@ -205,8 +173,6 @@ func _server_disconnected():
 	lobby.set_visible(false)
 	menu.set_visible(true)
 	call_deferred("remove_child",game)
-	
-#	remove_child(game)
 	game.queue_free()
 	eNet.close_connection()
 	eNet = NetworkedMultiplayerENet.new() #workaround
@@ -214,11 +180,7 @@ func _server_disconnected():
 	players={}
 	clearList()
 	clearChat()
-	
 	print("server closed")
-#	quit_game()
-#	emit_signal("server_ended")
-	
 	
 ################## button pressed signals
 remote func clearList():
@@ -243,11 +205,9 @@ remote func updateList(_list):
 func addNewListItem(_peer):
 	if !lobby.get_node("Container/body/RichTextLabel/VBoxContainer").has_node(str(_peer.id)):
 		var listItem = PlayerListElement.instance()
-		
 		listItem.get_node("id").set_text(str(_peer.id))
 		listItem.get_node("name").set_text(_peer.name)
 		listItem.get_node("name").add_color_override("font_color" ,utils.computeColor(_peer.name))
-		 
 		if currentPlayer.id!=_peer.id:
 			listItem.get_node("readyCheckbox").disabled=true
 			if _peer.isReady:
@@ -298,19 +258,16 @@ remote func changeReady(_id):
 		elif players[_id].isReady:
 			currentPlayer.isReady=false
 			players[_id].isReady=false
-			
 		for peer in players:
 			if peer!=1 and players[peer].id!=_id:
 				rpc_id(peer,"setChecked",_id)
 
-#if client send a request to server
 func _on_checkbox_pressed():
 	if get_tree().is_network_server():
 		changeReady(currentPlayer.id)
 		areAllReady()
 	else:
 		rpc_id(1,"changeReady",currentPlayer.id)
-
 
 func _on_host_pressed():
 	eNet.create_server(SERVER_PORT, 4)
@@ -341,10 +298,6 @@ func _on_connect_pressed():
 		print("I am already trying to connect.")
 	
 func _on_sp_pressed():
-#	game = load("res://game.tscn").instance()
-#	eNet.create_server(SERVER_PORT, 4)
-#	get_tree().set_network_peer(eNet)
-#	register_new_player(1,currentPlayer)
 	eNet.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(eNet)
 	currentPlayer.name = nameInput.get_text()
@@ -353,7 +306,6 @@ func _on_sp_pressed():
 	currentPlayer.id = 1
 	currentPlayer.isReady = false
 	var id = get_tree().get_network_unique_id()
-#	lobby.set_visible(true)
 	players[id] = {}
 	players[id].name = currentPlayer.name
 	players[id].id = id
@@ -377,7 +329,6 @@ func _on_leaveLobbyButton_pressed():
 	players={}
 	clearList()
 	clearChat()
-#	updateList(players)
 
 func _on_chatInput_focus_entered():
 	pass
@@ -402,17 +353,12 @@ remote func sendMessage(_player,_value):
 		
 func _on_clearChat_pressed():
 	clearChat()
-	pass # replace with function body
 	
 func clearChat():
 	var vBox = lobby.get_node("Container/chat/ScrollContainer/VBoxContainer")
 	for child in vBox.get_children():
 		vBox.remove_child(child)
 		child.queue_free()
-
-var countdown
-var countdownActive = false
-var countdownRemaining = GAME_COUNTDOWN
 
 remote func _on_startLobbyButton_pressed():
 	if get_tree().is_network_server():
@@ -463,8 +409,6 @@ sync func prepareGame():
 		startGame()
 		rpc("startGame")
 
-############################ _input, _process
-
 func _input(event):
 	if event.is_action_pressed("ui_enter") and chatInput.has_focus():
 		rpc("sendMessage",currentPlayer.name,chatInput.get_text())
@@ -474,28 +418,18 @@ func askForRestartGame():
 	rpc("restartGame")
 
 sync func restartGame():
-#	var myroot = get_tree().get_root()
-#	print(myroot.get_node("Control"))
-#	var co = get_tree().get_root().get_node("Control") #.remove_child("game")
-#	var ga = get_tree().get_root().get_node("Control/game")
-#	co.remove_child(ga)
 	remove_child(game)
 	game.queue_free()	
 	if get_tree().is_network_server():
 		startGame()
 		rpc("startGame")	
 	
-
 func _on_name_text_changed( text ):
 	pass # replace with function body
 	var name = get_node("menu/networkPanel/host/name")
 	name.set("custom_colors/font_color", utils.computeColor(text))
 	
-
-
 func _on_back_pressed():
 	networkPanel.hide()
 	highscore.hide()
 	mainMenu.show()
-	
-	

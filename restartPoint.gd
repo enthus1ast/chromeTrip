@@ -13,16 +13,11 @@ func doRespawn(collider):
 	##   the respawn point
 #	print("respawn point reached")
 	if not collider.alive: return true
-	# get all killed players.
 	for player in get_tree().get_nodes_in_group("players"):
 		print(player)
 		if ! player.alive:
 			print("reanimating player:",  Vector2(100, -400))
 			player.reanimate( Vector2(100,150))
-	
-	# get position of respawn point
-	# places all killed players to resp point 
-	# unkill them
 
 func _on_Area2D_body_entered( body ):
 	pass # replace with function body
@@ -33,6 +28,4 @@ func _on_Area2D_body_shape_entered( body_id, body, body_shape, area_shape ):
 		doRespawn(body)
 	
 func _on_VisibilityNotifier2D_screen_exited():
-#	get_parent().call_deferred("remove_child",self)
-#	call_deferred("queue_free")
 	queue_free()

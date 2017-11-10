@@ -2,10 +2,6 @@ extends Control
 
 signal restartGame
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
 sync func setPause(val, player):
 	get_tree().set_pause(val)
 
@@ -17,7 +13,6 @@ func hideMenu():
 	print("hide")
 	self.visible = false
 #	rpc("setPause", false, get_tree().get_network_unique_id())
-	
 
 func _ready():
 	# Called every time the node is added to the scene.

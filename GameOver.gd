@@ -10,10 +10,8 @@ func _input(event):
 
 func _on_Button_mouse_entered():
 	get_node("ButRestart/ImgRestart").modulate = "d84848"
-#	print("entered")
 	
 func _on_Button_pressed():
-#	print("pressed")
 	emit_signal("restartGame")
 
 func _on_Button_mouse_exited():
@@ -21,11 +19,8 @@ func _on_Button_mouse_exited():
 
 func _on_GameOverScreen_visibility_changed():
 	print("visibility_changed")
-	if self.visible == true:
-		utils.putHighscore( utils.getScore(), utils.getTeam() )
+	if self.visible == true: # TODO?
 		get_node("AnimationPlayer").play("s")
-	pass # replace with function body
 
 func _on_GameOverScreen_hide():
-#	print("hide called")
 	pass # replace with function body

@@ -1,6 +1,5 @@
 extends Node
 
-
 ########################################################################################################
 # Global game variables
 ########################################################################################################
@@ -9,7 +8,6 @@ const HIGHSCORE_PATH = "user://highscore.dat" # where the highscore is safed on 
 const HIGHSCORE_PW = "code0"
 const CONFIG_PATH = "user://config.ini"
 var config # the global game userconfig
-
 
 
 ########################################################################################################
@@ -63,10 +61,10 @@ func putHighscore(score, team):
 	tup["score"] = score
 	tup["team"] = team
 	tup["date"] = OS.get_datetime(true)
+	tup["stage"] = "todo"
 	var line = to_json(tup)
 	var cont = file.get_as_text()
 	file.close()
-	
 	file.open_encrypted_with_pass( HIGHSCORE_PATH, file.WRITE, HIGHSCORE_PW) 
 	file.store_string(cont + line + "\n")
 	file.close()
@@ -114,7 +112,6 @@ func getHighscore(cnt):
 	return result
 			
 func _ready():
-	print("READY FROM UTILS")
 	## Create highscore file.
 	createFile(HIGHSCORE_PATH, HIGHSCORE_PW)
 	#	putHighscore(5000, ["Foo1", "Baa"])
@@ -125,11 +122,7 @@ func _ready():
 	createFile(CONFIG_PATH)	
 	config = ConfigFile.new()
 	var err = config.load(CONFIG_PATH)
-	if err == OK: # if not, something went wrong with the file loading
-		# Look for the display/width pair, and default to 1024 if missing
-#		var playerName = config.get_value("player", "name", "lol")
-#		print(playerName)
-		
+	if err == OK: 
 		if not config.has_section_key("player", "defaultname"):
 			config.set_value("player", "defaultname", "unknown")		
 		if not config.has_section_key("player", "defaultserver"):
@@ -141,6 +134,3 @@ func _ready():
 		config.save(CONFIG_PATH)
 	else:
 		print("could not load userconfig from: " + CONFIG_PATH)
-
-	
-	#

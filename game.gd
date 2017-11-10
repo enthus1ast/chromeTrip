@@ -123,7 +123,6 @@ func collectablesGen():
 		rpc("rpcCollectable", pos)
 		i += 1
 	i = 0
-
 	
 sync func rpcEnemy(pos, scale, choice):#	
 	var enemy = Enemys.instance()
@@ -212,7 +211,6 @@ func _process(delta):
 # two ground-tiles for seamless infinite maps
 # everytime a tile hast left the screen, position.x is updating and new obstacles are generating
 func _on_VisibilityNotifier2D_screen_exited():
-	
 	if groundSprite1.position.x<groundSprite2.position.x:
 		groundSprite1.position.x = groundSprite2.position.x + spriteWidth*groundSprite1.scale.x
 	else:
@@ -225,18 +223,10 @@ func endGame():
 	queue_free()
 
 func _on_menu_pressed():
-#	pass # replace with function body
-#	var controlNode = get_tree().get_root().get_node("Control")
-#	get_tree().set_network_peer(null)
-#	controlNode.eNet.close_connection()
-#	controlNode.eNet = NetworkedMultiplayerENet.new()
-#	controlNode.get_node("menu").set_visible(true)
-#	endGame()
 	get_node("hud/PopupMenu").showMenu()
 	
 func _on_GameOverScreen_restartGame():
 	get_tree().get_root().get_node("Control").askForRestartGame()
-
 
 func _on_PopupMenu_restartGame():
 	get_tree().get_root().get_node("Control").askForRestartGame()

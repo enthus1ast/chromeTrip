@@ -7,8 +7,8 @@ export var highscoreCount = 500
 func _ready():
 	# the header
 	var header = highscoreItem.instance()
+	header.rect_min_size.y = 30
 	cont.add_child(header)
-	
 	var highscore = utils.getHighscore(highscoreCount)
 	print(highscore)
 	var idx = 0

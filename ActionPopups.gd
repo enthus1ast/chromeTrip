@@ -5,9 +5,7 @@ onready var label1 = get_node("Node2D/RichTextLabel1")
 #onready var label2 = get_node("RichTextLabel2")
 
 func _ready():
-	
 	animationPlayer.connect("animation_finished",self,"_animation_finished")
-	pass
 	
 func _animation_finished(_string):
 	set_visible(false)

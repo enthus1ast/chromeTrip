@@ -1,11 +1,11 @@
 David
-- Highscore counter
-- Crypted highscore file
+ok Highscore counter
+ok Crypted highscore file
 (- Online highscore)
-- Config file (ini)
+ok Config file (ini)
   Fullscreen
-  name
-  defaultServer
+ ok name
+ ok defaultServer
   custom look (haare etc)
 - Fix disconnect bug.
 - Debug modus
@@ -16,6 +16,6 @@ David
 - Name des spieler object hinzufügen
 - Spiel anhalten beim pause drücken SP/MP
 - Stage informer is above main menu
-
+ok doppelter eintrag in highscore
 
 
