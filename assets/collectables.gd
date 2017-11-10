@@ -42,14 +42,15 @@ func _process(delta):
 func _on_meatArea_body_entered( body ):
 	if body.is_in_group("players") and !isCollected:
 		rpc("rpcEatFood",body,control.players[int(body.get_name())].name)
+		print(control.players[int(body.get_name())].name)
 		pass
 
 sync func rpcEatFood(_playerNode,_playerName):
+	
 	if _playerNode.hunger < foodValue and _playerNode.hunger>=0:
 		_playerNode.hunger -= foodValue
 	else:
 		_playerNode.hunger = 0
-		
 		
 	flashMessage.showPointsAt(null,"Tasty!",position,_playerName)
 	set_process(false)
