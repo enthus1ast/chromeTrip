@@ -1,17 +1,18 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://PopupMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://ActionPopups.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/smoke/risingSmokeParticles.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/berge/vulkan1.png" type="Texture" id=6]
-[ext_resource path="res://assets/berge/berg1.png" type="Texture" id=7]
-[ext_resource path="res://assets/berge/berg2.png" type="Texture" id=8]
-[ext_resource path="res://ground.png" type="Texture" id=9]
-[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=10]
-[ext_resource path="res://GameOver.tscn" type="PackedScene" id=11]
-[ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=12]
+[ext_resource path="res://assets/progressBar/ProgressBar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/smoke/risingSmokeParticles.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/berge/vulkan1.png" type="Texture" id=7]
+[ext_resource path="res://assets/berge/berg1.png" type="Texture" id=8]
+[ext_resource path="res://assets/berge/berg2.png" type="Texture" id=9]
+[ext_resource path="res://ground.png" type="Texture" id=10]
+[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=11]
+[ext_resource path="res://GameOver.tscn" type="PackedScene" id=12]
+[ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -100,7 +101,6 @@ margin_bottom = 137.0
 
 [node name="hud" type="CanvasLayer" parent="."]
 
-editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -187,6 +187,11 @@ margin_top = 58.0
 margin_right = 148.0
 margin_bottom = 98.0
 
+[node name="progressBar" parent="hud" instance=ExtResource( 5 )]
+
+position = Vector2( 29.0858, 497.784 )
+scale = Vector2( 1.87467, 1.87467 )
+
 [node name="sprites" type="Node2D" parent="."]
 
 __meta__ = {
@@ -203,12 +208,15 @@ scale = Vector2( 0.20658, 2168.35 )
 texture = SubResource( 4 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Gebirge2" type="Node2D" parent="sprites/world"]
 
 editor/display_folded = true
 
-[node name="Node2D" parent="sprites/world/Gebirge2" instance=ExtResource( 5 )]
+[node name="Node2D" parent="sprites/world/Gebirge2" instance=ExtResource( 6 )]
 
 position = Vector2( 539.195, 281.914 )
 rotation = -0.00171995
@@ -219,7 +227,7 @@ scale = Vector2( 0.491848, 0.491848 )
 modulate = Color( 0.761719, 0.761719, 0.761719, 1 )
 position = Vector2( 517.032, 283.129 )
 scale = Vector2( 1.1002, 0.945489 )
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 _sections_unfolded = [ "Visibility", "Z" ]
 __meta__ = {
 "_edit_lock_": true
@@ -238,14 +246,14 @@ __meta__ = {
 
 [node name="Sprite" type="Sprite" parent="sprites/world/Gebirge1"]
 
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 _sections_unfolded = [ "Material", "Transform", "Visibility" ]
 
 [node name="Sprite2" type="Sprite" parent="sprites/world/Gebirge1"]
 
 modulate = Color( 1, 1, 1, 0.988941 )
 position = Vector2( 82.7714, 7.64497 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 flip_h = true
 region_enabled = true
 region_rect = Rect2( 0, 0, 100, 20 )
@@ -257,7 +265,7 @@ _sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
 modulate = Color( 1, 1, 1, 0.988941 )
 position = Vector2( 106.888, 7.44009 )
 scale = Vector2( 1.43859, 0.770555 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 flip_h = true
 region_enabled = true
 region_rect = Rect2( 0, 0, 100, 20 )
@@ -272,6 +280,9 @@ scale = Vector2( 0.183399, 2114.18 )
 texture = SubResource( 6 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Material", "Transform", "Visibility" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="gradientGround" type="Sprite" parent="sprites/world"]
 
@@ -281,12 +292,16 @@ scale = Vector2( 0.145033, 2149.04 )
 texture = SubResource( 8 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="wolken" type="Node2D" parent="sprites"]
 
 [node name="constantMovement" type="Node2D" parent="sprites"]
 
 editor/display_folded = true
+_sections_unfolded = [ "Transform" ]
 
 [node name="ground" type="Node2D" parent="sprites/constantMovement"]
 
@@ -297,7 +312,7 @@ _sections_unfolded = [ "Transform" ]
 
 editor/display_folded = true
 position = Vector2( 2400, 380 )
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -310,7 +325,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 editor/display_folded = true
 position = Vector2( 4800, 380 )
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -327,7 +342,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 [node name="enemys" type="Node2D" parent="sprites"]
 
-[node name="parallaxForeground" parent="sprites" instance=ExtResource( 10 )]
+[node name="parallaxForeground" parent="sprites" instance=ExtResource( 11 )]
 
 [node name="players" type="Node2D" parent="."]
 
@@ -407,12 +422,12 @@ scale = Vector2( 1.65385, 27.9423 )
 shape = SubResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="GameOverScreen" parent="." instance=ExtResource( 11 )]
+[node name="GameOverScreen" parent="." instance=ExtResource( 12 )]
 
 editor/display_folded = true
 visible = false
 
-[node name="cameraNode" parent="." instance=ExtResource( 12 )]
+[node name="cameraNode" parent="." instance=ExtResource( 13 )]
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 

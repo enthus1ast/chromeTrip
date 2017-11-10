@@ -14,6 +14,7 @@ var players
 var score = 0
 var finalScore = 0
 var distanceWalked = 0
+var ground
 
 var stage = 1 # each 5000 points one stage
 var nextLevel = 5000
