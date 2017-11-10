@@ -54,11 +54,11 @@ script = ExtResource( 1 )
 [node name="sprites" type="Node2D" parent="."]
 
 editor/display_folded = true
+position = Vector2( 0, 2.48 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="heartArea" type="Area2D" parent="sprites"]
 
-editor/display_folded = true
 scale = Vector2( 0.356363, 0.356363 )
 input_pickable = false
 gravity_vec = Vector2( 0, 1 )
@@ -81,7 +81,7 @@ editor/display_folded = true
 modulate = Color( 1, 0.300781, 0.300781, 1 )
 frames = SubResource( 2 )
 animation = "default"
-frame = 4
+frame = 1
 playing = true
 _sections_unfolded = [ "Material", "Visibility" ]
 

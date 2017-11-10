@@ -10,6 +10,8 @@ var soundPlayer = AudioStreamPlayer.new()
 var readyToPlay = false # this gets set to true when the player has loaded the playscene
 var killprotectTimer = Timer.new()
 var isKillProtected = false
+var hunger = 0
+var needForFood = 1 # speef of getting hungry
 
 onready var playerColShape = get_node("playerShape")
 # Grounded?
@@ -38,6 +40,8 @@ onready var game = get_tree().get_root().get_node("Control/game")
 onready var animPlayer = get_node("Sprite/AnimationPlayer")
 onready var powerUpPlayer = get_node("Sprite/AnimationPlayerPowerUps")
 onready var particleAnimPlayer = get_node("particleSystems/particleAnimPlayer")
+
+onready var progressBarHungry = game.get_node("hud/progressBar")
  
 # Jumping
 var can_jump = true

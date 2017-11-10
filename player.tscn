@@ -297,7 +297,7 @@ linear_damp = -1.0
 angular_velocity = 0.0
 angular_damp = -1.0
 script = ExtResource( 1 )
-_sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform" ]
+_sections_unfolded = [ "Angular", "Collision", "Linear", "Material", "Pickable", "Transform", "Visibility" ]
 
 [node name="particleSystems" type="Node2D" parent="."]
 

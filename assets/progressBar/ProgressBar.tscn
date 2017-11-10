@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/progressBar/progressBarUnder.png" type="Texture" id=1]
+[ext_resource path="res://assets/progressBar/progressBarOver.png" type="Texture" id=2]
+[ext_resource path="res://assets/progressBar/progressBar.png" type="Texture" id=3]
+
+[node name="progressBar" type="Node2D"]
+
+rotation = 1.5708
+_sections_unfolded = [ "Transform" ]
+
+[node name="TextureProgress" type="TextureProgress" parent="."]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -49.0
+margin_top = -5.0
+margin_right = 51.0
+margin_bottom = 5.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 100.0
+exp_edit = false
+rounded = false
+texture_under = ExtResource( 1 )
+texture_over = ExtResource( 2 )
+texture_progress = ExtResource( 3 )
+fill_mode = 1
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = false
+_sections_unfolded = [ "Anchor", "Radial Fill", "Rect", "Textures" ]
+
+
