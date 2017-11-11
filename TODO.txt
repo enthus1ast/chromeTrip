@@ -15,7 +15,11 @@ ok Config file (ini)
   online list mit badges
 - Name des spieler object hinzufügen
 - Spiel anhalten beim pause drücken SP/MP
-- Stage informer is above main menu
+ok Stage informer is above main menu
 ok doppelter eintrag in highscore
+- stage in highscore
+- disable collision on spawn/revive (kill protect)
+- player collision save spot eliminieren
+- clean player dicts on disconnect.
 
 
