@@ -123,7 +123,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -10 ), Vector2( 0, 10 ) ]
 }
 
-[sub_resource type="Shader" id=10]
+[sub_resource type="Shader" id=8]
 
 code = "shader_type canvas_item;
 
@@ -134,10 +134,10 @@ void fragment() {
 	COLOR.rgb = textureLod(SCREEN_TEXTURE,SCREEN_UV,amount).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=11]
+[sub_resource type="ShaderMaterial" id=9]
 
 render_priority = 0
-shader = SubResource( 10 )
+shader = SubResource( 8 )
 shader_param/amount = 3.196
 _sections_unfolded = [ "Resource", "shader_param" ]
 
@@ -153,6 +153,7 @@ _sections_unfolded = [ "Material", "Transform" ]
 
 [node name="heartArea" type="Area2D" parent="spriteNode"]
 
+visible = false
 scale = Vector2( 0.356363, 0.356363 )
 input_pickable = false
 gravity_vec = Vector2( 0, 1 )
@@ -203,7 +204,7 @@ disabled = true
 
 frames = SubResource( 6 )
 animation = "default"
-frame = 18
+frame = 11
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="spriteNode"]
@@ -225,7 +226,7 @@ rect = Rect2( -10, -10, 20, 20 )
 [node name="glowShader" type="Sprite" parent="spriteNode"]
 
 visible = false
-material = SubResource( 11 )
+material = SubResource( 9 )
 use_parent_material = true
 position = Vector2( 0.643921, 1.38352 )
 scale = Vector2( 0.429567, 0.429567 )
