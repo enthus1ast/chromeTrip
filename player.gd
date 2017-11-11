@@ -73,9 +73,9 @@ func rpcPowerUps(_id,_string):
 	
 sync func rpcKillProtectRequest(_id):
 	var player = get_parent().get_node(str(_id))
+	player.isKillProtected = false
 	player.set_collision_mask_bit(3, true) ## layer for obstacles
 	player.set_collision_mask_bit(4, true) ## layer for enemy
-	player.isKillProtected = false
 	player.powerUpPlayer.stop()
 #	player.powerUpPlayer.wait_time = 3
 	player.rpcPowerUps(_id,"default")
@@ -240,8 +240,8 @@ sync func RPCreanimate(_id, atPosition):
 	var player = get_parent().get_node(str(_id))
 	player.powerUpPlayer.play("killProtected")
 	player.isKillProtected = true
-	player.set_collision_mask_bit(4, false) ## layer for obstacles
-	player.set_collision_mask_bit(5, false) ## layer for enemies
+	player.set_collision_mask_bit(3, false) ## layer for obstacles
+	player.set_collision_mask_bit(4, false) ## layer for enemies
 	player.killprotectTimer.start()
 	var transMatrix = Transform2D(Vector2(),Vector2(), atPosition)
 	print(_id,transMatrix, " hasbeen reanimated")
