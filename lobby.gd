@@ -5,19 +5,19 @@ const INSTANT_READY = false
 const REQUIRED_PLAYERS = 2
 const GAME_COUNTDOWN = 1 #time to start in lobby
 
+
 onready var menu = get_node("menu")
 onready var lobby = menu.get_node("lobby")
 onready var startButton = lobby.get_node("Container/startLobbyButton")
 onready var chatInput = lobby.get_node("Container/chatInput/chatInput")
 onready var networkPanel = get_node("menu/networkPanel")
 onready var mainMenu = get_node("menu/MainMenu")
-onready var nameInput = networkPanel.get_node("host/name")
+onready var nameInput = networkPanel.get_node("name")
 onready var highscore = get_node("menu/Highscore")
 onready var ipInput = networkPanel.get_node("connect/ip")
 onready var version = get_node("menu/Version")
 
 onready var dialogWaiting = get_node("menu/DialogWaiting")
-
 #onready var playerList = lobby.get_node("Container/body/playerList")
 onready var PlayerListElement = preload("res://playerListElement.tscn")
 onready var Player = preload("res://player.tscn")
@@ -291,7 +291,9 @@ func _on_connect_pressed():
 	if !isConnecting:
 		dialogWaiting.set_visible(true)
 		isConnecting = true
-		var ip = ipInput.get_text()
+		var hostname = ipInput.get_text()
+		var ip = IP.resolve_hostname(hostname)
+		
 		eNet.create_client(ip, SERVER_PORT)
 		get_tree().set_network_peer(eNet)
 	else:
@@ -425,9 +427,7 @@ sync func restartGame():
 		rpc("startGame")	
 	
 func _on_name_text_changed( text ):
-	pass # replace with function body
-	var name = get_node("menu/networkPanel/host/name")
-	name.set("custom_colors/font_color", utils.computeColor(text))
+	nameInput.set("custom_colors/font_color", utils.computeColor(text))
 	
 func _on_back_pressed():
 	networkPanel.hide()

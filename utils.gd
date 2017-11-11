@@ -62,7 +62,7 @@ func putHighscore(score, team):
 	tup["score"] = score
 	tup["team"] = team
 	tup["date"] = OS.get_datetime(true)
-	tup["stage"] = "todo"
+	tup["stage"] = getStage()
 	var line = to_json(tup)
 	var cont = file.get_as_text()
 #	var lines = cont.split("\n")
@@ -100,6 +100,10 @@ func getTeam():
 func getScore():
 	## returns the current score
 	return get_tree().get_root().get_node("Control/game").finalScore
+
+func getStage():
+	## returns the current stage.
+	return get_tree().get_root().get_node("Control/game").stage
 
 func getHighscore(cnt):
 	# returns the N sorted highscore items

@@ -182,10 +182,10 @@ flat = false
 [node name="PopupMenu" parent="hud" instance=ExtResource( 2 )]
 
 visible = false
-margin_left = 108.0
-margin_top = 58.0
-margin_right = 148.0
-margin_bottom = 98.0
+margin_left = 121.0
+margin_top = 61.0
+margin_right = 161.0
+margin_bottom = 101.0
 
 [node name="progressBar" parent="hud" instance=ExtResource( 5 )]
 
@@ -194,6 +194,7 @@ scale = Vector2( 1.87467, 1.87467 )
 
 [node name="sprites" type="Node2D" parent="."]
 
+editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }

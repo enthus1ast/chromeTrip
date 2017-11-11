@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://lobby.gd" type="Script" id=1]
 [ext_resource path="res://PlayerAnim.tscn" type="PackedScene" id=2]
-[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=3]
-[ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://Highscore.tscn" type="PackedScene" id=5]
+[ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://200-offline-sprite.png" type="Texture" id=4]
+[ext_resource path="res://raw/Hair.png" type="Texture" id=5]
+[ext_resource path="res://raw/Hut.png" type="Texture" id=6]
+[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Highscore.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Gradient" id=1]
 
@@ -16,12 +19,20 @@ colors = PoolColorArray( 0, 0, 0, 1, 0.200756, 0.135815, 0.206644, 1, 0.36096, 0
 gradient = SubResource( 1 )
 width = 2048
 
+[sub_resource type="DynamicFont" id=5]
+
+size = 30
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 3 )
+_sections_unfolded = [ "Font", "Settings" ]
+
 [sub_resource type="DynamicFont" id=3]
 
 size = 15
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 4 )
+font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=4]
@@ -29,7 +40,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 16
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 4 )
+font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font" ]
 
 [node name="Control" type="Control"]
@@ -91,16 +102,14 @@ position = Vector2( 38, 66 )
 
 [node name="networkPanel" type="Panel" parent="menu"]
 
-editor/display_folded = true
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 348.0
-margin_top = 197.0
-margin_right = 684.0
-margin_bottom = 448.0
+margin_left = 132.0
+margin_top = 196.0
+margin_right = 806.0
+margin_bottom = 507.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -108,17 +117,42 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 _sections_unfolded = [ "Anchor" ]
 
-[node name="connect" type="Container" parent="menu/networkPanel"]
+[node name="name" type="LineEdit" parent="menu/networkPanel"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 89.0
-margin_top = 102.0
-margin_right = 277.0
-margin_bottom = 159.0
+margin_left = 140.0
+margin_top = 14.0
+margin_right = 518.0
+margin_bottom = 64.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 5 )
+align = 1
+max_length = 16
+expand_to_len = false
+focus_mode = 2
+placeholder_text = "name"
+placeholder_alpha = 0.6
+caret_blink = false
+caret_blink_speed = 0.65
+_sections_unfolded = [ "Placeholder", "Size Flags", "custom_colors", "custom_fonts" ]
+
+[node name="connect" type="Container" parent="menu/networkPanel"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 322.0
+margin_top = 142.0
+margin_right = 711.0
+margin_bottom = 199.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -131,9 +165,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 10.0
-margin_right = 81.0
-margin_bottom = 43.0
+margin_left = 1.0
+margin_top = -1.0
+margin_right = 209.0
+margin_bottom = 32.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -152,10 +187,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 110.0
-margin_top = 13.0
-margin_right = 188.0
-margin_bottom = 40.0
+margin_left = 215.0
+margin_top = 1.0
+margin_right = 293.0
+margin_bottom = 28.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -174,37 +209,15 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 90.0
-margin_top = 50.0
-margin_right = 278.0
-margin_bottom = 107.0
+margin_left = 326.0
+margin_top = 181.0
+margin_right = 622.0
+margin_bottom = 214.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-
-[node name="name" type="LineEdit" parent="menu/networkPanel/host"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 10.0
-margin_right = 81.0
-margin_bottom = 42.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-expand_to_len = false
-focus_mode = 2
-placeholder_text = "name"
-placeholder_alpha = 0.6
-caret_blink = false
-caret_blink_speed = 0.65
-_sections_unfolded = [ "Placeholder", "custom_colors" ]
 
 [node name="host" type="Button" parent="menu/networkPanel/host"]
 
@@ -212,10 +225,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 110.0
-margin_top = 13.0
-margin_right = 188.0
-margin_bottom = 40.0
+margin_left = -1.0
+margin_top = 3.0
+margin_right = 295.0
+margin_bottom = 30.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -234,10 +247,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 190.0
-margin_top = 170.0
-margin_right = 286.0
-margin_bottom = 204.0
+margin_left = 94.0
+margin_top = 180.0
+margin_right = 190.0
+margin_bottom = 214.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -256,10 +269,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 28.0
-margin_top = 200.0
-margin_right = 124.0
-margin_bottom = 234.0
+margin_left = 305.0
+margin_top = 264.0
+margin_right = 401.0
+margin_bottom = 298.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -271,6 +284,97 @@ shortcut = null
 group = null
 text = "back"
 flat = false
+
+[node name="Dinos" type="Node2D" parent="menu/networkPanel"]
+
+[node name="SpriteSp" type="Sprite" parent="menu/networkPanel/Dinos"]
+
+position = Vector2( 66.1986, 127.575 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+offset = Vector2( 6.09799, -42.0819 )
+region_enabled = true
+region_rect = Rect2( 1855, 1, 85, 96 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="menu/networkPanel/Dinos/SpriteSp"]
+
+position = Vector2( 2.28799, -67.7206 )
+scale = Vector2( 1.84861, 1.31444 )
+texture = ExtResource( 5 )
+
+[node name="SpriteMpL" type="Sprite" parent="menu/networkPanel/Dinos"]
+
+position = Vector2( 342.44, 125.12 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+offset = Vector2( 6.09799, -42.0819 )
+region_enabled = true
+region_rect = Rect2( 1855, 1, 85, 96 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="SpriteMpR" type="Sprite" parent="menu/networkPanel/Dinos"]
+
+modulate = Color( 0.867188, 0.867188, 0.867188, 1 )
+position = Vector2( 590.443, 127.575 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+offset = Vector2( 6.09799, -42.0819 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 1855, 1, 85, 96 )
+_sections_unfolded = [ "Offset", "Transform", "Visibility" ]
+
+[node name="Hut" type="Sprite" parent="menu/networkPanel/Dinos/SpriteMpR"]
+
+position = Vector2( 0.0218506, -91.5024 )
+texture = ExtResource( 6 )
+flip_h = true
+_sections_unfolded = [ "Offset" ]
+
+[node name="MultiplayerLabel" type="Label" parent="menu/networkPanel"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 421.0
+margin_top = 98.0
+margin_right = 522.0
+margin_bottom = 114.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 3 )
+text = "Multiplayer"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts", "custom_styles" ]
+
+[node name="SingleplayerLabel" type="Label" parent="menu/networkPanel"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 117.0
+margin_top = 100.0
+margin_right = 218.0
+margin_bottom = 116.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 3 )
+text = "Singleplayer"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [node name="lobby" type="PanelContainer" parent="menu"]
 
@@ -795,8 +899,9 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="MainMenu" parent="menu" instance=ExtResource( 3 )]
+[node name="MainMenu" parent="menu" instance=ExtResource( 7 )]
 
+visible = false
 margin_left = 128.0
 margin_top = 182.0
 margin_right = 168.0
@@ -846,17 +951,17 @@ percent_visible = 1.0
 override_selected_font_color = false
 _sections_unfolded = [ "BBCode", "custom_fonts" ]
 
-[node name="Highscore" parent="menu" instance=ExtResource( 5 )]
+[node name="Highscore" parent="menu" instance=ExtResource( 8 )]
 
 visible = false
-margin_left = 144.0
-margin_top = 147.0
-margin_right = 184.0
-margin_bottom = 187.0
+margin_left = 235.0
+margin_top = 162.0
+margin_right = 275.0
+margin_bottom = 202.0
+
+[connection signal="text_changed" from="menu/networkPanel/name" to="." method="_on_name_text_changed"]
 
 [connection signal="pressed" from="menu/networkPanel/connect/connect" to="." method="_on_connect_pressed"]
-
-[connection signal="text_changed" from="menu/networkPanel/host/name" to="." method="_on_name_text_changed"]
 
 [connection signal="pressed" from="menu/networkPanel/host/host" to="." method="_on_host_pressed"]
 

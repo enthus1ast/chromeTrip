@@ -15,7 +15,7 @@ func _ready():
 		idx += 1
 		if scoreLine == null: continue
 		var line = highscoreItem.instance()
-		line.fill(idx, scoreLine.score, scoreLine.team)
+		line.fill(idx, scoreLine.score, scoreLine.stage, scoreLine.team)
 		cont.add_child(line)
 
 func _on_back_pressed():
