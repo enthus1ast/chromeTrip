@@ -37,15 +37,10 @@
 [ext_resource path="res://assets/meatSpriteAnim/0021.png" type="Texture" id=35]
 [ext_resource path="res://assets/meatSpriteAnim/0022.png" type="Texture" id=36]
 
-[sub_resource type="RectangleShape2D" id=1]
-
-custom_solver_bias = 0.0
-extents = Vector2( 10, 10 )
-
-[sub_resource type="Shader" id=2]
+[sub_resource type="Shader" id=10]
 
 code = "shader_type canvas_item; 
-//render_mode blend_mix;
+render_mode blend_mix;
 uniform vec4 texForeground;
 uniform sampler2D texBackground;
 uniform float frequency = 1;
@@ -53,34 +48,41 @@ uniform float speed = 10.0;
 uniform float amount = 1.0;
 
 void fragment() {
-	//texForeground = texture(TEXTURE,UV);
-	//texBackground = texture(
-	//texForeground = TEXTURE;
-	float alpha = (sin(TIME*speed)+1.0) / 2.0 * COLOR.a;
 	vec2 uv = UV;
-	//uv = uv*2.0;
-	//textureSize(texBackground,1);
-	COLOR = textureLod(TEXTURE,uv,1.0);
+	//float alpha = (sin(TIME*speed)+1.0) / 2.0 * COLOR.a;
+	vec4 maskTexture = texture(texBackground,uv);
+	COLOR = textureLod(TEXTURE,uv,0.0);
 	vec4 c;
+	
 	if (COLOR.a > 0.0) {
-		c = COLOR*texture(texBackground,uv);
+		c = COLOR * maskTexture;
 	} else {
+		if (maskTexture.r < 0.1) {
+			c.a = 1.0;
+		}
 		c.a = 0.0;
 	}
-	//COLOR.rgba = vec4(c.r,c.g,c.b,c.a);
-}"
-_sections_unfolded = [ "Resource" ]
+	COLOR.rgba = vec4(c.r,c.g,c.b,c.a);
+}
+void vertex() {
 
-[sub_resource type="ShaderMaterial" id=3]
+}"
+
+[sub_resource type="ShaderMaterial" id=11]
 
 render_priority = 0
-shader = SubResource( 2 )
+shader = SubResource( 10 )
 shader_param/texForeground = null
 shader_param/frequency = null
 shader_param/speed = null
 shader_param/amount = null
 shader_param/texBackground = ExtResource( 2 )
 _sections_unfolded = [ "shader_param" ]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
 
 [sub_resource type="SpriteFrames" id=4]
 
@@ -148,13 +150,16 @@ _sections_unfolded = [ "Material" ]
 
 [node name="spriteNode" type="Node2D" parent="."]
 
+material = SubResource( 11 )
 position = Vector2( 0, 2.48 )
 _sections_unfolded = [ "Material", "Transform" ]
 
 [node name="heartArea" type="Area2D" parent="spriteNode"]
 
-visible = false
+editor/display_folded = true
+use_parent_material = true
 scale = Vector2( 0.356363, 0.356363 )
+z_as_relative = false
 input_pickable = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -170,14 +175,15 @@ position = Vector2( 0, 5 )
 scale = Vector2( 3.84615, 4.23077 )
 shape = SubResource( 1 )
 disabled = true
+_sections_unfolded = [ "Material" ]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="spriteNode/heartArea"]
 
 modulate = Color( 1, 0.300781, 0.300781, 1 )
-material = SubResource( 3 )
+use_parent_material = true
 frames = SubResource( 4 )
 animation = "default"
-frame = 9
+frame = 11
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
@@ -185,6 +191,7 @@ _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 editor/display_folded = true
 visible = false
+use_parent_material = true
 scale = Vector2( 0.507725, 0.507725 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -193,6 +200,7 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
+_sections_unfolded = [ "Material" ]
 
 [node name="collectableShape" type="CollisionShape2D" parent="spriteNode/meatArea"]
 
@@ -202,10 +210,12 @@ disabled = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="spriteNode/meatArea"]
 
+use_parent_material = true
 frames = SubResource( 6 )
 animation = "default"
-frame = 4
+frame = 9
 playing = true
+_sections_unfolded = [ "Material" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="spriteNode"]
 
