@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
@@ -11,7 +11,7 @@
 [ext_resource path="res://GameOver.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=10]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 
 size = 30
 use_mipmaps = false
@@ -19,7 +19,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Extra Spacing", "Settings" ]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=3]
 
 size = 25
 use_mipmaps = false
@@ -27,49 +27,98 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
-[sub_resource type="Gradient" id=3]
+[sub_resource type="Gradient" id=4]
 
 offsets = PoolRealArray( 0, 0.701044, 0.89295 )
 colors = PoolColorArray( 0.984234, 0.984234, 0.984234, 1, 0.648438, 1, 0.942322, 1, 0.679688, 1, 0.924927, 1 )
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="GradientTexture" id=4]
+[sub_resource type="GradientTexture" id=5]
 
-gradient = SubResource( 3 )
+gradient = SubResource( 4 )
 width = 2048
 
-[sub_resource type="Gradient" id=5]
+[sub_resource type="Gradient" id=6]
 
 offsets = PoolRealArray( 0.357843, 0.767157, 1 )
 colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0.215451, 0.929688, 0.929688, 0.929688, 1 )
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="GradientTexture" id=6]
+[sub_resource type="GradientTexture" id=7]
 
-gradient = SubResource( 5 )
+gradient = SubResource( 6 )
 width = 2048
 
-[sub_resource type="Gradient" id=7]
+[sub_resource type="Gradient" id=8]
 
 offsets = PoolRealArray( 0.00159236, 0.0159236, 0.463668, 0.726644 )
 colors = PoolColorArray( 1, 0.971924, 0.28125, 1, 0.984234, 0.984234, 0.984234, 1, 1, 0.966064, 0.457031, 1, 0.933594, 0.799971, 0.444916, 1 )
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="GradientTexture" id=8]
+[sub_resource type="GradientTexture" id=9]
 
-gradient = SubResource( 7 )
+gradient = SubResource( 8 )
 width = 2048
 
-[sub_resource type="LineShape2D" id=9]
+[sub_resource type="LineShape2D" id=10]
 
 custom_solver_bias = 0.0
 normal = Vector2( 0, -1 )
 d = 0.0
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=11]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
+
+[sub_resource type="Shader" id=19]
+
+code = "shader_type canvas_item;
+
+float rand(vec2 co){
+	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
+uniform float frequency=100;
+uniform float depth = 0.01;
+uniform float foo = 0.001;
+uniform float size_x=0.008;
+uniform float size_y=0.008;
+
+void fragment() {
+	
+	
+	vec2 uv = SCREEN_UV;
+	uv.x+=TIME + rand(uv);
+	uv.y+=TIME + rand(uv);
+	
+	
+	
+	//uv-=mod(uv,vec2(size_x,size_y));
+	//uv.x += sin(uv.y*frequency+TIME)*uv.y*depth/3.0;
+	//uv.x = uv.x;
+	//uv.x = clamp(uv.x,0,1);
+	vec3 c = textureLod(SCREEN_TEXTURE,uv,0.0).rgb;
+	//c=vec3(1.0)-c;
+	
+	COLOR.rgb=c;
+}
+
+"
+
+[sub_resource type="ShaderMaterial" id=17]
+
+render_priority = 0
+shader = SubResource( 19 )
+shader_param/frequency = null
+shader_param/depth = null
+shader_param/foo = null
+shader_param/size_x = null
+shader_param/size_y = null
+
+[sub_resource type="GradientTexture" id=18]
+
+width = 1
 
 [node name="game" type="Control"]
 
@@ -91,6 +140,7 @@ __meta__ = {
 
 [node name="hud" type="CanvasLayer" parent="."]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -111,7 +161,7 @@ rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.325439, 0.325439, 0.325439, 1 )
 text = "000000000"
 align = 2
@@ -135,7 +185,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/normal_font = SubResource( 2 )
+custom_fonts/normal_font = SubResource( 3 )
 custom_constants/line_separation = 0
 bbcode_enabled = true
 bbcode_text = "Dankrad awdawdawdfalse
@@ -184,7 +234,6 @@ scale = Vector2( 1.87467, 1.87467 )
 
 [node name="sprites" type="Node2D" parent="."]
 
-editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -196,7 +245,7 @@ __meta__ = {
 position = Vector2( 1052.72, 182.43 )
 rotation = -1.5708
 scale = Vector2( 0.20658, 2168.35 )
-texture = SubResource( 4 )
+texture = SubResource( 5 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
 __meta__ = {
@@ -210,19 +259,16 @@ __meta__ = {
 position = Vector2( -13.0456, 193.858 )
 rotation = 1.5708
 scale = Vector2( 0.183399, 2114.18 )
-texture = SubResource( 6 )
+texture = SubResource( 7 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Material", "Transform", "Visibility" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="gradientGround" type="Sprite" parent="sprites/background"]
 
 position = Vector2( -13.5201, 529.45 )
 rotation = 1.5708
 scale = Vector2( 0.145033, 2149.04 )
-texture = SubResource( 8 )
+texture = SubResource( 9 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
 __meta__ = {
@@ -304,7 +350,7 @@ __meta__ = {
 
 position = Vector2( 2258.02, 383.062 )
 scale = Vector2( 30.2855, 1.74003 )
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 _sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_lock_": true
@@ -328,7 +374,7 @@ __meta__ = {
 
 position = Vector2( -20, 110 )
 scale = Vector2( 1.65385, 27.9423 )
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 _sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_lock_": true
@@ -336,6 +382,7 @@ __meta__ = {
 
 [node name="rightBlock" type="StaticBody2D" parent="."]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -351,7 +398,7 @@ __meta__ = {
 
 position = Vector2( 1040.72, 111.706 )
 scale = Vector2( 1.65385, 27.9423 )
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="GameOverScreen" parent="." instance=ExtResource( 9 )]
@@ -360,6 +407,21 @@ editor/display_folded = true
 visible = false
 
 [node name="cameraNode" parent="." instance=ExtResource( 10 )]
+
+[node name="shaderSpass" type="Sprite" parent="."]
+
+visible = false
+material = SubResource( 17 )
+position = Vector2( -35.5309, -41.3741 )
+scale = Vector2( 1114.17, 702.121 )
+z = 4096
+texture = SubResource( 18 )
+centered = false
+_sections_unfolded = [ "Material", "Offset", "Transform", "Z" ]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+environment = null
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 

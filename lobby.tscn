@@ -61,7 +61,6 @@ _sections_unfolded = [ "Visibility" ]
 
 [node name="menu" type="Control" parent="."]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -177,10 +176,11 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 expand_to_len = false
 focus_mode = 2
+placeholder_text = "host/ip"
 placeholder_alpha = 0.6
 caret_blink = false
 caret_blink_speed = 0.65
-_sections_unfolded = [ "Caret", "Hint" ]
+_sections_unfolded = [ "Caret", "Hint", "Placeholder" ]
 
 [node name="connect" type="Button" parent="menu/networkPanel/connect"]
 
