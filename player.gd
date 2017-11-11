@@ -51,6 +51,13 @@ const TOP_JUMP_TIME = 0.1 # in seconds
 var keys = [false,false,false,false] # right, left, up, down 
 
 func _ready():
+#	print(get_collision_mask_bit(0))
+#	print(get_collision_mask_bit(1))
+#	print(get_collision_mask_bit(2))
+#	print(get_collision_mask_bit(3))
+#	print(get_collision_mask_bit(4))
+#	print(get_collision_mask_bit(5))
+#	print(get_collision_mask_bit(6))
 	cameraNode = game.get_node("cameraNode")
 	add_child ( killprotectTimer )
 	killprotectTimer.wait_time = 3
@@ -65,15 +72,23 @@ func rpcPowerUps(_id,_string):
 	get_parent().get_node(str(_id)).powerUpPlayer.play(_string)
 	
 sync func rpcKillProtectRequest(_id):
-	get_parent().get_node(str(_id)).isKillProtected = false
-	get_parent().get_node(str(_id)).powerUpPlayer.stop()
-#	get_parent().get_node(str(_id)).powerUpPlayer.wait_time = 3
-	get_parent().get_node(str(_id)).rpcPowerUps(_id,"default")
+	var player = get_parent().get_node(str(_id))
+	player.set_collision_mask_bit(3, true) ## layer for obstacles
+	player.set_collision_mask_bit(4, true) ## layer for enemy
+	player.isKillProtected = false
+	player.powerUpPlayer.stop()
+#	player.powerUpPlayer.wait_time = 3
+	player.rpcPowerUps(_id,"default")
 	print(_id,"is no longer protected!")
 
 func _killprotectTimeout():
 	rpc("rpcKillProtectRequest",get_name())
-	
+
+#func setNoCollide(val):
+#	## sets the player in the no collide mode
+#	## every obstacle and enemy will not collide
+#	## also the sprite is blinking.	
+
 func _process(delta):
 	if is_network_master():
 		rset("slave_hunger",hunger)
@@ -212,26 +227,30 @@ func _sound_finished():
 	
 sync func killed(_id):
 	if !isKillProtected:
-		get_parent().get_node(str(_id)).get_node("playerShape").disabled=true
-		get_parent().get_node(str(_id)).alive = false
-		get_parent().get_node(str(_id)).can_jump = false
-		get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
+		var player = get_parent().get_node(str(_id))
+		player.get_node("playerShape").disabled=true
+		player.alive = false
+		player.can_jump = false
+		player.get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
 		soundPlayer.stream = killedSound
 		soundPlayer.play(0.0)		
 		print(_id, " hasbeen killed")
 
 sync func RPCreanimate(_id, atPosition):
-	get_parent().get_node(str(_id)).powerUpPlayer.play("killProtected")
-	get_parent().get_node(str(_id)).isKillProtected = true
-	get_parent().get_node(str(_id)).killprotectTimer.start()
+	var player = get_parent().get_node(str(_id))
+	player.powerUpPlayer.play("killProtected")
+	player.isKillProtected = true
+	player.set_collision_mask_bit(4, false) ## layer for obstacles
+	player.set_collision_mask_bit(5, false) ## layer for enemies
+	player.killprotectTimer.start()
 	var transMatrix = Transform2D(Vector2(),Vector2(), atPosition)
 	print(_id,transMatrix, " hasbeen reanimated")
-	get_parent().get_node(str(_id)).get_node("playerShape").disabled=false
-	get_parent().get_node(str(_id)).get_node("playerShape").update()
-	get_parent().get_node(str(_id)).can_jump = false
-	get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimRun")
-	get_parent().get_node(str(_id)).slave_pos = transMatrix
-	get_parent().get_node(str(_id)).hunger = 0
+	player.get_node("playerShape").disabled=false
+	player.get_node("playerShape").update()
+	player.can_jump = false
+	player.get_node("Sprite/AnimationPlayer").play("trexAnimRun")
+	player.slave_pos = transMatrix
+	player.hunger = 0
 	if is_network_master():
 		playerColShape.disabled=false
 		isKillProtected = true
@@ -242,8 +261,8 @@ sync func RPCreanimate(_id, atPosition):
 		slave_pos = transMatrix
 		slave_motion = Vector2(0,0)
 		hunger = 0
-	get_parent().get_node(str(_id)).alive = true
-	get_parent().get_node(str(_id)).reviving = true
+	player.alive = true
+	player.reviving = true
 
 func reanimate(atPosition):
 	rpc("RPCreanimate", get_name(), atPosition)
