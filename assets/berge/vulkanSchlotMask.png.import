@@ -2,21 +2,21 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/vulkan1.png-695b5500584072e75087bc1f3e2810f8.stex"
+path="res://.import/vulkanSchlotMask.png-6675b16660b33a033df43cc0c0f91f85.stex"
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
-compress/normal_map=2
+compress/normal_map=0
 flags/repeat=0
 flags/filter=false
 flags/mipmaps=false
-flags/anisotropic=false
+flags/anisotropic=true
 flags/srgb=2
-process/fix_alpha_border=false
-process/premult_alpha=false
+process/fix_alpha_border=true
+process/premult_alpha=true
 process/HDR_as_SRGB=false
 stream=false
 size_limit=0

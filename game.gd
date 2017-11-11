@@ -69,7 +69,6 @@ sync func gogo():
 	# has loaded and is ready.
 	get_tree().set_pause(false)
 	set_process(true)
-	cameraNode.quake()
 
 sync func rpcShowActionStage(_stage):
 	actionPopup.showStage(_stage)

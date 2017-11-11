@@ -2,7 +2,7 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/vulkan1.png-695b5500584072e75087bc1f3e2810f8.stex"
+path="res://.import/vulkan2.png-52b5a8b733a0f8e3144d232fbc158bb2.stex"
 
 [params]
 
@@ -13,10 +13,10 @@ compress/normal_map=2
 flags/repeat=0
 flags/filter=false
 flags/mipmaps=false
-flags/anisotropic=false
+flags/anisotropic=true
 flags/srgb=2
-process/fix_alpha_border=false
-process/premult_alpha=false
+process/fix_alpha_border=true
+process/premult_alpha=true
 process/HDR_as_SRGB=false
 stream=false
 size_limit=0

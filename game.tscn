@@ -1,25 +1,22 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
-[ext_resource path="res://PopupMenu.tscn" type="PackedScene" id=2]
-[ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://ActionPopups.tscn" type="PackedScene" id=4]
+[ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://ActionPopups.tscn" type="PackedScene" id=3]
+[ext_resource path="res://PopupMenu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/progressBar/ProgressBar.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/smoke/risingSmokeParticles.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/berge/vulkan1.png" type="Texture" id=7]
-[ext_resource path="res://assets/berge/berg1.png" type="Texture" id=8]
-[ext_resource path="res://assets/berge/berg2.png" type="Texture" id=9]
-[ext_resource path="res://ground.png" type="Texture" id=10]
-[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=11]
-[ext_resource path="res://GameOver.tscn" type="PackedScene" id=12]
-[ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=13]
+[ext_resource path="res://assets/parallaxBackground.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ground.png" type="Texture" id=7]
+[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=8]
+[ext_resource path="res://GameOver.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 
 size = 30
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 3 )
+font_data = ExtResource( 2 )
 _sections_unfolded = [ "Extra Spacing", "Settings" ]
 
 [sub_resource type="DynamicFont" id=2]
@@ -27,7 +24,7 @@ _sections_unfolded = [ "Extra Spacing", "Settings" ]
 size = 25
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 3 )
+font_data = ExtResource( 2 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
 [sub_resource type="Gradient" id=3]
@@ -92,13 +89,6 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Control" parent="." instance=ExtResource( 2 )]
-
-margin_left = 1062.0
-margin_top = 97.0
-margin_right = 1102.0
-margin_bottom = 137.0
-
 [node name="hud" type="CanvasLayer" parent="."]
 
 layer = 1
@@ -155,7 +145,7 @@ percent_visible = 1.0
 override_selected_font_color = false
 _sections_unfolded = [ "BBCode", "Grow Direction", "Rect", "Size Flags", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
 
-[node name="actionPopup" parent="hud" instance=ExtResource( 4 )]
+[node name="actionPopup" parent="hud" instance=ExtResource( 3 )]
 
 [node name="menu" type="Button" parent="hud"]
 
@@ -179,7 +169,7 @@ group = null
 text = "menu"
 flat = false
 
-[node name="PopupMenu" parent="hud" instance=ExtResource( 2 )]
+[node name="PopupMenu" parent="hud" instance=ExtResource( 4 )]
 
 visible = false
 margin_left = 108.0
@@ -198,9 +188,9 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="world" type="Node2D" parent="sprites"]
+[node name="background" type="Node2D" parent="sprites"]
 
-[node name="gradientSky" type="Sprite" parent="sprites/world"]
+[node name="gradientSky" type="Sprite" parent="sprites/background"]
 
 position = Vector2( 1052.72, 182.43 )
 rotation = -1.5708
@@ -212,67 +202,9 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Gebirge2" type="Node2D" parent="sprites/world"]
+[node name="parallaxBackground" parent="sprites/background" instance=ExtResource( 6 )]
 
-editor/display_folded = true
-
-[node name="Node2D" parent="sprites/world/Gebirge2" instance=ExtResource( 6 )]
-
-position = Vector2( 539.195, 281.914 )
-rotation = -0.00171995
-scale = Vector2( 0.491848, 0.491848 )
-
-[node name="Sprite4" type="Sprite" parent="sprites/world/Gebirge2"]
-
-modulate = Color( 0.761719, 0.761719, 0.761719, 1 )
-position = Vector2( 517.032, 283.129 )
-scale = Vector2( 1.1002, 0.945489 )
-texture = ExtResource( 7 )
-_sections_unfolded = [ "Visibility", "Z" ]
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Gebirge1" type="Node2D" parent="sprites/world"]
-
-editor/display_folded = true
-position = Vector2( 219.788, 299.122 )
-scale = Vector2( 5, 5 )
-_sections_unfolded = [ "Material", "Visibility" ]
-__meta__ = {
-"_edit_group_": true,
-"_edit_lock_": true
-}
-
-[node name="Sprite" type="Sprite" parent="sprites/world/Gebirge1"]
-
-texture = ExtResource( 8 )
-_sections_unfolded = [ "Material", "Transform", "Visibility" ]
-
-[node name="Sprite2" type="Sprite" parent="sprites/world/Gebirge1"]
-
-modulate = Color( 1, 1, 1, 0.988941 )
-position = Vector2( 82.7714, 7.64497 )
-texture = ExtResource( 8 )
-flip_h = true
-region_enabled = true
-region_rect = Rect2( 0, 0, 100, 20 )
-region_filter_clip = true
-_sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
-
-[node name="Sprite3" type="Sprite" parent="sprites/world/Gebirge1"]
-
-modulate = Color( 1, 1, 1, 0.988941 )
-position = Vector2( 106.888, 7.44009 )
-scale = Vector2( 1.43859, 0.770555 )
-texture = ExtResource( 9 )
-flip_h = true
-region_enabled = true
-region_rect = Rect2( 0, 0, 100, 20 )
-region_filter_clip = true
-_sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
-
-[node name="mist" type="Sprite" parent="sprites/world"]
+[node name="mist" type="Sprite" parent="sprites/background"]
 
 position = Vector2( -13.0456, 193.858 )
 rotation = 1.5708
@@ -284,7 +216,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="gradientGround" type="Sprite" parent="sprites/world"]
+[node name="gradientGround" type="Sprite" parent="sprites/background"]
 
 position = Vector2( -13.5201, 529.45 )
 rotation = 1.5708
@@ -312,7 +244,7 @@ _sections_unfolded = [ "Transform" ]
 
 editor/display_folded = true
 position = Vector2( 2400, 380 )
-texture = ExtResource( 10 )
+texture = ExtResource( 7 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -325,7 +257,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 editor/display_folded = true
 position = Vector2( 4800, 380 )
-texture = ExtResource( 10 )
+texture = ExtResource( 7 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -342,7 +274,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 [node name="enemys" type="Node2D" parent="sprites"]
 
-[node name="parallaxForeground" parent="sprites" instance=ExtResource( 11 )]
+[node name="parallaxForeground" parent="sprites" instance=ExtResource( 8 )]
 
 [node name="players" type="Node2D" parent="."]
 
@@ -403,7 +335,6 @@ __meta__ = {
 
 [node name="rightBlock" type="StaticBody2D" parent="."]
 
-editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -422,12 +353,12 @@ scale = Vector2( 1.65385, 27.9423 )
 shape = SubResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="GameOverScreen" parent="." instance=ExtResource( 12 )]
+[node name="GameOverScreen" parent="." instance=ExtResource( 9 )]
 
 editor/display_folded = true
 visible = false
 
-[node name="cameraNode" parent="." instance=ExtResource( 13 )]
+[node name="cameraNode" parent="." instance=ExtResource( 10 )]
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 

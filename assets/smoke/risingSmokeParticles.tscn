@@ -7,24 +7,24 @@
 offsets = PoolRealArray( 0, 0.512987, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 0.363281, 0.363281, 0.363281, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=6]
+[sub_resource type="GradientTexture" id=2]
 
 gradient = SubResource( 1 )
 width = 2048
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=3]
 
 min_value = 0.0
 max_value = 4.38
 bake_resolution = 100
 _data = [ Vector2( 0, 1 ), 0.0, -1.08614, 0, 0, Vector2( 1, 2.19 ), -10.1108, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=5]
+[sub_resource type="CurveTexture" id=4]
 
 width = 2048
-curve = SubResource( 4 )
+curve = SubResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=7]
+[sub_resource type="ParticlesMaterial" id=5]
 
 render_priority = 0
 trail_divisor = 1
@@ -54,8 +54,8 @@ angle = 0.0
 angle_random = 0.0
 scale = 0.61
 scale_random = 0.78
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 6 )
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
 hue_variation = 0.0
 hue_variation_random = 0.0
 anim_speed = 0.0
@@ -65,7 +65,7 @@ anim_offset_random = 0.0
 anim_loop = true
 _sections_unfolded = [ "Angular Velocity", "Animation", "Color", "Damping", "Emission Shape", "Flags", "Gravity", "Hue Variation", "Initial Velocity", "Linear Accel", "Orbit Velocity", "Radial Accel", "Scale", "Spread", "Tangential Accel", "Trail" ]
 
-[node name="Node2D" type="Node2D"]
+[node name="risingSmoke" type="Node2D"]
 
 show_behind_parent = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
@@ -87,7 +87,7 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = true
 draw_order = 0
-process_material = SubResource( 7 )
+process_material = SubResource( 5 )
 texture = ExtResource( 1 )
 normal_map = null
 h_frames = 1

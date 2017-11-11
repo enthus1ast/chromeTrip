@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/parallaxBackground.gd" type="Script" id=1]
+[ext_resource path="res://assets/berge/berg1.png" type="Texture" id=2]
+[ext_resource path="res://assets/berge/berg2.png" type="Texture" id=3]
+
+[node name="parallaxBackground" type="Node2D"]
+
+position = Vector2( 1, 1 )
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="vulkan" type="Node2D" parent="."]
+
+position = Vector2( -1, -1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="gebirge" type="Node2D" parent="."]
+
+editor/display_folded = true
+position = Vector2( 218.788, 298.122 )
+rotation = 3.63798e-13
+scale = Vector2( 5, 5 )
+_sections_unfolded = [ "Material", "Visibility" ]
+
+[node name="Sprite1" type="Sprite" parent="gebirge"]
+
+texture = ExtResource( 2 )
+region_filter_clip = true
+_sections_unfolded = [ "Material", "Offset", "Region", "Transform", "Visibility" ]
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="gebirge/Sprite1"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
+[node name="Sprite2" type="Sprite" parent="gebirge"]
+
+modulate = Color( 1, 1, 1, 0.988941 )
+position = Vector2( 82.7714, 7.64497 )
+texture = ExtResource( 2 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 0, 0, 100, 20 )
+region_filter_clip = true
+_sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="gebirge/Sprite2"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
+[node name="Sprite3" type="Sprite" parent="gebirge"]
+
+modulate = Color( 1, 1, 1, 0.988941 )
+position = Vector2( 137.035, 8.34449 )
+scale = Vector2( 1.43859, 0.770555 )
+texture = ExtResource( 3 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 0, 0, 50, 20 )
+region_filter_clip = true
+_sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="gebirge/Sprite3"]
+
+position = Vector2( 1.88602, -0.782471 )
+rect = Rect2( -10, -10, 20, 20 )
+
+[connection signal="screen_exited" from="gebirge/Sprite1/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+
+[connection signal="screen_exited" from="gebirge/Sprite2/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+
+[connection signal="screen_exited" from="gebirge/Sprite3/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+
+
