@@ -16,7 +16,7 @@ func doRespawn(collider):
 	for player in get_tree().get_nodes_in_group("players"):
 		print(player)
 		if ! player.alive:
-			print("reanimating player:",  Vector2(100, -400))
+			print("reanimating player:", player.name, " ",  Vector2(100, -400))
 			player.reanimate( Vector2(100,150))
 
 func _on_Area2D_body_entered( body ):

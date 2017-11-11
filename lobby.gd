@@ -116,6 +116,7 @@ remote func startGame():
 	var cnt = 0
 	for p in players:
 		players[p].node = Player.instance()
+		players[p].node.name = players[p].name
 		players[p].node.get_node("Label").set_text(players[p].name)
 #		players[p].node.get_node("Label").set("custom_colors/font_color" ,computeColor(players[p].name))
 		players[p].node.get_node("Label").add_color_override("font_color" ,utils.computeColor(players[p].name))
