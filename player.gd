@@ -216,6 +216,8 @@ sync func killed(_id):
 		get_parent().get_node(str(_id)).alive = false
 		get_parent().get_node(str(_id)).can_jump = false
 		get_parent().get_node(str(_id)).get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
+		soundPlayer.stream = killedSound
+		soundPlayer.play(0.0)		
 		print(_id, " hasbeen killed")
 
 sync func RPCreanimate(_id, atPosition):
@@ -258,8 +260,6 @@ sync func showGameOverScreen():
 	
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive and !isKillProtected:
-		soundPlayer.stream = killedSound
-		soundPlayer.play(0.0)
 		if get_tree().is_network_server():
 			rpc("killed", get_name())
 			cameraNode.killedRumble()
