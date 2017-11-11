@@ -358,6 +358,7 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 9.8
 linear_damp = 0.1
 angular_damp = 1.0
+collision_layer = 0
 audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility" ]

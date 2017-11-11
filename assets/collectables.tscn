@@ -177,7 +177,7 @@ modulate = Color( 1, 0.300781, 0.300781, 1 )
 material = SubResource( 3 )
 frames = SubResource( 4 )
 animation = "default"
-frame = 6
+frame = 9
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
@@ -204,7 +204,7 @@ disabled = true
 
 frames = SubResource( 6 )
 animation = "default"
-frame = 11
+frame = 4
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="spriteNode"]

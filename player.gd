@@ -51,13 +51,6 @@ const TOP_JUMP_TIME = 0.1 # in seconds
 var keys = [false,false,false,false] # right, left, up, down 
 
 func _ready():
-#	print(get_collision_mask_bit(0))
-#	print(get_collision_mask_bit(1))
-#	print(get_collision_mask_bit(2))
-#	print(get_collision_mask_bit(3))
-#	print(get_collision_mask_bit(4))
-#	print(get_collision_mask_bit(5))
-#	print(get_collision_mask_bit(6))
 	cameraNode = game.get_node("cameraNode")
 	add_child ( killprotectTimer )
 	killprotectTimer.wait_time = 3
@@ -77,7 +70,6 @@ sync func rpcKillProtectRequest(_id):
 	player.set_collision_mask_bit(3, true) ## layer for obstacles
 	player.set_collision_mask_bit(4, true) ## layer for enemy
 	player.powerUpPlayer.stop()
-#	player.powerUpPlayer.wait_time = 3
 	player.rpcPowerUps(_id,"default")
 	print(_id,"is no longer protected!")
 
@@ -155,7 +147,7 @@ func _on_groundSensor_body_entered( body ):
 	if body.has_node("playerShape"):
 		if body.get_name()!=get_name():
 			grounded = true
-	elif body.get_name()=="groundCollision":
+	if body.get_name()=="groundCollision":
 		grounded = true
 		if alive:
 			cameraNode.landRumble(linear_velocity.y)
@@ -164,7 +156,7 @@ func _on_groundSensor_body_exited( body ):
 	if body.has_node("playerShape"):
 		if body.get_name()!=get_name():
 			grounded = false
-	elif body.get_name()=="groundCollision":
+	if body.get_name()=="groundCollision":
 		grounded = false
 
 sync func playAnimation(_string):
