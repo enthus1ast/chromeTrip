@@ -206,9 +206,9 @@ func _process(delta):
 	var playersText = "" 
 	playersLabel.bbcode_text = "Stage: "+str(stage)+"\n"
 	for player in get_tree().get_nodes_in_group("players"):
-		var playerName = get_parent().players[int(player.get_name())].name
-		var line = str(int(player.alive))+ " " + playerName
-		playersLabel.bbcode_text += "[color=#" + utils.computeColor(playerName).to_html() + "]"+line+"[/color]\n"
+#		var playerName = get_parent().players[int(player.get_name())].name
+		var line = str(int(player.alive))+ " " + player.name
+		playersLabel.bbcode_text += "[color=#" + utils.computeColor(player.name).to_html() + "]"+line+"[/color]\n"
 		
 
 # two ground-tiles for seamless infinite maps

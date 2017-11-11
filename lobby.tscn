@@ -19,7 +19,7 @@ colors = PoolColorArray( 0, 0, 0, 1, 0.200756, 0.135815, 0.206644, 1, 0.36096, 0
 gradient = SubResource( 1 )
 width = 2048
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=3]
 
 size = 30
 use_mipmaps = false
@@ -27,7 +27,7 @@ use_filter = false
 font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 
 size = 15
 use_mipmaps = false
@@ -35,7 +35,7 @@ use_filter = false
 font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=5]
 
 size = 16
 use_mipmaps = false
@@ -133,7 +133,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 3 )
 align = 1
 max_length = 16
 expand_to_len = false
@@ -348,7 +348,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Multiplayer"
 percent_visible = 1.0
 lines_skipped = 0
@@ -370,7 +370,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Singleplayer"
 percent_visible = 1.0
 lines_skipped = 0
@@ -923,7 +923,7 @@ rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Version: "
 percent_visible = 1.0
 lines_skipped = 0
@@ -944,7 +944,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = SubResource( 5 )
 bbcode_enabled = true
 bbcode_text = "[url=\"http://games.code0.xyz\"]games.code0.xyz[/url]"
 visible_characters = -1

@@ -11,6 +11,7 @@ var readyToPlay = false # this gets set to true when the player has loaded the p
 var killprotectTimer = Timer.new()
 var isKillProtected = false
 var needForFood = 1# speed of getting hungry
+var name = "SET_ME" # the player name
 
 onready var playerColShape = get_node("playerShape")
 # Grounded?
