@@ -1,73 +1,113 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://assets/collectables.gd" type="Script" id=1]
-[ext_resource path="res://assets/heartSpriteAnim/0001.png" type="Texture" id=2]
-[ext_resource path="res://assets/heartSpriteAnim/0002.png" type="Texture" id=3]
-[ext_resource path="res://assets/heartSpriteAnim/0003.png" type="Texture" id=4]
-[ext_resource path="res://assets/heartSpriteAnim/0004.png" type="Texture" id=5]
-[ext_resource path="res://assets/heartSpriteAnim/0005.png" type="Texture" id=6]
-[ext_resource path="res://assets/heartSpriteAnim/0006.png" type="Texture" id=7]
-[ext_resource path="res://assets/heartSpriteAnim/0007.png" type="Texture" id=8]
-[ext_resource path="res://assets/heartSpriteAnim/0008.png" type="Texture" id=9]
-[ext_resource path="res://assets/heartSpriteAnim/0009.png" type="Texture" id=10]
-[ext_resource path="res://assets/heartSpriteAnim/0010.png" type="Texture" id=11]
-[ext_resource path="res://assets/heartSpriteAnim/0011.png" type="Texture" id=12]
-[ext_resource path="res://assets/heartSpriteAnim/0012.png" type="Texture" id=13]
-[ext_resource path="res://assets/meatSpriteAnim/0001.png" type="Texture" id=14]
-[ext_resource path="res://assets/meatSpriteAnim/0002.png" type="Texture" id=15]
-[ext_resource path="res://assets/meatSpriteAnim/0003.png" type="Texture" id=16]
-[ext_resource path="res://assets/meatSpriteAnim/0004.png" type="Texture" id=17]
-[ext_resource path="res://assets/meatSpriteAnim/0005.png" type="Texture" id=18]
-[ext_resource path="res://assets/meatSpriteAnim/0006.png" type="Texture" id=19]
-[ext_resource path="res://assets/meatSpriteAnim/0007.png" type="Texture" id=20]
-[ext_resource path="res://assets/meatSpriteAnim/0008.png" type="Texture" id=21]
-[ext_resource path="res://assets/meatSpriteAnim/0009.png" type="Texture" id=22]
-[ext_resource path="res://assets/meatSpriteAnim/0010.png" type="Texture" id=23]
-[ext_resource path="res://assets/meatSpriteAnim/0011.png" type="Texture" id=24]
-[ext_resource path="res://assets/meatSpriteAnim/0012.png" type="Texture" id=25]
-[ext_resource path="res://assets/meatSpriteAnim/0013.png" type="Texture" id=26]
-[ext_resource path="res://assets/meatSpriteAnim/0014.png" type="Texture" id=27]
-[ext_resource path="res://assets/meatSpriteAnim/0015.png" type="Texture" id=28]
-[ext_resource path="res://assets/meatSpriteAnim/0016.png" type="Texture" id=29]
-[ext_resource path="res://assets/meatSpriteAnim/0017.png" type="Texture" id=30]
-[ext_resource path="res://assets/meatSpriteAnim/0018.png" type="Texture" id=31]
-[ext_resource path="res://assets/meatSpriteAnim/0019.png" type="Texture" id=32]
-[ext_resource path="res://assets/meatSpriteAnim/0020.png" type="Texture" id=33]
-[ext_resource path="res://assets/meatSpriteAnim/0021.png" type="Texture" id=34]
-[ext_resource path="res://assets/meatSpriteAnim/0022.png" type="Texture" id=35]
+[ext_resource path="res://shaders/texture/vignette.png" type="Texture" id=2]
+[ext_resource path="res://assets/heartSpriteAnim/0001.png" type="Texture" id=3]
+[ext_resource path="res://assets/heartSpriteAnim/0002.png" type="Texture" id=4]
+[ext_resource path="res://assets/heartSpriteAnim/0003.png" type="Texture" id=5]
+[ext_resource path="res://assets/heartSpriteAnim/0004.png" type="Texture" id=6]
+[ext_resource path="res://assets/heartSpriteAnim/0005.png" type="Texture" id=7]
+[ext_resource path="res://assets/heartSpriteAnim/0006.png" type="Texture" id=8]
+[ext_resource path="res://assets/heartSpriteAnim/0007.png" type="Texture" id=9]
+[ext_resource path="res://assets/heartSpriteAnim/0008.png" type="Texture" id=10]
+[ext_resource path="res://assets/heartSpriteAnim/0009.png" type="Texture" id=11]
+[ext_resource path="res://assets/heartSpriteAnim/0010.png" type="Texture" id=12]
+[ext_resource path="res://assets/heartSpriteAnim/0011.png" type="Texture" id=13]
+[ext_resource path="res://assets/heartSpriteAnim/0012.png" type="Texture" id=14]
+[ext_resource path="res://assets/meatSpriteAnim/0001.png" type="Texture" id=15]
+[ext_resource path="res://assets/meatSpriteAnim/0002.png" type="Texture" id=16]
+[ext_resource path="res://assets/meatSpriteAnim/0003.png" type="Texture" id=17]
+[ext_resource path="res://assets/meatSpriteAnim/0004.png" type="Texture" id=18]
+[ext_resource path="res://assets/meatSpriteAnim/0005.png" type="Texture" id=19]
+[ext_resource path="res://assets/meatSpriteAnim/0006.png" type="Texture" id=20]
+[ext_resource path="res://assets/meatSpriteAnim/0007.png" type="Texture" id=21]
+[ext_resource path="res://assets/meatSpriteAnim/0008.png" type="Texture" id=22]
+[ext_resource path="res://assets/meatSpriteAnim/0009.png" type="Texture" id=23]
+[ext_resource path="res://assets/meatSpriteAnim/0010.png" type="Texture" id=24]
+[ext_resource path="res://assets/meatSpriteAnim/0011.png" type="Texture" id=25]
+[ext_resource path="res://assets/meatSpriteAnim/0012.png" type="Texture" id=26]
+[ext_resource path="res://assets/meatSpriteAnim/0013.png" type="Texture" id=27]
+[ext_resource path="res://assets/meatSpriteAnim/0014.png" type="Texture" id=28]
+[ext_resource path="res://assets/meatSpriteAnim/0015.png" type="Texture" id=29]
+[ext_resource path="res://assets/meatSpriteAnim/0016.png" type="Texture" id=30]
+[ext_resource path="res://assets/meatSpriteAnim/0017.png" type="Texture" id=31]
+[ext_resource path="res://assets/meatSpriteAnim/0018.png" type="Texture" id=32]
+[ext_resource path="res://assets/meatSpriteAnim/0019.png" type="Texture" id=33]
+[ext_resource path="res://assets/meatSpriteAnim/0020.png" type="Texture" id=34]
+[ext_resource path="res://assets/meatSpriteAnim/0021.png" type="Texture" id=35]
+[ext_resource path="res://assets/meatSpriteAnim/0022.png" type="Texture" id=36]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="Shader" id=2]
+
+code = "shader_type canvas_item; 
+//render_mode blend_mix;
+uniform vec4 texForeground;
+uniform sampler2D texBackground;
+uniform float frequency = 1;
+uniform float speed = 10.0;
+uniform float amount = 1.0;
+
+void fragment() {
+	//texForeground = texture(TEXTURE,UV);
+	//texBackground = texture(
+	//texForeground = TEXTURE;
+	float alpha = (sin(TIME*speed)+1.0) / 2.0 * COLOR.a;
+	vec2 uv = UV;
+	//uv = uv*2.0;
+	//textureSize(texBackground,1);
+	COLOR = textureLod(TEXTURE,uv,1.0);
+	vec4 c;
+	if (COLOR.a > 0.0) {
+		c = COLOR*texture(texBackground,uv);
+	} else {
+		c.a = 0.0;
+	}
+	//COLOR.rgba = vec4(c.r,c.g,c.b,c.a);
+}"
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="ShaderMaterial" id=3]
+
+render_priority = 0
+shader = SubResource( 2 )
+shader_param/texForeground = null
+shader_param/frequency = null
+shader_param/speed = null
+shader_param/amount = null
+shader_param/texBackground = ExtResource( 2 )
+_sections_unfolded = [ "shader_param" ]
+
+[sub_resource type="SpriteFrames" id=4]
 
 animations = [ {
-"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ],
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ],
 "loop": true,
 "name": "default",
 "speed": 16.0
 } ]
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=6]
 
 animations = [ {
-"frames": [ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ), ExtResource( 35 ) ],
+"frames": [ ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 36 ) ],
 "loop": true,
 "name": "default",
 "speed": 12.0
 } ]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=7]
 
-resource_name = "collectablesSwing"
 length = 2.0
 loop = true
 step = 0.1
@@ -83,18 +123,36 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -10 ), Vector2( 0, 10 ) ]
 }
 
+[sub_resource type="Shader" id=10]
+
+code = "shader_type canvas_item;
+
+uniform float amount : hint_range(0,5);
+
+void fragment() {
+
+	COLOR.rgb = textureLod(SCREEN_TEXTURE,SCREEN_UV,amount).rgb;
+}"
+
+[sub_resource type="ShaderMaterial" id=11]
+
+render_priority = 0
+shader = SubResource( 10 )
+shader_param/amount = 3.196
+_sections_unfolded = [ "Resource", "shader_param" ]
+
 [node name="collectable" type="Node2D"]
 
 script = ExtResource( 1 )
+_sections_unfolded = [ "Material" ]
 
 [node name="spriteNode" type="Node2D" parent="."]
 
 position = Vector2( 0, 2.48 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Material", "Transform" ]
 
 [node name="heartArea" type="Area2D" parent="spriteNode"]
 
-visible = false
 scale = Vector2( 0.356363, 0.356363 )
 input_pickable = false
 gravity_vec = Vector2( 0, 1 )
@@ -115,14 +173,16 @@ disabled = true
 [node name="AnimatedSprite" type="AnimatedSprite" parent="spriteNode/heartArea"]
 
 modulate = Color( 1, 0.300781, 0.300781, 1 )
-frames = SubResource( 2 )
+material = SubResource( 3 )
+frames = SubResource( 4 )
 animation = "default"
-frame = 5
+frame = 6
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="meatArea" type="Area2D" parent="spriteNode"]
 
+editor/display_folded = true
 visible = false
 scale = Vector2( 0.507725, 0.507725 )
 input_pickable = true
@@ -136,12 +196,12 @@ audio_bus_name = "Master"
 [node name="collectableShape" type="CollisionShape2D" parent="spriteNode/meatArea"]
 
 scale = Vector2( 2.94929, 2.94929 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 disabled = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="spriteNode/meatArea"]
 
-frames = SubResource( 5 )
+frames = SubResource( 6 )
 animation = "default"
 frame = 18
 playing = true
@@ -151,7 +211,7 @@ playing = true
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/collectablesSwing = SubResource( 3 )
+anims/collectablesSwing = SubResource( 7 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -161,6 +221,16 @@ autoplay = "collectablesSwing"
 
 scale = Vector2( 0.356363, 0.356363 )
 rect = Rect2( -10, -10, 20, 20 )
+
+[node name="glowShader" type="Sprite" parent="spriteNode"]
+
+visible = false
+material = SubResource( 11 )
+use_parent_material = true
+position = Vector2( 0.643921, 1.38352 )
+scale = Vector2( 0.429567, 0.429567 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Material", "Visibility" ]
 
 [connection signal="body_entered" from="spriteNode/heartArea" to="." method="_on_heartArea_body_entered"]
 
