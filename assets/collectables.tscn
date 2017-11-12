@@ -1,7 +1,7 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://assets/collectables.gd" type="Script" id=1]
-[ext_resource path="res://shaders/texture/vignette.png" type="Texture" id=2]
+[ext_resource path="res://glowTexture.png" type="Texture" id=2]
 [ext_resource path="res://assets/heartSpriteAnim/0001.png" type="Texture" id=3]
 [ext_resource path="res://assets/heartSpriteAnim/0002.png" type="Texture" id=4]
 [ext_resource path="res://assets/heartSpriteAnim/0003.png" type="Texture" id=5]
@@ -37,47 +37,84 @@
 [ext_resource path="res://assets/meatSpriteAnim/0021.png" type="Texture" id=35]
 [ext_resource path="res://assets/meatSpriteAnim/0022.png" type="Texture" id=36]
 
-[sub_resource type="Shader" id=10]
+[sub_resource type="Shader" id=13]
 
 code = "shader_type canvas_item; 
 render_mode blend_mix;
-uniform vec4 texForeground;
-uniform sampler2D texBackground;
-uniform float frequency = 1;
-uniform float speed = 10.0;
-uniform float amount = 1.0;
+uniform float resolution = 100.0;
+uniform float radius = 2.0;
+uniform float fac = 10000.0;
+
+vec4 onePass(sampler2D tex,vec2 uv,vec2 dir){
+	vec4 sum = vec4(0.0,0.0,0.0,0.0);
+	//the amount to blur, i.e. how far off center to sample from 
+	//1.0 -> blur by one pixel
+	//2.0 -> blur by two pixels, etc.
+	float blur = radius/resolution;
+	//the direction of our blur
+	//(1.0, 0.0) -> x-axis blur
+	//(0.0, 1.0) -> y-axis blur
+	float hstep = dir.x;
+	float vstep = dir.y; 
+	
+	sum += texture(tex, vec2(uv.x - 4.0*blur*hstep, uv.y - 4.0*blur*vstep)) * 0.0162162162 * fac;
+	sum += texture(tex, vec2(uv.x - 3.0*blur*hstep, uv.y - 3.0*blur*vstep)) * 0.0540540541 * fac;
+	sum += texture(tex, vec2(uv.x - 2.0*blur*hstep, uv.y - 2.0*blur*vstep)) * 0.1216216216 * fac;
+	sum += texture(tex, vec2(uv.x - 1.0*blur*hstep, uv.y - 1.0*blur*vstep)) * 0.1945945946 * fac;
+	
+	sum += texture(tex, vec2(uv.x, uv.y)) * 0.2270270270 * fac;
+	
+	sum += texture(tex, vec2(uv.x + 1.0*blur*hstep, uv.y + 1.0*blur*vstep)) * 0.1945945946 * fac;
+	sum += texture(tex, vec2(uv.x + 2.0*blur*hstep, uv.y + 2.0*blur*vstep)) * 0.1216216216 * fac;
+	sum += texture(tex, vec2(uv.x + 3.0*blur*hstep, uv.y + 3.0*blur*vstep)) * 0.0540540541 * fac;
+	sum += texture(tex, vec2(uv.x + 4.0*blur*hstep, uv.y + 4.0*blur*vstep)) * 0.0162162162 * fac;
+	//clamp(sum,sum)
+	//sum = vec4(sum.rgb, 1.0);
+	return sum;
+}
 
 void fragment() {
-	vec2 uv = UV;
-	//float alpha = (sin(TIME*speed)+1.0) / 2.0 * COLOR.a;
-	vec4 maskTexture = texture(texBackground,uv);
-	COLOR = textureLod(TEXTURE,uv,0.0);
-	vec4 c;
+
+	vec4 pixelColor = texture(TEXTURE,UV);
+	//vec2 uv = UV;///0.5-vec2(0.5,0.5)
+	//this will be our RGBA sum
+	vec4 sum = onePass( TEXTURE, UV, vec2(0.0,1.0) ); //one pass - vertical
+	sum += onePass( TEXTURE , UV , vec2(1.0,0.0) ); //second pass - horizontal
+	//COLOR = sum*pixelColor;
+	//COLOR +=pixelColor;
 	
-	if (COLOR.a > 0.0) {
-		c = COLOR * maskTexture;
+	if (pixelColor.a>0.0) {
+		COLOR = pixelColor;
+		//COLOR=vec4(sum.rgb,0.0);
+		//COLOR *= pixelColor;
+		//COLOR+=pixelColor
 	} else {
-		if (maskTexture.r < 0.1) {
-			c.a = 1.0;
-		}
-		c.a = 0.0;
+		COLOR = sum;
 	}
-	COLOR.rgba = vec4(c.r,c.g,c.b,c.a);
+	
+	
 }
 void vertex() {
-
+	//COLOR = vec4(0.0,0.0,0);
+	//VERTEX = 1.0*VERTEX;
 }"
+_sections_unfolded = [ "Resource" ]
 
-[sub_resource type="ShaderMaterial" id=11]
+[sub_resource type="ShaderMaterial" id=14]
 
 render_priority = 0
-shader = SubResource( 10 )
-shader_param/texForeground = null
-shader_param/frequency = null
-shader_param/speed = null
-shader_param/amount = null
-shader_param/texBackground = ExtResource( 2 )
+shader = SubResource( 13 )
+shader_param/resolution = 20.091
+shader_param/radius = 0.732
+shader_param/fac = 1.0
 _sections_unfolded = [ "shader_param" ]
+
+[sub_resource type="CanvasItemMaterial" id=12]
+
+render_priority = 0
+blend_mode = 0
+light_mode = 0
+_sections_unfolded = [ "Resource" ]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -125,24 +162,6 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -10 ), Vector2( 0, 10 ) ]
 }
 
-[sub_resource type="Shader" id=8]
-
-code = "shader_type canvas_item;
-
-uniform float amount : hint_range(0,5);
-
-void fragment() {
-
-	COLOR.rgb = textureLod(SCREEN_TEXTURE,SCREEN_UV,amount).rgb;
-}"
-
-[sub_resource type="ShaderMaterial" id=9]
-
-render_priority = 0
-shader = SubResource( 8 )
-shader_param/amount = 3.196
-_sections_unfolded = [ "Resource", "shader_param" ]
-
 [node name="collectable" type="Node2D"]
 
 script = ExtResource( 1 )
@@ -150,13 +169,22 @@ _sections_unfolded = [ "Material" ]
 
 [node name="spriteNode" type="Node2D" parent="."]
 
-material = SubResource( 11 )
+material = SubResource( 14 )
 position = Vector2( 0, 2.48 )
 _sections_unfolded = [ "Material", "Transform" ]
 
+[node name="glowSprite" type="Sprite" parent="spriteNode"]
+
+modulate = Color( 1, 0.929688, 0.929688, 1 )
+material = SubResource( 12 )
+position = Vector2( -0.0534515, -0.892603 )
+scale = Vector2( 0.474787, 0.474787 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Animation", "Material", "Visibility" ]
+
 [node name="heartArea" type="Area2D" parent="spriteNode"]
 
-editor/display_folded = true
+visible = false
 use_parent_material = true
 scale = Vector2( 0.356363, 0.356363 )
 z_as_relative = false
@@ -183,13 +211,11 @@ modulate = Color( 1, 0.300781, 0.300781, 1 )
 use_parent_material = true
 frames = SubResource( 4 )
 animation = "default"
-frame = 11
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="meatArea" type="Area2D" parent="spriteNode"]
 
-editor/display_folded = true
 visible = false
 use_parent_material = true
 scale = Vector2( 0.507725, 0.507725 )
@@ -213,7 +239,7 @@ disabled = true
 use_parent_material = true
 frames = SubResource( 6 )
 animation = "default"
-frame = 9
+frame = 7
 playing = true
 _sections_unfolded = [ "Material" ]
 
@@ -232,16 +258,6 @@ autoplay = "collectablesSwing"
 
 scale = Vector2( 0.356363, 0.356363 )
 rect = Rect2( -10, -10, 20, 20 )
-
-[node name="glowShader" type="Sprite" parent="spriteNode"]
-
-visible = false
-material = SubResource( 9 )
-use_parent_material = true
-position = Vector2( 0.643921, 1.38352 )
-scale = Vector2( 0.429567, 0.429567 )
-texture = ExtResource( 2 )
-_sections_unfolded = [ "Material", "Visibility" ]
 
 [connection signal="body_entered" from="spriteNode/heartArea" to="." method="_on_heartArea_body_entered"]
 
