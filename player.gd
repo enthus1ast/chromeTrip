@@ -268,14 +268,21 @@ sync func showGameOverScreen():
 	get_parent().get_parent().allDead = true
 	utils.putHighscore( utils.getScore(), utils.getTeam() )
 	get_tree().get_root().get_node("Control/game/GameOverScreen").set_visible(true)
-	
+
+func kill():
+	# kills this player	
+	if get_tree().is_network_server():
+		rpc("killed", get_name())
+		cameraNode.killedRumble()
+		if allPlayersKilled():
+			rpc("showGameOverScreen")
+			
+#func disableInputs():
+#	## disable all the inputs
+
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive and !isKillProtected:
-		if get_tree().is_network_server():
-			rpc("killed", get_name())
-			cameraNode.killedRumble()
-			if allPlayersKilled():
-				rpc("showGameOverScreen")
+		kill()
 
 func _on_player_body_shape_exited( body_id, body, body_shape, local_shape ):
 	pass # replace with function body

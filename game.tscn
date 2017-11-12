@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=8]
 [ext_resource path="res://GameOver.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Loch.tscn" type="PackedScene" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -280,18 +281,16 @@ __meta__ = {
 
 [node name="constantMovement" type="Node2D" parent="sprites"]
 
-editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="ground" type="Node2D" parent="sprites/constantMovement"]
 
-editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite1" type="Sprite" parent="sprites/constantMovement/ground"]
 
 editor/display_folded = true
-position = Vector2( 2400, 380 )
+position = Vector2( 2400.79, 380 )
 texture = ExtResource( 7 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
@@ -420,9 +419,9 @@ texture = SubResource( 13 )
 centered = false
 _sections_unfolded = [ "Material", "Offset", "Transform", "Z" ]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="Loch" parent="." instance=ExtResource( 11 )]
 
-environment = null
+position = Vector2( 471.928, 439.584 )
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 
