@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
@@ -10,7 +10,6 @@
 [ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=8]
 [ext_resource path="res://GameOver.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Loch.tscn" type="PackedScene" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -423,11 +422,6 @@ z = 4096
 texture = SubResource( 13 )
 centered = false
 _sections_unfolded = [ "Material", "Offset", "Transform", "Z" ]
-
-[node name="Loch" parent="." instance=ExtResource( 11 )]
-
-visible = false
-position = Vector2( 471.928, 439.584 )
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 
