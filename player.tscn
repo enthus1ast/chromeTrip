@@ -280,7 +280,7 @@ tracks/0/keys = {
 position = Vector2( 115.098, 265.853 )
 input_pickable = false
 collision_layer = 1
-collision_mask = 25
+collision_mask = 1049
 mode = 2
 mass = 0.01
 friction = 1.0
@@ -361,7 +361,7 @@ angular_damp = 1.0
 collision_layer = 0
 audio_bus_override = false
 audio_bus_name = "Master"
-_sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility" ]
+_sections_unfolded = [ "Audio Bus", "Collision", "Pickable", "Transform", "Visibility" ]
 __meta__ = {
 "_edit_lock_": true
 }

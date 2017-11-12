@@ -1,0 +1,150 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Loch.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://raw/LOCH2.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 19.3413 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 12.2571, 10 )
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 15.7446 )
+
+[node name="Loch" type="StaticBody2D"]
+
+input_pickable = false
+collision_layer = 1024
+collision_mask = 1024
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "Transform" ]
+
+[node name="wall" type="StaticBody2D" parent="." groups=[
+"ground",
+]]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="lochWallL" type="CollisionShape2D" parent="wall"]
+
+position = Vector2( -67.7794, -74.8214 )
+shape = SubResource( 3 )
+
+[node name="lochWallR" type="CollisionShape2D" parent="wall"]
+
+position = Vector2( 88.9054, -73.0609 )
+shape = SubResource( 3 )
+
+[node name="icon" type="Sprite" parent="."]
+
+position = Vector2( -67.828, -61.7105 )
+scale = Vector2( 0.316146, 1.02788 )
+texture = ExtResource( 2 )
+
+[node name="icon2" type="Sprite" parent="."]
+
+position = Vector2( 87.9765, -59.5099 )
+scale = Vector2( 0.316146, 1.02788 )
+texture = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Disabler" type="Area2D" parent="."]
+
+editor/display_folded = true
+position = Vector2( 10.647, -54.776 )
+scale = Vector2( 2.13672, 0.551686 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 1024
+collision_mask = 1024
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Audio Bus", "Collision" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Disabler"]
+
+position = Vector2( -0.780109, -12.7561 )
+scale = Vector2( 2.43012, 1 )
+shape = SubResource( 2 )
+
+[node name="Killer" type="Area2D" parent="."]
+
+position = Vector2( 10.2069, 181.572 )
+scale = Vector2( 2.13672, 0.551686 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 1024
+collision_mask = 1024
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Audio Bus", "Collision" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killer"]
+
+position = Vector2( 3.508, 0 )
+scale = Vector2( 20, 1 )
+shape = SubResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+input_pickable = false
+collision_layer = 1024
+collision_mask = 1024
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 0.0
+bounce = 0.0
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShapeR" type="CollisionShape2D" parent="StaticBody2D"]
+
+position = Vector2( 86.3656, 58.6575 )
+scale = Vector2( 0.767658, 9.00736 )
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShapeL" type="CollisionShape2D" parent="StaticBody2D"]
+
+position = Vector2( -66.0613, 58.7301 )
+scale = Vector2( 0.710972, 8.95607 )
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="Disabler" to="." method="_on_Disabler_body_entered"]
+
+[connection signal="body_exited" from="Disabler" to="." method="_on_Disabler_body_exited"]
+
+[connection signal="body_entered" from="Killer" to="." method="_on_Killer_body_entered"]
+
+

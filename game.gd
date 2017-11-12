@@ -140,7 +140,7 @@ func enemysGen():
 	var i = 0
 	while i < enemysCount:
 		var choice = round(rand_range(1,1)) ##only one available
-		var pos = Vector2(i*800+rand_range(1024,2000)-enemysNode.position.x,rand_range(10,250))
+		var pos = Vector2(i*800+rand_range(1024,2000)-enemysNode.position.x,rand_range(10,325))
 		var scaleDice = rand_range(0.3,1)
 		var scale = Vector2(scaleDice,scaleDice)
 		rpc("rpcEnemy", pos, scale, choice)

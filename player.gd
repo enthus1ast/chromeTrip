@@ -12,10 +12,11 @@ var killprotectTimer = Timer.new()
 var isKillProtected = false
 var needForFood = 1# speed of getting hungry
 var name = "SET_ME" # the player name
+var inputsDisabled = false
 
 onready var playerColShape = get_node("playerShape")
-# Grounded?
 var grounded = false 
+
 # Movement Vars
 var directional_force = Vector2()
 const DIRECTION = {
@@ -28,7 +29,6 @@ const DIRECTION = {
 
 sync var slave_pos = Transform2D()
 sync var slave_motion = Vector2()
-#sync var slave_can_jump = true
 sync var alive = true
 var hunger = 0 # hunger level
 sync var slave_hunger = 0 # hunger level
@@ -57,6 +57,8 @@ func _ready():
 	killprotectTimer.connect("timeout",self,"_killprotectTimeout")
 	soundPlayer.connect("finished",self,"_sound_finished")
 	var root = get_tree().get_root().get_node("Control")
+	grounded = false
+	can_jump = true
 	set_process_input(true)
 	add_child(soundPlayer)
 	rpc("playAnimation","trexAnimRun")
@@ -144,19 +146,21 @@ func apply_force(state):
 		jump_time = 0
 		
 func _on_groundSensor_body_entered( body ):
+	print ("hit the floor")
 	if body.has_node("playerShape"):
 		if body.get_name()!=get_name():
 			grounded = true
-	if body.get_name()=="groundCollision":
+	if body.get_name()=="groundCollision" or body.is_in_group("ground"):
 		grounded = true
 		if alive:
 			cameraNode.landRumble(linear_velocity.y)
 
 func _on_groundSensor_body_exited( body ):
+	print ("up the floor")
 	if body.has_node("playerShape"):
 		if body.get_name()!=get_name():
 			grounded = false
-	if body.get_name()=="groundCollision":
+	if body.get_name()=="groundCollision" or body.is_in_group("ground"):
 		grounded = false
 
 sync func playAnimation(_string):
@@ -169,7 +173,7 @@ sync func rpcJumpParticles(_id):
 	get_parent().get_node(_id).particleAnimPlayer.play("particleJump")
 
 func _input(event):
-	if is_network_master() and alive:
+	if is_network_master() and alive and not inputsDisabled:
 		#if keyboard input
 		if event.get_class()=="InputEventKey":
 			# left or right keypressevent
@@ -199,7 +203,8 @@ func _input(event):
 			#jumping keyevents
 			if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_select"):
 				keys[2]=true
-				if (grounded or can_jump) and alive:
+				print(grounded, can_jump, alive)
+				if (grounded and can_jump and alive):
 					rpc("rpcJumpParticles",get_name())
 					cameraNode.jumpRumble()
 					if !soundPlayer.is_playing():
@@ -210,7 +215,7 @@ func _input(event):
 				keys[2]=false
 				can_jump = false # Prevents the player from jumping more than once while in air
 #				rset("slave_can_jump",can_jump)
-	elif is_network_master() and !alive: # not alive
+	elif is_network_master() and (!alive or inputsDisabled ): # not alive
 		keys = [false,false,false,false]
 		can_jump = false
 		
@@ -268,14 +273,23 @@ sync func showGameOverScreen():
 	get_parent().get_parent().allDead = true
 	utils.putHighscore( utils.getScore(), utils.getTeam() )
 	get_tree().get_root().get_node("Control/game/GameOverScreen").set_visible(true)
+
+func kill():
+	# kills this player	
+	if get_tree().is_network_server():
+		rpc("killed", get_name())
+		cameraNode.killedRumble()
+		if allPlayersKilled():
+			rpc("showGameOverScreen")
+			
+func disableInputs():
+	# disable all the inputs, for better kill handeling
+	inputsDisabled = true
 	
+
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive and !isKillProtected:
-		if get_tree().is_network_server():
-			rpc("killed", get_name())
-			cameraNode.killedRumble()
-			if allPlayersKilled():
-				rpc("showGameOverScreen")
+		kill()
 
 func _on_player_body_shape_exited( body_id, body, body_shape, local_shape ):
 	pass # replace with function body
