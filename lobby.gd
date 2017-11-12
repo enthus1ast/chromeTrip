@@ -110,8 +110,8 @@ remote func register_new_player(_player):
 remote func startGame():
 	print("startGame was called")
 	## Safe new config values
-	utils.config.set_value("player", "defaultname", nameInput.get_text())					
-	utils.config.set_value("player", "defaultserver", ipInput.get_text())					
+	utils.config.set_value("player", "defaultname", nameInput.get_text())
+	utils.config.set_value("player", "defaultserver", ipInput.get_text())
 	utils.config.save(utils.CONFIG_PATH)
 	var cnt = 0
 	for p in players:
@@ -123,7 +123,6 @@ remote func startGame():
 		
 		# Set initial position, not spawning behind each other 
 		players[p].node.position = Vector2(10 + cnt, 0)
-#		print(players[p].node.get_node("Sprite").get_region_rect())
 		cnt+= 5 +  players[p].node.get_node("Sprite").get_region_rect().size.x * players[p].node.get_node("Sprite").scale.x
 		
 #		Sprite

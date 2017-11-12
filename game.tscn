@@ -281,10 +281,12 @@ __meta__ = {
 
 [node name="constantMovement" type="Node2D" parent="sprites"]
 
+editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="ground" type="Node2D" parent="sprites/constantMovement"]
 
+editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite1" type="Sprite" parent="sprites/constantMovement/ground"]
@@ -331,7 +333,9 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="groundCollision" type="StaticBody2D" parent="."]
+[node name="groundCollision" type="StaticBody2D" parent="." groups=[
+"ground",
+]]
 
 editor/display_folded = true
 input_pickable = false
