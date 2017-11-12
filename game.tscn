@@ -236,6 +236,7 @@ scale = Vector2( 1.87467, 1.87467 )
 
 [node name="sprites" type="Node2D" parent="."]
 
+editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -425,6 +426,7 @@ _sections_unfolded = [ "Material", "Offset", "Transform", "Z" ]
 
 [node name="Loch" parent="." instance=ExtResource( 11 )]
 
+visible = false
 position = Vector2( 471.928, 439.584 )
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
