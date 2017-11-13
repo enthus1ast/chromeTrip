@@ -1,16 +1,17 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://ActionPopups.tscn" type="PackedScene" id=3]
 [ext_resource path="res://PopupMenu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/progressBar/ProgressBar.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/parallaxBackground.tscn" type="PackedScene" id=6]
-[ext_resource path="res://ground.png" type="Texture" id=7]
-[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=8]
-[ext_resource path="res://GameOver.tscn" type="PackedScene" id=9]
-[ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=10]
-[ext_resource path="res://shaders/texture/white.png" type="Texture" id=11]
+[ext_resource path="res://Sonne.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/parallaxBackground.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ground.png" type="Texture" id=8]
+[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=9]
+[ext_resource path="res://GameOver.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=11]
+[ext_resource path="res://shaders/texture/white.png" type="Texture" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -142,12 +143,12 @@ _sections_unfolded = [ "Resource" ]
 
 render_priority = 0
 shader = SubResource( 11 )
-shader_param/brightnessFac = 0.0
-shader_param/saturationFac = 1.0
-shader_param/contrastFac = 1.0
+shader_param/brightnessFac = -0.465
+shader_param/saturationFac = 0.389
+shader_param/contrastFac = -0.43
 _sections_unfolded = [ "shader_param" ]
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=13]
 
 resource_name = "daynightcycle"
 length = 30.0
@@ -330,11 +331,16 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="parallaxBackground" parent="sprites/background" instance=ExtResource( 6 )]
+[node name="Sonne" parent="sprites/background" instance=ExtResource( 6 )]
+
+position = Vector2( 80.9996, 61.9997 )
+
+[node name="parallaxBackground" parent="sprites/background" instance=ExtResource( 7 )]
 
 [node name="mist" type="Sprite" parent="sprites/background"]
 
-position = Vector2( -13.0456, 193.858 )
+self_modulate = Color( 0.0820312, 0.0563965, 0.0563965, 0.171255 )
+position = Vector2( -13.0456, 192.858 )
 rotation = 1.5708
 scale = Vector2( 0.183399, 2114.18 )
 texture = SubResource( 6 )
@@ -369,7 +375,7 @@ _sections_unfolded = [ "Transform" ]
 
 editor/display_folded = true
 position = Vector2( 2400.79, 380 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -382,7 +388,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 editor/display_folded = true
 position = Vector2( 4800, 380 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -399,7 +405,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 [node name="enemys" type="Node2D" parent="sprites"]
 
-[node name="parallaxForeground" parent="sprites" instance=ExtResource( 8 )]
+[node name="parallaxForeground" parent="sprites" instance=ExtResource( 9 )]
 
 [node name="players" type="Node2D" parent="."]
 
@@ -481,12 +487,12 @@ scale = Vector2( 1.65385, 27.9423 )
 shape = SubResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="GameOverScreen" parent="." instance=ExtResource( 9 )]
+[node name="GameOverScreen" parent="." instance=ExtResource( 10 )]
 
 editor/display_folded = true
 visible = false
 
-[node name="cameraNode" parent="." instance=ExtResource( 10 )]
+[node name="cameraNode" parent="." instance=ExtResource( 11 )]
 
 [node name="shaderSpass" type="Sprite" parent="."]
 
@@ -494,7 +500,7 @@ material = SubResource( 12 )
 position = Vector2( -84.333, -59.662 )
 scale = Vector2( 18.2812, 11.349 )
 z = 4096
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 centered = false
 _sections_unfolded = [ "Material", "Offset", "Transform", "Visibility", "Z" ]
 
@@ -503,7 +509,7 @@ _sections_unfolded = [ "Material", "Offset", "Transform", "Visibility", "Z" ]
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/daynightcycle = SubResource( 15 )
+anims/daynightcycle = SubResource( 13 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]

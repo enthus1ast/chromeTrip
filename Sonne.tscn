@@ -20,7 +20,7 @@ animations = [ {
 
 modulate = Color( 1, 0.992859, 0.822235, 1 )
 position = Vector2( -1.08072, 0.810523 )
-scale = Vector2( 1.5, 1.5 )
+scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 1 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
