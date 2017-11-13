@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://lobby.gd" type="Script" id=1]
 [ext_resource path="res://PlayerAnim.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://MainMenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Highscore.tscn" type="PackedScene" id=8]
 [ext_resource path="res://sounds/rolemu_-_04_-_The_Black_Kitty.ogg" type="AudioStream" id=9]
+[ext_resource path="res://sounds/sfx_coin_double3.ogg" type="AudioStream" id=10]
 
 [sub_resource type="Gradient" id=1]
 
@@ -1022,6 +1023,16 @@ wait_time = 1.0
 one_shot = false
 autostart = false
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+pause_mode = 1
+stream = ExtResource( 10 )
+volume_db = 0.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+_sections_unfolded = [ "Pause" ]
+
 [connection signal="pong" from="." to="." method="_on_Control_pong"]
 
 [connection signal="text_changed" from="menu/networkPanel/name" to="." method="_on_name_text_changed"]
@@ -1049,5 +1060,7 @@ autostart = false
 [connection signal="pressed" from="menu/DialogWaiting/cancel" to="." method="_on_cancel_pressed"]
 
 [connection signal="timeout" from="networkHud/Timer" to="." method="_on_Timer_timeout"]
+
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
 
 
