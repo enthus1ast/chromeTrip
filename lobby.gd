@@ -5,7 +5,7 @@ const INSTANT_READY = false
 const REQUIRED_PLAYERS = 2
 const GAME_COUNTDOWN = 1 #time to start in lobby
 
-
+onready var musicPlayer = get_node("musicPlayer")
 onready var menu = get_node("menu")
 onready var lobby = menu.get_node("lobby")
 onready var startButton = lobby.get_node("Container/startLobbyButton")
@@ -51,6 +51,7 @@ signal connection_fail()
 signal pong
 
 func _ready():
+	musicPlayer.connect("finished",self,"loopMusic")
 #	OS.set_low_processor_usage_mode(true)
 	eNet = NetworkedMultiplayerENet.new()
 	# load params from config
@@ -449,6 +450,10 @@ func _on_back_pressed():
 	highscore.hide()
 	mainMenu.show()
 
+
+func loopMusic():
+	musicPlayer.play()
+
 func _on_Control_pong(_remoteUnixTime, _localUnixTime, _timeout):
 	pass # replace with function body
 	pingTimeout.text = str(_timeout)
@@ -456,4 +461,3 @@ func _on_Control_pong(_remoteUnixTime, _localUnixTime, _timeout):
 func _on_Timer_timeout():
 	if not get_tree().is_network_server():
 		rpc_id(1, "ping", get_tree().get_network_unique_id(), OS.get_unix_time())
-	

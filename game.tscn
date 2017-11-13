@@ -75,51 +75,128 @@ extents = Vector2( 10, 10 )
 [sub_resource type="Shader" id=11]
 
 code = "shader_type canvas_item;
-
-float rand(vec2 co){
-	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+uniform float brightnessFac  : hint_range( -5.0, 5.0);
+uniform float saturationFac :hint_range( -5.0, 5.0);
+uniform float contrastFac : hint_range( -5.0, 5.0);
+mat4 brightnessMatrix( float brightness )
+{
+	mat4 myMatr = mat4( vec4(1.0, 0.0, 0.0, 0.0), vec4(0.0, 1.0, 0.0, 0.0) ,vec4(0.0, 0.0, 1.0, 0.0),vec4(brightness, brightness, brightness, 1.0 ));
+    return myMatr;
 }
 
-uniform float frequency=100;
-uniform float depth = 0.01;
-uniform float foo = 0.001;
-uniform float size_x=0.008;
-uniform float size_y=0.008;
+mat4 contrastMatrix( float contrast )
+{
+	float t = ( 1.0 - contrast ) / 2.0;
+    
+    return mat4( vec4(contrast, 0.0, 0.0, 0.0),
+                 vec4(0.0, contrast, 0.0, 0.0),
+                 vec4(0.0, 0.0, contrast, 0.0),
+                 vec4(t, t, t, 1 ));
+
+}
+
+mat4 saturationMatrix( float saturation )
+{
+    vec3 luminance = vec3( 0.3086, 0.6094, 0.0820 );
+    
+    float oneMinusSat = 1.0 - saturation;
+    
+    vec3 red = vec3( luminance.x * oneMinusSat );
+    red+= vec3( saturation, 0.0, 0.0 );
+    
+    vec3 green = vec3( luminance.y * oneMinusSat );
+    green += vec3( 0.0, saturation, 0.0 );
+    
+    vec3 blue = vec3( luminance.z * oneMinusSat );
+    blue += vec3( 0.0, 0.0, saturation );
+    
+    return mat4( vec4(red,     0.0),
+                 vec4(green,   0.0),
+                 vec4(blue,    0.0),
+                 vec4(0.0, 0.0, 0.0, 1 ));
+}
 
 void fragment() {
+	vec4 pixelColor = texture(SCREEN_TEXTURE,SCREEN_UV);
+	COLOR = brightnessMatrix( brightnessFac ) * contrastMatrix( contrastFac ) *  saturationMatrix( saturationFac ) * pixelColor;
+
+
+
+
+
+
+
+	//COLOR.rgb = vec3(saturation * pixelColor.rgb);
 	
-	
-	vec2 uv = SCREEN_UV;
-	uv.x+=TIME + rand(uv);
-	uv.y+=TIME + rand(uv);
-	
-	
-	
-	//uv-=mod(uv,vec2(size_x,size_y));
-	//uv.x += sin(uv.y*frequency+TIME)*uv.y*depth/3.0;
-	//uv.x = uv.x;
-	//uv.x = clamp(uv.x,0,1);
-	vec3 c = textureLod(SCREEN_TEXTURE,uv,0.0).rgb;
-	//c=vec3(1.0)-c;
-	
-	COLOR.rgb=c;
+	//COLOR = texture(SCREEN_TEXTURE,SCREEN_UV);
+
+		
+	//COLOR = texture(SCREEN_TEXTURE,SCREEN_UV);
+	//COLOR.rgba = pixelColor;
 }
 
 "
+_sections_unfolded = [ "Resource" ]
 
 [sub_resource type="ShaderMaterial" id=12]
 
 render_priority = 0
 shader = SubResource( 11 )
-shader_param/frequency = null
-shader_param/depth = null
-shader_param/foo = null
-shader_param/size_x = null
-shader_param/size_y = null
+shader_param/brightnessFac = 0.0
+shader_param/saturationFac = 1.0
+shader_param/contrastFac = 1.0
+_sections_unfolded = [ "shader_param" ]
 
-[sub_resource type="GradientTexture" id=13]
+[sub_resource type="Animation" id=15]
 
-width = 1
+resource_name = "daynightcycle"
+length = 30.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("shaderSpass:material:shader_param/saturationFac")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 15, 18.4, 28.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.389, 0.389, 1.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("shaderSpass:material:shader_param/contrastFac")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/keys = {
+"times": PoolRealArray( 0, 6.6, 15, 18.4, 28.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.933, -0.43, -0.43, 1.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("shaderSpass:material:shader_param/brightnessFac")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/keys = {
+"times": PoolRealArray( 0, 15, 18.4, 28.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -0.465, -0.465, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("sprites/background/mist:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/keys = {
+"times": PoolRealArray( 0, 15, 18.4, 28.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.0820312, 0.0563965, 0.0563965, 0.171255 ), Color( 0.0820312, 0.0563965, 0.0563965, 0.171255 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="game" type="Control"]
 
@@ -142,7 +219,6 @@ __meta__ = {
 
 [node name="hud" type="CanvasLayer" parent="."]
 
-editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -267,7 +343,7 @@ rotation = 1.5708
 scale = Vector2( 0.183399, 2114.18 )
 texture = SubResource( 6 )
 offset = Vector2( -25.2217, -0.498946 )
-_sections_unfolded = [ "Material", "Transform", "Visibility" ]
+_sections_unfolded = [ "Material", "Visibility" ]
 
 [node name="gradientGround" type="Sprite" parent="sprites/background"]
 
@@ -418,14 +494,24 @@ visible = false
 
 [node name="shaderSpass" type="Sprite" parent="."]
 
-visible = false
 material = SubResource( 12 )
-position = Vector2( -35.5309, -41.3741 )
-scale = Vector2( 1114.17, 702.121 )
+position = Vector2( -84.333, -59.662 )
+scale = Vector2( 18.2812, 11.349 )
 z = 4096
-texture = SubResource( 13 )
+texture = ExtResource( 11 )
 centered = false
-_sections_unfolded = [ "Material", "Offset", "Transform", "Z" ]
+_sections_unfolded = [ "Material", "Offset", "Transform", "Visibility", "Z" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/daynightcycle = SubResource( 15 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "daynightcycle"
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 

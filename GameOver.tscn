@@ -22,7 +22,7 @@ step = 0.1
 [sub_resource type="Animation" id=3]
 
 resource_name = "s"
-length = 2.5
+length = 5.0
 loop = false
 step = 0.1
 tracks/0/type = "value"
@@ -53,10 +53,10 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/keys = {
-"times": PoolRealArray( 1.8, 2.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 1.2, 2.3, 2.8, 3.3, 4.1, 4.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -130.952, 347.21 ), Vector2( 171.952, 347.21 ) ]
+"values": [ Vector2( -130.952, 347.21 ), Vector2( -130.952, 347.21 ), Vector2( 171.952, 347.21 ), Vector2( 171.952, 347.21 ), Vector2( 207.026, 347.21 ), Vector2( 207.026, 347.21 ), Vector2( 171.952, 347.21 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("DinoRight:position")
@@ -64,10 +64,10 @@ tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/keys = {
-"times": PoolRealArray( 1.8, 2.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 1.2, 2.3, 2.8, 3.3, 4.1, 4.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1150.01, 344.421 ), Vector2( 847.014, 344.421 ) ]
+"values": [ Vector2( 1150.01, 344.421 ), Vector2( 1150.01, 344.421 ), Vector2( 847.014, 344.421 ), Vector2( 847.014, 344.421 ), Vector2( 805.26, 349.432 ), Vector2( 805.26, 349.432 ), Vector2( 847.014, 344.421 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("ButRestart:visible")
@@ -75,10 +75,10 @@ tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/keys = {
-"times": PoolRealArray( 0, 2.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
 "update": 1,
-"values": [ false, true ]
+"values": [  ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("OVER:rect_position")
@@ -90,6 +90,50 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 368, 610 ), Vector2( 368, 477 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("ButRestart/ImgRestart:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/keys = {
+"times": PoolRealArray( 0, 3.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 2.43845, 2.43845 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("ButRestart/ImgRestart:rotation_deg")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/keys = {
+"times": PoolRealArray( 0, 3.9 ),
+"transitions": PoolRealArray( 1, -0.25 ),
+"update": 0,
+"values": [ 960.0, 0.0 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("DinoLeft:rotation_deg")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/keys = {
+"times": PoolRealArray( 0, 2.8, 3.3, 3.7, 4.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 21.0, 21.0, 0.0 ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("DinoRight:rotation_deg")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/keys = {
+"times": PoolRealArray( 0, 2.8, 3.3, 3.7, 4.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, -20.9678, -20.9678, 0.0 ]
 }
 
 [node name="GameOverScreen" type="Node2D"]
@@ -133,7 +177,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 361.0
 margin_right = 663.0
-margin_bottom = 92.0
+margin_bottom = 94.0
 rect_scale = Vector2( 0, 0 )
 rect_pivot_offset = Vector2( 155.559, 73.7997 )
 rect_clip_content = false
@@ -157,7 +201,7 @@ anchor_bottom = 0.0
 margin_left = 368.0
 margin_top = 610.0
 margin_right = 670.0
-margin_bottom = 702.0
+margin_bottom = 704.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -173,15 +217,15 @@ _sections_unfolded = [ "Rect", "custom_colors", "custom_fonts" ]
 
 [node name="ButRestart" type="Button" parent="."]
 
-visible = false
+self_modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 411.0
-margin_top = 250.0
-margin_right = 603.0
-margin_bottom = 420.0
+margin_left = 440.0
+margin_top = 320.0
+margin_right = 584.0
+margin_bottom = 454.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -192,15 +236,16 @@ enabled_focus_mode = 2
 shortcut = null
 group = null
 flat = false
-_sections_unfolded = [ "Visibility" ]
+_sections_unfolded = [ "Anchor", "Focus", "Grow Direction", "Hint", "Margin", "Mouse", "Rect", "Theme", "Visibility", "custom_fonts" ]
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="ImgRestart" type="Sprite" parent="ButRestart"]
 
-position = Vector2( 89.7507, 84.2105 )
-scale = Vector2( 3, 3 )
+position = Vector2( 70, 70 )
+rotation = 16.7552
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 73, 70 )

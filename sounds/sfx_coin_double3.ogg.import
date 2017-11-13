@@ -1,0 +1,10 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/sfx_coin_double3.ogg-6a98534c2b1dcceeaed78851d5cfc6c5.oggstr"
+
+[params]
+
+loop=true
+loop_offset=0

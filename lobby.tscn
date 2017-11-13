@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://lobby.gd" type="Script" id=1]
 [ext_resource path="res://PlayerAnim.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://raw/Hut.png" type="Texture" id=6]
 [ext_resource path="res://MainMenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Highscore.tscn" type="PackedScene" id=8]
+[ext_resource path="res://sounds/rolemu_-_04_-_The_Black_Kitty.ogg" type="AudioStream" id=9]
 
 [sub_resource type="Gradient" id=1]
 
@@ -514,6 +515,7 @@ _sections_unfolded = [ "Anchor", "Margin", "Rect", "Size Flags" ]
 
 [node name="body" type="Panel" parent="menu/lobby/Container"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -640,6 +642,7 @@ _sections_unfolded = [ "Grow Direction", "Hint", "Size Flags" ]
 
 [node name="chat" type="Panel" parent="menu/lobby/Container"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -961,6 +964,15 @@ margin_left = 235.0
 margin_top = 162.0
 margin_right = 275.0
 margin_bottom = 202.0
+
+[node name="musicPlayer" type="AudioStreamPlayer" parent="."]
+
+stream = ExtResource( 9 )
+volume_db = -1.25
+autoplay = true
+mix_target = 0
+bus = "Master"
+_sections_unfolded = [ "Pause" ]
 
 [node name="networkHud" type="Control" parent="."]
 
