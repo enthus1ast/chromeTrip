@@ -968,8 +968,8 @@ margin_bottom = 202.0
 [node name="musicPlayer" type="AudioStreamPlayer" parent="."]
 
 stream = ExtResource( 9 )
-volume_db = -5.38
-autoplay = false
+volume_db = -10.0
+autoplay = true
 mix_target = 0
 bus = "Master"
 _sections_unfolded = [ "Pause" ]
