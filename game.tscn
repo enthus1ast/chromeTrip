@@ -1,15 +1,16 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://ActionPopups.tscn" type="PackedScene" id=3]
 [ext_resource path="res://PopupMenu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/progressBar/ProgressBar.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/parallaxBackground.tscn" type="PackedScene" id=6]
-[ext_resource path="res://ground.png" type="Texture" id=7]
-[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=8]
-[ext_resource path="res://GameOver.tscn" type="PackedScene" id=9]
-[ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Sonne.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/parallaxBackground.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ground.png" type="Texture" id=8]
+[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=9]
+[ext_resource path="res://GameOver.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -235,7 +236,6 @@ scale = Vector2( 1.87467, 1.87467 )
 
 [node name="sprites" type="Node2D" parent="."]
 
-editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -254,11 +254,15 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="parallaxBackground" parent="sprites/background" instance=ExtResource( 6 )]
+[node name="Sonne" parent="sprites/background" instance=ExtResource( 6 )]
+
+position = Vector2( 80.9996, 61.9997 )
+
+[node name="parallaxBackground" parent="sprites/background" instance=ExtResource( 7 )]
 
 [node name="mist" type="Sprite" parent="sprites/background"]
 
-position = Vector2( -13.0456, 193.858 )
+position = Vector2( -13.0456, 192.858 )
 rotation = 1.5708
 scale = Vector2( 0.183399, 2114.18 )
 texture = SubResource( 6 )
@@ -293,7 +297,7 @@ _sections_unfolded = [ "Transform" ]
 
 editor/display_folded = true
 position = Vector2( 2400.79, 380 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -306,7 +310,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 editor/display_folded = true
 position = Vector2( 4800, 380 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 offset = Vector2( -1200, 1 )
 region_rect = Rect2( 0, 0, 2500, 26 )
 _sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
@@ -323,7 +327,7 @@ rect = Rect2( -10, -10, 20, 20 )
 
 [node name="enemys" type="Node2D" parent="sprites"]
 
-[node name="parallaxForeground" parent="sprites" instance=ExtResource( 8 )]
+[node name="parallaxForeground" parent="sprites" instance=ExtResource( 9 )]
 
 [node name="players" type="Node2D" parent="."]
 
@@ -405,12 +409,12 @@ scale = Vector2( 1.65385, 27.9423 )
 shape = SubResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="GameOverScreen" parent="." instance=ExtResource( 9 )]
+[node name="GameOverScreen" parent="." instance=ExtResource( 10 )]
 
 editor/display_folded = true
 visible = false
 
-[node name="cameraNode" parent="." instance=ExtResource( 10 )]
+[node name="cameraNode" parent="." instance=ExtResource( 11 )]
 
 [node name="shaderSpass" type="Sprite" parent="."]
 
