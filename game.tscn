@@ -357,7 +357,6 @@ __meta__ = {
 [node name="Sonne" parent="sprites/background" instance=ExtResource( 6 )]
 
 position = Vector2( 80.9996, 61.9997 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Mond" parent="sprites/background" instance=ExtResource( 7 )]
 
@@ -549,6 +548,7 @@ playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = "daynightcycle"
+_sections_unfolded = [ "Playback Options", "playback" ]
 
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 
