@@ -5,24 +5,26 @@ const INSTANT_READY = false
 const REQUIRED_PLAYERS = 2
 const GAME_COUNTDOWN = 1 #time to start in lobby
 
-onready var musicPlayer = get_node("musicPlayer")
 onready var menu = get_node("menu")
 onready var lobby = menu.get_node("lobby")
 onready var startButton = lobby.get_node("Container/startLobbyButton")
 onready var chatInput = lobby.get_node("Container/chatInput/chatInput")
 onready var networkPanel = get_node("menu/networkPanel")
+onready var settingsPanel = get_node("menu/Settings")
 onready var mainMenu = get_node("menu/MainMenu")
 onready var nameInput = networkPanel.get_node("name")
 onready var highscore = get_node("menu/Highscore")
 onready var ipInput = networkPanel.get_node("connect/ip")
 onready var version = get_node("menu/Version")
 onready var pingTimeout = get_node("networkHud/CanvasLayer/pingTimeout")
-
+onready var musicPlayer = get_node("musicPlayer")
+onready var effectsPlayer = get_node("AudioStreamPlayer")
 onready var dialogWaiting = get_node("menu/DialogWaiting")
 #onready var playerList = lobby.get_node("Container/body/playerList")
 onready var PlayerListElement = preload("res://playerListElement.tscn")
 onready var Player = preload("res://player.tscn")
 onready var Game = preload("res://game.tscn")
+onready var warnPopup = get_node("menu/WarnPopup")
 
 var countdown
 var countdownActive = false
@@ -50,6 +52,36 @@ signal connection_success()
 signal connection_fail()
 signal pong
 
+func leaveLobby():
+	lobby.set_visible(false)
+	get_tree().set_network_peer(null)
+	eNet.close_connection()
+	eNet = NetworkedMultiplayerENet.new()
+	players={}
+	clearList()
+	clearChat()
+
+remote func checkServerVersion(_answerId):
+	if get_tree().is_network_server():
+		rpc_id(_answerId, "errorOnWrongServerVersion", utils.version)
+remote func errorOnWrongServerVersion(serverVersion):
+	if serverVersion != utils.version:
+#	if true:
+		print("WRONG SERVER VERSION!!")
+		warnPopup.popup_centered() #show()
+		warnPopup.dialog_text = "server uses another version: " + str(serverVersion)
+		leaveLobby()
+		
+
+func mute(enabled):
+	if enabled == true:
+		effectsPlayer.volume_db = -1000
+		musicPlayer.volume_db = -1000		
+	else:
+		effectsPlayer.volume_db = utils.config.get_value("audio","effects")
+		musicPlayer.volume_db = utils.config.get_value("audio","music")
+
+
 func _ready():
 	musicPlayer.connect("finished",self,"loopMusic")
 #	OS.set_low_processor_usage_mode(true)
@@ -58,6 +90,16 @@ func _ready():
 	ipInput.set_text( utils.config.get_value("player", "defaultserver", ""))
 	nameInput.set_text( utils.config.get_value("player", "defaultname") )
 	version.set_text(version.text + str(utils.version))
+	
+	# Set initial audio volume
+	musicPlayer.volume_db = utils.config.get_value("audio","music")
+	effectsPlayer.volume_db = utils.config.get_value("audio","effects")
+	var isMuted = utils.config.get_value("audio","mute")
+	mute(isMuted)
+#	if not isMuted:
+	musicPlayer.play()
+		
+	
 #	chatInput.set_max_chars(100)
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
@@ -66,6 +108,7 @@ func _ready():
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 	set_process(false)
 	set_process_input(true)
+
 
 remote func ping(_id, _remoteUnixTime):
 	## client pings the server
@@ -87,6 +130,7 @@ func _connected_ok():
 		currentPlayer.name ="unnamed"
 	currentPlayer.isReady = false
 	currentPlayer.id = get_tree().get_network_unique_id()
+	rpc_id(1, "checkServerVersion", currentPlayer.id)
 	rpc_id(1, "user_ready", currentPlayer)
 	print("_connected_ok",currentPlayer.id)
 	lobby.set_visible(true)
@@ -338,15 +382,9 @@ func _on_cancel_pressed():
 	isConnecting = false
 	eNet = NetworkedMultiplayerENet.new()
 	pass
-
+		
 func _on_leaveLobbyButton_pressed():
-	lobby.set_visible(false)
-	get_tree().set_network_peer(null)
-	eNet.close_connection()
-	eNet = NetworkedMultiplayerENet.new()
-	players={}
-	clearList()
-	clearChat()
+	leaveLobby()
 
 func _on_chatInput_focus_entered():
 	pass
@@ -450,12 +488,10 @@ func _on_back_pressed():
 	highscore.hide()
 	mainMenu.show()
 
-
 func loopMusic():
 	musicPlayer.play()
 
 func _on_Control_pong(_remoteUnixTime, _localUnixTime, _timeout):
-	pass # replace with function body
 	pingTimeout.text = str(_timeout)
 	
 func _on_Timer_timeout():
@@ -463,5 +499,22 @@ func _on_Timer_timeout():
 		rpc_id(1, "ping", get_tree().get_network_unique_id(), OS.get_unix_time())
 
 func _on_AudioStreamPlayer_finished():
-	pass # replace with function body
 	print("Finished")
+
+func _on_Settings_effectVolume(val):
+	if effectsPlayer == null:
+		print("effectsPlayer is nil") # lol... 
+	else:
+		effectsPlayer.volume_db = val
+
+func _on_Settings_musicVolume(val):
+	if musicPlayer == null:
+		print("MusicPlayer is nil") # lol... 
+	else:
+		musicPlayer.volume_db = val
+
+func _on_Settings_mute(val):
+	mute(val)
+
+func _on_RichTextLabel_meta_clicked( meta ):
+	OS.shell_open(utils.DEVELOPER_URI)

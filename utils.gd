@@ -3,10 +3,12 @@ extends Node
 ########################################################################################################
 # Global game variables
 ########################################################################################################
-var version = 0.1 # general version of this game
+var version = 0.2 # general version of this game
 const HIGHSCORE_PATH = "user://highscore.dat" # where the highscore is safed on the filesystem.
 const HIGHSCORE_PW = "code0"
 const CONFIG_PATH = "user://config.ini"
+const DEVELOPER_URI = "http://games.code0.xyz"
+
 const HOW_MANY_HIGHSCORES = 500 
 var config # the global game userconfig
 
@@ -141,10 +143,14 @@ func _ready():
 		if not config.has_section_key("player", "defaultname"):
 			config.set_value("player", "defaultname", "unknown")		
 		if not config.has_section_key("player", "defaultserver"):
-			config.set_value("player", "defaultserver", "127.0.0.1")					
+			config.set_value("player", "defaultserver", "127.0.0.1")
 		# Store a variable if and only if it hasn't been defined yet
-		if not config.has_section_key("audio", "mute"):
-			config.set_value("audio", "mute", false)
+#		if not config.has_section_key("player", "SERVER_PORT"):
+#			config.set_value("player", "SERVER_PORT", 7000)		
+		if not config.has_section_key("audio", "effects"):
+			config.set_value("audio", "effects", 100)
+		if not config.has_section_key("audio", "music"):
+			config.set_value("audio", "music", 100)						
 		# Save the changes by overwriting the previous file
 		config.save(CONFIG_PATH)
 	else:

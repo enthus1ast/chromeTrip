@@ -30,3 +30,8 @@ func _on_ButtonMenu_pressed():
 
 func _on_ButtonQuit_pressed():
 	get_tree().quit()
+
+
+func _on_Settings_pressed():
+	pass # replace with function body
+	get_tree().get_root().get_node("Control/menu/Settings").show()

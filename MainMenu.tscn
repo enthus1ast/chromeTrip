@@ -83,7 +83,6 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.816406, 0.787879, 0.0861053, 1 )
-disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -120,7 +119,7 @@ _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
 [connection signal="pressed" from="VBoxContainer/ButtonNewGame" to="." method="_on_ButtonNewGame_pressed"]
 
-[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_ButtonRestart_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
 
 [connection signal="pressed" from="VBoxContainer/HighScore" to="." method="_on_HighScore_pressed"]
 
