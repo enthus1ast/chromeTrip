@@ -9,14 +9,17 @@ var isCollected = false
 var basePoints = 1000
 var foodValue = 50
 var selectedCollectable
+var onCollectParticles
+var animatedSprite
 
 var targetTopRight = Vector2(1042,0)
 var targetBottomLeft = Vector2(1,820)
 var collectedPosTween = Tween.new()
+var deleteTimer = Timer.new()
 var flashMessage
 
 func _tween_complete(_object, _key ):
-	queue_free()
+	deleteTimer.start()
 
 func _ready():
 	var animSprite =spriteNode.get_node(selectedCollectable+"Area").get_node("AnimatedSprite")
@@ -28,25 +31,29 @@ func _ready():
 	hud.add_child(flashMessage)
 	add_child(collectedPosTween)
 	collectedPosTween.connect("tween_completed",self,"_tween_complete")
+	deleteTimer.connect("timeout",self,"_delete_timeout")
+	add_child(deleteTimer)
+	deleteTimer.wait_time = 5
 	set_process(true)
 
 func choice(_name):
 	selectedCollectable = _name
 	get_node("spriteNode").get_node(_name+"Area").pause_mode=0
 	get_node("spriteNode").get_node(_name+"Area").set_visible(true)
-	get_node("spriteNode").get_node(_name+"Area").get_node("collectableShape").disabled=false
-
+	get_node("spriteNode").get_node(_name+"Area/collectableShape").disabled=false
+	animatedSprite = get_node("spriteNode/"+_name+"Area/AnimatedSprite")
+	onCollectParticles = animatedSprite.get_node("onCollectParticles/Particles2D")
+	onCollectParticles.texture = animatedSprite.get_sprite_frames().get_frame("default",int(rand_range(0,2)))
 func _process(delta):
 	position.x -= delta*game.fakeSpeed
  
 func _on_meatArea_body_entered( body ):
 	if body.is_in_group("players") and !isCollected:
 		rpc("rpcEatFood",body,control.players[int(body.get_name())].name)
-		print(control.players[int(body.get_name())].name)
 		pass
 
 sync func rpcEatFood(_playerNode,_playerName):
-	
+	onCollectParticles.emitting=true
 	if _playerNode.hunger < foodValue and _playerNode.hunger>=0:
 		_playerNode.hunger -= foodValue
 	else:
@@ -68,6 +75,7 @@ func _on_heartArea_body_entered( body ):
 		pass
 
 sync func rpcScoreAdd(_value,_player):
+	onCollectParticles.emitting=true
 	flashMessage.showPointsAt(_value,"Points",position,_player)
 	set_process(false)
 	isCollected = true
@@ -76,8 +84,14 @@ sync func rpcScoreAdd(_value,_player):
 	get_tree().get_root().get_node("Control/game").score = game.score + _value
 
 func _on_VisibilityNotifier2D_screen_exited():
-	queue_free()
+	if !isCollected:
+		queue_free()
+	else:
+		deleteTimer.start()
 	pass # replace with function body
 
-
+# 
+func _delete_timeout():
+	print(selectedCollectable,"deleted")
+	queue_free()
 

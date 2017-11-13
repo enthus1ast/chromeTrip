@@ -5,7 +5,7 @@ const INSTANT_READY = false
 const REQUIRED_PLAYERS = 2
 const GAME_COUNTDOWN = 1 #time to start in lobby
 
-
+onready var musicPlayer = get_node("musicPlayer")
 onready var menu = get_node("menu")
 onready var lobby = menu.get_node("lobby")
 onready var startButton = lobby.get_node("Container/startLobbyButton")
@@ -49,6 +49,7 @@ signal connection_success()
 signal connection_fail()
 
 func _ready():
+	musicPlayer.connect("finished",self,"loopMusic")
 #	OS.set_low_processor_usage_mode(true)
 	eNet = NetworkedMultiplayerENet.new()
 	# load params from config
@@ -433,3 +434,6 @@ func _on_back_pressed():
 	networkPanel.hide()
 	highscore.hide()
 	mainMenu.show()
+
+func loopMusic():
+	musicPlayer.play()

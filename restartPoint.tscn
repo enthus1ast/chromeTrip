@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://restartPoint.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://assets/eggs.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -18,7 +18,8 @@ rect = Rect2( -10, -10, 20, 20 )
 
 [node name="Sprite" type="Sprite" parent="."]
 
-position = Vector2( 0.726604, -0.465469 )
+position = Vector2( -1.86678, 36.0172 )
+scale = Vector2( 1.54626, 1.54626 )
 texture = ExtResource( 2 )
 offset = Vector2( -0.0631828, -32.0423 )
 __meta__ = {
@@ -27,6 +28,7 @@ __meta__ = {
 
 [node name="Area2D" type="Area2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( -0.0690308, -312.541 )
 scale = Vector2( 1.00216, 10.7669 )
 input_pickable = true
