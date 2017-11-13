@@ -461,3 +461,7 @@ func _on_Control_pong(_remoteUnixTime, _localUnixTime, _timeout):
 func _on_Timer_timeout():
 	if not get_tree().is_network_server():
 		rpc_id(1, "ping", get_tree().get_network_unique_id(), OS.get_unix_time())
+
+func _on_AudioStreamPlayer_finished():
+	pass # replace with function body
+	print("Finished")
