@@ -9,6 +9,8 @@
 [ext_resource path="res://MainMenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Highscore.tscn" type="PackedScene" id=8]
 [ext_resource path="res://sounds/rolemu_-_04_-_The_Black_Kitty.ogg" type="AudioStream" id=9]
+[ext_resource path="res://sounds/heartSound.ogg" type="AudioStream" id=10]
+
 
 [sub_resource type="Gradient" id=1]
 
@@ -968,8 +970,8 @@ margin_bottom = 202.0
 [node name="musicPlayer" type="AudioStreamPlayer" parent="."]
 
 stream = ExtResource( 9 )
-volume_db = -5.38
-autoplay = false
+volume_db = -10.0
+autoplay = true
 mix_target = 0
 bus = "Master"
 _sections_unfolded = [ "Pause" ]
