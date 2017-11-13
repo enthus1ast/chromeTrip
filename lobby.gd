@@ -16,6 +16,7 @@ onready var nameInput = networkPanel.get_node("name")
 onready var highscore = get_node("menu/Highscore")
 onready var ipInput = networkPanel.get_node("connect/ip")
 onready var version = get_node("menu/Version")
+onready var pingTimeout = get_node("networkHud/CanvasLayer/pingTimeout")
 
 onready var dialogWaiting = get_node("menu/DialogWaiting")
 #onready var playerList = lobby.get_node("Container/body/playerList")
@@ -47,6 +48,7 @@ signal server_ended()
 signal server_error()
 signal connection_success()
 signal connection_fail()
+signal pong
 
 func _ready():
 #	OS.set_low_processor_usage_mode(true)
@@ -64,6 +66,16 @@ func _ready():
 	set_process(false)
 	set_process_input(true)
 
+remote func ping(_id, _remoteUnixTime):
+	## client pings the server
+	var localUnixTime = OS.get_unix_time()
+	rpc_id(_id, "pong", get_tree().get_network_unique_id(), _remoteUnixTime, localUnixTime)
+	
+remote func pong(_id, _remoteUnixTime, _localUnixTime):
+	var timeout = _localUnixTime - _remoteUnixTime
+	print("Received pong")
+	emit_signal("pong",  _remoteUnixTime, _localUnixTime, timeout)
+	
 func _player_connected(playerId):
 	print("player has connected")
 
@@ -79,6 +91,9 @@ func _connected_ok():
 	lobby.set_visible(true)
 	dialogWaiting.set_visible(false)
 	isConnecting = false
+	get_node("networkHud/Timer").start()
+	
+
 
 #server responding to Clients connect ok
 remote func user_ready(_player):
@@ -433,3 +448,12 @@ func _on_back_pressed():
 	networkPanel.hide()
 	highscore.hide()
 	mainMenu.show()
+
+func _on_Control_pong(_remoteUnixTime, _localUnixTime, _timeout):
+	pass # replace with function body
+	pingTimeout.text = str(_timeout)
+	
+func _on_Timer_timeout():
+	if not get_tree().is_network_server():
+		rpc_id(1, "ping", get_tree().get_network_unique_id(), OS.get_unix_time())
+	
