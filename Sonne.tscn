@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://glowTexture.png" type="Texture" id=1]
+[ext_resource path="res://assets/sonneMond/SonneBase.png" type="Texture" id=2]
+[ext_resource path="res://assets/sonneMond/SonneStrahl1.png" type="Texture" id=3]
+[ext_resource path="res://assets/sonneMond/SonneStrahl2.png" type="Texture" id=4]
+
+[sub_resource type="SpriteFrames" id=1]
+
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+} ]
+
+[node name="Sonne" type="Node2D"]
+
+[node name="glowTexture" type="Sprite" parent="."]
+
+modulate = Color( 1, 0.992859, 0.822235, 1 )
+position = Vector2( -1.08072, 0.810523 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 1 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="Sprite" type="Sprite" parent="."]
+
+texture = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+
+frames = SubResource( 1 )
+animation = "default"
+frame = 1
+playing = true
+
+
