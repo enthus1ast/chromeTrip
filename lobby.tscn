@@ -62,7 +62,6 @@ _sections_unfolded = [ "Visibility" ]
 
 [node name="menu" type="Control" parent="."]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -84,10 +83,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -3.0
-margin_top = -2.0
-margin_right = 1024.0
-margin_bottom = 601.0
+margin_left = -1.0
+margin_top = 1.0
+margin_right = 1026.0
+margin_bottom = 604.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -104,15 +103,14 @@ position = Vector2( 38, 66 )
 
 [node name="networkPanel" type="Panel" parent="menu"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 132.0
-margin_top = 196.0
-margin_right = 806.0
-margin_bottom = 507.0
+margin_left = 169.0
+margin_top = 201.0
+margin_right = 843.0
+margin_bottom = 512.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -941,10 +939,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 412.0
-margin_top = 578.0
-margin_right = 633.0
-margin_bottom = 618.0
+margin_left = 439.0
+margin_top = 571.0
+margin_right = 606.0
+margin_bottom = 611.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
