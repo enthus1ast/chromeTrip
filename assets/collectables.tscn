@@ -186,6 +186,7 @@ _sections_unfolded = [ "Animation", "Material", "Visibility" ]
 
 [node name="heartArea" type="Area2D" parent="spriteNode"]
 
+editor/display_folded = true
 visible = false
 scale = Vector2( 0.356363, 0.356363 )
 z_as_relative = false
@@ -212,7 +213,7 @@ modulate = Color( 1, 0.300781, 0.300781, 1 )
 use_parent_material = true
 frames = SubResource( 5 )
 animation = "default"
-frame = 9
+frame = 2
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
@@ -220,6 +221,7 @@ _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="meatArea" type="Area2D" parent="spriteNode"]
 
+editor/display_folded = true
 visible = false
 scale = Vector2( 0.507725, 0.507725 )
 input_pickable = true
@@ -241,7 +243,7 @@ disabled = true
 
 frames = SubResource( 7 )
 animation = "default"
-frame = 9
+frame = 5
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
