@@ -316,8 +316,8 @@ explosiveness = 0.0
 randomness = 0.2
 fixed_fps = 0
 fract_delta = true
-visibility_rect = Rect2( -100, -100, 200, 340 )
-local_coords = true
+visibility_rect = Rect2( -100, -100, 400, 500 )
+local_coords = false
 draw_order = 0
 process_material = SubResource( 5 )
 texture = ExtResource( 3 )
@@ -335,7 +335,7 @@ amount = 100
 lifetime = 6.0
 one_shot = false
 preprocess = 0.0
-speed_scale = 0.3
+speed_scale = 0.4
 explosiveness = 0.0
 randomness = 0.0
 fixed_fps = 0
@@ -403,6 +403,8 @@ _sections_unfolded = [ "Material", "Region", "Transform", "Visibility", "Z" ]
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="foreground"]
 
+position = Vector2( 31.4121, 39.4762 )
+scale = Vector2( 15.6205, 4.94762 )
 rect = Rect2( -10, -10, 20, 20 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

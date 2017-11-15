@@ -59,7 +59,7 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 script = ExtResource( 1 )
-_sections_unfolded = [ "Visibility" ]
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Material", "Rect", "Size Flags", "Visibility" ]
 
 [node name="menu" type="Control" parent="."]
 
@@ -80,6 +80,7 @@ size_flags_vertical = 1
 
 [node name="TextureRect" type="TextureRect" parent="menu"]
 
+visible = false
 show_behind_parent = true
 anchor_left = 0.0
 anchor_top = 0.0
@@ -210,6 +211,7 @@ flat = false
 
 [node name="host" type="Container" parent="menu/networkPanel"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1007,7 +1009,6 @@ _sections_unfolded = [ "Pause" ]
 
 [node name="networkHud" type="Control" parent="."]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1029,6 +1030,7 @@ layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
+_sections_unfolded = [ "Pause" ]
 
 [node name="pingTimeout" type="Label" parent="networkHud/CanvasLayer"]
 

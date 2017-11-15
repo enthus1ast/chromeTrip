@@ -1,0 +1,160 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://backgroundGame.gd" type="Script" id=1]
+[ext_resource path="res://assets/parallaxBackground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ground.png" type="Texture" id=3]
+[ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Gradient" id=3]
+
+offsets = PoolRealArray( 0, 0.701044, 0.89295 )
+colors = PoolColorArray( 0.984234, 0.984234, 0.984234, 1, 0.648438, 1, 0.942322, 1, 0.679688, 1, 0.924927, 1 )
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="GradientTexture" id=4]
+
+gradient = SubResource( 3 )
+width = 2048
+
+[sub_resource type="Gradient" id=5]
+
+offsets = PoolRealArray( 0.357843, 0.767157, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0.215451, 0.929688, 0.929688, 0.929688, 1 )
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="GradientTexture" id=6]
+
+gradient = SubResource( 5 )
+width = 2048
+
+[sub_resource type="Gradient" id=7]
+
+offsets = PoolRealArray( 0.00159236, 0.0159236, 0.463668, 0.726644 )
+colors = PoolColorArray( 1, 0.971924, 0.28125, 1, 0.984234, 0.984234, 0.984234, 1, 1, 0.966064, 0.457031, 1, 0.933594, 0.799971, 0.444916, 1 )
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="GradientTexture" id=8]
+
+gradient = SubResource( 7 )
+width = 2048
+
+[node name="backgroundGame" type="Control"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 359.36 ],
+"_edit_lock_": true
+}
+
+[node name="sprites" type="Node2D" parent="."]
+
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="background" type="Node2D" parent="sprites"]
+
+[node name="gradientSky" type="Sprite" parent="sprites/background"]
+
+position = Vector2( 1052.72, 182.43 )
+rotation = -1.5708
+scale = Vector2( 0.20658, 2168.35 )
+texture = SubResource( 4 )
+offset = Vector2( -25.2217, -0.498946 )
+_sections_unfolded = [ "Region", "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="parallaxBackground" parent="sprites/background" instance=ExtResource( 2 )]
+
+[node name="mist" type="Sprite" parent="sprites/background"]
+
+position = Vector2( -13.0456, 192.858 )
+rotation = 1.5708
+scale = Vector2( 0.183399, 2114.18 )
+texture = SubResource( 6 )
+offset = Vector2( -25.2217, -0.498946 )
+_sections_unfolded = [ "Material", "Visibility" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="gradientGround" type="Sprite" parent="sprites/background"]
+
+position = Vector2( -13.5201, 529.45 )
+rotation = 1.5708
+scale = Vector2( 0.145033, 2149.04 )
+texture = SubResource( 8 )
+offset = Vector2( -25.2217, -0.498946 )
+_sections_unfolded = [ "Region", "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="wolken" type="Node2D" parent="sprites"]
+
+[node name="constantMovement" type="Node2D" parent="sprites"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="ground" type="Node2D" parent="sprites/constantMovement"]
+
+editor/display_folded = true
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite1" type="Sprite" parent="sprites/constantMovement/ground"]
+
+editor/display_folded = true
+position = Vector2( 2400.79, 380 )
+texture = ExtResource( 3 )
+offset = Vector2( -1200, 1 )
+region_rect = Rect2( 0, 0, 2500, 26 )
+_sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="sprites/constantMovement/ground/Sprite1"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
+[node name="Sprite2" type="Sprite" parent="sprites/constantMovement/ground"]
+
+editor/display_folded = true
+position = Vector2( 4800, 380 )
+texture = ExtResource( 3 )
+offset = Vector2( -1200, 1 )
+region_rect = Rect2( 0, 0, 2500, 26 )
+_sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="sprites/constantMovement/ground/Sprite2"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
+[node name="obstacles" type="Node2D" parent="sprites/constantMovement"]
+
+[node name="restartPoints" type="Node2D" parent="sprites/constantMovement"]
+
+[node name="collectables" type="Node2D" parent="sprites"]
+
+[node name="enemys" type="Node2D" parent="sprites"]
+
+[node name="parallaxForeground" parent="sprites" instance=ExtResource( 4 )]
+
+[node name="cameraNode" parent="." instance=ExtResource( 5 )]
+
+[connection signal="screen_exited" from="sprites/constantMovement/ground/Sprite1/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+
+[connection signal="screen_exited" from="sprites/constantMovement/ground/Sprite2/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+
+
