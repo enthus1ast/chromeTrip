@@ -18,7 +18,7 @@ onready var ipInput = networkPanel.get_node("connect/ip")
 onready var version = get_node("menu/Version")
 onready var pingTimeout = get_node("networkHud/CanvasLayer/pingTimeout")
 onready var musicPlayer = get_node("musicPlayer")
-onready var effectsPlayer = get_node("AudioStreamPlayer")
+#onready var effectsPlayer = get_node("AudioStreamPlayer")
 onready var dialogWaiting = get_node("menu/DialogWaiting")
 #onready var playerList = lobby.get_node("Container/body/playerList")
 onready var PlayerListElement = preload("res://playerListElement.tscn")
@@ -83,6 +83,10 @@ func mute(enabled):
 
 
 func _ready():
+	print(OS.get_unix_time ( ))
+	print(OS.get_system_time_secs())
+	print(OS.get_time())
+	
 	musicPlayer.connect("finished",self,"loopMusic")
 #	OS.set_low_processor_usage_mode(true)
 	eNet = NetworkedMultiplayerENet.new()
@@ -110,15 +114,15 @@ func _ready():
 	set_process_input(true)
 
 
-remote func ping(_id, _remoteUnixTime):
+remote func ping(_id, _remoteTicks):
 	## client pings the server
-	var localUnixTime = OS.get_unix_time()
-	rpc_id(_id, "pong", get_tree().get_network_unique_id(), _remoteUnixTime, localUnixTime)
+	#var localUnixTime = OS.get_unix_time()
+	rpc_id(_id, "pong", get_tree().get_network_unique_id(), _remoteTicks)
 	
-remote func pong(_id, _remoteUnixTime, _localUnixTime):
-	var timeout = _localUnixTime - _remoteUnixTime
+remote func pong(_id, _relayedTicks):
+	var timeout = (OS.get_ticks_msec ( ) - _relayedTicks) / 1000
 	print("Received pong")
-	emit_signal("pong",  _remoteUnixTime, _localUnixTime, timeout)
+	emit_signal("pong", timeout)
 	
 func _player_connected(playerId):
 	print("player has connected")
@@ -491,21 +495,23 @@ func _on_back_pressed():
 func loopMusic():
 	musicPlayer.play()
 
-func _on_Control_pong(_remoteUnixTime, _localUnixTime, _timeout):
-	pingTimeout.text = str(_timeout)
+func _on_Control_pong(_timeout):
+	pingTimeout.text = "ping: " + str(_timeout)
+	
 	
 func _on_Timer_timeout():
 	if not get_tree().is_network_server():
-		rpc_id(1, "ping", get_tree().get_network_unique_id(), OS.get_unix_time())
+		rpc_id(1, "ping", get_tree().get_network_unique_id(), OS.get_ticks_msec() )
 
 func _on_AudioStreamPlayer_finished():
 	print("Finished")
 
 func _on_Settings_effectVolume(val):
-	if effectsPlayer == null:
-		print("effectsPlayer is nil") # lol... 
-	else:
-		effectsPlayer.volume_db = val
+	pass
+#	if effectsPlayer == null:
+#		print("effectsPlayer is nil") # lol... 
+#	else:
+#		effectsPlayer.volume_db = val
 
 func _on_Settings_musicVolume(val):
 	if musicPlayer == null:
