@@ -63,7 +63,6 @@ _sections_unfolded = [ "Visibility" ]
 
 [node name="menu" type="Control" parent="."]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -105,7 +104,6 @@ position = Vector2( 38, 66 )
 
 [node name="networkPanel" type="Panel" parent="menu"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1056,6 +1054,18 @@ wait_time = 1.0
 one_shot = false
 autostart = false
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." groups=[
+"effects",
+]]
+
+pause_mode = 1
+stream = null
+volume_db = 0.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+_sections_unfolded = [ "Pause" ]
+
 [connection signal="pong" from="." to="." method="_on_Control_pong"]
 
 [connection signal="text_changed" from="menu/networkPanel/name" to="." method="_on_name_text_changed"]
@@ -1091,5 +1101,7 @@ autostart = false
 [connection signal="mute" from="menu/Settings" to="." method="_on_Settings_mute"]
 
 [connection signal="timeout" from="networkHud/Timer" to="." method="_on_Timer_timeout"]
+
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
 
 

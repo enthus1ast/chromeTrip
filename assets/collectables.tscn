@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://assets/collectables.gd" type="Script" id=1]
 [ext_resource path="res://glowTexture.png" type="Texture" id=2]
@@ -37,6 +37,8 @@
 [ext_resource path="res://assets/meatSpriteAnim/0020.png" type="Texture" id=35]
 [ext_resource path="res://assets/meatSpriteAnim/0021.png" type="Texture" id=36]
 [ext_resource path="res://assets/meatSpriteAnim/0022.png" type="Texture" id=37]
+[ext_resource path="res://sounds/jump.ogg" type="AudioStream" id=38]
+[ext_resource path="res://assets/AudioStreamPlayer.gd" type="Script" id=39]
 
 [sub_resource type="Shader" id=1]
 
@@ -186,7 +188,6 @@ _sections_unfolded = [ "Animation", "Material", "Visibility" ]
 
 [node name="heartArea" type="Area2D" parent="spriteNode"]
 
-editor/display_folded = true
 visible = false
 scale = Vector2( 0.356363, 0.356363 )
 z_as_relative = false
@@ -195,6 +196,7 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+collision_layer = 524288
 audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Audio Bus", "Collision", "Material", "Pause", "Pickable", "Transform", "Visibility", "Z" ]
@@ -213,7 +215,7 @@ modulate = Color( 1, 0.300781, 0.300781, 1 )
 use_parent_material = true
 frames = SubResource( 5 )
 animation = "default"
-frame = 10
+frame = 1
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
@@ -221,7 +223,6 @@ _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="meatArea" type="Area2D" parent="spriteNode"]
 
-editor/display_folded = true
 visible = false
 scale = Vector2( 0.507725, 0.507725 )
 input_pickable = true
@@ -229,6 +230,7 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+collision_layer = 524288
 audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Collision", "Material", "Transform" ]
@@ -243,7 +245,7 @@ disabled = true
 
 frames = SubResource( 7 )
 animation = "default"
-frame = 17
+frame = 12
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
@@ -264,6 +266,15 @@ autoplay = "collectablesSwing"
 
 scale = Vector2( 0.356363, 0.356363 )
 rect = Rect2( -10, -10, 20, 20 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+stream = ExtResource( 38 )
+volume_db = -80.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+script = ExtResource( 39 )
 
 [connection signal="body_entered" from="spriteNode/heartArea" to="." method="_on_heartArea_body_entered"]
 

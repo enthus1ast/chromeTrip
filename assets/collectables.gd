@@ -21,18 +21,17 @@ var targetTopRight = Vector2(1042,-10)
 var targetBottomLeft = Vector2(1,820)
 var collectedPosTween = Tween.new()
 var deleteTimer = Timer.new()
-var soundPlayer = AudioStreamPlayer.new()
+onready var soundPlayer = get_node("AudioStreamPlayer") #AudioStreamPlayer.new()
 var flashMessage
 
 func _tween_complete(_object, _key ):
-	soundPlayer.stop()
 	deleteTimer.start()
 
 func _ready():
-	spriteNode.add_child(soundPlayer)
+#	spriteNode.add_child(soundPlayer)
 	soundPlayer.stream = sounds[selectedCollectable]
+	soundPlayer.stream.loop = false
 	soundPlayer.volume_db = -12.0
-	soundPlayer.connect("finished",self,"_on_soundPlayer_finished")
 	var animSprite =spriteNode.get_node(selectedCollectable+"Area").get_node("AnimatedSprite")
 	animSprite.set_frame(round(rand_range(0,animSprite.get_sprite_frames().get_frame_count("default")))) 
 	for child in spriteNode.get_children():
@@ -48,7 +47,6 @@ func _ready():
 	set_process(true)
 
 func choice(_name):
-
 	selectedCollectable = _name
 	var spriteNode = get_node("spriteNode")
 	spriteNode.get_node(_name+"Area").pause_mode=0
@@ -68,12 +66,12 @@ func _on_meatArea_body_entered( body ):
 sync func rpcEatFood(_playerNode,_playerName):
 	onCollectParticles.emitting=true
 	if !soundPlayer.is_playing():
-		soundPlayer.play(0.0)
+#		soundPlayer.play(0.0)
+		soundPlayer.play()
 	if _playerNode.hunger < foodValue and _playerNode.hunger>=0:
 		_playerNode.hunger -= foodValue
 	else:
 		_playerNode.hunger = 0
-		
 	flashMessage.showPointsAt(null,"Tasty!",position,_playerName)
 	set_process(false)
 	isCollected = true
@@ -110,7 +108,4 @@ func _on_VisibilityNotifier2D_screen_exited():
 func _delete_timeout():
 	queue_free()
 
-func _on_soundPlayer_finished(lol):
-	print(lol)
-	soundPlayer.stop()
-	pass # replace with function body
+	

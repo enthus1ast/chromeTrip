@@ -75,10 +75,10 @@ remote func errorOnWrongServerVersion(serverVersion):
 
 func mute(enabled):
 	if enabled == true:
-		effectsPlayer.volume_db = -1000
+		#effectsPlayer.volume_db = -1000
 		musicPlayer.volume_db = -1000		
 	else:
-		effectsPlayer.volume_db = utils.config.get_value("audio","effects")
+		#effectsPlayer.volume_db = utils.config.get_value("audio","effects")
 		musicPlayer.volume_db = utils.config.get_value("audio","music")
 
 
@@ -93,7 +93,7 @@ func _ready():
 	
 	# Set initial audio volume
 	musicPlayer.volume_db = utils.config.get_value("audio","music")
-	effectsPlayer.volume_db = utils.config.get_value("audio","effects")
+	#effectsPlayer.volume_db = utils.config.get_value("audio","effects")
 	var isMuted = utils.config.get_value("audio","mute")
 	mute(isMuted)
 #	if not isMuted:
