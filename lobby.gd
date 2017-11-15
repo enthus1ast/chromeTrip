@@ -127,7 +127,7 @@ remote func ping(_id, _remoteTicks):
 	rpc_id(_id, "pong", get_tree().get_network_unique_id(), _remoteTicks)
 	
 remote func pong(_id, _relayedTicks):
-	var timeout = (OS.get_ticks_msec ( ) - _relayedTicks) / 1000
+	var timeout = (OS.get_ticks_msec ( ) - _relayedTicks) 
 	print("Received pong")
 	emit_signal("pong", timeout)
 	
