@@ -10,11 +10,12 @@ var soundPlayer = AudioStreamPlayer.new()
 var readyToPlay = false # this gets set to true when the player has loaded the playscene
 var killprotectTimer = Timer.new()
 var isKillProtected = false
-var needForFood = 1# speed of getting hungry
+var needForFood = 2# speed of getting hungry
 var name = "SET_ME" # the player name
 var inputsDisabled = false
 
 onready var playerColShape = get_node("playerShape")
+onready var hungerInfo = get_tree().get_root().get_node("Control/game/hud/Fleisch")
 var grounded = false 
 
 # Movement Vars
@@ -41,7 +42,6 @@ onready var animPlayer = get_node("Sprite/AnimationPlayer")
 onready var powerUpPlayer = get_node("Sprite/AnimationPlayerPowerUps")
 onready var particleAnimPlayer = get_node("particleSystems/particleAnimPlayer")
 
-onready var progressBarHungry = game.get_node("hud/progressBar/TextureProgress")
  
 # Jumping
 var can_jump = true
@@ -86,16 +86,16 @@ func _killprotectTimeout():
 func _process(delta):
 	if is_network_master():
 		rset("slave_hunger",hunger)
+		hungerInfo.amount = 100-hunger
 		if alive and (hunger<100 and hunger>=0):
 			hunger += delta*needForFood
-			progressBarHungry.value=100-hunger
-		elif hunger>=100:
-			hunger = 0
+		elif alive and hunger>=100:
+#			hunger = 0
 			#death by starving
 			rpc("killed", get_name())
 			if allPlayersKilled():
 				rpc("showGameOverScreen")
-		else:
+		elif alive:
 			hunger = 0
 			pass
 	else:

@@ -13,7 +13,7 @@ onready var game = control.get_node("game")
 onready var hud = game.get_node("hud")
 var isCollected = false
 var basePoints = 1000
-var foodValue = 50
+var foodValue = 25
 var selectedCollectable
 var onCollectParticles
 var animatedSprite

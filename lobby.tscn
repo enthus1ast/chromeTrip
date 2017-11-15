@@ -63,7 +63,6 @@ _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Material", "Rect",
 
 [node name="menu" type="Control" parent="."]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -922,10 +921,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 871.0
-margin_top = 572.0
-margin_right = 953.0
-margin_bottom = 589.0
+margin_left = 923.0
+margin_top = 574.0
+margin_right = 1005.0
+margin_bottom = 591.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -938,7 +937,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="RichTextLabel" type="RichTextLabel" parent="menu"]
+[node name="Ads" type="RichTextLabel" parent="menu"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -953,12 +952,13 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_fonts/normal_font = SubResource( 5 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
 bbcode_enabled = true
 bbcode_text = "[url=\"http://games.code0.xyz\"]games.code0.xyz[/url]"
 visible_characters = -1
 percent_visible = 1.0
 override_selected_font_color = false
-_sections_unfolded = [ "BBCode", "custom_fonts" ]
+_sections_unfolded = [ "BBCode", "custom_colors", "custom_fonts" ]
 
 [node name="Highscore" parent="menu" instance=ExtResource( 8 )]
 
@@ -1009,6 +1009,7 @@ _sections_unfolded = [ "Pause" ]
 
 [node name="networkHud" type="Node2D" parent="."]
 
+editor/display_folded = true
 _sections_unfolded = [ "Focus", "Hint", "Margin", "Rect" ]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="networkHud"]
@@ -1028,14 +1029,13 @@ anchor_bottom = 0.0
 margin_left = 956.0
 margin_top = 62.0
 margin_right = 1016.0
-margin_bottom = 112.0
+margin_bottom = 83.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_colors/font_color = Color( 0.155594, 0.804688, 0.100586, 1 )
-text = "ping"
 autowrap = true
 percent_visible = 1.0
 lines_skipped = 0
@@ -1075,7 +1075,7 @@ autostart = false
 
 [connection signal="pressed" from="menu/DialogWaiting/cancel" to="." method="_on_cancel_pressed"]
 
-[connection signal="meta_clicked" from="menu/RichTextLabel" to="." method="_on_RichTextLabel_meta_clicked"]
+[connection signal="meta_clicked" from="menu/Ads" to="." method="_on_RichTextLabel_meta_clicked"]
 
 [connection signal="effectVolume" from="menu/Settings" to="." method="_on_Settings_effectVolume"]
 

@@ -4,7 +4,7 @@
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://ActionPopups.tscn" type="PackedScene" id=3]
 [ext_resource path="res://PopupMenu.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/progressBar/ProgressBar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Fleisch.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Sonne.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/Mond.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/parallaxBackground.tscn" type="PackedScene" id=8]
@@ -243,7 +243,6 @@ __meta__ = {
 
 [node name="hud" type="CanvasLayer" parent="."]
 
-editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -330,10 +329,12 @@ margin_top = 61.0
 margin_right = 161.0
 margin_bottom = 101.0
 
-[node name="progressBar" parent="hud" instance=ExtResource( 5 )]
+[node name="Fleisch" parent="hud" instance=ExtResource( 5 )]
 
-position = Vector2( 29.0858, 497.784 )
-scale = Vector2( 1.87467, 1.87467 )
+margin_left = 5.0
+margin_top = 533.0
+margin_right = 45.0
+margin_bottom = 573.0
 
 [node name="sprites" type="Node2D" parent="."]
 
@@ -366,6 +367,8 @@ z = 4096
 _sections_unfolded = [ "Transform", "Z" ]
 
 [node name="parallaxBackground" parent="sprites/background" instance=ExtResource( 8 )]
+
+position = Vector2( 1, 2.6702 )
 
 [node name="mist" type="Sprite" parent="sprites/background"]
 

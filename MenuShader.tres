@@ -1,0 +1,26 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+
+code = "shader_type canvas_item;
+	uniform float brightness = 1.0;
+	uniform float contrast = 1.0;
+	uniform float saturation = 1.0;
+
+void fragment(){
+	float foo = sin(TIME);
+	float baa = sin(TIME*2.0);
+	float baz = sin(TIME*3.0);
+	//float xx = sin(UV.x + UV.y);
+	float xx = 0.0;
+
+	COLOR = vec4(0.0 + foo ,0.0+baa,0.0+baz,1.0);
+}
+
+void vertex(){
+	
+	UV.x *= 2.0;
+	UV.y = 0.0;
+}"
+_sections_unfolded = [ "Resource" ]
+
