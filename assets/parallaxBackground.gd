@@ -32,13 +32,14 @@ func storeAvailableMountains():
 
 #create sprite from stored prebuild template
 func createSprites(_offset):
+	if game==null:
+		game = control.get_node("backgroundGame")
 	if !isInitial:
 		var v = Vulkan.instance()
 		activeVulkan = v
 		vulkanNode.add_child(v)
 		v.global_position = vulkanPosition + Vector2(_offset,0)
 	for _object in availableMountains:
-		print("new mountains created")
 		var sprite = Sprite.new()
 		var visibleNotifier = VisibilityNotifier2D.new()
 		sprite.texture = _object.texture
@@ -66,7 +67,7 @@ func _process(delta):
 		createSprites(1000)
 		counter+=1
 		canSpawn = true
-	if activeVulkan!=null:
+	if activeVulkan!=null and game.get_name()!="backgroundGame":
 		if activeVulkan.global_position.x > 400 and activeVulkan.global_position.x < 600 and !isErrupting:
 			isErrupting = true
 			activeVulkan.errupt()

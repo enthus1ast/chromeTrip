@@ -24,7 +24,9 @@ onready var dialogWaiting = get_node("menu/DialogWaiting")
 onready var PlayerListElement = preload("res://playerListElement.tscn")
 onready var Player = preload("res://player.tscn")
 onready var Game = preload("res://game.tscn")
+onready var BackgroundGame = preload("res://backgroundGame.tscn")
 onready var warnPopup = get_node("menu/WarnPopup")
+
 
 var countdown
 var countdownActive = false
@@ -32,6 +34,7 @@ var countdownRemaining = GAME_COUNTDOWN
 var allReady = false
 var eNet
 var game
+var backgroundGame = null
 var players = {}
 var player_name
 var currentPlayer = {
@@ -80,13 +83,17 @@ func mute(enabled):
 	else:
 		#effectsPlayer.volume_db = utils.config.get_value("audio","effects")
 		musicPlayer.volume_db = utils.config.get_value("audio","music")
-
+		
+func backgroundGameFnc():
+	backgroundGame = BackgroundGame.instance()
+	add_child(backgroundGame)
+	backgroundGame.show_behind_parent = true
 
 func _ready():
+	backgroundGameFnc()
 	print(OS.get_unix_time ( ))
 	print(OS.get_system_time_secs())
 	print(OS.get_time())
-	
 	musicPlayer.connect("finished",self,"loopMusic")
 #	OS.set_low_processor_usage_mode(true)
 	eNet = NetworkedMultiplayerENet.new()
@@ -172,6 +179,9 @@ remote func register_new_player(_player):
 		areAllReady()
 
 remote func startGame():
+	if backgroundGame!=null:
+		backgroundGame.queue_free()
+		backgroundGame = null
 	print("startGame was called")
 	## Safe new config values
 	utils.config.set_value("player", "defaultname", nameInput.get_text())

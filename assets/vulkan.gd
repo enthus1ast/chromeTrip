@@ -2,12 +2,12 @@ extends Node2D
 
 onready var control = get_tree().get_root().get_node("Control")
 onready var game = control.get_node("game")
-onready var cameraNode = game.get_node("cameraNode")
 onready var animPlayer = get_node("AnimationPlayer")
 onready var firePlayer = get_node("fire/firePlayer")
 onready var smokeSystem = get_node("risingSmoke/Particles2D")
 onready var stonesSystem = get_node("stoneParticles")
 onready var spriteOn = get_node("fire")
+var cameraNode
 
 var isErrupting = false
 
@@ -22,6 +22,9 @@ func errupt():
 	
 
 func _ready():
+	if game ==null:
+		game = control.get_node("backgroundGame")
+	cameraNode = game.get_node("cameraNode")
 	animPlayer.connect("animation_finished",self,"_anim_finished")
 	pass
 	
