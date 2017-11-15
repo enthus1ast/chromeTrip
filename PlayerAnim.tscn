@@ -6,7 +6,7 @@
 [sub_resource type="Animation" id=1]
 
 length = 1.0
-loop = false
+loop = true
 step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:region_rect")
@@ -71,10 +71,10 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
 "update": 0,
-"values": [ Vector2( -2.2629, 29.6091 ) ]
+"values": [  ]
 }
 
 [sub_resource type="DynamicFont" id=4]
@@ -88,7 +88,7 @@ _sections_unfolded = [ "Extra Spacing", "Font", "Resource", "Settings" ]
 [sub_resource type="Animation" id=5]
 
 resource_name = "logo"
-length = 3.0
+length = 10.0
 loop = false
 step = 0.1
 tracks/0/type = "value"
@@ -97,34 +97,63 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/keys = {
-"times": PoolRealArray( 0.5, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 2.6, 4.1, 10 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 1.0 ]
+"values": [ 0.0, 0.0, 1.0, 1.0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite2:position")
 tracks/1/interp = 1
-tracks/1/loop_wrap = true
+tracks/1/loop_wrap = false
 tracks/1/imported = false
 tracks/1/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 2, 4.1, 5.1, 7.1, 8.1, 10 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 22, 49 ), Vector2( 1050, 49 ) ]
+"values": [ Vector2( -50, 49 ), Vector2( -50, 49 ), Vector2( 1100, 49 ), Vector2( 1100, 500 ), Vector2( -200, 550 ), Vector2( -50, 49 ), Vector2( 50, 49 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite2:rotation_deg")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2, 7.1, 8.1, 10 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 30.0, 0.0, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite2:flip_h")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/keys = {
+"times": PoolRealArray( 0, 2, 5.1, 8.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite2:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/keys = {
+"times": PoolRealArray( 0, 2, 4.1, 7.1, 8.1, 10 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 2, 2 ), Vector2( 1, 1 ), Vector2( 1, 1 ) ]
 }
 
 [node name="LogoAnim" type="Node2D"]
 
 _sections_unfolded = [ "Transform" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Sprite2" type="Sprite" parent="."]
 
-editor/display_folded = true
-position = Vector2( 22, 49 )
+position = Vector2( -2.2629, 29.6091 )
 texture = ExtResource( 1 )
 offset = Vector2( 6.09799, -42.0819 )
 region_enabled = true
@@ -143,6 +172,7 @@ playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = "trexAnimRun"
+_sections_unfolded = [ "playback" ]
 
 [node name="ChromeTrip" type="Label" parent="."]
 
@@ -150,9 +180,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 138.0
-margin_right = 881.0
-margin_bottom = 92.0
+margin_left = 200.0
+margin_right = 943.0
+margin_bottom = 94.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -162,7 +192,7 @@ custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.925781, 0.0578613, 0.0578613, 1 )
 text = "Chrome Trip"
 clip_text = true
-percent_visible = 0.0
+percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_colors", "custom_fonts" ]
@@ -177,5 +207,6 @@ playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = "logo"
+_sections_unfolded = [ "Playback Options", "playback" ]
 
 

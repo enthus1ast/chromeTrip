@@ -254,6 +254,7 @@ func _server_disconnected():
 	players={}
 	clearList()
 	clearChat()
+	backgroundGameFnc()
 	print("server closed")
 	
 ################## button pressed signals

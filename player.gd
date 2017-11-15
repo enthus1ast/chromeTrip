@@ -10,7 +10,7 @@ var soundPlayer = AudioStreamPlayer.new()
 var readyToPlay = false # this gets set to true when the player has loaded the playscene
 var killprotectTimer = Timer.new()
 var isKillProtected = false
-var needForFood = 1# speed of getting hungry
+var needForFood = 2# speed of getting hungry
 var name = "SET_ME" # the player name
 var inputsDisabled = false
 
@@ -73,7 +73,6 @@ sync func rpcKillProtectRequest(_id):
 	player.set_collision_mask_bit(4, true) ## layer for enemy
 	player.powerUpPlayer.stop()
 	player.rpcPowerUps(_id,"default")
-	print(_id,"is no longer protected!")
 
 func _killprotectTimeout():
 	rpc("rpcKillProtectRequest",get_name())
@@ -146,21 +145,19 @@ func apply_force(state):
 		jump_time = 0
 		
 func _on_groundSensor_body_entered( body ):
-	print ("hit the floor")
 	if body.has_node("playerShape"):
 		if body.get_name()!=get_name():
 			grounded = true
-	if body.get_name()=="groundCollision" or body.is_in_group("ground"):
+	elif body.is_in_group("ground"):
 		grounded = true
 		if alive:
 			cameraNode.landRumble(linear_velocity.y)
 
 func _on_groundSensor_body_exited( body ):
-	print ("up the floor")
 	if body.has_node("playerShape"):
 		if body.get_name()!=get_name():
 			grounded = false
-	if body.get_name()=="groundCollision" or body.is_in_group("ground"):
+	elif body.is_in_group("ground"):
 		grounded = false
 
 sync func playAnimation(_string):
@@ -203,14 +200,13 @@ func _input(event):
 			#jumping keyevents
 			if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_select"):
 				keys[2]=true
-				print(grounded, can_jump, alive)
 				if (grounded and can_jump and alive):
 					rpc("rpcJumpParticles",get_name())
 					cameraNode.jumpRumble()
-					if !soundPlayer.is_playing():
-						if soundPlayer.get_stream() != jumpSound:
-							soundPlayer.set_stream(jumpSound)
-						soundPlayer.play(0.0)
+#					if !soundPlayer.is_playing():
+					if soundPlayer.get_stream() != jumpSound:
+						soundPlayer.set_stream(jumpSound)
+					soundPlayer.play(0.0)
 			if event.is_action_released("ui_up") or event.is_action_released("ui_select"):
 				keys[2]=false
 				can_jump = false # Prevents the player from jumping more than once while in air
@@ -231,7 +227,6 @@ sync func killed(_id):
 		player.get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
 		soundPlayer.stream = killedSound
 		soundPlayer.play(0.0)		
-		print(_id, " hasbeen killed")
 
 sync func RPCreanimate(_id, atPosition):
 	var player = get_parent().get_node(str(_id))
@@ -241,7 +236,6 @@ sync func RPCreanimate(_id, atPosition):
 	player.set_collision_mask_bit(4, false) ## layer for enemies
 	player.killprotectTimer.start()
 	var transMatrix = Transform2D(Vector2(),Vector2(), atPosition)
-	print(_id,transMatrix, " hasbeen reanimated")
 	player.get_node("playerShape").disabled=false
 	player.get_node("playerShape").update()
 	player.can_jump = false

@@ -63,7 +63,6 @@ _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Material", "Rect",
 
 [node name="menu" type="Control" parent="."]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -102,7 +101,7 @@ _sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="LogoAnim" parent="menu" instance=ExtResource( 2 )]
 
-position = Vector2( 38, 66 )
+position = Vector2( -51, 61 )
 
 [node name="networkPanel" type="Panel" parent="menu"]
 
@@ -385,7 +384,6 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [node name="lobby" type="PanelContainer" parent="menu"]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1009,6 +1007,7 @@ _sections_unfolded = [ "Pause" ]
 
 [node name="networkHud" type="Node2D" parent="."]
 
+editor/display_folded = true
 _sections_unfolded = [ "Focus", "Hint", "Margin", "Rect" ]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="networkHud"]

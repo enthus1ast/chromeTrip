@@ -32,7 +32,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/keys = {
 "times": PoolRealArray( 0, 1.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"transitions": PoolRealArray( 1, 4 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 1, 1 ) ]
 }
@@ -42,10 +42,10 @@ tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.7 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.7, 4.1 ),
+"transitions": PoolRealArray( 0.25, -4, 1 ),
 "update": 0,
-"values": [ Vector2( 361, 0 ), Vector2( 361, 92 ) ]
+"values": [ Vector2( 361, 0 ), Vector2( 361, 92 ), Vector2( 360, 220 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("DinoLeft:position")
@@ -152,7 +152,7 @@ _sections_unfolded = [ "Region", "Textures", "Transform" ]
 
 [node name="DinoLeft" type="Sprite" parent="."]
 
-position = Vector2( -130.952, 347.21 )
+position = Vector2( 171.952, 347.21 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 2 )
 region_enabled = true
@@ -161,7 +161,7 @@ _sections_unfolded = [ "Region", "Transform" ]
 
 [node name="DinoRight" type="Sprite" parent="."]
 
-position = Vector2( 1150.01, 344.421 )
+position = Vector2( 847.014, 344.421 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 2 )
 flip_h = true
@@ -175,10 +175,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 361.0
-margin_right = 663.0
-margin_bottom = 94.0
-rect_scale = Vector2( 0, 0 )
+margin_left = 360.0
+margin_top = 220.0
+margin_right = 662.0
+margin_bottom = 318.0
 rect_pivot_offset = Vector2( 155.559, 73.7997 )
 rect_clip_content = false
 mouse_filter = 2
@@ -199,9 +199,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 368.0
-margin_top = 610.0
+margin_top = 477.0
 margin_right = 670.0
-margin_bottom = 704.0
+margin_bottom = 571.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -244,8 +244,7 @@ __meta__ = {
 [node name="ImgRestart" type="Sprite" parent="ButRestart"]
 
 position = Vector2( 70, 70 )
-rotation = 16.7552
-scale = Vector2( 1e-05, 1e-05 )
+scale = Vector2( 2.43845, 2.43845 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 73, 70 )
