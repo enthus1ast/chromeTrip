@@ -42,7 +42,7 @@
 
 [sub_resource type="Shader" id=1]
 
-code = "shader_type canvas_item; 
+code = "shader_type canvas_item;
 render_mode blend_mix;
 uniform float resolution = 100.0;
 uniform float radius = 2.0;
@@ -50,7 +50,7 @@ uniform float fac = 10000.0;
 
 vec4 onePass(sampler2D tex,vec2 uv,vec2 dir){
 	vec4 sum = vec4(0.0,0.0,0.0,0.0);
-	//the amount to blur, i.e. how far off center to sample from 
+	//the amount to blur, i.e. how far off center to sample from
 	//1.0 -> blur by one pixel
 	//2.0 -> blur by two pixels, etc.
 	float blur = radius/resolution;
@@ -58,15 +58,15 @@ vec4 onePass(sampler2D tex,vec2 uv,vec2 dir){
 	//(1.0, 0.0) -> x-axis blur
 	//(0.0, 1.0) -> y-axis blur
 	float hstep = dir.x;
-	float vstep = dir.y; 
-	
+	float vstep = dir.y;
+
 	sum += texture(tex, vec2(uv.x - 4.0*blur*hstep, uv.y - 4.0*blur*vstep)) * 0.0162162162 * fac;
 	sum += texture(tex, vec2(uv.x - 3.0*blur*hstep, uv.y - 3.0*blur*vstep)) * 0.0540540541 * fac;
 	sum += texture(tex, vec2(uv.x - 2.0*blur*hstep, uv.y - 2.0*blur*vstep)) * 0.1216216216 * fac;
 	sum += texture(tex, vec2(uv.x - 1.0*blur*hstep, uv.y - 1.0*blur*vstep)) * 0.1945945946 * fac;
-	
+
 	sum += texture(tex, vec2(uv.x, uv.y)) * 0.2270270270 * fac;
-	
+
 	sum += texture(tex, vec2(uv.x + 1.0*blur*hstep, uv.y + 1.0*blur*vstep)) * 0.1945945946 * fac;
 	sum += texture(tex, vec2(uv.x + 2.0*blur*hstep, uv.y + 2.0*blur*vstep)) * 0.1216216216 * fac;
 	sum += texture(tex, vec2(uv.x + 3.0*blur*hstep, uv.y + 3.0*blur*vstep)) * 0.0540540541 * fac;
@@ -85,7 +85,7 @@ void fragment() {
 	sum += onePass( TEXTURE , UV , vec2(1.0,0.0) ); //second pass - horizontal
 	//COLOR = sum*pixelColor;
 	//COLOR +=pixelColor;
-	
+
 	if (pixelColor.a>0.0) {
 		COLOR = pixelColor;
 		//COLOR=vec4(sum.rgb,0.0);
@@ -94,8 +94,8 @@ void fragment() {
 	} else {
 		COLOR = sum;
 	}
-	
-	
+
+
 }
 void vertex() {
 	//COLOR = vec4(0.0,0.0,0);
@@ -245,7 +245,7 @@ disabled = true
 
 frames = SubResource( 7 )
 animation = "default"
-frame = 12
+frame = 6
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 

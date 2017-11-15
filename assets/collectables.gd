@@ -84,12 +84,12 @@ remote func calcPointsFromHeight(_height): #ony server shoud run this
 
 func _on_heartArea_body_entered( body ):
 	if body.is_in_group("players") and !isCollected:
-		if !soundPlayer.is_playing():
-			soundPlayer.play(0.0)
 		rpc("rpcScoreAdd",calcPointsFromHeight(position.y),control.players[int(body.get_name())].name)
 		pass
 
 sync func rpcScoreAdd(_value,_player):
+	if !soundPlayer.is_playing():
+			soundPlayer.play(0.0)
 	onCollectParticles.emitting = true
 	flashMessage.showPointsAt(_value,"Points",position,_player)
 	set_process(false)

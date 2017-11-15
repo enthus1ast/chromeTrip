@@ -306,7 +306,7 @@ _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 show_behind_parent = true
 rotation = -1.47218
-emitting = true
+emitting = false
 amount = 50
 lifetime = 4.0
 one_shot = false
