@@ -104,6 +104,7 @@ position = Vector2( 38, 66 )
 
 [node name="networkPanel" type="Panel" parent="menu"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0

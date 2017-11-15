@@ -243,7 +243,7 @@ disabled = true
 
 frames = SubResource( 7 )
 animation = "default"
-frame = 17
+frame = 6
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 

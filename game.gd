@@ -118,7 +118,6 @@ func collectablesGen():
 	var i = 0
 	var choice
 	## decide which obstacle
-
 	while i < collectablesCount:
 		if 30 < rand_range(0,100):
 			choice = collectablesStrings[0]
