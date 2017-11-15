@@ -317,14 +317,14 @@ randomness = 0.2
 fixed_fps = 0
 fract_delta = true
 visibility_rect = Rect2( -100, -100, 400, 500 )
-local_coords = false
+local_coords = true
 draw_order = 0
 process_material = SubResource( 5 )
 texture = ExtResource( 3 )
 normal_map = null
 h_frames = 1
 v_frames = 1
-_sections_unfolded = [ "Drawing", "Material", "Process Material", "Textures", "Time", "Transform", "Visibility" ]
+_sections_unfolded = [ "Drawing", "Material", "Process Material", "Textures", "Time", "Transform", "Visibility", "Z" ]
 
 [node name="stoneParticles" type="Particles2D" parent="."]
 
