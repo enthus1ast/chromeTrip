@@ -60,7 +60,6 @@ func _ready():
 	grounded = false
 	can_jump = true
 	set_process_input(true)
-	add_child(soundPlayer)
 	rpc("playAnimation","trexAnimRun")
 
 func rpcPowerUps(_id,_string):

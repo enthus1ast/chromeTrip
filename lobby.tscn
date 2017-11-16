@@ -1007,17 +1007,6 @@ mix_target = 0
 bus = "Music"
 _sections_unfolded = [ "Pause" ]
 
-[node name="musicPlayer2" type="AudioStreamPlayer" parent="." groups=[
-"music",
-]]
-
-stream = ExtResource( 10 )
-volume_db = -10.0
-autoplay = false
-mix_target = 0
-bus = "Music"
-_sections_unfolded = [ "Pause" ]
-
 [node name="networkHud" type="Node2D" parent="."]
 
 editor/display_folded = true

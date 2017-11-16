@@ -479,14 +479,17 @@ func _input(event):
 
 func askForRestartGame():
 	rpc("restartGame")
-
-sync func restartGame():
+	
+sync func prepeareForRestartGame():
 	remove_child(game)
 	game.queue_free()
+
+sync func restartGame():
 	if get_tree().is_network_server():
 		if not alreadyRestarting:
+			rpc("prepeareForRestartGame")
 			startGame()
-			rpc("startGame")	
+			rpc("startGame")
 	
 func _on_name_text_changed( text ):
 	nameInput.set("custom_colors/font_color", utils.computeColor(text))
