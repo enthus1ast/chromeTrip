@@ -142,7 +142,7 @@ modulate = Color( 1, 0.300781, 0.300781, 1 )
 use_parent_material = true
 frames = SubResource( 3 )
 animation = "default"
-frame = 8
+frame = 2
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
@@ -200,7 +200,7 @@ stream = ExtResource( 38 )
 volume_db = -80.0
 autoplay = false
 mix_target = 0
-bus = "Master"
+bus = "Effects"
 script = ExtResource( 39 )
 
 [connection signal="body_entered" from="spriteNode/heartArea" to="." method="_on_heartArea_body_entered"]

@@ -446,6 +446,14 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Focus", "Hint", "Material", "Mouse", "Rect", "Size Flags", "Theme", "Visibility", "custom_colors", "custom_constants", "custom_styles" ]
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+stream = null
+volume_db = 0.0
+autoplay = false
+mix_target = 0
+bus = "Effects"
+
 [connection signal="body_shape_entered" from="." to="." method="_on_player_body_shape_entered"]
 
 [connection signal="body_shape_exited" from="." to="." method="_on_player_body_shape_exited"]

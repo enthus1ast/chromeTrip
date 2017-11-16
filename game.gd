@@ -8,6 +8,7 @@ onready var Enemys = preload("res://assets/enemys.tscn")
 onready var Collectables = preload("res://assets/collectables.tscn")
 onready var Wolke = preload("res://Wolke.tscn")
 onready var viewportSize = get_viewport().size
+onready var muteCheckbox = get_node("hud/Mute")
 
 var collectablesStrings = ["heart","meat"]
 
@@ -74,6 +75,7 @@ sync func rpcShowActionStage(_stage):
 	actionPopup.showStage(_stage)
 	
 func _ready():
+	muteCheckbox.pressed = utils.config.get_value("audio","mute")
 	set_process_input(true)
 	spriteWidth = groundSprite1.get_texture().get_size().x
 	placeholderScore = pointsLabel.text
@@ -240,3 +242,8 @@ func _input(event):
 		else:
 			popup.showMenu()
 
+
+
+func _on_Mute_toggled( pressed ):
+	pass # replace with function body
+	utils.mute(pressed)

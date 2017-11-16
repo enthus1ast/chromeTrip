@@ -3,7 +3,7 @@ extends Node
 ########################################################################################################
 # Global game variables
 ########################################################################################################
-var version = 0.3 # general version of this game
+var version = 0.4 # general version of this game
 const HIGHSCORE_PATH = "user://highscore.dat" # where the highscore is safed on the filesystem.
 const HIGHSCORE_PW = "code0"
 const CONFIG_PATH = "user://config.ini"
@@ -67,15 +67,12 @@ func putHighscore(score, team):
 	tup["stage"] = getStage()
 	var line = to_json(tup)
 	var cont = file.get_as_text()
-#	var lines = cont.split("\n")
-	
 	
 	# Only store max count of highscore entries.
 	var oldHighscore = getHighscore(-1)
 	if oldHighscore.size() > HOW_MANY_HIGHSCORES:
 		sortHighscore(oldHighscore) # highest first
 		oldHighscore.resize(HOW_MANY_HIGHSCORES) # remove rest
-		
 	file.close()
 	file.open_encrypted_with_pass( HIGHSCORE_PATH, file.WRITE, HIGHSCORE_PW) 
 	file.store_string(cont + line + "\n")
@@ -127,6 +124,18 @@ func getHighscore(cnt):
 	if result.size() >= cnt and cnt != -1:
 		result.resize(cnt) # only the first n elements, rest is NULL!
 	return result
+		
+func mute(enabled):
+	var musicIdx = AudioServer.get_bus_index("Music")
+	var effectIdx = AudioServer.get_bus_index("Effects")
+	AudioServer.set_bus_mute(musicIdx, enabled)
+	AudioServer.set_bus_mute(effectIdx, enabled)
+	utils.config.set_value("audio", "mute", enabled)
+	utils.config.save(utils.CONFIG_PATH)
+			
+func setLoudness(name, db):
+	var musicIdx = AudioServer.get_bus_index(name)
+	AudioServer.set_bus_volume_db(musicIdx, db)		
 			
 func _ready():
 	## Create highscore file.
@@ -147,6 +156,8 @@ func _ready():
 		# Store a variable if and only if it hasn't been defined yet
 #		if not config.has_section_key("player", "SERVER_PORT"):
 #			config.set_value("player", "SERVER_PORT", 7000)		
+		if not config.has_section_key("audio", "mute"):
+			config.set_value("audio", "mute", false)
 		if not config.has_section_key("audio", "effects"):
 			config.set_value("audio", "effects", 100)
 		if not config.has_section_key("audio", "music"):

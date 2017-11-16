@@ -12,7 +12,6 @@ func setDisabledIfMuted():
 	effects.editable = not mute.pressed
 	music.editable = not mute.pressed
 
-
 func _ready():
 	## Load settings from config file
 	mute.pressed = utils.config.get_value("audio", "mute")
@@ -20,12 +19,11 @@ func _ready():
 	music.value = utils.config.get_value("audio", "music")
 	setDisabledIfMuted()
 
-
-
 func _on_VMute_toggled( pressed ):
 	print(pressed)
 	utils.config.set_value("audio", "mute", pressed)
 	utils.config.save(utils.CONFIG_PATH)
+	utils.mute(pressed)
 	emit_signal("mute", pressed)
 	setDisabledIfMuted()
 	
@@ -33,12 +31,14 @@ func _on_VEffects_value_changed( value ):
 	print(value)
 	utils.config.set_value("audio", "effects", value)
 	utils.config.save(utils.CONFIG_PATH)
+	utils.setLoudness("Effects", value)
 	emit_signal("effectVolume", value)
 
 func _on_VMusic_value_changed( value ):
 	print(value)
 	utils.config.set_value("audio", "music", value)
 	utils.config.save(utils.CONFIG_PATH)
+	utils.setLoudness("Music", value)
 	emit_signal("musicVolume", value)
 
 func _on_Back_pressed():
