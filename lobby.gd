@@ -37,6 +37,7 @@ var game
 var backgroundGame = null
 var players = {}
 var player_name
+var alreadyRestarting  = false
 var currentPlayer = {
 	"id":null,
 	"name":"",
@@ -169,6 +170,7 @@ remote func register_new_player(_player):
 		areAllReady()
 
 remote func startGame():
+	alreadyRestarting = false # prevent double loading
 	if backgroundGame!=null:
 		backgroundGame.free()
 		backgroundGame = null
@@ -482,8 +484,9 @@ sync func restartGame():
 	remove_child(game)
 	game.queue_free()	
 	if get_tree().is_network_server():
-		startGame()
-		rpc("startGame")	
+		if not alreadyRestarting:
+			startGame()
+			rpc("startGame")	
 	
 func _on_name_text_changed( text ):
 	nameInput.set("custom_colors/font_color", utils.computeColor(text))

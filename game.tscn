@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
@@ -30,51 +30,54 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
-[sub_resource type="Gradient" id=3]
+[sub_resource type="ShortCut" id=3]
+
+
+[sub_resource type="Gradient" id=4]
 
 offsets = PoolRealArray( 0, 0.701044, 0.89295 )
 colors = PoolColorArray( 0.984234, 0.984234, 0.984234, 1, 0.648438, 1, 0.942322, 1, 0.679688, 1, 0.924927, 1 )
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="GradientTexture" id=4]
+[sub_resource type="GradientTexture" id=5]
 
-gradient = SubResource( 3 )
+gradient = SubResource( 4 )
 width = 2048
 
-[sub_resource type="Gradient" id=5]
+[sub_resource type="Gradient" id=6]
 
 offsets = PoolRealArray( 0.357843, 0.767157, 1 )
 colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0.215451, 0.929688, 0.929688, 0.929688, 1 )
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="GradientTexture" id=6]
+[sub_resource type="GradientTexture" id=7]
 
-gradient = SubResource( 5 )
+gradient = SubResource( 6 )
 width = 2048
 
-[sub_resource type="Gradient" id=7]
+[sub_resource type="Gradient" id=8]
 
 offsets = PoolRealArray( 0.00159236, 0.0159236, 0.463668, 0.726644 )
 colors = PoolColorArray( 1, 0.971924, 0.28125, 1, 0.984234, 0.984234, 0.984234, 1, 1, 0.966064, 0.457031, 1, 0.933594, 0.799971, 0.444916, 1 )
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="GradientTexture" id=8]
+[sub_resource type="GradientTexture" id=9]
 
-gradient = SubResource( 7 )
+gradient = SubResource( 8 )
 width = 2048
 
-[sub_resource type="LineShape2D" id=9]
+[sub_resource type="LineShape2D" id=10]
 
 custom_solver_bias = 0.0
 normal = Vector2( 0, -1 )
 d = 0.0
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=11]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[sub_resource type="Shader" id=11]
+[sub_resource type="Shader" id=12]
 
 code = "shader_type canvas_item;
 uniform float brightnessFac  : hint_range( -5.0, 5.0);
@@ -140,18 +143,17 @@ void fragment() {
 "
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="ShaderMaterial" id=12]
+[sub_resource type="ShaderMaterial" id=13]
 
 render_priority = 0
-shader = SubResource( 11 )
+shader = SubResource( 12 )
 shader_param/brightnessFac = 0.0
 shader_param/saturationFac = 1.0
 shader_param/contrastFac = 1.0
 _sections_unfolded = [ "shader_param" ]
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 
-resource_name = "daynightcycle"
 length = 30.0
 loop = true
 step = 0.1
@@ -354,7 +356,7 @@ size_flags_vertical = 1
 custom_colors/font_color = Color( 0.651402, 0.792969, 0.0681458, 1 )
 toggle_mode = true
 enabled_focus_mode = 1
-shortcut = null
+shortcut = SubResource( 3 )
 group = null
 text = "Mute"
 flat = false
@@ -374,7 +376,7 @@ __meta__ = {
 position = Vector2( 1052.72, 182.43 )
 rotation = -1.5708
 scale = Vector2( 0.20658, 2168.35 )
-texture = SubResource( 4 )
+texture = SubResource( 5 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
 __meta__ = {
@@ -400,7 +402,7 @@ position = Vector2( 1, 2.6702 )
 position = Vector2( -13.0456, 192.858 )
 rotation = 1.5708
 scale = Vector2( 0.183399, 2114.18 )
-texture = SubResource( 6 )
+texture = SubResource( 7 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Material", "Visibility" ]
 __meta__ = {
@@ -412,7 +414,7 @@ __meta__ = {
 position = Vector2( -13.5201, 529.45 )
 rotation = 1.5708
 scale = Vector2( 0.145033, 2149.04 )
-texture = SubResource( 8 )
+texture = SubResource( 9 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
 __meta__ = {
@@ -496,7 +498,7 @@ __meta__ = {
 
 position = Vector2( 2258.02, 383.062 )
 scale = Vector2( 30.2855, 1.74003 )
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 _sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_lock_": true
@@ -520,7 +522,7 @@ __meta__ = {
 
 position = Vector2( -20, 110 )
 scale = Vector2( 1.65385, 27.9423 )
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 _sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_lock_": true
@@ -544,7 +546,7 @@ __meta__ = {
 
 position = Vector2( 1040.72, 111.706 )
 scale = Vector2( 1.65385, 27.9423 )
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="GameOverScreen" parent="." instance=ExtResource( 11 )]
@@ -556,7 +558,7 @@ visible = false
 
 [node name="shaderSpass" type="Sprite" parent="."]
 
-material = SubResource( 12 )
+material = SubResource( 13 )
 position = Vector2( -84.333, -59.662 )
 scale = Vector2( 18.2812, 11.349 )
 z = 4095
@@ -572,7 +574,7 @@ __meta__ = {
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/daynightcycle = SubResource( 13 )
+anims/daynightcycle = SubResource( 14 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
