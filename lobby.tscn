@@ -38,14 +38,14 @@ use_filter = false
 font_data = ExtResource( 4 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="Theme" id=7]
+[sub_resource type="Theme" id=5]
 
 default_font = SubResource( 4 )
 
-[sub_resource type="Theme" id=8]
+[sub_resource type="Theme" id=6]
 
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=7]
 
 size = 16
 use_mipmaps = false
@@ -53,7 +53,7 @@ use_filter = false
 font_data = ExtResource( 4 )
 _sections_unfolded = [ "Font" ]
 
-[sub_resource type="Theme" id=9]
+[sub_resource type="Theme" id=8]
 
 default_font = SubResource( 4 )
 _sections_unfolded = [ "Resource" ]
@@ -406,6 +406,7 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [node name="lobby" type="PanelContainer" parent="menu"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -420,7 +421,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-theme = SubResource( 7 )
+theme = SubResource( 5 )
 _sections_unfolded = [ "Theme" ]
 
 [node name="Container" type="Container" parent="menu/lobby"]
@@ -456,7 +457,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-theme = SubResource( 8 )
+theme = SubResource( 6 )
 _sections_unfolded = [ "Theme", "custom_styles" ]
 
 [node name="name" type="Label" parent="menu/lobby/Container/info"]
@@ -956,7 +957,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/normal_font = SubResource( 5 )
+custom_fonts/normal_font = SubResource( 7 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 bbcode_enabled = true
 bbcode_text = "[url=\"http://games.code0.xyz\"]games.code0.xyz[/url]"
@@ -975,6 +976,7 @@ margin_bottom = 202.0
 
 [node name="Settings" parent="menu" instance=ExtResource( 10 )]
 
+visible = false
 margin_left = 104.0
 margin_top = 148.0
 margin_right = 160.0
@@ -994,7 +996,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-theme = SubResource( 9 )
+theme = SubResource( 8 )
 popup_exclusive = false
 window_title = "Warnung!"
 resizable = false
