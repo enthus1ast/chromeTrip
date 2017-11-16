@@ -2,15 +2,14 @@ extends Node2D
 
 onready var Vulkan = preload("res://assets/vulkan.tscn")
 
-var isInitial = true
-
 onready var control = get_tree().get_root().get_node("Control")
-onready var game = control.get_node("game")
 onready var mountains = get_node("gebirge")
 onready var vulkanNode = get_node("vulkan")
 
+var game
 var availableMountains = []
 var counter = 0
+var isInitial = true
 var canSpawn = true
 var isErrupting = false
 var activeVulkan = null
@@ -32,8 +31,6 @@ func storeAvailableMountains():
 
 #create sprite from stored prebuild template
 func createSprites(_offset):
-	if game==null:
-		game = control.get_node("backgroundGame")
 	if !isInitial:
 		var v = Vulkan.instance()
 		activeVulkan = v
@@ -55,6 +52,10 @@ func createSprites(_offset):
 	isInitial = false
 
 func _ready():
+	if control.has_node("game"):
+		game = control.get_node("game")
+	elif game==null:
+		game = control.get_node("backgroundGame")
 	# store available sprites for later reuse
 	storeAvailableMountains()
 	createSprites(1000)
@@ -75,6 +76,6 @@ func _process(delta):
 
 func _on_VisibilityNotifier2D_screen_exited():
 	for sprite in mountains.get_children():
-		if sprite.global_position.x<-200:
+		if sprite.is_inside_tree() and sprite.global_position.x<-200:
 			sprite.queue_free()
 	pass # replace with function body

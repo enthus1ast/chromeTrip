@@ -4,15 +4,17 @@ onready var disabledSprites = get_node("Sprites")
 onready var childrenArray = disabledSprites.get_children()
 onready var parentNode = get_node("Node2D")
 onready var control = get_tree().get_root().get_node("Control")
-onready var game = control.get_node("game")
 
+var game
 var texture
 var count = 20
 var isInitial = true
 var time = 0
 
 func _ready():
-	if game ==null:
+	if control.has_node("game"):
+		game = control.get_node("game")
+	elif game==null:
 		game = control.get_node("backgroundGame")
 	texture = childrenArray[0].get_texture()
 	set_process(true)

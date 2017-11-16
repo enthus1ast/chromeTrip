@@ -55,7 +55,6 @@ func _ready():
 	add_child ( killprotectTimer )
 	killprotectTimer.wait_time = 3
 	killprotectTimer.connect("timeout",self,"_killprotectTimeout")
-	soundPlayer.connect("finished",self,"_sound_finished")
 	var root = get_tree().get_root().get_node("Control")
 	grounded = false
 	can_jump = true
@@ -203,8 +202,8 @@ func _input(event):
 				if (grounded and can_jump and alive):
 					rpc("rpcJumpParticles",get_name())
 					cameraNode.jumpRumble()
-#					if !soundPlayer.is_playing():
-					if soundPlayer.get_stream() != jumpSound:
+					# play jump sound
+					if soundPlayer.stream != jumpSound:
 						soundPlayer.set_stream(jumpSound)
 					soundPlayer.play(0.0)
 			if event.is_action_released("ui_up") or event.is_action_released("ui_select"):
@@ -215,8 +214,6 @@ func _input(event):
 		keys = [false,false,false,false]
 		can_jump = false
 		
-func _sound_finished():
-	soundPlayer.stop()
 	
 sync func killed(_id):
 	if !isKillProtected:

@@ -108,7 +108,7 @@ func _ready():
 	var isMuted = utils.config.get_value("audio","mute")
 	mute(isMuted)
 #	if not isMuted:
-	musicPlayer.play()
+#	musicPlayer.play()
 		
 	
 #	chatInput.set_max_chars(100)
@@ -180,7 +180,7 @@ remote func register_new_player(_player):
 
 remote func startGame():
 	if backgroundGame!=null:
-		backgroundGame.queue_free()
+		backgroundGame.free()
 		backgroundGame = null
 	print("startGame was called")
 	## Safe new config values
@@ -246,8 +246,8 @@ func _connected_fail():
 func _server_disconnected():
 	lobby.set_visible(false)
 	menu.set_visible(true)
-	call_deferred("remove_child",game)
-	game.queue_free()
+#	call_deferred("remove_child",game)
+	game.free()
 	eNet.close_connection()
 	eNet = NetworkedMultiplayerENet.new() #workaround
 	get_tree().set_network_peer(null)

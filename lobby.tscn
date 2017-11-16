@@ -384,6 +384,7 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [node name="lobby" type="PanelContainer" parent="menu"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0

@@ -99,13 +99,15 @@ sync func rpcScoreAdd(_value,_player):
 	get_tree().get_root().get_node("Control/game").score = game.score + _value
 
 func _on_VisibilityNotifier2D_screen_exited():
-	if !isCollected:
+	if !isCollected and is_inside_tree():
+		deleteTimer.stop()
 		queue_free()
 	else:
 		deleteTimer.start()
 	pass # replace with function body
 
 func _delete_timeout():
-	queue_free()
+	if is_inside_tree():
+		queue_free()
 
 	
