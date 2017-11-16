@@ -136,6 +136,15 @@ func apply_force(state):
     # Jump
 	if keys[2]:
 		if jump_time < TOP_JUMP_TIME and can_jump:
+			## Play sound here cause we want to play on every jump!
+			if (grounded and can_jump and alive):
+				rpc("rpcJumpParticles",get_name())
+				cameraNode.jumpRumble()
+				# play jump sound
+				if soundPlayer.stream != jumpSound:
+					soundPlayer.set_stream(jumpSound)
+				if not soundPlayer.playing:
+					soundPlayer.play(0.0)	
 			directional_force += DIRECTION.UP
 			jump_time += state.get_step()
     # While on the ground
@@ -199,13 +208,6 @@ func _input(event):
 			#jumping keyevents
 			if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_select"):
 				keys[2]=true
-				if (grounded and can_jump and alive):
-					rpc("rpcJumpParticles",get_name())
-					cameraNode.jumpRumble()
-					# play jump sound
-					if soundPlayer.stream != jumpSound:
-						soundPlayer.set_stream(jumpSound)
-					soundPlayer.play(0.0)
 			if event.is_action_released("ui_up") or event.is_action_released("ui_select"):
 				keys[2]=false
 				can_jump = false # Prevents the player from jumping more than once while in air
