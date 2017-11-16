@@ -98,8 +98,7 @@ func _ready():
 	#effectsPlayer.volume_db = utils.config.get_value("audio","effects")
 	var isMuted = utils.config.get_value("audio","mute")
 	utils.mute(isMuted)
-#	if not isMuted:
-#	musicPlayer.play()
+	musicPlayer.play()
 		
 	
 #	chatInput.set_max_chars(100)
