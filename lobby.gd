@@ -482,7 +482,7 @@ func askForRestartGame():
 
 sync func restartGame():
 	remove_child(game)
-	game.queue_free()	
+	game.queue_free()
 	if get_tree().is_network_server():
 		if not alreadyRestarting:
 			startGame()
