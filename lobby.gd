@@ -75,15 +75,6 @@ remote func errorOnWrongServerVersion(serverVersion):
 		warnPopup.dialog_text = "server uses another version: " + str(serverVersion)
 		leaveLobby()
 		
-
-func mute(enabled):
-	if enabled == true:
-		#effectsPlayer.volume_db = -1000
-		musicPlayer.volume_db = -1000		
-	else:
-		#effectsPlayer.volume_db = utils.config.get_value("audio","effects")
-		musicPlayer.volume_db = utils.config.get_value("audio","music")
-		
 func backgroundGameFnc():
 	backgroundGame = BackgroundGame.instance()
 	add_child(backgroundGame)
@@ -106,7 +97,7 @@ func _ready():
 	musicPlayer.volume_db = utils.config.get_value("audio","music")
 	#effectsPlayer.volume_db = utils.config.get_value("audio","effects")
 	var isMuted = utils.config.get_value("audio","mute")
-	mute(isMuted)
+	utils.mute(isMuted)
 #	if not isMuted:
 	musicPlayer.play()
 		
@@ -531,7 +522,7 @@ func _on_Settings_musicVolume(val):
 		musicPlayer.volume_db = val
 
 func _on_Settings_mute(val):
-	mute(val)
+	utils.mute(val)
 
 func _on_RichTextLabel_meta_clicked( meta ):
 	OS.shell_open(utils.DEVELOPER_URI)

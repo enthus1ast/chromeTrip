@@ -315,7 +315,7 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 toggle_mode = false
-enabled_focus_mode = 2
+enabled_focus_mode = 1
 shortcut = null
 group = null
 text = "menu"
@@ -335,6 +335,31 @@ margin_left = 5.0
 margin_top = 533.0
 margin_right = 45.0
 margin_bottom = 573.0
+
+[node name="Mute" type="CheckBox" parent="hud"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 694.0
+margin_top = 9.0
+margin_right = 753.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_colors/font_color = Color( 0.651402, 0.792969, 0.0681458, 1 )
+toggle_mode = true
+enabled_focus_mode = 1
+shortcut = null
+group = null
+text = "Mute"
+flat = false
+align = 0
+_sections_unfolded = [ "Visibility" ]
 
 [node name="sprites" type="Node2D" parent="."]
 
@@ -557,6 +582,8 @@ _sections_unfolded = [ "Playback Options", "playback" ]
 [connection signal="pressed" from="hud/menu" to="." method="_on_menu_pressed"]
 
 [connection signal="restartGame" from="hud/PopupMenu" to="." method="_on_PopupMenu_restartGame"]
+
+[connection signal="toggled" from="hud/Mute" to="." method="_on_Mute_toggled"]
 
 [connection signal="screen_exited" from="sprites/constantMovement/ground/Sprite1/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
