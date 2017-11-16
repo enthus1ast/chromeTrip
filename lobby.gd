@@ -480,10 +480,10 @@ func askForRestartGame():
 
 sync func restartGame():
 	remove_child(game)
-	game.queue_free()	
+	game.queue_free()
 	if get_tree().is_network_server():
 		startGame()
-		rpc("startGame")	
+		rpc("startGame")
 	
 func _on_name_text_changed( text ):
 	nameInput.set("custom_colors/font_color", utils.computeColor(text))
