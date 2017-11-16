@@ -88,6 +88,7 @@ func _ready():
 	print(OS.get_time())
 	musicPlayer.connect("finished",self,"loopMusic")
 #	OS.set_low_processor_usage_mode(true)
+	get_tree().set_network_peer(null)
 	eNet = NetworkedMultiplayerENet.new()
 	# load params from config
 	ipInput.set_text( utils.config.get_value("player", "defaultserver", ""))
