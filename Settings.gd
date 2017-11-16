@@ -43,3 +43,4 @@ func _on_VMusic_value_changed( value ):
 
 func _on_Back_pressed():
 	self.hide()
+	

@@ -970,11 +970,10 @@ margin_bottom = 202.0
 
 [node name="Settings" parent="menu" instance=ExtResource( 9 )]
 
-visible = false
-margin_left = 169.0
-margin_top = 201.0
-margin_right = 209.0
-margin_bottom = 241.0
+margin_left = 104.0
+margin_top = 148.0
+margin_right = 160.0
+margin_bottom = 207.0
 
 [node name="WarnPopup" type="AcceptDialog" parent="menu"]
 
