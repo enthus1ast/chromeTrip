@@ -18,6 +18,7 @@ var score = 0
 var finalScore = 0
 var distanceWalked = 0
 var ground
+var globalIdCounter = 0
 
 var stage = 1 # each 5000 points one stage
 var nextLevel = 5000
@@ -75,6 +76,7 @@ sync func rpcShowActionStage(_stage):
 	actionPopup.showStage(_stage)
 	
 func _ready():
+	
 	muteCheckbox.pressed = utils.config.get_value("audio","mute")
 	set_process_input(true)
 	spriteWidth = groundSprite1.get_texture().get_size().x
@@ -110,11 +112,13 @@ func respawnpointGen():
 	var pos = Vector2(distance , get_node("groundCollision/CollisionShape2D").position.y)
 	rpc("rpcRespawnpoint", pos)
 	
-sync func rpcCollectable(pos,choice):
+sync func rpcCollectable(pos,choice, name):
 	var collectable = Collectables.instance()
 	collectable.choice(choice)
 	collectable.position = pos
+	collectable.set_name(str(name))
 	collectablesNode.add_child(collectable)
+	
 
 func collectablesGen():
 	var i = 0
@@ -126,7 +130,9 @@ func collectablesGen():
 		else:
 			choice = collectablesStrings[1]
 		var pos = Vector2(i*400+rand_range(1024,2000)-collectablesNode.position.x,rand_range(10,330))
-		rpc("rpcCollectable", pos, choice)
+		
+		rpc("rpcCollectable", pos, choice, globalIdCounter)
+		globalIdCounter += 1
 		i += 1
 	i = 0
 	

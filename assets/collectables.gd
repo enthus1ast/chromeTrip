@@ -59,9 +59,10 @@ func _process(delta):
 	position.x -= delta*game.fakeSpeed
  
 func _on_meatArea_body_entered( body ):
-	if body.is_in_group("players") and !isCollected:
-		rpc("rpcEatFood",body,control.players[int(body.get_name())].name)
-		pass
+	if get_tree().is_network_server():
+		if body.is_in_group("players") and !isCollected:
+			rpc("rpcEatFood",body,body.name)
+			pass
 
 sync func rpcEatFood(_playerNode,_playerName):
 	onCollectParticles.emitting=true
@@ -83,11 +84,13 @@ remote func calcPointsFromHeight(_height): #ony server shoud run this
 	return round(points)
 
 func _on_heartArea_body_entered( body ):
-	if body.is_in_group("players") and !isCollected:
-		rpc("rpcScoreAdd",calcPointsFromHeight(position.y),control.players[int(body.get_name())].name)
-		pass
+	if get_tree().is_network_server():
+		if body.is_in_group("players") and !isCollected:
+			rpc("rpcScoreAdd",calcPointsFromHeight(position.y),body.name)
+			pass	
 
 sync func rpcScoreAdd(_value,_player):
+#	var collectable
 	if !soundPlayer.is_playing():
 			soundPlayer.play(0.0)
 	onCollectParticles.emitting = true
