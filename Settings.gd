@@ -7,7 +7,7 @@ signal effectVolume
 onready var mute = get_node("Panel/GridContainer/VMute")
 onready var effects = get_node("Panel/GridContainer/VEffects")
 onready var music = get_node("Panel/GridContainer/VMusic")
-
+var first = true
 
 func setDisabledIfMuted():
 	effects.editable = not mute.pressed
@@ -33,7 +33,9 @@ func _on_VEffects_value_changed( value ):
 	utils.config.set_value("audio", "effects", value)
 	utils.config.save(utils.CONFIG_PATH)
 	utils.setLoudness("Effects", value)
-	get_node("Panel/GridContainer/KEffects/AudioStreamPlayer").play()
+	if not first:
+		get_node("Panel/GridContainer/KEffects/AudioStreamPlayer").play()
+	else: first = false
 	emit_signal("effectVolume", value)
 
 func _on_VMusic_value_changed( value ):

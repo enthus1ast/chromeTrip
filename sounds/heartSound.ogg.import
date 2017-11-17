@@ -6,5 +6,5 @@ path="res://.import/heartSound.ogg-9f1cac283b64f1945a2d1c5ff36e20b1.oggstr"
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

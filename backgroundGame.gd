@@ -9,7 +9,6 @@ onready var Collectables = preload("res://assets/collectables.tscn")
 onready var Wolke = preload("res://Wolke.tscn")
 onready var viewportSize = get_viewport().size
 
-
 var fakeSpeed=1000
 var score = 0
 var finalScore = 0
@@ -22,7 +21,6 @@ var spriteWidth
 var obstaclesCount = 8
 var enemysCount = 8
 var wolkenMaxCount = 20
-
 
 onready var cameraNode = get_node("cameraNode")
 onready var spritesNode = get_node("sprites")
@@ -39,7 +37,6 @@ onready var groundSprite2 = groundSprites.get_node("Sprite2")
 func _ready():
 	spriteWidth = groundSprite1.get_texture().get_size().x
 	seed(0)
-	
 	
 func mapGen():
 	obstaclesGen()
@@ -58,7 +55,6 @@ func respawnpointGen():
 	var restartPoint = Restartpoint.instance()
 	var pos = Vector2(distance ,400)
 	rpcRespawnpoint( pos)
-	
 	
 sync func rpcEnemy(pos, scale, choice):#	
 	var enemy = Enemys.instance()
@@ -124,10 +120,9 @@ func _process(delta):
 	constMoveNode.position.x-=fakeSpeed*delta
 	enemysNode.position.x-=fakeSpeed*delta*1.5
 
-
-# two ground-tiles for seamless infinite maps
-# everytime a tile hast left the screen, position.x is updating and new obstacles are generating
 func _on_VisibilityNotifier2D_screen_exited():
+	# two ground-tiles for seamless infinite maps
+	# everytime a tile hast left the screen, position.x is updating and new obstacles are generating
 	if groundSprite1.position.x<groundSprite2.position.x:
 		groundSprite1.position.x = groundSprite2.position.x + spriteWidth*groundSprite1.scale.x
 	else:
