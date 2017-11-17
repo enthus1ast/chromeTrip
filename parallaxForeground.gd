@@ -10,12 +10,14 @@ var texture
 var count = 20
 var isInitial = true
 var time = 0
+var backgroundGame = false
 
 func _ready():
 	if control.has_node("game"):
 		game = control.get_node("game")
 	elif game==null:
 		game = control.get_node("backgroundGame")
+		backgroundGame = true
 	texture = childrenArray[0].get_texture()
 	set_process(true)
 	
@@ -38,23 +40,36 @@ func genScale(_posY):
 	var myscale = Vector2(tmp,tmp)
 	return myscale
 
-func newSprite():
+
+func doNewSprite():
+	if backgroundGame or get_tree().is_network_server():
+		var choice
+		var flipped = false
+		if rand_range(0,2) > 1:
+			flipped = true
+		choice = int(rand_range(1,disabledSprites.get_child_count()))
+		var pos = genPos()		
+		if backgroundGame: 
+			newSprite(choice, flipped, pos)
+		elif get_tree().is_network_server():
+			rpc("newSprite", choice, flipped, pos)
+
+sync func newSprite(choice, flipped, pos):
 	var sprite = Sprite.new()
 	sprite.texture = texture
 	sprite.region_enabled=true;
-	sprite.set_region_rect(disabledSprites.get_node("Sprite"+str(int(rand_range(1,disabledSprites.get_child_count())))).get_region_rect())
+	sprite.set_region_rect(disabledSprites.get_node("Sprite"+str(choice)).get_region_rect())
 	parentNode.add_child(sprite)
-	sprite.position = genPos()
+	sprite.position = pos
 	sprite.z = sprite.position.y
 	sprite.scale= genScale(sprite.position.y)
-	if rand_range(0,2) > 1:
-		sprite.flip_h = true
+	sprite.flip_h = flipped
 
 func _process(delta):
 	time += delta
 	if count > parentNode.get_child_count() and time > 1:
 		time = 0
-		newSprite()
+		doNewSprite()
 	for object in parentNode.get_children():
 		object.position.x -= delta * genSpeed(object.position.y)
 		if object.position.x<-100 and !object.is_queued_for_deletion():
