@@ -534,3 +534,22 @@ func _on_Settings_mute(val):
 
 func _on_RichTextLabel_meta_clicked( meta ):
 	OS.shell_open(utils.DEVELOPER_URI)
+
+func _on_sp_mouse_entered():
+	get_node("menu/networkPanel/Dinos/SpriteSp/AnimationPlayer").play("TrexAnimRun")
+	pass # replace with function body
+	
+func _on_sp_mouse_exited():
+	get_node("menu/networkPanel/Dinos/SpriteSp/AnimationPlayer").stop()
+	pass # replace with function body
+
+func _on_host_mouse_entered():
+	get_node("menu/networkPanel/Dinos/SpriteMpL/AnimationPlayer").play("TrexAnimRun")
+	get_node("menu/networkPanel/Dinos/SpriteMpR/AnimationPlayer").play("TrexAnimRun")
+	pass # replace with function body
+
+
+func _on_host_mouse_exited():
+	get_node("menu/networkPanel/Dinos/SpriteMpL/AnimationPlayer").stop()
+	get_node("menu/networkPanel/Dinos/SpriteMpR/AnimationPlayer").stop()
+	pass # replace with function body
