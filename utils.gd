@@ -3,7 +3,7 @@ extends Node
 ########################################################################################################
 # Global game variables
 ########################################################################################################
-var version = 0.5 # general version of this game
+var version = 0.6 # general version of this game
 const HIGHSCORE_PATH = "user://highscore.dat" # where the highscore is safed on the filesystem.
 const HIGHSCORE_PW = "code0"
 const CONFIG_PATH = "user://config.ini"
