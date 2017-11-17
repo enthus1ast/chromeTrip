@@ -76,7 +76,6 @@ sync func rpcShowActionStage(_stage):
 	actionPopup.showStage(_stage)
 	
 func _ready():
-	
 	muteCheckbox.pressed = utils.config.get_value("audio","mute")
 	set_process_input(true)
 	spriteWidth = groundSprite1.get_texture().get_size().x
@@ -94,6 +93,7 @@ func _ready():
 	
 func mapGen():
 	if get_tree().is_network_server():
+		pass
 		obstaclesGen()
 		respawnpointGen()
 		enemysGen()
@@ -119,7 +119,6 @@ sync func rpcCollectable(pos,choice, name):
 	collectable.set_name(str(name))
 	collectablesNode.add_child(collectable)
 	
-
 func collectablesGen():
 	var i = 0
 	var choice
@@ -216,10 +215,9 @@ func _process(delta):
 		var line = str(int(player.alive))+ " " + player.name
 		playersLabel.bbcode_text += utils.computeColorBB(player.name, line) + "\n"
 		
-
-# two ground-tiles for seamless infinite maps
-# everytime a tile hast left the screen, position.x is updating and new obstacles are generating
 func _on_VisibilityNotifier2D_screen_exited():
+	# two ground-tiles for seamless infinite maps
+	# everytime a tile hast left the screen, position.x is updating and new obstacles are generating
 	if groundSprite1.position.x<groundSprite2.position.x:
 		groundSprite1.position.x = groundSprite2.position.x + spriteWidth*groundSprite1.scale.x
 	else:
@@ -247,8 +245,6 @@ func _input(event):
 			popup.hideMenu()
 		else:
 			popup.showMenu()
-
-
 
 func _on_Mute_toggled( pressed ):
 	pass # replace with function body

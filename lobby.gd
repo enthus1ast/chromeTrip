@@ -176,6 +176,7 @@ remote func startGame():
 		backgroundGame.free()
 		backgroundGame = null
 	print("startGame was called")
+		
 	## Safe new config values
 	utils.config.set_value("player", "defaultname", nameInput.get_text())
 	utils.config.set_value("player", "defaultserver", ipInput.get_text())
@@ -466,6 +467,7 @@ sync func setStartButtonText(_string):
 sync func prepareGame():
 	menu.set_visible(false)
 	if get_tree().is_network_server():
+		get_tree().set_refuse_new_network_connections(true)
 		countdown.disconnect("timeout",self,"_countdown_timeout")
 		countdown.queue_free()
 		countdownRemaining = GAME_COUNTDOWN
