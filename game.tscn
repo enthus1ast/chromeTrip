@@ -371,8 +371,6 @@ __meta__ = {
 
 [node name="background" type="Node2D" parent="sprites"]
 
-editor/display_folded = true
-
 [node name="gradientSky" type="Sprite" parent="sprites/background"]
 
 position = Vector2( 1052.72, 182.43 )
@@ -522,17 +520,13 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="leftBlock"]
 
-position = Vector2( -20, 110 )
-scale = Vector2( 1.65385, 27.9423 )
+position = Vector2( -20, -73.4225 )
+scale = Vector2( 1.65385, 62.1349 )
 shape = SubResource( 11 )
 _sections_unfolded = [ "Transform" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="rightBlock" type="StaticBody2D" parent="."]
 
-editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -546,8 +540,8 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="rightBlock"]
 
-position = Vector2( 1040.72, 111.706 )
-scale = Vector2( 1.65385, 27.9423 )
+position = Vector2( 1040.72, -91.1267 )
+scale = Vector2( 1.65385, 62.1349 )
 shape = SubResource( 11 )
 _sections_unfolded = [ "Transform" ]
 

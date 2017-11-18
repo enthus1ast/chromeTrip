@@ -89,6 +89,7 @@ _sections_unfolded = [ "Resource" ]
 
 [node name="Control" type="Control"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -143,10 +144,12 @@ _sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="LogoAnim" parent="menu" instance=ExtResource( 2 )]
 
+editor/display_folded = true
 position = Vector2( -51, 61 )
 
 [node name="networkPanel" type="Panel" parent="menu"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -217,6 +220,7 @@ _sections_unfolded = [ "Placeholder", "Size Flags", "custom_colors", "custom_fon
 
 [node name="connect" type="Container" parent="menu/networkPanel"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -281,6 +285,7 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [node name="host" type="Container" parent="menu/networkPanel"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0

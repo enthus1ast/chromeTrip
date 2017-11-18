@@ -20,7 +20,7 @@ func doRespawn(collider):
 			if player.type == "dino":
 				newPos = Vector2(100, -400)
 			elif player.type == "bird":
-				newPos = Vector2(100, -650)
+				newPos = Vector2(100, -300)
 			print("reanimating player:", player.name, " ", newPos )
 			player.reanimate( Vector2(100,150))
 
