@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://player.gd" type="Script" id=1]
 [ext_resource path="res://200-offline-sprite.png" type="Texture" id=2]
@@ -83,7 +83,69 @@ height = 11.8958
 custom_solver_bias = 0.0
 extents = Vector2( 8.70709, 16.8859 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=13]
+
+resource_name = "birdFly"
+length = 0.6
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Rect2( 262, 5, 88, 74 ), Rect2( 354, 5, 88, 74 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../playerShape:position")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -0.899892, 4.86638 ), Vector2( -0.913778, -9.02121 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../playerShape:scale")
+tracks/2/interp = 0
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 4.01397, 2.77044 ), Vector2( 4.16979, 2.41413 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../playerShape:rotation_deg")
+tracks/3/interp = 0
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 4.2, -347.2 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=14]
 
 length = 1.0
 loop = false
@@ -99,8 +161,52 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Rect2( 1679, 1, 85, 96 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("../playerShape:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 3.40043, 2.68738 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../playerShape:rotation_deg")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 27.7389 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../playerShape:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1.77437, 1.87565 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=15]
 
 length = 0.2
 loop = true
@@ -149,8 +255,19 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 2.33423, 1.22343 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=16]
 
 length = 1.5
 loop = false
@@ -177,8 +294,19 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( -2.2629, 29.6091 ), Vector2( -2.2629, 0 ), Vector2( -2.2629, 500 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=17]
 
 length = 0.2
 loop = true
@@ -237,6 +365,17 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( -2.2629, 29.6091 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath(".:flip_h")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=11]
@@ -342,9 +481,9 @@ _sections_unfolded = [ "Playback Options" ]
 
 [node name="playerShape" type="CollisionShape2D" parent="."]
 
-position = Vector2( 3.40043, 2.68738 )
-rotation = 0.484135
-scale = Vector2( 1.77437, 1.87565 )
+position = Vector2( -0.899892, 4.86638 )
+rotation = 0.0733038
+scale = Vector2( 4.01397, 2.77044 )
 shape = SubResource( 5 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z" ]
 
@@ -376,13 +515,13 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="."]
 
-editor/display_folded = true
 position = Vector2( -2.2629, 29.6091 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
 offset = Vector2( 6.09799, -42.0819 )
+flip_h = true
 region_enabled = true
-region_rect = Rect2( 1943, 1, 85, 96 )
+region_rect = Rect2( 262, 5, 88, 74 )
 _sections_unfolded = [ "Animation", "Material", "Offset", "Region", "Transform", "Visibility", "Z" ]
 __meta__ = {
 "_edit_lock_": true
@@ -400,10 +539,11 @@ texture = ExtResource( 3 )
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/trexAnim = SubResource( 7 )
-anims/trexAnimDuck = SubResource( 8 )
-anims/trexAnimKilled = SubResource( 9 )
-anims/trexAnimRun = SubResource( 10 )
+anims/birdFly = SubResource( 13 )
+anims/trexAnim = SubResource( 14 )
+anims/trexAnimDuck = SubResource( 15 )
+anims/trexAnimKilled = SubResource( 16 )
+anims/trexAnimRun = SubResource( 17 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]

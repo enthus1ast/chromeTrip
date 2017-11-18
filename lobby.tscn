@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://lobby.gd" type="Script" id=1]
 [ext_resource path="res://PlayerAnim.tscn" type="PackedScene" id=2]
@@ -38,14 +38,43 @@ use_filter = false
 font_data = ExtResource( 4 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="Theme" id=5]
+[sub_resource type="Animation" id=5]
 
-default_font = SubResource( 4 )
+resource_name = "TrexAnimRun"
+length = 0.2
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Rect2( 1855, 1, 85, 96 ), Rect2( 1943, 1, 85, 96 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
 
 [sub_resource type="Theme" id=6]
 
+default_font = SubResource( 4 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="Theme" id=7]
+
+
+[sub_resource type="DynamicFont" id=8]
 
 size = 16
 use_mipmaps = false
@@ -53,7 +82,7 @@ use_filter = false
 font_data = ExtResource( 4 )
 _sections_unfolded = [ "Font" ]
 
-[sub_resource type="Theme" id=8]
+[sub_resource type="Theme" id=9]
 
 default_font = SubResource( 4 )
 _sections_unfolded = [ "Resource" ]
@@ -340,8 +369,11 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [node name="Dinos" type="Node2D" parent="menu/networkPanel"]
 
+editor/display_folded = true
+
 [node name="SpriteSp" type="Sprite" parent="menu/networkPanel/Dinos"]
 
+editor/display_folded = true
 position = Vector2( 66.1986, 127.575 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 5 )
@@ -356,8 +388,20 @@ position = Vector2( 2.28799, -67.7206 )
 scale = Vector2( 1.84861, 1.31444 )
 texture = ExtResource( 6 )
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="menu/networkPanel/Dinos/SpriteSp"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/TrexAnimRun = SubResource( 5 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
 [node name="SpriteMpL" type="Sprite" parent="menu/networkPanel/Dinos"]
 
+editor/display_folded = true
 position = Vector2( 342.44, 125.12 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 5 )
@@ -366,8 +410,20 @@ region_enabled = true
 region_rect = Rect2( 1855, 1, 85, 96 )
 _sections_unfolded = [ "Transform" ]
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="menu/networkPanel/Dinos/SpriteMpL"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/TrexAnimRun = SubResource( 5 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
 [node name="SpriteMpR" type="Sprite" parent="menu/networkPanel/Dinos"]
 
+editor/display_folded = true
 modulate = Color( 0.867188, 0.867188, 0.867188, 1 )
 position = Vector2( 590.443, 127.575 )
 scale = Vector2( 0.5, 0.5 )
@@ -384,6 +440,17 @@ position = Vector2( 0.0218506, -91.5024 )
 texture = ExtResource( 7 )
 flip_h = true
 _sections_unfolded = [ "Offset" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="menu/networkPanel/Dinos/SpriteMpR"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/TrexAnimRun = SubResource( 5 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
 
 [node name="MultiplayerLabel" type="Label" parent="menu/networkPanel"]
 
@@ -446,7 +513,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-theme = SubResource( 5 )
+theme = SubResource( 6 )
 _sections_unfolded = [ "Theme" ]
 
 [node name="Container" type="Container" parent="menu/lobby"]
@@ -482,7 +549,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-theme = SubResource( 6 )
+theme = SubResource( 7 )
 _sections_unfolded = [ "Theme", "custom_styles" ]
 
 [node name="name" type="Label" parent="menu/lobby/Container/info"]
@@ -608,7 +675,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 359.0
-margin_bottom = 14.0
+margin_bottom = 15.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -695,6 +762,7 @@ _sections_unfolded = [ "Grow Direction", "Hint", "Size Flags" ]
 
 [node name="chat" type="Panel" parent="menu/lobby/Container"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -834,9 +902,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 383.0
-margin_top = 267.0
+margin_top = 277.0
 margin_right = 525.0
-margin_bottom = 318.0
+margin_bottom = 328.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -871,6 +939,30 @@ shortcut = null
 group = null
 text = "leave"
 flat = false
+
+[node name="beABird" type="Button" parent="menu/lobby/Container"]
+
+modulate = Color( 0.6875, 0.6875, 0.6875, 0.613255 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 383.0
+margin_top = 217.0
+margin_right = 525.0
+margin_bottom = 268.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "be a Bird"
+flat = false
+_sections_unfolded = [ "Visibility", "custom_styles" ]
 
 [node name="DialogWaiting" type="Panel" parent="menu"]
 
@@ -983,7 +1075,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/normal_font = SubResource( 7 )
+custom_fonts/normal_font = SubResource( 8 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 bbcode_enabled = true
 bbcode_text = "[url=\"http://games.code0.xyz\"]games.code0.xyz[/url]"
@@ -1046,7 +1138,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-theme = SubResource( 8 )
+theme = SubResource( 9 )
 popup_exclusive = false
 window_title = "Warnung!"
 resizable = false
@@ -1133,10 +1225,21 @@ autostart = false
 [connection signal="text_changed" from="menu/networkPanel/name" to="." method="_on_name_text_changed"]
 
 [connection signal="text_changed" from="menu/networkPanel/seed" to="." method="_on_seed_text_changed"]
+[connection signal="mouse_entered" from="menu/networkPanel/connect/connect" to="." method="_on_host_mouse_entered"]
+
+[connection signal="mouse_exited" from="menu/networkPanel/connect/connect" to="." method="_on_host_mouse_exited"]
 
 [connection signal="pressed" from="menu/networkPanel/connect/connect" to="." method="_on_connect_pressed"]
 
+[connection signal="mouse_entered" from="menu/networkPanel/host/host" to="." method="_on_host_mouse_entered"]
+
+[connection signal="mouse_exited" from="menu/networkPanel/host/host" to="." method="_on_host_mouse_exited"]
+
 [connection signal="pressed" from="menu/networkPanel/host/host" to="." method="_on_host_pressed"]
+
+[connection signal="mouse_entered" from="menu/networkPanel/sp" to="." method="_on_sp_mouse_entered"]
+
+[connection signal="mouse_exited" from="menu/networkPanel/sp" to="." method="_on_sp_mouse_exited"]
 
 [connection signal="pressed" from="menu/networkPanel/sp" to="." method="_on_sp_pressed"]
 
@@ -1154,6 +1257,8 @@ autostart = false
 
 [connection signal="pressed" from="menu/lobby/Container/leaveLobbyButton" to="." method="_on_leaveLobbyButton_pressed"]
 
+[connection signal="toggled" from="menu/lobby/Container/beABird" to="." method="_on_beABird_toggle"]
+
 [connection signal="pressed" from="menu/DialogWaiting/cancel" to="." method="_on_cancel_pressed"]
 
 [connection signal="meta_clicked" from="menu/Ads" to="." method="_on_RichTextLabel_meta_clicked"]
@@ -1167,3 +1272,4 @@ autostart = false
 [connection signal="timeout" from="networkHud/Timer" to="." method="_on_Timer_timeout"]
 
 
+[editable path="menu/LogoAnim"]
