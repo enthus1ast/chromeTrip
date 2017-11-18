@@ -13,14 +13,14 @@ var readyToPlay = false # this gets set to true when the player has loaded the p
 var killprotectTimer = Timer.new()
 var isKillProtected = false
 var needForFood = 2# speed of getting hungry
-var name = "SET_ME" # the player name
+export var playerName = "SET_ME_PLAYER_NAME" # the player name
 var inputsDisabled = false
 
 onready var playerColShape = get_node("playerShape")
 onready var hungerInfo = get_tree().get_root().get_node("Control/game/hud/Fleisch")
 var grounded = false 
 ## eperimental
-var type = "SET_ME"
+var type = "SET_ME_TYPE"
 
 # Movement Vars
 var directional_force = Vector2()
@@ -35,8 +35,8 @@ const DIRECTION = {
 sync var slave_pos = Transform2D()
 sync var slave_motion = Vector2()
 sync var alive = true
-var hunger = 0 # hunger level
-sync var slave_hunger = 0 # hunger level
+export var hunger = 0 # hunger level
+export sync var slave_hunger = 0 # hunger level
 
 var reviving = false
 
