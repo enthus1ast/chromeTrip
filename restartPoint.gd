@@ -16,7 +16,12 @@ func doRespawn(collider):
 	for player in get_tree().get_nodes_in_group("players"):
 		print(player)
 		if ! player.alive:
-			print("reanimating player:", player.name, " ",  Vector2(100, -400))
+			var newPos
+			if player.type == "dino":
+				newPos = Vector2(100, -400)
+			elif player.type == "bird":
+				newPos = Vector2(100, -650)
+			print("reanimating player:", player.name, " ", newPos )
 			player.reanimate( Vector2(100,150))
 
 func _on_Area2D_body_entered( body ):

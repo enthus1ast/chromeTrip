@@ -83,7 +83,7 @@ height = 11.8958
 custom_solver_bias = 0.0
 extents = Vector2( 8.70709, 16.8859 )
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=7]
 
 resource_name = "birdFly"
 length = 0.6
@@ -145,7 +145,7 @@ tracks/4/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=8]
 
 length = 1.0
 loop = false
@@ -206,7 +206,7 @@ tracks/4/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=9]
 
 length = 0.2
 loop = true
@@ -267,7 +267,7 @@ tracks/4/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=10]
 
 length = 1.5
 loop = false
@@ -306,7 +306,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=11]
 
 length = 0.2
 loop = true
@@ -378,7 +378,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 
 length = 1.0
 loop = false
@@ -395,7 +395,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 
 length = 0.6
 loop = true
@@ -539,11 +539,11 @@ texture = ExtResource( 3 )
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/birdFly = SubResource( 13 )
-anims/trexAnim = SubResource( 14 )
-anims/trexAnimDuck = SubResource( 15 )
-anims/trexAnimKilled = SubResource( 16 )
-anims/trexAnimRun = SubResource( 17 )
+anims/birdFly = SubResource( 7 )
+anims/trexAnim = SubResource( 8 )
+anims/trexAnimDuck = SubResource( 9 )
+anims/trexAnimKilled = SubResource( 10 )
+anims/trexAnimRun = SubResource( 11 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -554,8 +554,8 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/default = SubResource( 11 )
-anims/killProtected = SubResource( 12 )
+anims/default = SubResource( 12 )
+anims/killProtected = SubResource( 13 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
