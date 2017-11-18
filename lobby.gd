@@ -42,11 +42,11 @@ var currentPlayer = {
 	"id":null,
 	"name":"",
 	"isReady":null,
-	"node":null
+	"node":null,
+	"type":"dino"
 }
 var isConnecting = false
 
-var isJumping = false
 const SPEED = 200
 
 signal refresh_lobby()
@@ -150,6 +150,7 @@ remote func user_ready(_player):
 		players[_player.id].id = _player.id
 		players[_player.id].name = _player.name
 		players[_player.id].isReady = _player.isReady
+		players[_player.id].type = _player.type
 		rpc_id(_player.id, "register_in_lobby")
 
 remote func register_in_lobby():
@@ -162,6 +163,7 @@ remote func register_new_player(_player):
 	players[_player.id].id = _player.id
 	players[_player.id].name = _player.name
 	players[_player.id].isReady = _player.isReady
+	players[_player.id].type = _player.type
 	
 	if get_tree().is_network_server():
 		rpc("updateList",players)
@@ -185,12 +187,17 @@ remote func startGame():
 	for p in players:
 		players[p].node = Player.instance()
 		players[p].node.name = players[p].name
+		players[p].node.type = players[p].type
 		players[p].node.get_node("Label").set_text(players[p].name)
 #		players[p].node.get_node("Label").set("custom_colors/font_color" ,computeColor(players[p].name))
 		players[p].node.get_node("Label").add_color_override("font_color" ,utils.computeColor(players[p].name))
 		
 		# Set initial position, not spawning behind each other 
-		players[p].node.position = Vector2(10 + cnt, 0)
+		if players[p].type!="bird":
+			players[p].node.position = Vector2(10 + cnt, 0)
+		else:
+			players[p].node.global_position = Vector2(30 + cnt, 0)
+		
 		cnt+= 5 +  players[p].node.get_node("Sprite").get_region_rect().size.x * players[p].node.get_node("Sprite").scale.x
 		
 #		Sprite
@@ -353,6 +360,7 @@ func _on_host_pressed():
 	players[id] = {}
 	players[id].name = currentPlayer.name
 	players[id].id = id
+	players[id].type = currentPlayer.type
 	players[id].isReady = currentPlayer.isReady
 	updateList(players)
 
@@ -381,6 +389,7 @@ func _on_sp_pressed():
 	players[id].name = currentPlayer.name
 	players[id].id = id
 	players[id].isReady = currentPlayer.isReady
+	players[id].type = currentPlayer.type
 	updateList(players)
 	startGame()
 	
@@ -553,3 +562,38 @@ func _on_host_mouse_exited():
 	get_node("menu/networkPanel/Dinos/SpriteMpL/AnimationPlayer").stop()
 	get_node("menu/networkPanel/Dinos/SpriteMpR/AnimationPlayer").stop()
 	pass # replace with function body
+
+func _on_beABird_toggle(_bool):
+	if get_tree().is_network_server():
+		#if server clicks
+		beABirdToggle(currentPlayer.id,_bool)
+	else:
+		rpc_id(1,"beABirdToggle",currentPlayer.id,_bool)
+
+remote func rpcSetToBirds(_id,_type):
+	print("remote rpcsSetTo is now bird:   ",players,_id,_type)
+	players[_id].type=_type
+	if _id == currentPlayer.id:
+		currentPlayer.type=_type
+		
+remote func beABirdToggle(_id,_bool):
+	##serverside answer to toggle bird event
+	##TODO can do bird?
+	if get_tree().is_network_server():
+		var type
+		if _bool:
+			type="bird"
+		else:
+			type="dino"
+		rpcSetToBirds(_id,type) # for the server 
+		for peer in players:
+			
+			print("588 peer" + str(peer) + " " + str(_bool) )
+			print(players[peer].id)
+			
+			if players[peer].id != 1:
+				rpc_id(players[peer].id,"rpcSetToBirds",_id,type)
+				print("should be called")
+		
+
+		

@@ -736,6 +736,7 @@ _sections_unfolded = [ "Grow Direction", "Hint", "Size Flags" ]
 
 [node name="chat" type="Panel" parent="menu/lobby/Container"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -875,9 +876,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 383.0
-margin_top = 267.0
+margin_top = 277.0
 margin_right = 525.0
-margin_bottom = 318.0
+margin_bottom = 328.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -912,6 +913,30 @@ shortcut = null
 group = null
 text = "leave"
 flat = false
+
+[node name="beABird" type="Button" parent="menu/lobby/Container"]
+
+modulate = Color( 0.6875, 0.6875, 0.6875, 0.613255 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 383.0
+margin_top = 217.0
+margin_right = 525.0
+margin_bottom = 268.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "be a Bird"
+flat = false
+_sections_unfolded = [ "Visibility", "custom_styles" ]
 
 [node name="DialogWaiting" type="Panel" parent="menu"]
 
@@ -1156,6 +1181,8 @@ autostart = false
 [connection signal="pressed" from="menu/lobby/Container/startLobbyButton" to="." method="_on_startLobbyButton_pressed"]
 
 [connection signal="pressed" from="menu/lobby/Container/leaveLobbyButton" to="." method="_on_leaveLobbyButton_pressed"]
+
+[connection signal="toggled" from="menu/lobby/Container/beABird" to="." method="_on_beABird_toggle"]
 
 [connection signal="pressed" from="menu/DialogWaiting/cancel" to="." method="_on_cancel_pressed"]
 

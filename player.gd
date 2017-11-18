@@ -4,6 +4,7 @@ var acceleration = 10000
 var top_move_speed_org = 200
 var top_move_speed = top_move_speed_org
 var top_jump_speed = 800
+var top_flyup_speed = 400
 var jumpSound = load("res://sounds/jump.ogg")
 var killedSound = load("res://sounds/killed.ogg")
 #var soundPlayer = AudioStreamPlayer.new(
@@ -18,6 +19,8 @@ var inputsDisabled = false
 onready var playerColShape = get_node("playerShape")
 onready var hungerInfo = get_tree().get_root().get_node("Control/game/hud/Fleisch")
 var grounded = false 
+## eperimental
+var type = "SET_ME"
 
 # Movement Vars
 var directional_force = Vector2()
@@ -56,11 +59,14 @@ func _ready():
 	add_child ( killprotectTimer )
 	killprotectTimer.wait_time = 3
 	killprotectTimer.connect("timeout",self,"_killprotectTimeout")
-	var root = get_tree().get_root().get_node("Control")
 	grounded = false
 	can_jump = true
 	set_process_input(true)
-	rpc("playAnimation","trexAnimRun")
+	if type=="bird":
+		gravity_scale = 8
+		rpc("playAnimation","birdFly")
+	else:
+		rpc("playAnimation","trexAnimRun")
 
 func rpcPowerUps(_id,_string):
 	get_parent().get_node(str(_id)).powerUpPlayer.play(_string)
@@ -114,10 +120,16 @@ func _integrate_forces(state):
 			final_force.x = top_move_speed
 		elif(final_force.x < -top_move_speed):
 			final_force.x = -top_move_speed
-		if(final_force.y > top_jump_speed):
-			final_force.y = top_jump_speed
-		elif(final_force.y < -top_jump_speed):
-			final_force.y = -top_jump_speed
+		if(type == "dino"):
+			if(final_force.y > top_jump_speed):
+				final_force.y = top_jump_speed
+			elif(final_force.y < -top_jump_speed):
+				final_force.y = -top_jump_speed
+		elif (type == "bird"):
+			if(final_force.y > top_flyup_speed):
+				final_force.y = top_flyup_speed
+			elif(final_force.y < -top_flyup_speed):
+				final_force.y = -top_flyup_speed
 		rset("slave_motion",final_force)
 		rset("slave_pos",state.get_transform())
 	else:
@@ -134,10 +146,33 @@ func apply_force(state):
 	if keys[1]:
 		directional_force += DIRECTION.LEFT
     # Jump
-	if keys[2]:
-		if jump_time < TOP_JUMP_TIME and can_jump:
+	if keys[2] and alive:
+		if type == "dino":
+			dinoJump(state)
+		elif type == "bird":
+			 birdFly(state)
+			
+var fly_time = 0
+var TOP_FLY_TIME = 0.02
+var flyTimer = 0.2
+var can_fly = true
+
+func birdFly(state):
+	
+	if fly_time < TOP_FLY_TIME and can_fly and global_position.y>10:
+		directional_force += DIRECTION.UP/100
+	elif flyTimer >= 0:
+		can_fly = false
+		flyTimer-=state.get_step()
+	else:
+		flyTimer=0.2
+		fly_time = 0
+		can_fly=true
+
+func dinoJump(state):
+	if jump_time < TOP_JUMP_TIME and can_jump:
 			## Play sound here cause we want to play on every jump!
-			if (grounded and can_jump and alive):
+			if (grounded and can_jump):
 				rpc("rpcJumpParticles",get_name())
 				cameraNode.jumpRumble()
 				# play jump sound
@@ -151,18 +186,20 @@ func apply_force(state):
 	if(grounded):
 		can_jump = true
 		jump_time = 0
-		
+
+
 func _on_groundSensor_body_entered( body ):
-	if body.has_node("playerShape"):
-		if body.get_name()!=get_name():
+	if body.is_in_group("players"):
+		if type =="dino":
 			grounded = true
 	elif body.is_in_group("ground"):
-		grounded = true
+		if type =="dino":
+			grounded = true
 		if alive:
 			cameraNode.landRumble(linear_velocity.y)
 
 func _on_groundSensor_body_exited( body ):
-	if body.has_node("playerShape"):
+	if body.is_in_group("players")and type =="dino":
 		if body.get_name()!=get_name():
 			grounded = false
 	elif body.is_in_group("ground"):
@@ -178,6 +215,7 @@ sync func rpcJumpParticles(_id):
 	get_parent().get_node(_id).particleAnimPlayer.play("particleJump")
 
 func _input(event):
+	
 	if is_network_master() and alive and not inputsDisabled:
 		#if keyboard input
 		if event.get_class()=="InputEventKey":
@@ -200,9 +238,16 @@ func _input(event):
 			# Duck and Cover!
 			if event.is_action_pressed("ui_down"):
 				keys[3] = true
-				rpc("playAnimation","trexAnimDuck")
+				if type=="bird":
+					rpc("playAnimation","birdFly")
+				elif type == "dino":
+					rpc("playAnimation","trexAnimDuck")
+
 			elif event.is_action_released("ui_down"):
-				rpc("playAnimation","trexAnimRun")
+				if type == "dino":
+					rpc("playAnimation","trexAnimRun")
+				elif type == "bird":
+					rpc("playAnimation","birdFly")
 				keys[3] = false
 			
 			#jumping keyevents
