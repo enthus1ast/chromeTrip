@@ -75,6 +75,7 @@ func _on_meatArea_body_entered( body ):
 			pass
 
 sync func rpcEatFood(_playerNode,_playerName):
+	print("ate foot: ", _playerNode, _playerNode.name)
 	onCollectParticles.emitting=true
 	if !soundPlayer.is_playing():
 #		soundPlayer.play(0.0)
