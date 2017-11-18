@@ -28,7 +28,6 @@ __meta__ = {
 
 [node name="Area2D" type="Area2D" parent="."]
 
-editor/display_folded = true
 position = Vector2( -0.0690308, -312.541 )
 scale = Vector2( 1.00216, 10.7669 )
 input_pickable = true
@@ -42,8 +41,8 @@ _sections_unfolded = [ "Collision" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 
-position = Vector2( 0.068882, -0.617592 )
-scale = Vector2( 2.03407, 2.96908 )
+position = Vector2( 0.068882, -44.7423 )
+scale = Vector2( 2.03407, 7.58918 )
 shape = SubResource( 1 )
 
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

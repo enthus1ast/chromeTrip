@@ -75,8 +75,8 @@ tracks/0/keys = {
 [sub_resource type="CapsuleShape2D" id=5]
 
 custom_solver_bias = 0.0
-radius = 12.5938
-height = 11.8958
+radius = 11.0155
+height = 5.33517
 
 [sub_resource type="RectangleShape2D" id=6]
 
@@ -109,7 +109,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -0.899892, 4.86638 ), Vector2( -0.913778, -9.02121 ) ]
+"values": [ Vector2( 2.8125, 7.82388 ), Vector2( 3.39283, -0.346639 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("../playerShape:scale")
@@ -120,7 +120,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 4.01397, 2.77044 ), Vector2( 4.16979, 2.41413 ) ]
+"values": [ Vector2( 2.43329, 1.29047 ), Vector2( 2.40592, 1.18218 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("../playerShape:rotation_deg")
@@ -131,7 +131,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 4.2, -347.2 ]
+"values": [ -7.21679, -374.539 ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath(".:flip_h")
@@ -143,6 +143,28 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath(".:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2.2629, 29.6091 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.6, 0.6 ) ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -231,7 +253,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -1.01272, 15.1961 ) ]
+"values": [ Vector2( -0.929398, 13.5063 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("../playerShape:rotation_deg")
@@ -253,7 +275,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 2.33423, 1.22343 ) ]
+"values": [ Vector2( 2.33423, 1.32484 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath(".:flip_h")
@@ -305,6 +327,39 @@ tracks/2/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("../playerShape:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 3.95235, 1.63785 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../playerShape:rotation_deg")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 27.7389 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../playerShape:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1.77437, 2.24299 ) ]
+}
 
 [sub_resource type="Animation" id=11]
 
@@ -342,7 +397,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1.77437, 1.87565 ) ]
+"values": [ Vector2( 1.77437, 2.24299 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("../playerShape:position")
@@ -353,7 +408,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 3.40043, 2.68738 ) ]
+"values": [ Vector2( 3.95235, 1.63785 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath(".:position")
@@ -483,9 +538,9 @@ _sections_unfolded = [ "Playback Options" ]
 
 [node name="playerShape" type="CollisionShape2D" parent="."]
 
-position = Vector2( -0.899892, 4.86638 )
-rotation = 0.0733038
-scale = Vector2( 4.01397, 2.77044 )
+position = Vector2( 2.8125, 7.82388 )
+rotation = -0.125957
+scale = Vector2( 2.43329, 1.29047 )
 shape = SubResource( 5 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z" ]
 
