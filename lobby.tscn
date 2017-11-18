@@ -4,7 +4,7 @@
 [ext_resource path="res://PlayerAnim.tscn" type="PackedScene" id=2]
 [ext_resource path="res://panelMaterial.tres" type="StyleBox" id=3]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://200-offline-sprite.png" type="Texture" id=5]
+[ext_resource path="res://sounds/200-offline-sprite.png" type="Texture" id=5]
 [ext_resource path="res://raw/Hair.png" type="Texture" id=6]
 [ext_resource path="res://raw/Hut.png" type="Texture" id=7]
 [ext_resource path="res://MainMenu.tscn" type="PackedScene" id=8]
@@ -118,7 +118,6 @@ position = Vector2( -51, 61 )
 
 [node name="networkPanel" type="Panel" parent="menu"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -141,10 +140,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 140.0
-margin_top = 14.0
-margin_right = 518.0
-margin_bottom = 64.0
+margin_left = 51.0
+margin_top = 13.0
+margin_right = 429.0
+margin_bottom = 63.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -156,6 +155,32 @@ max_length = 16
 expand_to_len = false
 focus_mode = 2
 placeholder_text = "name"
+placeholder_alpha = 0.6
+caret_blink = false
+caret_blink_speed = 0.65
+_sections_unfolded = [ "Placeholder", "Size Flags", "custom_colors", "custom_fonts" ]
+
+[node name="seed" type="LineEdit" parent="menu/networkPanel"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 438.0
+margin_top = 13.0
+margin_right = 664.0
+margin_bottom = 63.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 3 )
+align = 1
+max_length = 16
+expand_to_len = false
+focus_mode = 2
+placeholder_text = "seed"
 placeholder_alpha = 0.6
 caret_blink = false
 caret_blink_speed = 0.65
@@ -849,6 +874,7 @@ flat = false
 
 [node name="DialogWaiting" type="Panel" parent="menu"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -966,6 +992,30 @@ percent_visible = 1.0
 override_selected_font_color = false
 _sections_unfolded = [ "BBCode", "custom_colors", "custom_fonts" ]
 
+[node name="Donate" type="RichTextLabel" parent="menu"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 374.0
+margin_top = 585.0
+margin_right = 694.0
+margin_bottom = 625.0
+rect_pivot_offset = Vector2( 98.6567, 11.303 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/normal_font = SubResource( 7 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "[url=\"http://games.code0.xyz\"]donate if you [color=red]LOVE[/color] this game[/url]
+ "
+visible_characters = -1
+percent_visible = 1.0
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode", "custom_colors", "custom_fonts" ]
+
 [node name="Highscore" parent="menu" instance=ExtResource( 9 )]
 
 visible = false
@@ -1016,6 +1066,7 @@ _sections_unfolded = [ "Pause" ]
 
 [node name="networkHud" type="Node2D" parent="."]
 
+editor/display_folded = true
 _sections_unfolded = [ "Focus", "Hint", "Margin", "Rect" ]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="networkHud"]
@@ -1048,6 +1099,28 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Material", "custom_colors" ]
 
+[node name="peerTypeInfo" type="RichTextLabel" parent="networkHud/CanvasLayer"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 983.0
+margin_top = -1.0
+margin_right = 1043.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode", "Material", "custom_colors", "custom_fonts" ]
+
 [node name="Timer" type="Timer" parent="networkHud"]
 
 process_mode = 1
@@ -1058,6 +1131,8 @@ autostart = false
 [connection signal="pong" from="." to="." method="_on_Control_pong"]
 
 [connection signal="text_changed" from="menu/networkPanel/name" to="." method="_on_name_text_changed"]
+
+[connection signal="text_changed" from="menu/networkPanel/seed" to="." method="_on_seed_text_changed"]
 
 [connection signal="pressed" from="menu/networkPanel/connect/connect" to="." method="_on_connect_pressed"]
 

@@ -26,6 +26,8 @@ onready var Player = preload("res://player.tscn")
 onready var Game = preload("res://game.tscn")
 onready var BackgroundGame = preload("res://backgroundGame.tscn")
 onready var warnPopup = get_node("menu/WarnPopup")
+onready var peerTypeInfo = get_node("networkHud/CanvasLayer/peerTypeInfo")
+onready var seedInput = get_node("menu/networkPanel/seed")
 
 
 var countdown
@@ -83,9 +85,7 @@ func backgroundGameFnc():
 
 func _ready():
 	backgroundGameFnc()
-	print(OS.get_unix_time ( ))
-	print(OS.get_system_time_secs())
-	print(OS.get_time())
+	seedInput.set_text(str(utils.config.get_value("player", "seed")))
 	musicPlayer.connect("finished",self,"loopMusic")
 #	OS.set_low_processor_usage_mode(true)
 	get_tree().set_network_peer(null)
@@ -350,6 +350,7 @@ func _on_host_pressed():
 	lobby.set_visible(true)
 	lobby.get_node("Container/info/ip").set_text("Ip: "+ str(IP.get_local_addresses()[1]))
 	lobby.get_node("Container/info/name").set_text("name: "+currentPlayer.name)
+	peerTypeInfo.bbcode_text = "[color=red]HOST[/color]"
 	players[id] = {}
 	players[id].name = currentPlayer.name
 	players[id].id = id
@@ -365,6 +366,7 @@ func _on_connect_pressed():
 		
 		eNet.create_client(ip, SERVER_PORT)
 		get_tree().set_network_peer(eNet)
+		peerTypeInfo.bbcode_text = "[color=green]CLIENT[/color]"
 	else:
 		print("I am already trying to connect.")
 	
@@ -534,3 +536,15 @@ func _on_Settings_mute(val):
 
 func _on_RichTextLabel_meta_clicked( meta ):
 	OS.shell_open(utils.DEVELOPER_URI)
+	
+	
+
+
+func _on_seed_text_changed( text ):
+	pass # replace with function body
+	print(text.hash())
+	utils.config.set_value("player", "seed", hash(text))		
+	utils.config.save(utils.CONFIG_PATH)	
+	
+#	seed(text.hash())
+	

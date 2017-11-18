@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://assets/collectables.gd" type="Script" id=1]
 [ext_resource path="res://glowTexture.png" type="Texture" id=2]
@@ -37,8 +37,9 @@
 [ext_resource path="res://assets/meatSpriteAnim/0020.png" type="Texture" id=35]
 [ext_resource path="res://assets/meatSpriteAnim/0021.png" type="Texture" id=36]
 [ext_resource path="res://assets/meatSpriteAnim/0022.png" type="Texture" id=37]
-[ext_resource path="res://sounds/jump.ogg" type="AudioStream" id=38]
-[ext_resource path="res://assets/AudioStreamPlayer.gd" type="Script" id=39]
+[ext_resource path="res://Badges.tscn" type="PackedScene" id=38]
+[ext_resource path="res://sounds/jump.ogg" type="AudioStream" id=39]
+[ext_resource path="res://assets/AudioStreamPlayer.gd" type="Script" id=40]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
@@ -115,6 +116,7 @@ _sections_unfolded = [ "Animation", "Material", "Visibility" ]
 
 [node name="heartArea" type="Area2D" parent="spriteNode"]
 
+editor/display_folded = true
 visible = false
 scale = Vector2( 0.356363, 0.356363 )
 z_as_relative = false
@@ -138,11 +140,12 @@ _sections_unfolded = [ "Material" ]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="spriteNode/heartArea"]
 
+editor/display_folded = true
 modulate = Color( 1, 0.300781, 0.300781, 1 )
 use_parent_material = true
 frames = SubResource( 3 )
 animation = "default"
-frame = 2
+frame = 10
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
@@ -150,6 +153,7 @@ _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="meatArea" type="Area2D" parent="spriteNode"]
 
+editor/display_folded = true
 visible = false
 scale = Vector2( 0.507725, 0.507725 )
 input_pickable = true
@@ -172,11 +176,45 @@ disabled = true
 
 frames = SubResource( 5 )
 animation = "default"
-frame = 20
+frame = 8
 playing = true
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="onCollectParticles" parent="spriteNode/meatArea/AnimatedSprite" instance=ExtResource( 15 )]
+
+[node name="badgeArea" type="Area2D" parent="spriteNode"]
+
+visible = false
+scale = Vector2( 0.507725, 0.507725 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 524288
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision", "Material", "Transform" ]
+
+[node name="collectableShape" type="CollisionShape2D" parent="spriteNode/badgeArea"]
+
+scale = Vector2( 2.94929, 2.94929 )
+shape = SubResource( 4 )
+disabled = true
+
+[node name="Badges" parent="spriteNode/badgeArea" instance=ExtResource( 38 )]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="spriteNode/badgeArea"]
+
+editor/display_folded = true
+visible = false
+frames = SubResource( 5 )
+animation = "default"
+frame = 8
+playing = true
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
+
+[node name="onCollectParticles" parent="spriteNode/badgeArea/AnimatedSprite" instance=ExtResource( 15 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="spriteNode"]
 
@@ -196,16 +234,18 @@ rect = Rect2( -10, -10, 20, 20 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
-stream = ExtResource( 38 )
+stream = ExtResource( 39 )
 volume_db = -80.0
 autoplay = false
 mix_target = 0
 bus = "Effects"
-script = ExtResource( 39 )
+script = ExtResource( 40 )
 
 [connection signal="body_entered" from="spriteNode/heartArea" to="." method="_on_heartArea_body_entered"]
 
 [connection signal="body_entered" from="spriteNode/meatArea" to="." method="_on_meatArea_body_entered"]
+
+[connection signal="body_entered" from="spriteNode/badgeArea" to="." method="_on_badgeArea_body_entered"]
 
 [connection signal="screen_exited" from="spriteNode/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 

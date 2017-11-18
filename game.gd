@@ -6,11 +6,12 @@ onready var Restartpoint = preload("res://restartPoint.tscn")
 onready var Obstacles = preload("res://assets/obstacles.tscn")
 onready var Enemys = preload("res://assets/enemys.tscn")
 onready var Collectables = preload("res://assets/collectables.tscn")
+onready var Badge = preload("res://Badges.tscn")
 onready var Wolke = preload("res://Wolke.tscn")
 onready var viewportSize = get_viewport().size
 onready var muteCheckbox = get_node("hud/Mute")
 
-var collectablesStrings = ["heart","meat"]
+var collectablesStrings = ["heart","meat","badge"]
 
 var fakeSpeed=300
 var players
@@ -19,6 +20,9 @@ var finalScore = 0
 var distanceWalked = 0
 var ground
 var globalIdCounter = 0
+var badgePropability = 1000
+var badgeScore = 20000 # score needet to randomly drop badges
+#var badgePropability = 10
 
 var stage = 1 # each 5000 points one stage
 var nextLevel = 5000
@@ -81,7 +85,9 @@ func _ready():
 	spriteWidth = groundSprite1.get_texture().get_size().x
 	placeholderScore = pointsLabel.text
 	placeholderScoreSize = placeholderScore.length()
-	seed(0)
+#	seed(0)
+#	seed(100)
+	seed(hash(utils.config.get_value("player", "seed")))
 	if get_tree().is_network_server():
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 		pass
@@ -99,6 +105,7 @@ func mapGen():
 		enemysGen()
 		wolkenGen()
 		collectablesGen()
+		badgesGen()
 
 sync func rpcRespawnpoint(pos):
 	var restartPoint = Restartpoint.instance()
@@ -134,6 +141,32 @@ func collectablesGen():
 		globalIdCounter += 1
 		i += 1
 	i = 0
+
+func badgesGen():
+#	var i = 0
+#	var choice
+	## decide which obstacle
+	print(str(score) + "/" + str(badgeScore))
+	if score < badgeScore  : return
+	var choice = rand_range(0,1024)
+	print("BADGE choise is:" + str(choice))
+	if choice > badgePropability:
+		print("CREATED A BADGE")
+#		if 30 < rand_range(0,100):
+#			choice = collectablesStrings[0]
+#		else:
+#			choice = collectablesStrings[1]
+		var pos = Vector2(rand_range(1024,2000)-collectablesNode.position.x,rand_range(10,330))
+#
+		rpc("rpcBadge", pos, globalIdCounter)
+		globalIdCounter += 1
+
+sync func rpcBadge(pos, name):
+	var badge = Collectables.instance()
+	badge.choice(collectablesStrings[2]) # badge
+	badge.position = pos
+	badge.set_name("badge" + str(name))
+	collectablesNode.add_child(badge)
 	
 sync func rpcEnemy(pos, scale, choice):#	
 	var enemy = Enemys.instance()

@@ -2,7 +2,7 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/100-offline-sprite.png-ab6fed078be2a46c42d837d51b641793.stex"
+path="res://.import/eggOutlinedZerschnibbelt..png-28a072ae2d15f918c857d64fe8aebe01.stex"
 
 [params]
 
@@ -11,7 +11,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

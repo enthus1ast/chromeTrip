@@ -104,6 +104,9 @@ func getStage():
 	## returns the current stage.
 	return get_tree().get_root().get_node("Control/game").stage
 
+func canBeABird():
+	return config.get_key("player", "beabird")
+
 func getHighscore(cnt):
 	# returns the N sorted highscore items
 	# info: crypto cannot append line atm...
@@ -153,9 +156,13 @@ func _ready():
 			config.set_value("player", "defaultname", "unknown")		
 		if not config.has_section_key("player", "defaultserver"):
 			config.set_value("player", "defaultserver", "127.0.0.1")
+		if not config.has_section_key("player", "seed"):
+			config.set_value("player", "seed", "0")			
 		# Store a variable if and only if it hasn't been defined yet
 #		if not config.has_section_key("player", "SERVER_PORT"):
-#			config.set_value("player", "SERVER_PORT", 7000)		
+#			config.set_value("player", "SERVER_PORT", 7000)	
+		if not config.has_section_key("player", "beabird"):
+			config.set_value("player", "beabird", false)		
 		if not config.has_section_key("audio", "mute"):
 			config.set_value("audio", "mute", false)
 		if not config.has_section_key("audio", "effects"):
