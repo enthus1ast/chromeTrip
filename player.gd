@@ -283,7 +283,10 @@ sync func RPCreanimate(_id, atPosition):
 	player.get_node("playerShape").disabled=false
 	player.get_node("playerShape").update()
 	player.can_jump = false
-	player.get_node("Sprite/AnimationPlayer").play("trexAnimRun")
+	if player.type == "dino":
+		player.get_node("Sprite/AnimationPlayer").play("trexAnimRun")
+	if player.type == "bird":
+		player.get_node("Sprite/AnimationPlayer").play("birdFly")
 	player.slave_pos = transMatrix
 	player.hunger = 0
 	if is_network_master():
