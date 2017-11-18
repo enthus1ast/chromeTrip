@@ -7,19 +7,21 @@ ok Config file (ini)
  ok name
  ok defaultServer
   custom look (haare etc)
-- Fix disconnect bug.
+ok Fix disconnect bug.
 - Debug modus
   positionen
   collision shapes
-- Archivements/Badges
+ok Archivements/Badges
   online list mit badges
-- Name des spieler object hinzufügen
+ok Name des spieler object hinzufügen
+- name muss Playername sein. Damit es keine bugs gibt
+- food einsammeln muss wieder gehen, geht bestimmt nicht weil falscher name
 - Spiel anhalten beim pause drücken SP/MP
 ok Stage informer is above main menu
 ok doppelter eintrag in highscore
-- stage in highscore
-- disable collision on spawn/revive (kill protect)
+ok stage in highscore
+ok disable collision on spawn/revive (kill protect)
 - player collision save spot eliminieren
-- clean player dicts on disconnect.
+? clean player dicts on disconnect.
 
 

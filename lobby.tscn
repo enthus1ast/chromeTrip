@@ -675,7 +675,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 359.0
-margin_bottom = 15.0
+margin_bottom = 14.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -1098,7 +1098,6 @@ rect_pivot_offset = Vector2( 98.6567, 11.303 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/normal_font = SubResource( 7 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 bbcode_enabled = true
 bbcode_text = "[url=\"http://games.code0.xyz\"]donate if you [color=red]LOVE[/color] this game[/url]
@@ -1225,6 +1224,7 @@ autostart = false
 [connection signal="text_changed" from="menu/networkPanel/name" to="." method="_on_name_text_changed"]
 
 [connection signal="text_changed" from="menu/networkPanel/seed" to="." method="_on_seed_text_changed"]
+
 [connection signal="mouse_entered" from="menu/networkPanel/connect/connect" to="." method="_on_host_mouse_entered"]
 
 [connection signal="mouse_exited" from="menu/networkPanel/connect/connect" to="." method="_on_host_mouse_exited"]
