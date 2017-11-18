@@ -89,7 +89,6 @@ _sections_unfolded = [ "Resource" ]
 
 [node name="Control" type="Control"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -106,6 +105,7 @@ _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Material", "Rect",
 
 [node name="menu" type="Control" parent="."]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -680,7 +680,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 359.0
-margin_bottom = 14.0
+margin_bottom = 15.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1

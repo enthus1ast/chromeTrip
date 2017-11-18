@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
@@ -10,9 +10,10 @@
 [ext_resource path="res://assets/parallaxBackground.tscn" type="PackedScene" id=8]
 [ext_resource path="res://ground.png" type="Texture" id=9]
 [ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=10]
-[ext_resource path="res://GameOver.tscn" type="PackedScene" id=11]
-[ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=12]
-[ext_resource path="res://shaders/texture/white.png" type="Texture" id=13]
+[ext_resource path="res://assets/rockShower.tscn" type="PackedScene" id=11]
+[ext_resource path="res://GameOver.tscn" type="PackedScene" id=12]
+[ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=13]
+[ext_resource path="res://shaders/texture/white.png" type="Texture" id=14]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -66,11 +67,10 @@ _sections_unfolded = [ "Resource" ]
 gradient = SubResource( 8 )
 width = 2048
 
-[sub_resource type="LineShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=15]
 
 custom_solver_bias = 0.0
-normal = Vector2( 0, -1 )
-d = 0.0
+extents = Vector2( 21.273, 10 )
 
 [sub_resource type="RectangleShape2D" id=11]
 
@@ -245,6 +245,7 @@ __meta__ = {
 
 [node name="hud" type="CanvasLayer" parent="."]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -371,6 +372,8 @@ __meta__ = {
 
 [node name="background" type="Node2D" parent="sprites"]
 
+editor/display_folded = true
+
 [node name="gradientSky" type="Sprite" parent="sprites/background"]
 
 position = Vector2( 1052.72, 182.43 )
@@ -430,8 +433,11 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="ground" type="Node2D" parent="sprites/constantMovement"]
 
-editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="Sprite1" type="Sprite" parent="sprites/constantMovement/ground"]
 
@@ -477,6 +483,8 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="rockShower" parent="." instance=ExtResource( 11 )]
+
 [node name="groundCollision" type="StaticBody2D" parent="." groups=[
 "ground",
 ]]
@@ -496,13 +504,11 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="groundCollision"]
 
-position = Vector2( 2258.02, 383.062 )
+position = Vector2( 485.777, 398.802 )
+rotation = 3.14159
 scale = Vector2( 30.2855, 1.74003 )
-shape = SubResource( 10 )
+shape = SubResource( 15 )
 _sections_unfolded = [ "Transform" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="leftBlock" type="StaticBody2D" parent="."]
 
@@ -527,6 +533,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="rightBlock" type="StaticBody2D" parent="."]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -545,12 +552,12 @@ scale = Vector2( 1.65385, 62.1349 )
 shape = SubResource( 11 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="GameOverScreen" parent="." instance=ExtResource( 11 )]
+[node name="GameOverScreen" parent="." instance=ExtResource( 12 )]
 
 editor/display_folded = true
 visible = false
 
-[node name="cameraNode" parent="." instance=ExtResource( 12 )]
+[node name="cameraNode" parent="." instance=ExtResource( 13 )]
 
 [node name="shaderSpass" type="Sprite" parent="."]
 
@@ -558,7 +565,7 @@ material = SubResource( 13 )
 position = Vector2( -84.333, -59.662 )
 scale = Vector2( 18.2812, 11.349 )
 z = 4095
-texture = ExtResource( 13 )
+texture = ExtResource( 14 )
 centered = false
 _sections_unfolded = [ "Material", "Offset", "Transform", "Visibility", "Z" ]
 __meta__ = {
