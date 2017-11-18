@@ -186,7 +186,12 @@ remote func startGame():
 	var cnt = 0
 	for p in players:
 		players[p].node = Player.instance()
-		players[p].node.name = players[p].name
+		players[p].node.playerName = players[p].name
+		
+		
+		players[p].node.playerName = players[p].name
+		print(players[p].node, "->", players[p])
+		
 		players[p].node.type = players[p].type
 		players[p].node.get_node("Label").set_text(players[p].name)
 #		players[p].node.get_node("Label").set("custom_colors/font_color" ,computeColor(players[p].name))
@@ -379,6 +384,7 @@ func _on_connect_pressed():
 		print("I am already trying to connect.")
 	
 func _on_sp_pressed():
+	
 	eNet.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(eNet)
 	currentPlayer.name = nameInput.get_text()
@@ -390,6 +396,8 @@ func _on_sp_pressed():
 	players[id] = {}
 	players[id].name = currentPlayer.name
 	players[id].id = id
+	print("created sp game player id is:", id)
+	print("network id is:", get_tree().get_network_unique_id())
 	players[id].isReady = currentPlayer.isReady
 	players[id].type = currentPlayer.type
 	updateList(players)

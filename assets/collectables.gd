@@ -71,11 +71,14 @@ func _process(delta):
 func _on_meatArea_body_entered( body ):
 	if get_tree().is_network_server():
 		if body.is_in_group("players") and !isCollected:
-			rpc("rpcEatFood",body,body.name)
+			print("body entered 1@@@@@@: ", body.get_name())
+			print("body entered 2@@@@@@: ", body.playerName)
+			rpc("rpcEatFood",body.get_name(),body.playerName)
 			pass
 
-sync func rpcEatFood(_playerNode,_playerName):
-	print("ate foot: ", _playerNode, _playerNode.name)
+sync func rpcEatFood(_playerId,_playerName):
+#	print("ate foot: ", _playerNode, _playerNode.get_name(), _playerNode.playerName)
+	var _playerNode = get_tree().get_root().get_node("Control/game/players/" + str(_playerId))
 	onCollectParticles.emitting=true
 	if !soundPlayer.is_playing():
 #		soundPlayer.play(0.0)
@@ -84,6 +87,7 @@ sync func rpcEatFood(_playerNode,_playerName):
 		_playerNode.hunger -= foodValue
 	else:
 		_playerNode.hunger = 0
+	print("Player hunger is: ", _playerNode.hunger)
 	flashMessage.showPointsAt(null,"Tasty!",position,_playerName)
 	set_process(false)
 	isCollected = true
@@ -97,7 +101,7 @@ remote func calcPointsFromHeight(_height): #ony server shoud run this
 func _on_heartArea_body_entered( body ):
 	if get_tree().is_network_server():
 		if body.is_in_group("players") and !isCollected:
-			rpc("rpcScoreAdd",calcPointsFromHeight(position.y),body.name)
+			rpc("rpcScoreAdd",calcPointsFromHeight(position.y),body.playerName)
 			pass	
 
 sync func rpcScoreAdd(_value,_player):

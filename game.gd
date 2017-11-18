@@ -245,8 +245,8 @@ func _process(delta):
 	var playersText = "" 
 	playersLabel.bbcode_text = "Stage: "+str(stage)+"\n"
 	for player in get_tree().get_nodes_in_group("players"):
-		var line = str(int(player.alive))+ " " + player.name
-		playersLabel.bbcode_text += utils.computeColorBB(player.name, line) + "\n"
+		var line = str(int(player.alive))+ " " + player.playerName
+		playersLabel.bbcode_text += utils.computeColorBB(player.playerName, line) + "\n"
 		
 func _on_VisibilityNotifier2D_screen_exited():
 	# two ground-tiles for seamless infinite maps
