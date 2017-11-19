@@ -4,7 +4,6 @@
 [ext_resource path="res://sounds/200-offline-sprite.png" type="Texture" id=2]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=3]
 
-
 [sub_resource type="DynamicFont" id=1]
 
 size = 100
@@ -104,7 +103,7 @@ tracks/6/keys = {
 "values": [ Vector2( 1e-05, 1e-05 ), Vector2( 2.43845, 2.43845 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("ButRestart/ImgRestart:rotation_deg")
+tracks/7/path = NodePath("ButRestart/ImgRestart:rotation_degrees")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -115,7 +114,7 @@ tracks/7/keys = {
 "values": [ 960.0, 0.0 ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("DinoLeft:rotation_deg")
+tracks/8/path = NodePath("DinoLeft:rotation_degrees")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -126,7 +125,7 @@ tracks/8/keys = {
 "values": [ 0.0, 0.0, 21.0, 21.0, 0.0 ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("DinoRight:rotation_deg")
+tracks/9/path = NodePath("DinoRight:rotation_degrees")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
