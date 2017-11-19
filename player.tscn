@@ -660,4 +660,6 @@ bus = "Effects"
 
 [connection signal="body_exited" from="groundSensor" to="." method="_on_groundSensor_body_exited"]
 
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
+
 

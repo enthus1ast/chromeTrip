@@ -87,7 +87,7 @@ sync func rpcObstacles(pos, flipped, scale ,choice):
 
 func obstaclesGen():
 	var i = 0
-	while i < obstaclesCount:
+	while i < obstaclesCount and is_inside_tree():
 		var pos = Vector2(i*1000+rand_range(1024,2000)-obstaclesNode.global_position.x,rand_range(350,390))
 		var flipped
 		var choice = round(rand_range(1,8))
