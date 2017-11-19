@@ -192,7 +192,12 @@ func _on_groundSensor_body_entered( body ):
 	if body.is_in_group("players"):
 		if type =="dino":
 			grounded = true
-	elif body.is_in_group("ground"):
+	elif body.is_in_group("ground") or body.is_in_group("rocks"):
+		if type =="dino":
+			grounded = true
+		if alive:
+			cameraNode.landRumble(linear_velocity.y)
+	elif body.is_in_group("rocks"):
 		if type =="dino":
 			grounded = true
 		if alive:
@@ -203,6 +208,8 @@ func _on_groundSensor_body_exited( body ):
 		if body.get_name()!=get_name():
 			grounded = false
 	elif body.is_in_group("ground"):
+		grounded = false
+	elif  body.is_in_group("rocks"):
 		grounded = false
 
 sync func playAnimation(_string):

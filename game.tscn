@@ -66,11 +66,10 @@ _sections_unfolded = [ "Resource" ]
 gradient = SubResource( 8 )
 width = 2048
 
-[sub_resource type="LineShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=10]
 
 custom_solver_bias = 0.0
-normal = Vector2( 0, -1 )
-d = 0.0
+extents = Vector2( 21.273, 10 )
 
 [sub_resource type="RectangleShape2D" id=11]
 
@@ -365,11 +364,14 @@ _sections_unfolded = [ "Visibility" ]
 
 [node name="sprites" type="Node2D" parent="."]
 
+editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="background" type="Node2D" parent="sprites"]
+
+editor/display_folded = true
 
 [node name="gradientSky" type="Sprite" parent="sprites/background"]
 
@@ -430,8 +432,11 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="ground" type="Node2D" parent="sprites/constantMovement"]
 
-editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="Sprite1" type="Sprite" parent="sprites/constantMovement/ground"]
 
@@ -496,13 +501,11 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="groundCollision"]
 
-position = Vector2( 2258.02, 383.062 )
+position = Vector2( 485.777, 398.802 )
+rotation = 3.14159
 scale = Vector2( 30.2855, 1.74003 )
 shape = SubResource( 10 )
 _sections_unfolded = [ "Transform" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="leftBlock" type="StaticBody2D" parent="."]
 
@@ -527,6 +530,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="rightBlock" type="StaticBody2D" parent="."]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1

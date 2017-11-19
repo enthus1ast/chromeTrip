@@ -76,7 +76,7 @@ tracks/0/keys = {
 
 custom_solver_bias = 0.0
 radius = 11.0155
-height = 5.33517
+height = 6.73176
 
 [sub_resource type="RectangleShape2D" id=6]
 
@@ -192,7 +192,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 3.40043, 2.68738 ) ]
+"values": [ Vector2( 3.68526, 2.69872 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("../playerShape:rotation_deg")
@@ -214,7 +214,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1.77437, 1.87565 ) ]
+"values": [ Vector2( 1.77437, 2.24255 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath(".:flip_h")
@@ -336,7 +336,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 3.95235, 1.63785 ) ]
+"values": [ Vector2( 3.68526, 2.69872 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("../playerShape:rotation_deg")
@@ -358,7 +358,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1.77437, 2.24299 ) ]
+"values": [ Vector2( 1.77437, 2.24255 ) ]
 }
 
 [sub_resource type="Animation" id=11]
@@ -397,7 +397,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1.77437, 2.24299 ) ]
+"values": [ Vector2( 1.77437, 2.24255 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("../playerShape:position")
@@ -408,7 +408,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 3.95235, 1.63785 ) ]
+"values": [ Vector2( 3.68526, 2.69872 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath(".:position")
@@ -538,9 +538,9 @@ _sections_unfolded = [ "Playback Options" ]
 
 [node name="playerShape" type="CollisionShape2D" parent="."]
 
-position = Vector2( 2.8125, 7.82388 )
-rotation = -0.125957
-scale = Vector2( 2.43329, 1.29047 )
+position = Vector2( 3.68526, 2.69872 )
+rotation = 0.484135
+scale = Vector2( 1.77437, 2.24255 )
 shape = SubResource( 5 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z" ]
 
@@ -555,6 +555,7 @@ gravity = 9.8
 linear_damp = 0.1
 angular_damp = 1.0
 collision_layer = 0
+collision_mask = 33
 audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Audio Bus", "Collision", "Pickable", "Transform", "Visibility" ]
@@ -576,9 +577,8 @@ position = Vector2( -2.2629, 29.6091 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
 offset = Vector2( 6.09799, -42.0819 )
-flip_h = true
 region_enabled = true
-region_rect = Rect2( 262, 5, 88, 74 )
+region_rect = Rect2( 2118, 1, 85, 96 )
 _sections_unfolded = [ "Animation", "Material", "Offset", "Region", "Transform", "Visibility", "Z" ]
 __meta__ = {
 "_edit_lock_": true
