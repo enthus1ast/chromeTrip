@@ -17,7 +17,6 @@ func _ready():
 		timeToStart.connect("timeout",self,"_time_to_start_timeout")
 		add_child(timer)
 		add_child(timeToStart)
-		letItRain(1,20)
 	
 func letItRain(_timeTo_Start,_count):
 	if get_tree().is_network_server():
