@@ -24,10 +24,10 @@ func errupt():
 func _ready():
 	if control.has_node("game"):
 		game = control.get_node("game")
+		cameraNode = game.get_node("cameraNode")
+		animPlayer.connect("animation_finished",self,"_anim_finished")
 	elif game==null:
 		game = control.get_node("backgroundGame")
-	cameraNode = game.get_node("cameraNode")
-	animPlayer.connect("animation_finished",self,"_anim_finished")
 	pass
 	
 func _anim_finished(_anim):

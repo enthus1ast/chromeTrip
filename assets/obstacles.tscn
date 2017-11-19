@@ -30,7 +30,6 @@ _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z" ]
 
 [node name="kaktuss1" type="KinematicBody2D" parent="."]
 
-editor/display_folded = true
 visible = false
 input_pickable = false
 collision_layer = 8

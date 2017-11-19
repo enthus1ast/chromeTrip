@@ -88,6 +88,10 @@ func _killprotectTimeout():
 #	## also the sprite is blinking.	
 
 func _process(delta):
+	
+	if global_position.x < 0 and alive:
+		kill()
+	
 	if is_network_master():
 		rset("slave_hunger",hunger)
 		hungerInfo.amount = 100-hunger
