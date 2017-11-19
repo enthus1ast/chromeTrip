@@ -1,27 +1,23 @@
 David
-ok Highscore counter
-ok Crypted highscore file
-(- Online highscore)
-ok Config file (ini)
+** DONE Highscore counter
+** DONE Crypted highscore file
+** TODO Online highscore?
+** DONE Config file (ini)
   Fullscreen
  ok name
  ok defaultServer
   custom look (haare etc)
-ok Fix disconnect bug.
-- Debug modus
-  positionen
-  collision shapes
-ok Archivements/Badges
-  online list mit badges
-ok Name des spieler object hinzufügen
-- name muss Playername sein. Damit es keine bugs gibt
-- food einsammeln muss wieder gehen, geht bestimmt nicht weil falscher name
-- Spiel anhalten beim pause drücken SP/MP
-ok Stage informer is above main menu
-ok doppelter eintrag in highscore
-ok stage in highscore
-ok disable collision on spawn/revive (kill protect)
-- player collision save spot eliminieren
-? clean player dicts on disconnect.
-
+** DONE Archivements/Badges
+  - online list mit badges
+** DONE Name des spieler object hinzufügen
+** DONE name muss Playername sein. Damit es keine bugs gibt
+** DONE food einsammeln muss wieder gehen, geht bestimmt nicht weil falscher name
+** DONE Stage informer is above main menu
+** DONE doppelter eintrag in highscore
+** DONE stage in highscore
+** DONE disable collision on spawn/revive (kill protect)
+** TODO Spiel anhalten beim pause drücken SP/MP
+** TODO player collision save spot eliminieren
+** TODO dauer spring bug beim ersten mal 
+** TODO be a bird ausblenden wenn kein bird
 

@@ -22,6 +22,10 @@ var ground
 var globalIdCounter = 0
 var badgePropability = 800 # dice of 0..1024 
 var badgeScore = 10000 # score needet to randomly drop badges
+
+#var badgePropability = 1 # dice of 0..1024 
+#var badgeScore = 1 # score needet to randomly drop badges
+
 #var badgePropability = 10
 
 var stage = 1 # each 5000 points one stage
