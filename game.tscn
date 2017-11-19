@@ -365,14 +365,11 @@ _sections_unfolded = [ "Visibility" ]
 
 [node name="sprites" type="Node2D" parent="."]
 
-editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="background" type="Node2D" parent="sprites"]
-
-editor/display_folded = true
 
 [node name="gradientSky" type="Sprite" parent="sprites/background"]
 

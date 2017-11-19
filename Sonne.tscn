@@ -21,7 +21,7 @@ length = 3.0
 loop = true
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:rotation_deg")
+tracks/0/path = NodePath(".:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/imported = false
@@ -34,7 +34,6 @@ tracks/0/keys = {
 
 [node name="Sonne" type="Node2D"]
 
-rotation = 0.230986
 _sections_unfolded = [ "Transform" ]
 
 [node name="glowTexture" type="Sprite" parent="."]

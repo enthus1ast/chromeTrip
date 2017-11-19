@@ -143,7 +143,6 @@ _sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="LogoAnim" parent="menu" instance=ExtResource( 2 )]
 
-editor/display_folded = true
 position = Vector2( -51, 61 )
 
 [node name="networkPanel" type="Panel" parent="menu"]
@@ -371,6 +370,8 @@ flat = false
 _sections_unfolded = [ "custom_fonts" ]
 
 [node name="Dinos" type="Node2D" parent="menu/networkPanel"]
+
+editor/display_folded = true
 
 [node name="SpriteSp" type="Sprite" parent="menu/networkPanel/Dinos"]
 

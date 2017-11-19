@@ -3,7 +3,6 @@
 [ext_resource path="res://sounds/200-offline-sprite.png" type="Texture" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
 
-
 [sub_resource type="Animation" id=1]
 
 length = 1.0
@@ -115,7 +114,7 @@ tracks/1/keys = {
 "values": [ Vector2( -50, 49 ), Vector2( -50, 49 ), Vector2( 1100, 49 ), Vector2( 1100, 500 ), Vector2( -200, 550 ), Vector2( -50, 49 ), Vector2( 50, 49 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite2:rotation_deg")
+tracks/2/path = NodePath("Sprite2:rotation_degrees")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -154,7 +153,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite2" type="Sprite" parent="."]
 
-position = Vector2( -2.2629, 29.6091 )
+position = Vector2( 50, 49 )
 texture = ExtResource( 1 )
 offset = Vector2( 6.09799, -42.0819 )
 region_enabled = true
