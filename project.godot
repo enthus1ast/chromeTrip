@@ -8,14 +8,11 @@
 
 config_version=3
 
-[3d]
-
-=false
-
 [application]
 
 config/name="chromeTrip"
 run/main_scene="res://lobby.tscn"
+boot_splash/image="res://splashScreen.png"
 config/icon="res://raw/chromeTrip.png"
 
 [autoload]
@@ -51,10 +48,14 @@ ui_down=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"
 ui_enter=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777221,"unicode":0,"echo":false,"script":null)
  ]
 
+[physics]
+
+2d/thread_model=2
+
 [rendering]
 
 quality/intended_usage/framebuffer_allocation=0
 quality/2d/use_pixel_snap=true
-quality/filters/anisotropic_filter_level=0.0
+threads/thread_model=2
 environment/default_clear_color=Color( 0.964706, 0.964706, 0.964706, 1 )
 environment/default_environment="res://default_env.tres"
