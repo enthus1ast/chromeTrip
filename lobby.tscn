@@ -182,12 +182,12 @@ size_flags_vertical = 1
 custom_fonts/font = SubResource( 3 )
 align = 1
 max_length = 16
-expand_to_len = false
 focus_mode = 2
 placeholder_text = "name"
 placeholder_alpha = 0.6
 caret_blink = false
 caret_blink_speed = 0.65
+context_menu_enabled = true
 _sections_unfolded = [ "Placeholder", "Size Flags", "custom_colors", "custom_fonts" ]
 
 [node name="seed" type="LineEdit" parent="menu/networkPanel"]
@@ -208,12 +208,12 @@ size_flags_vertical = 1
 custom_fonts/font = SubResource( 3 )
 align = 1
 max_length = 16
-expand_to_len = false
 focus_mode = 2
 placeholder_text = "seed"
 placeholder_alpha = 0.6
 caret_blink = false
 caret_blink_speed = 0.65
+context_menu_enabled = true
 _sections_unfolded = [ "Placeholder", "Size Flags", "custom_colors", "custom_fonts" ]
 
 [node name="connect" type="Container" parent="menu/networkPanel"]
@@ -249,12 +249,12 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 4 )
-expand_to_len = false
 focus_mode = 2
 placeholder_text = "host/ip"
 placeholder_alpha = 0.6
 caret_blink = false
 caret_blink_speed = 0.65
+context_menu_enabled = true
 _sections_unfolded = [ "Caret", "Hint", "Placeholder", "custom_fonts" ]
 
 [node name="connect" type="Button" parent="menu/networkPanel/connect"]
@@ -372,17 +372,14 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [node name="Dinos" type="Node2D" parent="menu/networkPanel"]
 
-editor/display_folded = true
-
 [node name="SpriteSp" type="Sprite" parent="menu/networkPanel/Dinos"]
 
-editor/display_folded = true
 position = Vector2( 66.1986, 127.575 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 5 )
 offset = Vector2( 6.09799, -42.0819 )
 region_enabled = true
-region_rect = Rect2( 1855, 1, 85, 96 )
+region_rect = Rect2( 1943, 1, 85, 96 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="menu/networkPanel/Dinos/SpriteSp"]
@@ -890,12 +887,12 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 max_length = 100
-expand_to_len = false
 focus_mode = 2
 placeholder_text = "type here..."
 placeholder_alpha = 0.6
 caret_blink = false
 caret_blink_speed = 0.65
+context_menu_enabled = true
 _sections_unfolded = [ "Placeholder" ]
 
 [node name="startLobbyButton" type="Button" parent="menu/lobby/Container"]
