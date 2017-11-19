@@ -1,13 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/rock.gd" type="Script" id=1]
 [ext_resource path="res://assets/stones/stone1.png" type="Texture" id=2]
+[ext_resource path="res://glowTexture.png" type="Texture" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 9.587
-height = 41.018
+radius = 17.7257
+height = 22.4266
 
 [node name="rock" type="RigidBody2D"]
 
@@ -34,9 +35,9 @@ _sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( 0.317133, -0.517346 )
 rotation = 1.5708
-scale = Vector2( 1.73149, 0.948159 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform", "Visibility", "Z" ]
 
@@ -44,8 +45,16 @@ _sections_unfolded = [ "Transform", "Visibility", "Z" ]
 
 position = Vector2( 0.319592, 0.334472 )
 rotation = -1.5708
-scale = Vector2( 0.978687, 0.535926 )
 texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform", "Z" ]
+
+[node name="shadow" type="Sprite" parent="CollisionShape2D"]
+
+modulate = Color( 0, 0, 0, 0.171255 )
+show_behind_parent = true
+position = Vector2( 0.388308, 3.90864 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Material", "Region", "Transform", "Visibility" ]
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 

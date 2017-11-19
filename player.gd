@@ -279,8 +279,10 @@ sync func killed(_id):
 		player.get_node("playerShape").disabled=true
 		player.alive = false
 		player.can_jump = false
-		player.get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
-		print("killed")
+		if player.type =="dino":
+			player.get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
+		elif player.type =="bird":
+			player.get_node("Sprite/AnimationPlayer").play("birdAnimKilled")
 		soundPlayer.stream = killedSound
 		soundPlayer.stream.loop = false
 		soundPlayer.play(0.0)

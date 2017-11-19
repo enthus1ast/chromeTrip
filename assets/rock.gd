@@ -6,6 +6,7 @@ var dangerous = true
 sync var rock_slave_pos = Transform2D()
 sync var rock_slave_lin_vel = Vector2()
 sync var rock_slave_ang_vel = 0
+onready var shadowSprite = get_node("CollisionShape2D/shadow")
 
 func _ready():
 	if get_tree().is_network_server():
@@ -33,7 +34,13 @@ func _physics_process(delta):
 		
 	elif !is_inside_tree():
 		set_physics_process(false)
-		
+	if is_inside_tree():
+		shadowSprite.global_position.y = 372
+		shadowSprite.global_position.x = position.x
+		shadowSprite.scale=Vector2(global_position.y+1000,global_position.y+2000)/5000
 func _on_VisibilityNotifier2D_screen_exited():
-	queue_free()
+	if get_tree().get_nodes_in_group("rocks").size()<=1:
+		get_parent().removeRockShowerNode()
+	if is_inside_tree():
+		queue_free()
 	pass # replace with function body

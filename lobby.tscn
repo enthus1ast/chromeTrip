@@ -4,7 +4,7 @@
 [ext_resource path="res://PlayerAnim.tscn" type="PackedScene" id=2]
 [ext_resource path="res://panelMaterial.tres" type="StyleBox" id=3]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://sounds/200-offline-sprite.png" type="Texture" id=5]
+[ext_resource path="res://200-offline-sprite.png" type="Texture" id=5]
 [ext_resource path="res://raw/Hair.png" type="Texture" id=6]
 [ext_resource path="res://raw/Hut.png" type="Texture" id=7]
 [ext_resource path="res://MainMenu.tscn" type="PackedScene" id=8]
@@ -371,8 +371,6 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [node name="Dinos" type="Node2D" parent="menu/networkPanel"]
 
-editor/display_folded = true
-
 [node name="SpriteSp" type="Sprite" parent="menu/networkPanel/Dinos"]
 
 position = Vector2( 66.1986, 127.575 )
@@ -409,7 +407,7 @@ texture = ExtResource( 5 )
 offset = Vector2( 6.09799, -42.0819 )
 region_enabled = true
 region_rect = Rect2( 1855, 1, 85, 96 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="menu/networkPanel/Dinos/SpriteMpL"]
 
@@ -425,7 +423,6 @@ autoplay = ""
 [node name="SpriteMpR" type="Sprite" parent="menu/networkPanel/Dinos"]
 
 editor/display_folded = true
-modulate = Color( 0.867188, 0.867188, 0.867188, 1 )
 position = Vector2( 590.443, 127.575 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 5 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://player.gd" type="Script" id=1]
 [ext_resource path="res://200-offline-sprite.png" type="Texture" id=2]
@@ -83,6 +83,101 @@ height = 6.73176
 custom_solver_bias = 0.0
 extents = Vector2( 8.70709, 16.8859 )
 
+[sub_resource type="Animation" id=14]
+
+resource_name = "birdAnimKilled"
+length = 1.5
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.6, 1, 1.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Rect2( 262, 5, 88, 74 ), Rect2( 354, 5, 88, 74 ), Rect2( 262, 5, 88, 74 ), Rect2( 354, 5, 88, 74 ), Rect2( 262, 5, 88, 74 ), Rect2( 354, 5, 88, 74 ), Rect2( 262, 5, 88, 74 ), Rect2( 354, 5, 88, 74 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../playerShape:position")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 2.8125, 7.82388 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../playerShape:scale")
+tracks/2/interp = 0
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 2.43329, 1.29047 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../playerShape:rotation_degrees")
+tracks/3/interp = 0
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -7.21679 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath(".:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.2, 1.5 ),
+"transitions": PoolRealArray( 1, -3, 0.25 ),
+"update": 0,
+"values": [ Vector2( -2.2629, 29.6091 ), Vector2( 5, -60 ), Vector2( 100, 500 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.6, 0.6 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath(".:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
 [sub_resource type="Animation" id=7]
 
 resource_name = "birdFly"
@@ -165,6 +260,17 @@ tracks/6/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( 0.6, 0.6 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath(".:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -288,6 +394,17 @@ tracks/4/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath(".:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=10]
 
@@ -360,6 +477,17 @@ tracks/5/keys = {
 "update": 0,
 "values": [ Vector2( 1.77437, 2.24255 ) ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=11]
 
@@ -431,6 +559,17 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
 }
 
 [sub_resource type="Animation" id=12]
@@ -538,14 +677,15 @@ _sections_unfolded = [ "Playback Options" ]
 
 [node name="playerShape" type="CollisionShape2D" parent="."]
 
-position = Vector2( 3.68526, 2.69872 )
-rotation = 0.484135
-scale = Vector2( 1.77437, 2.24255 )
+position = Vector2( 2.8125, 7.82388 )
+rotation = -0.125957
+scale = Vector2( 2.43329, 1.29047 )
 shape = SubResource( 5 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z" ]
 
 [node name="groundSensor" type="Area2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( -3.07397, 28.562 )
 scale = Vector2( 0.72265, 0.72265 )
 input_pickable = false
@@ -564,7 +704,7 @@ __meta__ = {
 
 [node name="sensorShape" type="CollisionShape2D" parent="groundSensor"]
 
-position = Vector2( 0.22403, 6.02573 )
+position = Vector2( 0.224045, 2.7933 )
 scale = Vector2( 1.62509, 0.52064 )
 shape = SubResource( 6 )
 one_way_collision = true
@@ -576,8 +716,9 @@ position = Vector2( -2.2629, 29.6091 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
 offset = Vector2( 6.09799, -42.0819 )
+flip_h = true
 region_enabled = true
-region_rect = Rect2( 1855, 1, 85, 96 )
+region_rect = Rect2( 262, 5, 88, 74 )
 _sections_unfolded = [ "Animation", "Material", "Offset", "Region", "Transform", "Visibility", "Z" ]
 __meta__ = {
 "_edit_lock_": true
@@ -595,6 +736,7 @@ texture = ExtResource( 3 )
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
+anims/birdAnimKilled = SubResource( 14 )
 anims/birdFly = SubResource( 7 )
 anims/trexAnim = SubResource( 8 )
 anims/trexAnimDuck = SubResource( 9 )

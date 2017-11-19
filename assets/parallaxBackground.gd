@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var Vulkan = preload("res://assets/vulkan.tscn")
+onready var Shower = preload("res://assets/rockShower.tscn")
 
 onready var control = get_tree().get_root().get_node("Control")
 onready var mountains = get_node("gebirge")
@@ -73,7 +74,11 @@ func _process(delta):
 			if activeVulkan.global_position.x > 400 and activeVulkan.global_position.x < 600 and !isErrupting:
 				isErrupting = true
 				activeVulkan.errupt()
-		
+				var rockShower = Shower.instance()
+				game.add_child(rockShower)
+				rockShower.letItRain(20,20)
+				
+
 
 func _on_VisibilityNotifier2D_screen_exited():
 	for sprite in mountains.get_children():
