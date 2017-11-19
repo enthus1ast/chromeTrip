@@ -28,6 +28,7 @@ onready var BackgroundGame = preload("res://backgroundGame.tscn")
 onready var warnPopup = get_node("menu/WarnPopup")
 onready var peerTypeInfo = get_node("networkHud/CanvasLayer/peerTypeInfo")
 onready var seedInput = get_node("menu/networkPanel/seed")
+onready var beABirdButton = get_node("menu/lobby/Container/beABird")
 
 
 var countdown
@@ -86,6 +87,10 @@ func backgroundGameFnc():
 func _ready():
 	backgroundGameFnc()
 	seedInput.set_text(str(utils.config.get_value("player", "seed")))
+	if utils.config.get_value("player", "beabird", false) == true:
+		beABirdButton.show()
+	else:
+		beABirdButton.hide()
 	musicPlayer.connect("finished",self,"loopMusic")
 #	OS.set_low_processor_usage_mode(true)
 	get_tree().set_network_peer(null)
