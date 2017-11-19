@@ -128,7 +128,8 @@ func _on_VisibilityNotifier2D_screen_exited():
 	else:
 		groundSprites.position.x=0
 		groundSprite2.position.x = groundSprite1.position.x + spriteWidth*groundSprite1.scale.x
-		mapGen()
+		if is_inside_tree():
+			mapGen()
 	
 func endGame():
 	get_parent().remove_child(self)
