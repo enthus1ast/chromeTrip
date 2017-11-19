@@ -1,6 +1,7 @@
 extends Node2D
 var Rock = preload("res://assets/rock.tscn")
 
+var timeToStart = Timer.new()
 var timer = Timer.new()
 var count
 var timeout = 1
@@ -13,13 +14,18 @@ func _ready():
 	if get_tree().is_network_server():
 		timer.wait_time = timeout
 		timer.connect("timeout",self,"_timeout")
+		timeToStart.connect("timeout",self,"_time_to_start_timeout")
 		add_child(timer)
-		letItRain(20)
+		add_child(timeToStart)
+		letItRain(1,20)
 	
-func letItRain(_count):
+func letItRain(_timeTo_Start,_count):
 	if get_tree().is_network_server():
+		timeToStart.wait_time = _timeTo_Start
+		timeToStart.start()
 		count = _count
-		timer.start()
+		print("rockshowertimeout")
+		
 
 	
 func _timeout():
@@ -45,7 +51,14 @@ sync func rpcCreateRock(_pos,_scale,_ang_vel,_name):
 	rock.global_translate(_pos)
 	rock.angular_velocity = _ang_vel
 	rock.add_to_group("rocks")
-		
+
+func _time_to_start_timeout():
+	print("rain!!")
+	timeToStart.stop()
+	timer.start()
+
+
 func removeRockShowerNode():
+	queue_free()
 	pass
 

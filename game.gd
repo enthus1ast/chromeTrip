@@ -13,7 +13,7 @@ onready var muteCheckbox = get_node("hud/Mute")
 
 var collectablesStrings = ["heart","meat","badge"]
 
-var fakeSpeed=300
+var fakeSpeed = 300
 var players
 var score = 0
 var finalScore = 0
