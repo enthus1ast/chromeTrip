@@ -18,7 +18,6 @@ var inputsDisabled = false
 
 onready var playerColShape = get_node("playerShape")
 onready var hungerInfo = get_tree().get_root().get_node("Control/game/hud/Fleisch")
-var grounded = false 
 ## eperimental
 var type = "SET_ME_TYPE"
 
@@ -48,7 +47,9 @@ onready var particleAnimPlayer = get_node("particleSystems/particleAnimPlayer")
 
  
 # Jumping
+var first_jump = false
 var can_jump = true
+var grounded = false 
 var jump_time = 0
 const TOP_JUMP_TIME = 0.1 # in seconds
 
@@ -59,8 +60,6 @@ func _ready():
 	add_child ( killprotectTimer )
 	killprotectTimer.wait_time = 3
 	killprotectTimer.connect("timeout",self,"_killprotectTimeout")
-	grounded = false
-	can_jump = true
 	set_process_input(true)
 	if type=="bird":
 		gravity_scale = 8
@@ -176,7 +175,7 @@ func birdFly(state):
 func dinoJump(state):
 	if jump_time < TOP_JUMP_TIME and can_jump:
 			## Play sound here cause we want to play on every jump!
-			if (grounded and can_jump):
+			if ((grounded and can_jump) or !first_jump):
 				rpc("rpcJumpParticles",get_name())
 				cameraNode.jumpRumble()
 				# play jump sound
@@ -186,6 +185,9 @@ func dinoJump(state):
 					soundPlayer.play(0.0)	
 			directional_force += DIRECTION.UP
 			jump_time += state.get_step()
+			if !first_jump:
+				directional_force += DIRECTION.UP*5000
+				first_jump = true
     # While on the ground
 	if(grounded):
 		can_jump = true
@@ -193,7 +195,7 @@ func dinoJump(state):
 
 
 func _on_groundSensor_body_entered( body ):
-	if body.is_in_group("players"):
+	if body.is_in_group("players") and body.get_name() != get_name():
 		if type =="dino":
 			grounded = true
 	elif body.is_in_group("ground") or body.is_in_group("rocks"):
@@ -209,8 +211,7 @@ func _on_groundSensor_body_entered( body ):
 
 func _on_groundSensor_body_exited( body ):
 	if body.is_in_group("players")and type =="dino":
-		if body.get_name()!=get_name():
-			grounded = false
+		grounded = false
 	elif body.is_in_group("ground"):
 		grounded = false
 	elif  body.is_in_group("rocks"):
@@ -264,7 +265,7 @@ func _input(event):
 			#jumping keyevents
 			if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_select"):
 				keys[2]=true
-			if event.is_action_released("ui_up") or event.is_action_released("ui_select"):
+			elif event.is_action_released("ui_up") or event.is_action_released("ui_select"):
 				keys[2]=false
 				can_jump = false # Prevents the player from jumping more than once while in air
 #				rset("slave_can_jump",can_jump)
@@ -297,8 +298,9 @@ sync func RPCreanimate(_id, atPosition):
 	var transMatrix = Transform2D(Vector2(),Vector2(), atPosition)
 	player.get_node("playerShape").disabled=false
 	player.get_node("playerShape").update()
-	player.can_jump = false
 	if player.type == "dino":
+		player.can_jump = true
+		player.grounded = false
 		player.get_node("Sprite/AnimationPlayer").play("trexAnimRun")
 	if player.type == "bird":
 		player.get_node("Sprite/AnimationPlayer").play("birdFly")
@@ -308,7 +310,7 @@ sync func RPCreanimate(_id, atPosition):
 		playerColShape.disabled=false
 		isKillProtected = true
 		alive = true
-		can_jump = false
+		can_jump = true
 		grounded = false
 		position = atPosition
 		slave_pos = transMatrix

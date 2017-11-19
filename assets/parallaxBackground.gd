@@ -70,7 +70,7 @@ func _process(delta):
 		counter+=1
 		canSpawn = true
 	if activeVulkan!=null:
-		if activeVulkan.is_inside_tree() and game.get_name()!="backgroundGame":
+		if game.get_name()!="backgroundGame":
 			if activeVulkan.global_position.x > 400 and activeVulkan.global_position.x < 600 and !isErrupting:
 				isErrupting = true
 				activeVulkan.errupt()
