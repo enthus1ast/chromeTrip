@@ -118,6 +118,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+_sections_unfolded = [ "Material" ]
 
 [node name="TextureRect" type="TextureRect" parent="menu"]
 
@@ -143,6 +144,7 @@ _sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="LogoAnim" parent="menu" instance=ExtResource( 2 )]
 
+editor/display_folded = true
 position = Vector2( -51, 61 )
 
 [node name="networkPanel" type="Panel" parent="menu"]

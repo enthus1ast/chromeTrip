@@ -65,7 +65,7 @@ func _ready():
 	if type=="bird":
 		gravity_scale = 8
 		rpc("playAnimation","birdFly")
-	else:
+	elif type =="dino":
 		rpc("playAnimation","trexAnimRun")
 
 func rpcPowerUps(_id,_string):
@@ -88,10 +88,7 @@ func _killprotectTimeout():
 #	## also the sprite is blinking.	
 
 func _process(delta):
-	
-	if global_position.x < 0 and alive:
-		kill()
-	
+#
 	if is_network_master():
 		rset("slave_hunger",hunger)
 		hungerInfo.amount = 100-hunger
@@ -100,6 +97,7 @@ func _process(delta):
 		elif alive and hunger>=100:
 #			hunger = 0
 			#death by starving
+			print("killed by hunger")
 			rpc("killed", get_name())
 			if allPlayersKilled():
 				rpc("showGameOverScreen")
@@ -112,6 +110,8 @@ func _process(delta):
 func _integrate_forces(state):
 	var final_force = Vector2()
 	if is_network_master():
+		if global_position.x < -5 and alive:
+			kill()
 		if !alive:
 			pass
 		if reviving:
