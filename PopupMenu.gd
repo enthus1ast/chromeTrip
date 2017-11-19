@@ -2,8 +2,11 @@ extends Control
 
 signal restartGame
 
-sync func setPause(val, player):
+sync func rpcSetPause(val):
 	get_tree().set_pause(val)
+	
+func setPause(val):
+	rpc("rpcSetPause",val)
 
 func showMenu():
 	self.visible = true
@@ -12,6 +15,7 @@ func showMenu():
 func hideMenu():
 	print("hide")
 	self.visible = false
+	setPause(false)
 #	rpc("setPause", false, get_tree().get_network_unique_id())
 
 func _ready():
@@ -21,11 +25,14 @@ func _ready():
 
 func _on_ButtonResume_pressed():
 	hideMenu()
+	rpc("setPause",false)
 
 func _on_ButtonRestart_pressed():
+	setPause(false)
 	emit_signal("restartGame")
 
 func _on_ButtonMenu_pressed():
+	setPause(false)
 	get_tree().change_scene("res://lobby.tscn")
 
 func _on_ButtonQuit_pressed():

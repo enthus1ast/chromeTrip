@@ -8,6 +8,10 @@
 
 config_version=3
 
+[3d]
+
+=false
+
 [application]
 
 config/name="chromeTrip"

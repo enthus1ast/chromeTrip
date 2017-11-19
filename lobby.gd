@@ -255,6 +255,7 @@ func _connected_fail():
 	emit_signal("connection_fail")
 	
 func _server_disconnected():
+	get_tree().set_pause(false)
 	lobby.set_visible(false)
 	menu.set_visible(true)
 #	call_deferred("remove_child",game)

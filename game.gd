@@ -268,6 +268,8 @@ func endGame():
 
 func _on_menu_pressed():
 	get_node("hud/PopupMenu").showMenu()
+	# set to pause
+	get_node("hud/PopupMenu").setPause(true)
 	
 func _on_GameOverScreen_restartGame():
 	get_tree().get_root().get_node("Control").askForRestartGame()
