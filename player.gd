@@ -280,8 +280,10 @@ sync func killed(_id):
 		player.alive = false
 		player.can_jump = false
 		player.get_node("Sprite/AnimationPlayer").play("trexAnimKilled")
+		print("killed")
 		soundPlayer.stream = killedSound
-		soundPlayer.play(0.0)		
+		soundPlayer.stream.loop = false
+		soundPlayer.play(0.0)
 
 sync func RPCreanimate(_id, atPosition):
 	var player = get_parent().get_node(str(_id))
@@ -344,4 +346,9 @@ func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 		kill()
 
 func _on_player_body_shape_exited( body_id, body, body_shape, local_shape ):
+	pass # replace with function body
+
+func _on_AudioStreamPlayer_finished():
+	soundPlayer.stop()
+	print("player sound finished")
 	pass # replace with function body
