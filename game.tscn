@@ -190,33 +190,22 @@ tracks/2/keys = {
 "values": [ 0.0, -0.465, -0.465, 0.0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("sprites/background/mist:self_modulate")
+tracks/3/path = NodePath("sprites/background/Sonne:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/keys = {
-"times": PoolRealArray( 0, 15, 18.4, 28.2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 0.0820312, 0.0563965, 0.0563965, 0.171255 ), Color( 0.0820312, 0.0563965, 0.0563965, 0.171255 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("sprites/background/Sonne:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/keys = {
 "times": PoolRealArray( 0, 12.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 80.9996, 61.9997 ), Vector2( 82.9996, -127 ) ]
 }
-tracks/5/type = "value"
-tracks/5/path = NodePath("sprites/background/Mond:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/keys = {
+tracks/4/type = "value"
+tracks/4/path = NodePath("sprites/background/Mond:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/keys = {
 "times": PoolRealArray( 0, 12.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
@@ -365,7 +354,6 @@ _sections_unfolded = [ "Visibility" ]
 
 [node name="sprites" type="Node2D" parent="."]
 
-editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -400,6 +388,7 @@ position = Vector2( 1, 2.6702 )
 
 [node name="mist" type="Sprite" parent="sprites/background"]
 
+visible = false
 position = Vector2( -13.0456, 192.858 )
 rotation = 1.5708
 scale = Vector2( 0.183399, 2114.18 )

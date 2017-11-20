@@ -70,6 +70,7 @@ tracks/1/keys = {
 [sub_resource type="Theme" id=6]
 
 default_font = SubResource( 4 )
+_sections_unfolded = [ "Resource" ]
 
 [sub_resource type="Theme" id=7]
 
@@ -105,6 +106,7 @@ _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Material", "Rect",
 
 [node name="menu" type="Control" parent="."]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -499,7 +501,6 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [node name="lobby" type="PanelContainer" parent="menu"]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -515,7 +516,7 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 theme = SubResource( 6 )
-_sections_unfolded = [ "Theme" ]
+_sections_unfolded = [ "Material", "Theme", "Visibility" ]
 
 [node name="Container" type="Container" parent="menu/lobby"]
 
@@ -532,7 +533,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-_sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect" ]
+_sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect", "Theme" ]
 
 [node name="info" type="Panel" parent="menu/lobby/Container"]
 
