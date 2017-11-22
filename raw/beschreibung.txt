@@ -1,0 +1,12 @@
+Chrome Trip
+Ein multiplayer/lan/coop runner.
+Lan party game
+
+
+
+Anforderungen: Neuere grafikkarte. (Intel HD3000 funktioniert (noch) nicht)
+
+download win64
+download win32
+download lin64
+download lin32

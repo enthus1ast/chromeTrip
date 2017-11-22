@@ -1,26 +1,26 @@
-id,de,en
-GAME_OVER,"Game Over","Game Over"
-SETTINGS,Einstellungen,Settings
-NEW_GAME,"Neues Spiel","New Game"
-MUTE,stumm,mute
-BE_A_BIRD,"sei ein Vogel","be a bird"
-TASTY,LECKER!,TASTY!
-SINGLE_PLAYER,Einzelspieler,Singleplayer
-MULTI_PLAYER,Mehrspieler,Multiplayer
-START_SP,"Start SP","Start SP"
-BACK,zurück,back
-EFFECTS,Effecte,Effects
-MUSIC,Musik,Music
-CONNECT,Verbinden,Connect
-HOST,Hosten,Host
-DONATE,"[url=""http://games.code0.xyz""]Spende, wenn du dieses Spiel [color=red]LIEBST![/color][/url]","[url=""http://games.code0.xyz""]donate if you [color=red]LOVE[/color] this game[/url]"
-QUIT,Beenden,Quit
-READY?,Bereit?,ready?
-NAME,Name,name
-YOUR_NAME,"Dein Name:","your name:"
-SEND,senden,send
-TYPE_HERE,"hier tippen....","type here...."
-POINTS,Punke,points
-MAIN_MENU,Hauptmenu,"Main Menu"
-RESTART,Neustart,restart
-RESUME,weiter,resume
+id,de,en,ja
+GAME_OVER,"Game Over","Game Over",
+SETTINGS,Einstellungen,Settings,
+NEW_GAME,"Neues Spiel","New Game",
+MUTE,stumm,mute,
+BE_A_BIRD,"sei ein Vogel","be a bird",
+TASTY,LECKER!,TASTY!,
+SINGLE_PLAYER,Einzelspieler,Singleplayer,
+MULTI_PLAYER,Mehrspieler,Multiplayer,
+START_SP,"Start SP","Start SP",
+BACK,zurück,back,
+EFFECTS,Effekte,Effects,
+MUSIC,Musik,Music,
+CONNECT,Verbinden,Connect,
+HOST,Hosten,Host,
+DONATE,"[url=""http://games.code0.xyz""]Spende, wenn du dieses Spiel [color=red]LIEBST![/color][/url]","[url=""http://games.code0.xyz""]donate if you [color=red]LOVE[/color] this game[/url]",
+QUIT,Beenden,Quit,
+READY?,Bereit?,ready?,
+NAME,Name,name,
+YOUR_NAME,"Dein Name:","your name:",
+SEND,senden,send,
+TYPE_HERE,"hier tippen....","type here....",
+POINTS,Punke,points,
+MAIN_MENU,Hauptmenu,"Main Menu",
+RESTART,Neustart,restart,
+RESUME,Weiter,resume,

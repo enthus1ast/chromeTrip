@@ -4,7 +4,7 @@ importer="csv_translation"
 type="Translation"
 
 [gen]
-files=[ "res://raw/translation.de.translation", "res://raw/translation.en.translation" ]
+files=[ "res://raw/translation.de.translation", "res://raw/translation.en.translation", "res://raw/translation.ja.translation" ]
 
 [params]
 
