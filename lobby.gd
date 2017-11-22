@@ -60,6 +60,7 @@ signal connection_fail()
 signal pong
 
 func leaveLobby():
+	networkPanel.set_visible(true)
 	lobby.set_visible(false)
 	get_tree().set_network_peer(null)
 	eNet.close_connection()
@@ -255,19 +256,22 @@ func _connected_fail():
 	emit_signal("connection_fail")
 	
 func _server_disconnected():
+	print("server closed")
 	get_tree().set_pause(false)
+	networkPanel.set_visible(true)
 	lobby.set_visible(false)
 	menu.set_visible(true)
 #	call_deferred("remove_child",game)
-	game.free()
+	if has_node("game"):
+		game.free()
+	if !has_node("backgroundGame"):
+		backgroundGameFnc()
 	eNet.close_connection()
 	eNet = NetworkedMultiplayerENet.new() #workaround
 	get_tree().set_network_peer(null)
 	players={}
 	clearList()
 	clearChat()
-	backgroundGameFnc()
-	print("server closed")
 	
 ################## button pressed signals
 remote func clearList():
@@ -357,6 +361,7 @@ func _on_checkbox_pressed():
 		rpc_id(1,"changeReady",currentPlayer.id)
 
 func _on_host_pressed():
+	networkPanel.set_visible(false)
 	eNet.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(eNet)
 	currentPlayer.name = nameInput.get_text()
@@ -378,6 +383,7 @@ func _on_host_pressed():
 
 func _on_connect_pressed():
 	if !isConnecting:
+		networkPanel.set_visible(false)
 		dialogWaiting.set_visible(true)
 		isConnecting = true
 		var hostname = ipInput.get_text()
@@ -410,6 +416,7 @@ func _on_sp_pressed():
 	startGame()
 	
 func _on_cancel_pressed():
+	networkPanel.set_visible(true)
 	dialogWaiting.set_visible(false)
 	get_tree().set_network_peer(null)
 	eNet.close_connection()
