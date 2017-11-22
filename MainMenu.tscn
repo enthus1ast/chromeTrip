@@ -63,7 +63,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "New Game"
+text = "NEW_GAME"
 flat = false
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
@@ -87,7 +87,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Settings"
+text = "SETTINGS"
 flat = false
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
@@ -116,6 +116,8 @@ flat = false
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
 [node name="ButtonQuit" parent="VBoxContainer" instance=ExtResource( 3 )]
+
+text = "QUIT"
 
 [connection signal="pressed" from="VBoxContainer/ButtonNewGame" to="." method="_on_ButtonNewGame_pressed"]
 

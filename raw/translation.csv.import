@@ -1,0 +1,12 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+
+[gen]
+files=[ "res://raw/translation.de.translation", "res://raw/translation.en.translation" ]
+
+[params]
+
+compress=true
+delimiter=0

@@ -88,7 +88,7 @@ sync func rpcEatFood(_playerId,_playerName):
 	else:
 		_playerNode.hunger = 0
 	print("Player hunger is: ", _playerNode.hunger)
-	flashMessage.showPointsAt(null,"Tasty!",position,_playerName)
+	flashMessage.showPointsAt(null,TranslationServer.translate("TASTY"),position,_playerName)
 	set_process(false)
 	isCollected = true
 	collectedPosTween.interpolate_property(self,"position",position,targetBottomLeft,.6, Tween.TRANS_QUART, Tween.EASE_IN_OUT)
@@ -109,7 +109,7 @@ sync func rpcScoreAdd(_value,_player):
 	if !soundPlayer.is_playing():
 			soundPlayer.play(0.0)
 	onCollectParticles.emitting = true
-	flashMessage.showPointsAt(_value,"Points",position,_player)
+	flashMessage.showPointsAt(_value, " " + TranslationServer.translate("POINTS"),position,_player)
 	set_process(false)
 	isCollected = true
 	collectedPosTween.interpolate_property(self,"position",position,targetTopRight,.5, Tween.TRANS_QUART, Tween.EASE_IN_OUT)

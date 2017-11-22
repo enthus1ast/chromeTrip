@@ -625,3 +625,10 @@ remote func beABirdToggle(_id,_bool):
 		
 
 		
+func _on_ButtonDe_pressed():
+	print("game language: de")
+	TranslationServer.set_locale("de")
+	
+func _on_ButtonEn_pressed():
+	print("game language: en")
+	TranslationServer.set_locale("en")
