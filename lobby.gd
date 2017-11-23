@@ -423,7 +423,10 @@ remote func sendMessage(_player,_value):
 		message.set_text(_player+": "+_value)
 		message.add_color_override("font_color" ,utils.computeColor(_player))
 		scrollContainer.get_node("VBoxContainer").add_child(message)
-		scrollContainer.set_v_scroll(scrollContainer.get_item_and_children_rect().size.y)
+#		scrollContainer.set_v_scroll(scrollContainer.get_item_and_children_rect().size.y)
+		scrollContainer.set_v_scroll(scrollContainer.get_node("VBoxContainer").get_rect().size.y)
+		#menu/lobby/Container/chat/ScrollContainer/VBoxContainer
+		
 		scrollContainer.update()
 		chatInput.set_text("")
 		
