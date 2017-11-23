@@ -13,7 +13,8 @@
 [ext_resource path="res://parallaxForeground.tscn" type="PackedScene" id=11]
 [ext_resource path="res://GameOver.tscn" type="PackedScene" id=12]
 [ext_resource path="res://assets/rumbleCam/RumbleCam.tscn" type="PackedScene" id=13]
-[ext_resource path="res://shaders/texture/white.png" type="Texture" id=14]
+[ext_resource path="res://shaders/contrastBrightnessShader.tres" type="Shader" id=14]
+[ext_resource path="res://shaders/texture/white.png" type="Texture" id=15]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -23,7 +24,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Extra Spacing", "Settings" ]
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=2]
 
 size = 22
 use_mipmaps = false
@@ -45,103 +46,37 @@ _sections_unfolded = [ "Resource" ]
 gradient = SubResource( 4 )
 width = 2048
 
-[sub_resource type="Gradient" id=8]
+[sub_resource type="Gradient" id=6]
 
 offsets = PoolRealArray( 0.00159236, 0.0159236, 0.463668, 0.726644 )
 colors = PoolColorArray( 1, 0.971924, 0.28125, 1, 0.984234, 0.984234, 0.984234, 1, 1, 0.966064, 0.457031, 1, 0.933594, 0.799971, 0.444916, 1 )
 _sections_unfolded = [ "Resource" ]
 
-[sub_resource type="GradientTexture" id=9]
+[sub_resource type="GradientTexture" id=7]
 
-gradient = SubResource( 8 )
+gradient = SubResource( 6 )
 width = 2048
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=8]
 
 custom_solver_bias = 0.0
 extents = Vector2( 21.273, 10 )
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=9]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[sub_resource type="Shader" id=12]
-
-code = "shader_type canvas_item;
-uniform float brightnessFac  : hint_range( -5.0, 5.0);
-uniform float saturationFac :hint_range( -5.0, 5.0);
-uniform float contrastFac : hint_range( -5.0, 5.0);
-mat4 brightnessMatrix( float brightness )
-{
-	mat4 myMatr = mat4( vec4(1.0, 0.0, 0.0, 0.0), vec4(0.0, 1.0, 0.0, 0.0) ,vec4(0.0, 0.0, 1.0, 0.0),vec4(brightness, brightness, brightness, 1.0 ));
-    return myMatr;
-}
-
-mat4 contrastMatrix( float contrast )
-{
-	float t = ( 1.0 - contrast ) / 2.0;
-    
-    return mat4( vec4(contrast, 0.0, 0.0, 0.0),
-                 vec4(0.0, contrast, 0.0, 0.0),
-                 vec4(0.0, 0.0, contrast, 0.0),
-                 vec4(t, t, t, 1 ));
-
-}
-
-mat4 saturationMatrix( float saturation )
-{
-    vec3 luminance = vec3( 0.3086, 0.6094, 0.0820 );
-    
-    float oneMinusSat = 1.0 - saturation;
-    
-    vec3 red = vec3( luminance.x * oneMinusSat );
-    red+= vec3( saturation, 0.0, 0.0 );
-    
-    vec3 green = vec3( luminance.y * oneMinusSat );
-    green += vec3( 0.0, saturation, 0.0 );
-    
-    vec3 blue = vec3( luminance.z * oneMinusSat );
-    blue += vec3( 0.0, 0.0, saturation );
-    
-    return mat4( vec4(red,     0.0),
-                 vec4(green,   0.0),
-                 vec4(blue,    0.0),
-                 vec4(0.0, 0.0, 0.0, 1 ));
-}
-
-void fragment() {
-	vec4 pixelColor = texture(SCREEN_TEXTURE,SCREEN_UV);
-	COLOR = brightnessMatrix( brightnessFac ) * contrastMatrix( contrastFac ) *  saturationMatrix( saturationFac ) * pixelColor;
-
-
-
-
-
-
-
-	//COLOR.rgb = vec3(saturation * pixelColor.rgb);
-	
-	//COLOR = texture(SCREEN_TEXTURE,SCREEN_UV);
-
-		
-	//COLOR = texture(SCREEN_TEXTURE,SCREEN_UV);
-	//COLOR.rgba = pixelColor;
-}
-
-"
-_sections_unfolded = [ "Resource" ]
-
-[sub_resource type="ShaderMaterial" id=13]
+[sub_resource type="ShaderMaterial" id=10]
 
 render_priority = 0
-shader = SubResource( 12 )
+shader = ExtResource( 14 )
 shader_param/brightnessFac = 0.0
 shader_param/saturationFac = 1.0
 shader_param/contrastFac = 1.0
 _sections_unfolded = [ "shader_param" ]
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=11]
 
 length = 30.0
 loop = true
@@ -268,7 +203,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/normal_font = SubResource( 15 )
+custom_fonts/normal_font = SubResource( 2 )
 custom_constants/line_separation = 0
 bbcode_enabled = true
 bbcode_text = "Dankrad awdawdawdfalse
@@ -383,7 +318,7 @@ position = Vector2( 1, 2.6702 )
 position = Vector2( -13.5201, 529.45 )
 rotation = 1.5708
 scale = Vector2( 0.145033, 2149.04 )
-texture = SubResource( 9 )
+texture = SubResource( 7 )
 offset = Vector2( -25.2217, -0.498946 )
 _sections_unfolded = [ "Region", "Transform" ]
 __meta__ = {
@@ -470,7 +405,7 @@ __meta__ = {
 position = Vector2( 485.777, 398.802 )
 rotation = 3.14159
 scale = Vector2( 30.2855, 1.74003 )
-shape = SubResource( 10 )
+shape = SubResource( 8 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="leftBlock" type="StaticBody2D" parent="."]
@@ -490,7 +425,7 @@ __meta__ = {
 
 position = Vector2( -20, -73.4225 )
 scale = Vector2( 1.65385, 62.1349 )
-shape = SubResource( 11 )
+shape = SubResource( 9 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="rightBlock" type="StaticBody2D" parent="."]
@@ -511,7 +446,7 @@ __meta__ = {
 
 position = Vector2( 1040.72, -91.1267 )
 scale = Vector2( 1.65385, 62.1349 )
-shape = SubResource( 11 )
+shape = SubResource( 9 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="GameOverScreen" parent="." instance=ExtResource( 12 )]
@@ -523,11 +458,11 @@ visible = false
 
 [node name="shaderSpass" type="Sprite" parent="."]
 
-material = SubResource( 13 )
+material = SubResource( 10 )
 position = Vector2( -84.333, -59.662 )
 scale = Vector2( 18.2812, 11.349 )
 z = 4095
-texture = ExtResource( 14 )
+texture = ExtResource( 15 )
 centered = false
 _sections_unfolded = [ "Material", "Offset", "Transform", "Visibility", "Z" ]
 __meta__ = {
@@ -539,7 +474,7 @@ __meta__ = {
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/daynightcycle = SubResource( 14 )
+anims/daynightcycle = SubResource( 11 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
