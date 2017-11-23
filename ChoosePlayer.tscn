@@ -13,8 +13,8 @@ var isabird # has to come from config
 
 func init():
 	isabird = utils.config.get_value(\"player\", \"isabird\")
-	if isabird: animator.play(\"birdFly\")
-	else: animator.play(\"trexAnimRun\")		
+	if isabird: animator.play(\"birdFly_choosePlayer\")
+	else: animator.play(\"trexAnimRun_choosePlayer\")		
 
 func _ready():
 	init()
@@ -26,8 +26,8 @@ func _on_ChoosePlayer_pressed():
 	utils.config.set_value(\"player\", \"isabird\", isabird)
 	utils.config.save(utils.CONFIG_PATH)
 	if isabird: 
-		animator.play(\"birdFly\")
-	else: animator.play(\"trexAnimRun\")
+		animator.play(\"birdFly_choosePlayer\")
+	else: animator.play(\"trexAnimRun_choosePlayer\")
 
 
 func _on_ChoosePlayer_visibility_changed():
