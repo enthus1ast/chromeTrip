@@ -104,8 +104,14 @@ func getStage():
 	## returns the current stage.
 	return get_tree().get_root().get_node("Control/game").stage
 
-func canBeABird():
-	return config.get_key("player", "beabird")
+#func canBeABird():
+#	return config.get_key("player", "beabird")
+
+func getPlayerType():
+	if config.get_value("player", "isabird") == true:
+		return "bird"
+	else:
+		return "dino"
 
 func getHighscore(cnt):
 	# returns the N sorted highscore items

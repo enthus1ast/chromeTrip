@@ -10,10 +10,14 @@ signal playerisabird
 
 onready var animator = get_node(\"Sprite/AnimationPlayer\")
 var isabird # has to come from config
-func _ready():
+
+func init():
 	isabird = utils.config.get_value(\"player\", \"isabird\")
 	if isabird: animator.play(\"birdFly\")
-	else: animator.play(\"trexAnimRun\")	
+	else: animator.play(\"trexAnimRun\")		
+
+func _ready():
+	init()
 	
 func _on_ChoosePlayer_pressed():
 #	print(\"foo\", isabird)
@@ -24,6 +28,12 @@ func _on_ChoosePlayer_pressed():
 	if isabird: 
 		animator.play(\"birdFly\")
 	else: animator.play(\"trexAnimRun\")
+
+
+func _on_ChoosePlayer_visibility_changed():
+	pass # replace with function body
+	print(\"my visibility has changed!!!\")
+	init()
 "
 
 [node name="ChoosePlayer" type="Button"]
@@ -55,5 +65,7 @@ centered = false
 [connection signal="pressed" from="." to="." method="_on_ChoosePlayer_pressed"]
 
 [connection signal="toggled" from="." to="." method="_on_ChoosePlayer_toggled"]
+
+[connection signal="visibility_changed" from="." to="." method="_on_ChoosePlayer_visibility_changed"]
 
 

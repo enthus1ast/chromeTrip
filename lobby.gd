@@ -37,12 +37,12 @@ var backgroundGame = null
 var players = {}
 var player_name
 var alreadyRestarting  = false
-var currentPlayer = {
+onready var currentPlayer = {
 	"id":null,
 	"name":"",
 	"isReady":null,
 	"node":null,
-	"type":"dino"
+	"type": utils.getPlayerType()
 }
 var isConnecting = false
 
@@ -86,10 +86,13 @@ func backgroundGameFnc():
 func _ready():
 	backgroundGameFnc()
 	seedInput.set_text(str(utils.config.get_value("player", "seed")))
-	if utils.config.get_value("player", "beabird", false) == true:
-		beABirdButton.show()
-	else:
-		beABirdButton.hide()
+	
+	# Maybe later ...
+#	if utils.config.get_value("player", "beabird", false) == true:
+#		beABirdButton.show()
+#	else:
+#		beABirdButton.hide()
+
 	musicPlayer.connect("finished",self,"loopMusic")
 #	OS.set_low_processor_usage_mode(true)
 	get_tree().set_network_peer(null)
@@ -172,6 +175,9 @@ remote func register_new_player(_player):
 			rpc_id(_player.id, "register_new_player", players[peer_id])
 			updateList(players)
 		areAllReady()
+#	else:
+#		# tell server what we are 
+#		rpc_id(1,"beABirdToggle",currentPlayer.id,)
 
 remote func startGame():
 	alreadyRestarting = false # prevent double loading
@@ -370,7 +376,7 @@ func _on_host_pressed():
 	players[id] = {}
 	players[id].name = currentPlayer.name
 	players[id].id = id
-	players[id].type = currentPlayer.type
+	players[id].type =  utils.getPlayerType()
 	players[id].isReady = currentPlayer.isReady
 	updateList(players)
 
@@ -389,7 +395,7 @@ func _on_connect_pressed():
 		print("I am already trying to connect.")
 	
 func _on_sp_pressed():
-	
+	## Singleplayer
 	eNet.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(eNet)
 	currentPlayer.name = nameInput.get_text()
@@ -404,6 +410,7 @@ func _on_sp_pressed():
 	print("created sp game player id is:", id)
 	print("network id is:", get_tree().get_network_unique_id())
 	players[id].isReady = currentPlayer.isReady
+	currentPlayer.type = utils.getPlayerType()
 	players[id].type = currentPlayer.type
 	updateList(players)
 	startGame()
@@ -577,12 +584,12 @@ func _on_host_mouse_exited():
 	get_node("menu/networkPanel/Dinos/SpriteMpR/AnimationPlayer").stop()
 	pass # replace with function body
 
-func _on_beABird_toggle(_bool):
-	if get_tree().is_network_server():
-		#if server clicks
-		beABirdToggle(currentPlayer.id,_bool)
-	else:
-		rpc_id(1,"beABirdToggle",currentPlayer.id,_bool)
+#func _on_beABird_toggle(_bool):
+#	if get_tree().is_network_server():
+#		#if server clicks
+#		beABirdToggle(currentPlayer.id,_bool)
+#	else:
+#		rpc_id(1,"beABirdToggle",currentPlayer.id,_bool)
 
 remote func rpcSetToBirds(_id,_type):
 	print("remote rpcsSetTo is now bird:   ",players,_id,_type)
@@ -601,16 +608,12 @@ remote func beABirdToggle(_id,_bool):
 			type="dino"
 		rpcSetToBirds(_id,type) # for the server 
 		for peer in players:
-			
-			print("588 peer" + str(peer) + " " + str(_bool) )
-			print(players[peer].id)
-			
+#			print("588 peer" + str(peer) + " " + str(_bool) )
+#			print(players[peer].id)
 			if players[peer].id != 1:
 				rpc_id(players[peer].id,"rpcSetToBirds",_id,type)
-				print("should be called")
-		
-
-		
+#				print("should be called")
+				
 func _on_ButtonDe_pressed():
 	print("game language: de")
 	TranslationServer.set_locale("de")
@@ -618,3 +621,9 @@ func _on_ButtonDe_pressed():
 func _on_ButtonEn_pressed():
 	print("game language: en")
 	TranslationServer.set_locale("en")
+
+func _on_ChoosePlayer_playerisabird(_bool):
+	if get_tree().is_network_server():
+		beABirdToggle(currentPlayer.id,_bool)
+	else:
+		rpc_id(1,"beABirdToggle",currentPlayer.id,_bool)
