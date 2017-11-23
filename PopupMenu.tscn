@@ -1,14 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://PopupMenu.gd" type="Script" id=1]
-[ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://mainTheme.tres" type="Theme" id=2]
+[ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 
 size = 16
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font" ]
 
 [node name="PopupMenu" type="Control"]
@@ -34,15 +35,16 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 8.0
+margin_top = 3.0
 margin_right = 751.0
-margin_bottom = 410.0
+margin_bottom = 276.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 2
-_sections_unfolded = [ "Size Flags", "Visibility" ]
+theme = ExtResource( 2 )
+_sections_unfolded = [ "Size Flags", "Theme", "Visibility" ]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 
@@ -53,7 +55,7 @@ anchor_bottom = 0.0
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 254.0
-margin_bottom = 126.0
+margin_bottom = 94.0
 rect_scale = Vector2( 3, 3 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -69,9 +71,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 12.0
 margin_right = 244.0
-margin_bottom = 32.0
+margin_bottom = 18.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -93,9 +94,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 36.0
+margin_top = 22.0
 margin_right = 244.0
-margin_bottom = 56.0
+margin_bottom = 40.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -117,9 +118,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 60.0
+margin_top = 44.0
 margin_right = 244.0
-margin_bottom = 80.0
+margin_bottom = 62.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -141,9 +142,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 84.0
+margin_top = 66.0
 margin_right = 244.0
-margin_bottom = 104.0
+margin_bottom = 84.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
