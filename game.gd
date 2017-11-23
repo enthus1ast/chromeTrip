@@ -266,7 +266,9 @@ func _on_PopupMenu_restartGame():
 func _on_Mute_toggled( pressed ):
 	utils.mute(pressed)
 	
+
 func _input(event):
+	# just needed for cheat codes
 	if event.get_class()=="InputEventKey" and !event.is_pressed():
 		if(OS.get_scancode_string(event.scancode).length() == 1):
 			var tmp
@@ -283,17 +285,20 @@ func _input(event):
 			else:
 				tempKeyStore=""
 
+# cheat codes
 func cheatCode(_string):
+	# 1. cheat - shower
 	if _string == "shower":
 		if get_tree().is_network_server():
-			rpcServerExecCheat()
+			rpcServerExecCheat("shower")
 		else:
-			rpc_id(1,"rpcServerExecCheat")
+			rpc_id(1,"rpcServerExecCheat","shower")
+	############
 			
-remote func rpcServerExecCheat():
-	rpc("rockShowerCheat")
+remote func rpcServerExecCheat(_string):
+	rpc(_string+"Cheat")
 	
-sync func rockShowerCheat():
+sync func showerCheat():
 	var rockShower = RockShower.instance()
 	add_child(rockShower)
 	rockShower.letItRain(1,5)

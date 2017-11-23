@@ -4,6 +4,7 @@
 
 [node name="cameraNode" type="Node2D"]
 
+position = Vector2( 1, 0 )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 

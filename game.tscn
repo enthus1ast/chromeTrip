@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
@@ -43,17 +43,6 @@ _sections_unfolded = [ "Resource" ]
 [sub_resource type="GradientTexture" id=5]
 
 gradient = SubResource( 4 )
-width = 2048
-
-[sub_resource type="Gradient" id=6]
-
-offsets = PoolRealArray( 0.357843, 0.767157, 1 )
-colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0.215451, 0.929688, 0.929688, 0.929688, 1 )
-_sections_unfolded = [ "Resource" ]
-
-[sub_resource type="GradientTexture" id=7]
-
-gradient = SubResource( 6 )
 width = 2048
 
 [sub_resource type="Gradient" id=8]
@@ -234,6 +223,7 @@ __meta__ = {
 
 [node name="hud" type="CanvasLayer" parent="."]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -387,18 +377,6 @@ _sections_unfolded = [ "Transform", "Z" ]
 [node name="parallaxBackground" parent="sprites/background" instance=ExtResource( 9 )]
 
 position = Vector2( 1, 2.6702 )
-
-[node name="mist" type="Sprite" parent="sprites/background"]
-
-position = Vector2( -13.0456, 192.858 )
-rotation = 1.5708
-scale = Vector2( 0.183399, 2114.18 )
-texture = SubResource( 7 )
-offset = Vector2( -25.2217, -0.498946 )
-_sections_unfolded = [ "Material", "Visibility" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="gradientGround" type="Sprite" parent="sprites/background"]
 

@@ -17,7 +17,6 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="gebirge" type="Node2D" parent="."]
 
-editor/display_folded = true
 position = Vector2( 218.788, 298.122 )
 rotation = 3.63798e-13
 scale = Vector2( 5, 5 )

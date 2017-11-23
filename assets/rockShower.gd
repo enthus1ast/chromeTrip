@@ -24,10 +24,8 @@ func letItRain(_timeTo_Start,_count):
 		timeToStart.wait_time = _timeTo_Start
 		timeToStart.start()
 		count = _count
-		print("rockshowertimeout")
 		
-
-	
+		
 func _timeout():
 	if get_tree().is_network_server():
 		timer.stop()
@@ -38,7 +36,6 @@ func _timeout():
 			var pos = Vector2(rand_range(0,1024),-100)
 			var ang_vel =  rand_range(-25,25)
 			var named = "rock"+str(count)
-	#		rock.transform()
 			count-=1
 			rpc("rpcCreateRock",pos,scaling,ang_vel,named)
 		
