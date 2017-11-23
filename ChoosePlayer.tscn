@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://PlayerSprites.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Button
+
+signal playerisabird
+
+onready var animator = get_node(\"Sprite/AnimationPlayer\")
+var isabird # has to come from config
+func _ready():
+	isabird = utils.config.get_value(\"player\", \"isabird\")
+	if isabird: animator.play(\"birdFly\")
+	else: animator.play(\"trexAnimRun\")	
+	
+func _on_ChoosePlayer_pressed():
+#	print(\"foo\", isabird)
+	isabird = not isabird
+	emit_signal(\"playerisabird\", isabird)
+	utils.config.set_value(\"player\", \"isabird\", isabird)
+	utils.config.save(utils.CONFIG_PATH)
+	if isabird: 
+		animator.play(\"birdFly\")
+	else: animator.play(\"trexAnimRun\")
+"
+
+[node name="ChoosePlayer" type="Button"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 62.0
+margin_bottom = 60.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+script = SubResource( 1 )
+_sections_unfolded = [ "Rect" ]
+
+[node name="Sprite" parent="." instance=ExtResource( 1 )]
+
+position = Vector2( 0.88591, 29.8999 )
+centered = false
+
+[connection signal="pressed" from="." to="." method="_on_ChoosePlayer_pressed"]
+
+[connection signal="toggled" from="." to="." method="_on_ChoosePlayer_toggled"]
+
+

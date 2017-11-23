@@ -56,7 +56,9 @@ const TOP_JUMP_TIME = 0.1 # in seconds
 var keys = [false,false,false,false] # right, left, up, down 
 
 func _ready():
-	cameraNode = game.get_node("cameraNode")
+	
+	if game != null:
+		cameraNode = game.get_node("cameraNode")
 	add_child ( killprotectTimer )
 	killprotectTimer.wait_time = 3
 	killprotectTimer.connect("timeout",self,"_killprotectTimeout")
@@ -81,13 +83,7 @@ sync func rpcKillProtectRequest(_id):
 func _killprotectTimeout():
 	rpc("rpcKillProtectRequest",get_name())
 
-#func setNoCollide(val):
-#	## sets the player in the no collide mode
-#	## every obstacle and enemy will not collide
-#	## also the sprite is blinking.	
-
-func _process(delta):
-#
+func _process(delta):#
 	if is_network_master():
 		rset("slave_hunger",hunger)
 		hungerInfo.amount = 100-hunger
@@ -174,20 +170,19 @@ func birdFly(state):
 
 func dinoJump(state):
 	if jump_time < TOP_JUMP_TIME and can_jump:
-			## Play sound here cause we want to play on every jump!
-			if ((grounded and can_jump) or !first_jump):
-				rpc("rpcJumpParticles",get_name())
-				cameraNode.jumpRumble()
-				# play jump sound
-				if soundPlayer.stream != jumpSound:
-					soundPlayer.set_stream(jumpSound)
-				if not soundPlayer.playing:
-					soundPlayer.play(0.0)	
-			directional_force += DIRECTION.UP
-			jump_time += state.get_step()
-			if !first_jump:
-				directional_force += DIRECTION.UP*5000
-				first_jump = true
+		if ((grounded and can_jump) or !first_jump):
+			rpc("rpcJumpParticles",get_name())
+			cameraNode.jumpRumble()
+			# play jump sound
+			if soundPlayer.stream != jumpSound:
+				soundPlayer.set_stream(jumpSound)
+			if not soundPlayer.playing:
+				soundPlayer.play(0.0)	
+		directional_force += DIRECTION.UP
+		jump_time += state.get_step()
+		if !first_jump:
+			directional_force += DIRECTION.UP*5000
+			first_jump = true
     # While on the ground
 	if(grounded):
 		can_jump = true
@@ -227,9 +222,7 @@ sync func rpcJumpParticles(_id):
 	get_parent().get_node(_id).particleAnimPlayer.play("particleJump")
 
 func _input(event):
-	
 	if is_network_master() and alive and not inputsDisabled:
-		#if keyboard input
 		if event.get_class()=="InputEventKey":
 			# left or right keypressevent
 			if event.is_action_pressed("ui_right"):
@@ -344,7 +337,6 @@ func disableInputs():
 	# disable all the inputs, for better kill handeling
 	inputsDisabled = true
 	
-
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive and !isKillProtected:
 		kill()
@@ -355,4 +347,4 @@ func _on_player_body_shape_exited( body_id, body, body_shape, local_shape ):
 func _on_AudioStreamPlayer_finished():
 	soundPlayer.stop()
 	print("player sound finished")
-	pass # replace with function body
+	

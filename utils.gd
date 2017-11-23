@@ -162,7 +162,9 @@ func _ready():
 #		if not config.has_section_key("player", "SERVER_PORT"):
 #			config.set_value("player", "SERVER_PORT", 7000)	
 		if not config.has_section_key("player", "beabird"):
-			config.set_value("player", "beabird", false)		
+			config.set_value("player", "beabird", true)	
+		if not config.has_section_key("player", "isabird"):
+			config.set_value("player", "isabird", false)						
 		if not config.has_section_key("audio", "mute"):
 			config.set_value("audio", "mute", false)
 		if not config.has_section_key("audio", "effects"):
