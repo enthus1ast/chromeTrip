@@ -9,23 +9,20 @@ func setPause(val):
 	rpc("rpcSetPause",val)
 
 func showMenu():
+	setPause(true)
 	self.visible = true
-#	rpc("setPause", true, get_tree().get_network_unique_id())
 
 func hideMenu():
 	print("hide")
 	self.visible = false
 	setPause(false)
-#	rpc("setPause", false, get_tree().get_network_unique_id())
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
+	set_process_input(true)
 	pass
 
 func _on_ButtonResume_pressed():
 	hideMenu()
-	rpc("setPause",false)
 
 func _on_ButtonRestart_pressed():
 	setPause(false)
@@ -36,9 +33,16 @@ func _on_ButtonMenu_pressed():
 	get_tree().change_scene("res://lobby.tscn")
 
 func _on_ButtonQuit_pressed():
+	setPause(false)
 	get_tree().quit()
 
-
 func _on_Settings_pressed():
-	pass # replace with function body
 	get_tree().get_root().get_node("Control/menu/Settings").show()
+	
+
+func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		if self.visible:
+			self.hideMenu()
+		else:
+			self.showMenu()
