@@ -85,7 +85,6 @@ sync func rpcShowActionStage(_stage):
 	
 func _ready():
 	muteCheckbox.pressed = utils.config.get_value("audio","mute")
-	set_process_input(true)
 	spriteWidth = groundSprite1.get_texture().get_size().x
 	placeholderScore = pointsLabel.text
 	placeholderScoreSize = placeholderScore.length()
@@ -268,22 +267,12 @@ func endGame():
 
 func _on_menu_pressed():
 	get_node("hud/PopupMenu").showMenu()
-	# set to pause
-	get_node("hud/PopupMenu").setPause(true)
 	
 func _on_GameOverScreen_restartGame():
 	get_tree().get_root().get_node("Control").askForRestartGame()
 
 func _on_PopupMenu_restartGame():
 	get_tree().get_root().get_node("Control").askForRestartGame()
-
-func _input(event):
-	if event.is_action_pressed("ui_cancel"):
-		var popup = self.get_node("hud/PopupMenu")
-		if popup.visible:
-			popup.hideMenu()
-		else:
-			popup.showMenu()
 
 func _on_Mute_toggled( pressed ):
 	pass # replace with function body
