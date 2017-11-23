@@ -16,8 +16,13 @@ David
 ** DONE doppelter eintrag in highscore
 ** DONE stage in highscore
 ** DONE disable collision on spawn/revive (kill protect)
-** TODO Spiel anhalten beim pause drücken SP/MP
+** DONE Spiel anhalten beim pause drücken SP/MP
 ** TODO player collision save spot eliminieren
-** TODO dauer spring bug beim ersten mal 
-** TODO be a bird ausblenden wenn kein bird
+** DONE dauer spring bug beim ersten mal 
+** DONE be a bird ausblenden wenn kein bird (jetzt dauerhaft)
 
+
+Pinned godot versions:
+** DONE 82ad05a20ef4420122b18eadf3835c4a8a49ba19 
+  Working fine so far, some annoying engine outputs
+  

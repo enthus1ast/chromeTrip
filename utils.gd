@@ -58,7 +58,9 @@ func putHighscore(score, team):
 	# puts a line into the crypted highscore file.
 	# info: crypto cannot append line atm...
 	var file = File.new()
-	print("PUT ERROR: " + str( file.open_encrypted_with_pass( HIGHSCORE_PATH, file.READ_WRITE, HIGHSCORE_PW) ))
+	var err = file.open_encrypted_with_pass( HIGHSCORE_PATH, file.READ_WRITE, HIGHSCORE_PW) 
+	if err != 0:
+		print("PUT ERROR: " + str( err ))
 #	file.open( HIGHSCORE_PATH, file.READ_WRITE) #, "code0" )
 	var tup = {}
 	tup["score"] = score
@@ -119,7 +121,9 @@ func getHighscore(cnt):
 	# if cnt == -1 all items are returned
 	createFile(HIGHSCORE_PATH, HIGHSCORE_PW)
 	var file = File.new()
-	print("get ERROR: " + str( file.open_encrypted_with_pass( HIGHSCORE_PATH, file.READ, HIGHSCORE_PW )))
+	var err = file.open_encrypted_with_pass( HIGHSCORE_PATH, file.READ, HIGHSCORE_PW )
+	if err != 0:
+		print("get ERROR: " + str( err ))
 #	file.open( HIGHSCORE_PATH, file.READ ) #, "code0" )
 	var obj
 	var result = []

@@ -78,10 +78,7 @@ func _process(delta):
 				game.add_child(rockShower)
 				rockShower.letItRain(20,20)
 				
-
-
 func _on_VisibilityNotifier2D_screen_exited():
 	for sprite in mountains.get_children():
 		if sprite.is_inside_tree() and sprite.global_position.x<-200:
 			sprite.queue_free()
-	pass # replace with function body

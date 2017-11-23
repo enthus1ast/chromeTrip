@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://200-offline-sprite.png" type="Texture" id=1]
 [ext_resource path="res://raw/Hair.png" type="Texture" id=2]
@@ -98,7 +98,7 @@ tracks/7/keys = {
 "values": [ 0.0, 360.0 ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=3]
 
 length = 0.6
 loop = true
@@ -192,7 +192,69 @@ tracks/7/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=11]
+
+resource_name = "birdFly_choosePlayer"
+length = 0.6
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Rect2( 262, 5, 88, 74 ), Rect2( 354, 5, 88, 74 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2.2629, 29.6091 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.6, 0.6 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=4]
 
 length = 1.0
 loop = false
@@ -253,7 +315,7 @@ tracks/4/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 
 length = 0.2
 loop = true
@@ -325,7 +387,7 @@ tracks/5/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 
 length = 1.5
 loop = false
@@ -408,7 +470,7 @@ tracks/6/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 
 length = 0.2
 loop = true
@@ -491,7 +553,58 @@ tracks/6/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
+
+resource_name = "trexAnimRun_choosePlayer"
+length = 0.2
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Rect2( 1855, 1, 85, 96 ), Rect2( 1943, 1, 85, 96 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2.2629, 29.6091 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=9]
 
 length = 1.0
 loop = false
@@ -508,7 +621,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=10]
 
 length = 0.6
 loop = true
@@ -549,11 +662,13 @@ playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
 anims/birdAnimKilled = SubResource( 1 )
-anims/birdFly = SubResource( 2 )
-anims/trexAnim = SubResource( 3 )
-anims/trexAnimDuck = SubResource( 4 )
-anims/trexAnimKilled = SubResource( 5 )
-anims/trexAnimRun = SubResource( 6 )
+anims/birdFly = SubResource( 3 )
+anims/birdFly_choosePlayer = SubResource( 11 )
+anims/trexAnim = SubResource( 4 )
+anims/trexAnimDuck = SubResource( 5 )
+anims/trexAnimKilled = SubResource( 6 )
+anims/trexAnimRun = SubResource( 7 )
+anims/trexAnimRun_choosePlayer = SubResource( 8 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -564,8 +679,8 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/default = SubResource( 7 )
-anims/killProtected = SubResource( 8 )
+anims/default = SubResource( 9 )
+anims/killProtected = SubResource( 10 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]

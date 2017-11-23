@@ -6,12 +6,6 @@ func _ready():
 	pass
 
 func doRespawn(collider):
-	## - informs everybody that the restart
-	##   point was reached.
-	## - safes the random seed
-	## - position all killed bodies nearby
-	##   the respawn point
-#	print("respawn point reached")
 	if not collider.alive: return true
 	for player in get_tree().get_nodes_in_group("players"):
 		print(player)
@@ -24,12 +18,9 @@ func doRespawn(collider):
 			print("reanimating player:", player.playerName, " ", newPos )
 			player.reanimate( Vector2(100,150))
 
-func _on_Area2D_body_entered( body ):
-	pass # replace with function body
-
 func _on_Area2D_body_shape_entered( body_id, body, body_shape, area_shape ):
 	if get_tree().is_network_server() and body.get_parent().get_name()=="players":
-		print( body_id, body.get_name(), body_shape, area_shape, "body_shape entered respawn point")
+#		print( body_id, body.get_name(), body_shape, area_shape, "body_shape entered respawn point")
 		doRespawn(body)
 	
 func _on_VisibilityNotifier2D_screen_exited():

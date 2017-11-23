@@ -2,15 +2,6 @@ extends Control
 var offsetX
 var offsetY = -50
 
-onready var Restartpoint = preload("res://restartPoint.tscn")
-onready var Obstacles = preload("res://assets/obstacles.tscn")
-onready var Enemys = preload("res://assets/enemys.tscn")
-onready var Collectables = preload("res://assets/collectables.tscn")
-onready var Badge = preload("res://Badges.tscn")
-onready var Wolke = preload("res://Wolke.tscn")
-onready var viewportSize = get_viewport().size
-onready var muteCheckbox = get_node("hud/Mute")
-
 var collectablesStrings = ["heart","meat","badge"]
 
 var fakeSpeed = 300
@@ -22,12 +13,6 @@ var ground
 var globalIdCounter = 0
 var badgePropability = 800 # dice of 0..1024 
 var badgeScore = 10000 # score needet to randomly drop badges
-
-#var badgePropability = 1 # dice of 0..1024 
-#var badgeScore = 1 # score needet to randomly drop badges
-
-#var badgePropability = 10
-
 var stage = 1 # each 5000 points one stage
 var nextLevel = 5000
 
@@ -40,6 +25,14 @@ var wolkenMaxCount = 10
 var collectablesCount = 8
 var allDead = false
 
+onready var Restartpoint = preload("res://restartPoint.tscn")
+onready var Obstacles = preload("res://assets/obstacles.tscn")
+onready var Enemys = preload("res://assets/enemys.tscn")
+onready var Collectables = preload("res://assets/collectables.tscn")
+onready var Badge = preload("res://Badges.tscn")
+onready var Wolke = preload("res://Wolke.tscn")
+onready var viewportSize = get_viewport().size
+onready var muteCheckbox = get_node("hud/Mute")
 onready var playersNode = get_node("players")
 onready var cameraNode = get_node("cameraNode")
 onready var spritesNode = get_node("sprites")
@@ -108,7 +101,7 @@ func mapGen():
 		enemysGen()
 		wolkenGen()
 		collectablesGen()
-		badgesGen()
+#		badgesGen() # since we can choose the player now no need for "badges" any more, maybe later....
 
 sync func rpcRespawnpoint(pos):
 	var restartPoint = Restartpoint.instance()
@@ -146,21 +139,13 @@ func collectablesGen():
 	i = 0
 
 func badgesGen():
-#	var i = 0
-#	var choice
-	## decide which obstacle
-	print(str(score) + "/" + str(badgeScore))
+#	print(str(score) + "/" + str(badgeScore))
 	if score < badgeScore  : return
 	var choice = rand_range(0,1024)
 	print("BADGE choise is:" + str(choice))
 	if choice > badgePropability:
 		print("CREATED A BADGE")
-#		if 30 < rand_range(0,100):
-#			choice = collectablesStrings[0]
-#		else:
-#			choice = collectablesStrings[1]
 		var pos = Vector2(rand_range(1024,2000)-collectablesNode.position.x,rand_range(10,330))
-#
 		rpc("rpcBadge", pos, globalIdCounter)
 		globalIdCounter += 1
 
@@ -234,7 +219,6 @@ sync func setNewSpeed(_speed):
 func _process(delta):
 	constMoveNode.position.x-=fakeSpeed*delta
 	enemysNode.position.x-=fakeSpeed*delta*1.5
-#	collectablesNode.position.x-=fakeSpeed*delta*1.5
 	if !allDead:
 		distanceWalked = round(abs(constMoveNode.position.x)/10) # scoring from walked distance
 		finalScore = distanceWalked + score
@@ -275,5 +259,4 @@ func _on_PopupMenu_restartGame():
 	get_tree().get_root().get_node("Control").askForRestartGame()
 
 func _on_Mute_toggled( pressed ):
-	pass # replace with function body
 	utils.mute(pressed)

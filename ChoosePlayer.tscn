@@ -9,12 +9,12 @@ script/source = "extends Button
 signal playerisabird
 
 onready var animator = get_node(\"Sprite/AnimationPlayer\")
-var isabird # has to come from config
+var isabird
 
 func init():
 	isabird = utils.config.get_value(\"player\", \"isabird\")
-	if isabird: animator.play(\"birdFly\")
-	else: animator.play(\"trexAnimRun\")		
+	if isabird: animator.play(\"birdFly_choosePlayer\")
+	else: animator.play(\"trexAnimRun_choosePlayer\")		
 
 func _ready():
 	init()
@@ -25,14 +25,9 @@ func _on_ChoosePlayer_pressed():
 	emit_signal(\"playerisabird\", isabird)
 	utils.config.set_value(\"player\", \"isabird\", isabird)
 	utils.config.save(utils.CONFIG_PATH)
-	if isabird: 
-		animator.play(\"birdFly\")
-	else: animator.play(\"trexAnimRun\")
-
+	init()
 
 func _on_ChoosePlayer_visibility_changed():
-	pass # replace with function body
-	print(\"my visibility has changed!!!\")
 	init()
 "
 

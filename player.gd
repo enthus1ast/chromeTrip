@@ -1,5 +1,13 @@
 extends RigidBody2D
-# Default Character Properties (Should be overwritten)
+
+export var playerName = "SET_ME_PLAYER_NAME" # the player name
+export var hunger = 0 # hunger level
+export sync var slave_hunger = 0 # hunger level
+
+sync var slave_pos = Transform2D()
+sync var slave_motion = Vector2()
+sync var alive = true
+
 var acceleration = 10000
 var top_move_speed_org = 200
 var top_move_speed = top_move_speed_org
@@ -7,19 +15,14 @@ var top_jump_speed = 800
 var top_flyup_speed = 400
 var jumpSound = load("res://sounds/jump.ogg")
 var killedSound = load("res://sounds/killed.ogg")
-#var soundPlayer = AudioStreamPlayer.new(
-onready var soundPlayer =  get_node("AudioStreamPlayer") #AudioStreamPlayer.new())
 var readyToPlay = false # this gets set to true when the player has loaded the playscene
 var killprotectTimer = Timer.new()
 var isKillProtected = false
 var needForFood = 2# speed of getting hungry
-export var playerName = "SET_ME_PLAYER_NAME" # the player name
 var inputsDisabled = false
-
-onready var playerColShape = get_node("playerShape")
-onready var hungerInfo = get_tree().get_root().get_node("Control/game/hud/Fleisch")
-## eperimental
 var type = "SET_ME_TYPE"
+var reviving = false
+var cameraNode
 
 # Movement Vars
 var directional_force = Vector2()
@@ -31,21 +34,6 @@ const DIRECTION = {
     DOWN = Vector2(0, 1)
 }
 
-sync var slave_pos = Transform2D()
-sync var slave_motion = Vector2()
-sync var alive = true
-export var hunger = 0 # hunger level
-export sync var slave_hunger = 0 # hunger level
-
-var reviving = false
-
-var cameraNode
-onready var game = get_tree().get_root().get_node("Control/game")
-onready var animPlayer = get_node("Sprite/AnimationPlayer")
-onready var powerUpPlayer = get_node("Sprite/AnimationPlayerPowerUps")
-onready var particleAnimPlayer = get_node("particleSystems/particleAnimPlayer")
-
- 
 # Jumping
 var first_jump = false
 var can_jump = true
@@ -53,10 +41,24 @@ var grounded = false
 var jump_time = 0
 const TOP_JUMP_TIME = 0.1 # in seconds
 
+# Bird
+var fly_time = 0
+var TOP_FLY_TIME = 0.02
+var flyTimer = 0.2
+var can_fly = true
+
+# Movement
 var keys = [false,false,false,false] # right, left, up, down 
 
+onready var playerColShape = get_node("playerShape")
+onready var hungerInfo = get_tree().get_root().get_node("Control/game/hud/Fleisch")
+onready var soundPlayer =  get_node("AudioStreamPlayer") #AudioStreamPlayer.new())
+onready var game = get_tree().get_root().get_node("Control/game")
+onready var animPlayer = get_node("Sprite/AnimationPlayer")
+onready var powerUpPlayer = get_node("Sprite/AnimationPlayerPowerUps")
+onready var particleAnimPlayer = get_node("particleSystems/particleAnimPlayer")
+
 func _ready():
-	
 	if game != null:
 		cameraNode = game.get_node("cameraNode")
 	add_child ( killprotectTimer )
@@ -136,7 +138,6 @@ func _integrate_forces(state):
 		final_force = slave_motion
 	state.set_linear_velocity(final_force)
 	
-# Apply force
 func apply_force(state):
     # Move Right
 	if keys[0]:
@@ -151,13 +152,7 @@ func apply_force(state):
 		elif type == "bird":
 			 birdFly(state)
 			
-var fly_time = 0
-var TOP_FLY_TIME = 0.02
-var flyTimer = 0.2
-var can_fly = true
-
 func birdFly(state):
-	
 	if fly_time < TOP_FLY_TIME and can_fly and global_position.y>10:
 		directional_force += DIRECTION.UP/100
 	elif flyTimer >= 0:
@@ -173,7 +168,6 @@ func dinoJump(state):
 		if ((grounded and can_jump) or !first_jump):
 			rpc("rpcJumpParticles",get_name())
 			cameraNode.jumpRumble()
-			# play jump sound
 			if soundPlayer.stream != jumpSound:
 				soundPlayer.set_stream(jumpSound)
 			if not soundPlayer.playing:
@@ -187,7 +181,6 @@ func dinoJump(state):
 	if(grounded):
 		can_jump = true
 		jump_time = 0
-
 
 func _on_groundSensor_body_entered( body ):
 	if body.is_in_group("players") and body.get_name() != get_name():
@@ -266,7 +259,6 @@ func _input(event):
 		keys = [false,false,false,false]
 		can_jump = false
 		
-	
 sync func killed(_id):
 	if !isKillProtected:
 		var player = get_parent().get_node(str(_id))
@@ -346,5 +338,5 @@ func _on_player_body_shape_exited( body_id, body, body_shape, local_shape ):
 
 func _on_AudioStreamPlayer_finished():
 	soundPlayer.stop()
-	print("player sound finished")
+#	print("player sound finished")
 	

@@ -1,12 +1,11 @@
 extends Control
 
+var tweenToTop = Tween.new()
+
 onready var animationPlayer = get_node("AnimationPlayer")
 onready var node2D = get_node("Node2D")
 onready var label1 = get_node("Node2D/RichTextLabel1")
 
-var tweenToTop = Tween.new()
-	
-#onready var label2 = get_node("RichTextLabel2")
 func _ready():
 	add_child(tweenToTop)
 	animationPlayer.connect("animation_finished",self,"_animation_finished")
@@ -18,7 +17,6 @@ func _tween_to_top_finished(_a,_b):
 
 func _animation_finished(_string):
 	pass
-#	queue_free()
 
 func showPointsAt(_val,_string,_pos,_player): ## how much points, position whre has been hit, player who hit
 	set_visible(true)
