@@ -264,7 +264,7 @@ func _on_PopupMenu_restartGame():
 	get_tree().get_root().get_node("Control").askForRestartGame()
 
 func _on_Mute_toggled( pressed ):
-	utils.mute(pressed)
+	utils.muteMaster(pressed)
 	
 
 func _input(event):

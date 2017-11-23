@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://GameOver.gd" type="Script" id=1]
 [ext_resource path="res://sounds/200-offline-sprite.png" type="Texture" id=2]
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://ChoosePlayer.tscn" type="PackedScene" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -263,6 +264,13 @@ blend_times = [  ]
 autoplay = ""
 _sections_unfolded = [ "playback" ]
 
+[node name="ChoosePlayer" parent="." instance=ExtResource( 4 )]
+
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 72.0
+margin_bottom = 70.0
+
 [connection signal="hide" from="." to="." method="_on_GameOverScreen_hide"]
 
 [connection signal="visibility_changed" from="." to="." method="_on_GameOverScreen_visibility_changed"]
@@ -272,5 +280,7 @@ _sections_unfolded = [ "playback" ]
 [connection signal="mouse_exited" from="ButRestart" to="." method="_on_Button_mouse_exited"]
 
 [connection signal="pressed" from="ButRestart" to="." method="_on_Button_pressed"]
+
+[connection signal="playerisabird" from="ChoosePlayer" to="." method="_on_ChoosePlayer_playerisabird"]
 
 

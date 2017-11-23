@@ -24,3 +24,6 @@ func _on_GameOverScreen_visibility_changed():
 
 func _on_GameOverScreen_hide():
 	pass # replace with function body
+
+func _on_ChoosePlayer_playerisabird(_bool):
+	get_tree().get_root().get_node("Control")._on_ChoosePlayer_playerisabird(_bool)

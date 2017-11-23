@@ -138,18 +138,19 @@ func getHighscore(cnt):
 		result.resize(cnt) # only the first n elements, rest is NULL!
 	return result
 		
-func mute(enabled):
-	var musicIdx = AudioServer.get_bus_index("Music")
-	var effectIdx = AudioServer.get_bus_index("Effects")
-	AudioServer.set_bus_mute(musicIdx, enabled)
-	AudioServer.set_bus_mute(effectIdx, enabled)
+func muteMaster(enabled):
+	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), enabled)
 	utils.config.set_value("audio", "mute", enabled)
 	utils.config.save(utils.CONFIG_PATH)
 			
 func setLoudness(name, db):
 	var musicIdx = AudioServer.get_bus_index(name)
 	AudioServer.set_bus_volume_db(musicIdx, db)		
-			
+	
+func toggleMuteChannel(name,_bool):
+	var musicIdx = AudioServer.get_bus_index(name)
+	AudioServer.set_bus_mute(musicIdx,_bool)
+	
 func _ready():
 	## Create highscore file.
 	createFile(HIGHSCORE_PATH, HIGHSCORE_PW)

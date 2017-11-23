@@ -100,7 +100,7 @@ func _ready():
 	version.set_text(version.text + str(utils.version))
 	
 	var isMuted = utils.config.get_value("audio","mute", false)
-	utils.mute(isMuted)
+	utils.muteMaster(isMuted)
 	musicPlayer.play()
 	
 #	chatInput.set_max_chars(100)
@@ -531,7 +531,7 @@ func _on_AudioStreamPlayer_finished():
 	pass
 
 func _on_Settings_mute(val):
-	utils.mute(val)
+	utils.muteMaster(val)
 
 func _on_RichTextLabel_meta_clicked( meta ):
 	OS.shell_open(utils.DEVELOPER_URI)
@@ -587,3 +587,7 @@ func _on_ChoosePlayer_playerisabird(_bool):
 		beABirdToggle(currentPlayer.id,_bool)
 	else:
 		rpc_id(1,"beABirdToggle",currentPlayer.id,_bool)
+		
+		
+		
+	

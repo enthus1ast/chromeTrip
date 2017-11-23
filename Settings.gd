@@ -9,24 +9,22 @@ onready var effects = get_node("Panel/GridContainer/VEffects")
 onready var music = get_node("Panel/GridContainer/VMusic")
 var first = true
 
-func setDisabledIfMuted():
-	effects.editable = not mute.pressed
-	music.editable = not mute.pressed
-
 func _ready():
 	## Load settings from config file
 	mute.pressed = utils.config.get_value("audio", "mute")
 	effects.value = utils.config.get_value("audio", "effects")
 	music.value = utils.config.get_value("audio", "music")
-	setDisabledIfMuted()
+	if music.value<=-24:
+		utils.toggleMuteChannel("Music",true)
+	else:
+		utils.toggleMuteChannel("Music",false)
 
 func _on_VMute_toggled( pressed ):
 	print(pressed)
 	utils.config.set_value("audio", "mute", pressed)
 	utils.config.save(utils.CONFIG_PATH)
-	utils.mute(pressed)
+	utils.muteMaster(pressed)
 	emit_signal("mute", pressed)
-	setDisabledIfMuted()
 	
 func _on_VEffects_value_changed( value ):
 	print(value)
@@ -43,6 +41,10 @@ func _on_VMusic_value_changed( value ):
 	utils.config.set_value("audio", "music", value)
 	utils.config.save(utils.CONFIG_PATH)
 	utils.setLoudness("Music", value)
+	if music.value<=-24:
+		utils.toggleMuteChannel("Music",true)
+	else:
+		utils.toggleMuteChannel("Music",false)
 #	emit_signal("musicVolume", value)
 
 func _on_Back_pressed():
