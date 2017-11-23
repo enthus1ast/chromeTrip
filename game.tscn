@@ -23,9 +23,9 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Extra Spacing", "Settings" ]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=15]
 
-size = 25
+size = 22
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 2 )
@@ -270,15 +270,15 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 718.0
-margin_top = 39.0
-margin_right = 1435.0
-margin_bottom = 328.0
+margin_left = 831.0
+margin_top = 37.0
+margin_right = 1548.0
+margin_bottom = 326.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/normal_font = SubResource( 2 )
+custom_fonts/normal_font = SubResource( 15 )
 custom_constants/line_separation = 0
 bbcode_enabled = true
 bbcode_text = "Dankrad awdawdawdfalse
@@ -286,7 +286,7 @@ Dreaded-gnu fasle"
 visible_characters = -1
 percent_visible = 1.0
 override_selected_font_color = false
-_sections_unfolded = [ "BBCode", "Grow Direction", "Rect", "Size Flags", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
+_sections_unfolded = [ "BBCode", "Grow Direction", "Rect", "Size Flags", "Theme", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
 
 [node name="actionPopup" parent="hud" instance=ExtResource( 3 )]
 
@@ -390,7 +390,6 @@ position = Vector2( 1, 2.6702 )
 
 [node name="mist" type="Sprite" parent="sprites/background"]
 
-visible = false
 position = Vector2( -13.0456, 192.858 )
 rotation = 1.5708
 scale = Vector2( 0.183399, 2114.18 )
