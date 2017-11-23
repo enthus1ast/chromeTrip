@@ -25,12 +25,16 @@ var wolkenMaxCount = 10
 var collectablesCount = 8
 var allDead = false
 
+# cheatCodeChecker
+var tempKeyStore =""
+
 onready var Restartpoint = preload("res://restartPoint.tscn")
 onready var Obstacles = preload("res://assets/obstacles.tscn")
 onready var Enemys = preload("res://assets/enemys.tscn")
 onready var Collectables = preload("res://assets/collectables.tscn")
 onready var Badge = preload("res://Badges.tscn")
 onready var Wolke = preload("res://Wolke.tscn")
+onready var RockShower = preload("res://assets/rockShower.tscn")
 onready var viewportSize = get_viewport().size
 onready var muteCheckbox = get_node("hud/Mute")
 onready var playersNode = get_node("players")
@@ -81,6 +85,7 @@ func _ready():
 	spriteWidth = groundSprite1.get_texture().get_size().x
 	placeholderScore = pointsLabel.text
 	placeholderScoreSize = placeholderScore.length()
+	set_process_input(true)
 #	seed(0)
 #	seed(100)
 	seed(hash(utils.config.get_value("player", "seed")))
@@ -260,3 +265,35 @@ func _on_PopupMenu_restartGame():
 
 func _on_Mute_toggled( pressed ):
 	utils.mute(pressed)
+	
+func _input(event):
+	if event.get_class()=="InputEventKey" and !event.is_pressed():
+		if(OS.get_scancode_string(event.scancode).length() == 1):
+			var tmp
+			if(event.shift):
+				tmp=OS.get_scancode_string(event.scancode)
+			else:
+				tmp=OS.get_scancode_string(event.scancode).to_lower()
+			if tempKeyStore.length()!=20:
+				tempKeyStore += tmp
+				var pos = tempKeyStore.find("shower")
+				if pos > -1:
+					cheatCode("shower")
+					tempKeyStore=""
+			else:
+				tempKeyStore=""
+
+func cheatCode(_string):
+	if _string == "shower":
+		if get_tree().is_network_server():
+			rpcServerExecCheat()
+		else:
+			rpc_id(1,"rpcServerExecCheat")
+			
+remote func rpcServerExecCheat():
+	rpc("rockShowerCheat")
+	
+sync func rockShowerCheat():
+	var rockShower = RockShower.instance()
+	add_child(rockShower)
+	rockShower.letItRain(1,5)

@@ -25,12 +25,8 @@ func _physics_process(delta):
 			global_position.x-=get_parent().game.fakeSpeed*delta
 			
 		rset("rock_slave_pos",get_transform())
-		rset("rock_slave_lin_vel",get_linear_velocity())
-		rset("rock_slave_ang_vel",get_angular_velocity())
 	elif !get_tree().is_network_server():
 		set_transform(rock_slave_pos)
-		linear_velocity = rock_slave_lin_vel
-		angular_velocity = rock_slave_ang_vel
 		
 	elif !is_inside_tree():
 		set_physics_process(false)
@@ -38,9 +34,14 @@ func _physics_process(delta):
 		shadowSprite.global_position.y = 372
 		shadowSprite.global_position.x = position.x
 		shadowSprite.scale=Vector2(global_position.y+1000,global_position.y+2000)/5000
+		
 func _on_VisibilityNotifier2D_screen_exited():
+	if get_tree().is_network_server(): 
+		rpc("rpcRemoveRock")
+	
+sync func rpcRemoveRock():
 	if get_tree().get_nodes_in_group("rocks").size()<=1:
 		get_parent().removeRockShowerNode()
 	if is_inside_tree():
 		queue_free()
-	pass # replace with function body
+	

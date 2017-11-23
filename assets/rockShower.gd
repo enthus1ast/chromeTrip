@@ -19,6 +19,7 @@ func _ready():
 		add_child(timeToStart)
 	
 func letItRain(_timeTo_Start,_count):
+	print(get_tree())
 	if get_tree().is_network_server():
 		timeToStart.wait_time = _timeTo_Start
 		timeToStart.start()
