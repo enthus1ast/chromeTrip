@@ -15,4 +15,4 @@ func _process(delta):
 func _on_VisibilityNotifier2D_screen_exited():
 	set_process(false)
 	queue_free()
-	print("cloud deleted")
+#	print("cloud deleted")
