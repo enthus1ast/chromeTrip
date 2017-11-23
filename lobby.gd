@@ -1,9 +1,7 @@
 extends Control
 
 const SERVER_PORT = 7000
-const INSTANT_READY = false
-const REQUIRED_PLAYERS = 2
-const GAME_COUNTDOWN = 1 #time to start in lobby
+const GAME_COUNTDOWN = 1 #time to start in lobby //change this for release
 
 onready var menu = get_node("menu")
 onready var lobby = menu.get_node("lobby")
@@ -18,9 +16,7 @@ onready var ipInput = networkPanel.get_node("connect/ip")
 onready var version = get_node("menu/Version")
 onready var pingTimeout = get_node("networkHud/CanvasLayer/pingTimeout")
 onready var musicPlayer = get_node("musicPlayer")
-#onready var effectsPlayer = get_node("AudioStreamPlayer")
 onready var dialogWaiting = get_node("menu/DialogWaiting")
-#onready var playerList = lobby.get_node("Container/body/playerList")
 onready var PlayerListElement = preload("res://playerListElement.tscn")
 onready var Player = preload("res://player.tscn")
 onready var Game = preload("res://game.tscn")
@@ -72,6 +68,7 @@ func leaveLobby():
 remote func checkServerVersion(_answerId):
 	if get_tree().is_network_server():
 		rpc_id(_answerId, "errorOnWrongServerVersion", utils.version)
+		
 remote func errorOnWrongServerVersion(serverVersion):
 	if serverVersion != utils.version:
 #	if true:
@@ -81,6 +78,7 @@ remote func errorOnWrongServerVersion(serverVersion):
 		leaveLobby()
 		
 func backgroundGameFnc():
+	# function for instancing background scene
 	backgroundGame = BackgroundGame.instance()
 	add_child(backgroundGame)
 	backgroundGame.show_behind_parent = true
@@ -107,7 +105,6 @@ func _ready():
 	var isMuted = utils.config.get_value("audio","mute")
 	utils.mute(isMuted)
 	musicPlayer.play()
-		
 	
 #	chatInput.set_max_chars(100)
 	get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -121,7 +118,6 @@ func _ready():
 
 remote func ping(_id, _remoteTicks):
 	## client pings the server
-	#var localUnixTime = OS.get_unix_time()
 	rpc_id(_id, "pong", get_tree().get_network_unique_id(), _remoteTicks)
 	
 remote func pong(_id, _relayedTicks):
@@ -147,7 +143,6 @@ func _connected_ok():
 	isConnecting = false
 	get_node("networkHud/Timer").start()
 	
-
 
 #server responding to Clients connect ok
 remote func user_ready(_player):
@@ -183,12 +178,12 @@ remote func startGame():
 	if backgroundGame!=null:
 		backgroundGame.free()
 		backgroundGame = null
-	print("startGame was called")
 		
 	## Safe new config values
 	utils.config.set_value("player", "defaultname", nameInput.get_text())
 	utils.config.set_value("player", "defaultserver", ipInput.get_text())
 	utils.config.save(utils.CONFIG_PATH)
+	
 	var cnt = 0
 	for p in players:
 		players[p].node = Player.instance()
@@ -200,7 +195,6 @@ remote func startGame():
 		
 		players[p].node.type = players[p].type
 		players[p].node.get_node("Label").set_text(players[p].name)
-#		players[p].node.get_node("Label").set("custom_colors/font_color" ,computeColor(players[p].name))
 		players[p].node.get_node("Label").add_color_override("font_color" ,utils.computeColor(players[p].name))
 		
 		# Set initial position, not spawning behind each other 
@@ -208,7 +202,6 @@ remote func startGame():
 			players[p].node.position = Vector2(10 + cnt, 0)
 		else:
 			players[p].node.global_position = Vector2(30 + cnt, 0)
-		
 		cnt+= 5 +  players[p].node.get_node("Sprite").get_region_rect().size.x * players[p].node.get_node("Sprite").scale.x
 		
 #		Sprite
@@ -219,17 +212,18 @@ remote func startGame():
 		players[p].node.set_network_master(0)
 		if (players[p].id == currentPlayer.id and players[p].name == currentPlayer.name):
 			players[p].node.set_network_master(players[p].id)
-#		print("players:",players[p]," for ",currentPlayer.name)
 	if has_node("game"):
+		# maybe join  a running game
+		print("already there")
 		pass
 	else:
+		# only if there is no other game instance
 		game = Game.instance()
 		for p in players:
 			game.get_node("players").add_child(players[p].node)
 		add_child(game)
 
 func _player_disconnected(_id):
-	print("_player_disconnected")
 	# If I am server, send a signal to inform that an player disconnected
 	unregister_player(_id)
 	rpc("unregister_player", _id)
@@ -289,7 +283,6 @@ remote func removeItemFromList(_id):
 	
 remote func updateList(_list):
 	print("updateList: ",_list)
-#	clearList()
 	for peer in _list:
 		addNewListItem(_list[peer])
 
@@ -547,13 +540,6 @@ func _on_Timer_timeout():
 
 func _on_AudioStreamPlayer_finished():
 	print("Finished")
-
-func _on_Settings_effectVolume(val):
-	pass
-#	if effectsPlayer == null:
-#		print("effectsPlayer is nil") # lol... 
-#	else:
-#		effectsPlayer.volume_db = val
 
 func _on_Settings_musicVolume(val):
 	if musicPlayer == null:
