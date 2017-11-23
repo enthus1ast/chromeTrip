@@ -393,6 +393,7 @@ func _on_sp_pressed():
 	currentPlayer.type = utils.getPlayerType()
 	players[id].type = currentPlayer.type
 	updateList(players)
+	get_tree().set_refuse_new_network_connections(true)
 	startGame()
 	
 func _on_cancel_pressed():
