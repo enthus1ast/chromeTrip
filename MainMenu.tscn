@@ -1,15 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://MainMenu.gd" type="Script" id=1]
-[ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://ButtonQuit.tscn" type="PackedScene" id=3]
+[ext_resource path="res://mainTheme.tres" type="Theme" id=2]
+[ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://ButtonQuit.tscn" type="PackedScene" id=4]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=1183]
 
 size = 16
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font" ]
 
 [node name="PopupMenu" type="Control"]
@@ -34,15 +35,16 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 244.0
-margin_bottom = 92.0
+margin_bottom = 100.0
 rect_scale = Vector2( 3, 3 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource( 2 )
 alignment = 1
-_sections_unfolded = [ "Rect" ]
+_sections_unfolded = [ "Rect", "Theme" ]
 
 [node name="ButtonNewGame" type="Button" parent="VBoxContainer"]
 
@@ -50,14 +52,15 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_top = 8.0
 margin_right = 244.0
-margin_bottom = 20.0
+margin_bottom = 26.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 1183 )
 custom_colors/font_color = Color( 0.379899, 0.933594, 0.0364685, 1 )
 toggle_mode = false
 enabled_focus_mode = 2
@@ -65,7 +68,7 @@ shortcut = null
 group = null
 text = "NEW_GAME"
 flat = false
-_sections_unfolded = [ "custom_colors", "custom_fonts" ]
+_sections_unfolded = [ "Material", "Visibility", "custom_colors", "custom_constants", "custom_fonts" ]
 
 [node name="Settings" type="Button" parent="VBoxContainer"]
 
@@ -73,15 +76,15 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 24.0
+margin_top = 30.0
 margin_right = 244.0
-margin_bottom = 44.0
+margin_bottom = 48.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 1183 )
 custom_colors/font_color = Color( 0.816406, 0.787879, 0.0861053, 1 )
 toggle_mode = false
 enabled_focus_mode = 2
@@ -97,15 +100,15 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 48.0
+margin_top = 52.0
 margin_right = 244.0
-margin_bottom = 68.0
+margin_bottom = 70.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 1183 )
 custom_colors/font_color = Color( 0.123688, 0.576657, 0.753906, 1 )
 toggle_mode = false
 enabled_focus_mode = 2
@@ -115,8 +118,9 @@ text = "HighScore"
 flat = false
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
-[node name="ButtonQuit" parent="VBoxContainer" instance=ExtResource( 3 )]
+[node name="ButtonQuit" parent="VBoxContainer" instance=ExtResource( 4 )]
 
+margin_top = 74.0
 text = "QUIT"
 
 [connection signal="pressed" from="VBoxContainer/ButtonNewGame" to="." method="_on_ButtonNewGame_pressed"]
