@@ -24,7 +24,6 @@ onready var BackgroundGame = preload("res://backgroundGame.tscn")
 onready var warnPopup = get_node("menu/WarnPopup")
 onready var peerTypeInfo = get_node("networkHud/CanvasLayer/peerTypeInfo")
 onready var seedInput = get_node("menu/networkPanel/seed")
-onready var beABirdButton = get_node("menu/lobby/Container/beABird")
 
 var countdown
 var countdownActive = false

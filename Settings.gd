@@ -36,14 +36,14 @@ func _on_VEffects_value_changed( value ):
 	if not first:
 		get_node("Panel/GridContainer/KEffects/AudioStreamPlayer").play()
 	else: first = false
-	emit_signal("effectVolume", value)
+#	emit_signal("effectVolume", value)
 
 func _on_VMusic_value_changed( value ):
 	print(value)
 	utils.config.set_value("audio", "music", value)
 	utils.config.save(utils.CONFIG_PATH)
 	utils.setLoudness("Music", value)
-	emit_signal("musicVolume", value)
+#	emit_signal("musicVolume", value)
 
 func _on_Back_pressed():
 	self.hide()
