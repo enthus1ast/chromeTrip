@@ -33,7 +33,6 @@ onready var groundSprites = constMoveNode.get_node("ground")
 onready var groundSprite1 = groundSprites.get_node("Sprite1")
 onready var groundSprite2 = groundSprites.get_node("Sprite2")
 
-
 func _ready():
 	spriteWidth = groundSprite1.get_texture().get_size().x
 	seed(0)

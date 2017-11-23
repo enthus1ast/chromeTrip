@@ -8,7 +8,6 @@ func fill(rank, score, stage, team):
 	for player in team:
 		var one = utils.computeColorBB( player, player ) + " "
 		teamline += one 
-#	print(str(teamline))
 	get_node("Team").set_bbcode(str(teamline))
 
 func _ready():

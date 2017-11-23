@@ -3,11 +3,6 @@ extends Node2D
 var rumbleEnd = false
 var isRumbling = false
 
-
-onready var animPlayer = get_node("AnimationPlayer")
-onready var cam = get_node("Camera2D")
-
-
 ##process vars
 var cnt = 0
 var displace = 0
@@ -24,9 +19,10 @@ var timeScale = 1
 var intensity = 100 #in pixels
 var maxBounces = 5
 var tweendCount = 0
-
-#var rotationTween = Tween.new()
 var positionTween = Tween.new()
+
+onready var animPlayer = get_node("AnimationPlayer")
+onready var cam = get_node("Camera2D")
 
 func killedRumble():
 	if !isQuaking:
@@ -50,18 +46,12 @@ func landRumble(_velocity):
 	cnt += 12
 	displace = 100
 	
-
 func _ready():
 	startPosition = cam.position
-#	rotationTween.connect("tween_completed",self,"_rotationTween_complete")
 	positionTween.connect("tween_completed",self,"_positionTween_complete")
-	
 	animPlayer.connect("animation_started",self,"_animation_started")
 	animPlayer.connect("animation_finished",self,"_animation_finished")
 	cam.add_child(positionTween)
-#	add_child(rotationTween)
-	
-#	startRotation = cam.rotation
 #	rumble(1)
 
 func _process(delta):
@@ -69,14 +59,9 @@ func _process(delta):
 	if cnt > 0:
 		addForce = Vector2(0,0)
 		cnt -= 1
-		# Called every frame. Delta is time since last frame.
-		# Update game logic here.
 		var off = Vector2(rand_range(-displace, displace), rand_range(-displace, displace))
-	#	cam.offset = cam.offset + (off * delta)
-		
 		if isQuaking:
 			addForce = Vector2(rand_range(-quakeDisplace, quakeDisplace), rand_range(-quakeDisplace, quakeDisplace))
-
 		cam.offset = (addForce+off) * delta
 	else:
 		addForce = Vector2(0,0)

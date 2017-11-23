@@ -13,7 +13,6 @@ func showMenu():
 	self.visible = true
 
 func hideMenu():
-	print("hide")
 	self.visible = false
 	setPause(false)
 

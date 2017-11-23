@@ -26,7 +26,6 @@ onready var peerTypeInfo = get_node("networkHud/CanvasLayer/peerTypeInfo")
 onready var seedInput = get_node("menu/networkPanel/seed")
 onready var beABirdButton = get_node("menu/lobby/Container/beABird")
 
-
 var countdown
 var countdownActive = false
 var countdownRemaining = GAME_COUNTDOWN
@@ -94,7 +93,6 @@ func _ready():
 #		beABirdButton.hide()
 
 	musicPlayer.connect("finished",self,"loopMusic")
-#	OS.set_low_processor_usage_mode(true)
 	get_tree().set_network_peer(null)
 	eNet = NetworkedMultiplayerENet.new()
 	# load params from config
@@ -102,10 +100,7 @@ func _ready():
 	nameInput.set_text( utils.config.get_value("player", "defaultname") )
 	version.set_text(version.text + str(utils.version))
 	
-	# Set initial audio volume
-	musicPlayer.volume_db = utils.config.get_value("audio","music")
-	#effectsPlayer.volume_db = utils.config.get_value("audio","effects")
-	var isMuted = utils.config.get_value("audio","mute")
+	var isMuted = utils.config.get_value("audio","mute", false)
 	utils.mute(isMuted)
 	musicPlayer.play()
 	
@@ -117,7 +112,6 @@ func _ready():
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 	set_process(false)
 	set_process_input(true)
-
 
 remote func ping(_id, _remoteTicks):
 	## client pings the server
@@ -131,8 +125,8 @@ remote func pong(_id, _relayedTicks):
 func _player_connected(playerId):
 	print("player has connected")
 
-#Client sending to host
 func _connected_ok():
+	#Client sending to host
 	currentPlayer.name = nameInput.get_text()
 	if currentPlayer.name == "":
 		currentPlayer.name ="unnamed"
@@ -146,9 +140,8 @@ func _connected_ok():
 	isConnecting = false
 	get_node("networkHud/Timer").start()
 	
-
-#server responding to Clients connect ok
 remote func user_ready(_player):
+	#server responding to Clients connect ok
 	if(get_tree().is_network_server()):
 		players[_player.id] = {}
 		players[_player.id].id = _player.id
@@ -168,16 +161,12 @@ remote func register_new_player(_player):
 	players[_player.id].name = _player.name
 	players[_player.id].isReady = _player.isReady
 	players[_player.id].type = _player.type
-	
 	if get_tree().is_network_server():
 		rpc("updateList",players)
 		for peer_id in players:
 			rpc_id(_player.id, "register_new_player", players[peer_id])
 			updateList(players)
 		areAllReady()
-#	else:
-#		# tell server what we are 
-#		rpc_id(1,"beABirdToggle",currentPlayer.id,)
 
 remote func startGame():
 	alreadyRestarting = false # prevent double loading
@@ -194,11 +183,6 @@ remote func startGame():
 	for p in players:
 		players[p].node = Player.instance()
 		players[p].node.playerName = players[p].name
-		
-		
-		players[p].node.playerName = players[p].name
-		print(players[p].node, "->", players[p])
-		
 		players[p].node.type = players[p].type
 		players[p].node.get_node("Label").set_text(players[p].name)
 		players[p].node.get_node("Label").add_color_override("font_color" ,utils.computeColor(players[p].name))
@@ -210,7 +194,6 @@ remote func startGame():
 			players[p].node.global_position = Vector2(30 + cnt, 0)
 		cnt+= 5 +  players[p].node.get_node("Sprite").get_region_rect().size.x * players[p].node.get_node("Sprite").scale.x
 		
-#		Sprite
 		players[p].node.get_node("Sprite").modulate =  utils.computeColor(players[p].name)
 	
 		# Set Player ID as node name - Unique for each player!
@@ -230,7 +213,6 @@ remote func startGame():
 		add_child(game)
 
 func _player_disconnected(_id):
-	# If I am server, send a signal to inform that an player disconnected
 	unregister_player(_id)
 	rpc("unregister_player", _id)
 
@@ -273,7 +255,6 @@ func _server_disconnected():
 	clearList()
 	clearChat()
 	
-################## button pressed signals
 remote func clearList():
 	var children = lobby.get_node("Container/body/RichTextLabel/VBoxContainer").get_children()
 	for item in children:
@@ -387,7 +368,6 @@ func _on_connect_pressed():
 		isConnecting = true
 		var hostname = ipInput.get_text()
 		var ip = IP.resolve_hostname(hostname)
-		
 		eNet.create_client(ip, SERVER_PORT)
 		get_tree().set_network_peer(eNet)
 		peerTypeInfo.bbcode_text = "[color=green]CLIENT[/color]"
@@ -422,7 +402,6 @@ func _on_cancel_pressed():
 	eNet.close_connection()
 	isConnecting = false
 	eNet = NetworkedMultiplayerENet.new()
-	pass
 		
 func _on_leaveLobbyButton_pressed():
 	leaveLobby()
@@ -540,19 +519,13 @@ func loopMusic():
 func _on_Control_pong(_timeout):
 	pingTimeout.text = "ping: " + str(_timeout)
 	
-	
 func _on_Timer_timeout():
 	if not get_tree().is_network_server():
 		rpc_id(1, "ping", get_tree().get_network_unique_id(), OS.get_ticks_msec() )
 
 func _on_AudioStreamPlayer_finished():
-	print("Finished")
-
-func _on_Settings_musicVolume(val):
-	if musicPlayer == null:
-		print("MusicPlayer is nil") # lol... 
-	else:
-		musicPlayer.volume_db = val
+#	print("Finished")
+	pass
 
 func _on_Settings_mute(val):
 	utils.mute(val)
@@ -561,35 +534,23 @@ func _on_RichTextLabel_meta_clicked( meta ):
 	OS.shell_open(utils.DEVELOPER_URI)
 	
 func _on_seed_text_changed( text ):
-	pass # replace with function body
 	print(text.hash())
 	utils.config.set_value("player", "seed", hash(text))		
 	utils.config.save(utils.CONFIG_PATH)	
 	
 func _on_sp_mouse_entered():
 	get_node("menu/networkPanel/Dinos/SpriteSp/AnimationPlayer").play("TrexAnimRun")
-	pass # replace with function body
 	
 func _on_sp_mouse_exited():
 	get_node("menu/networkPanel/Dinos/SpriteSp/AnimationPlayer").stop()
-	pass # replace with function body
 
 func _on_host_mouse_entered():
 	get_node("menu/networkPanel/Dinos/SpriteMpL/AnimationPlayer").play("TrexAnimRun")
 	get_node("menu/networkPanel/Dinos/SpriteMpR/AnimationPlayer").play("TrexAnimRun")
-	pass # replace with function body
 
 func _on_host_mouse_exited():
 	get_node("menu/networkPanel/Dinos/SpriteMpL/AnimationPlayer").stop()
 	get_node("menu/networkPanel/Dinos/SpriteMpR/AnimationPlayer").stop()
-	pass # replace with function body
-
-#func _on_beABird_toggle(_bool):
-#	if get_tree().is_network_server():
-#		#if server clicks
-#		beABirdToggle(currentPlayer.id,_bool)
-#	else:
-#		rpc_id(1,"beABirdToggle",currentPlayer.id,_bool)
 
 remote func rpcSetToBirds(_id,_type):
 	print("remote rpcsSetTo is now bird:   ",players,_id,_type)
@@ -599,7 +560,6 @@ remote func rpcSetToBirds(_id,_type):
 		
 remote func beABirdToggle(_id,_bool):
 	##serverside answer to toggle bird event
-	##TODO can do bird?
 	if get_tree().is_network_server():
 		var type
 		if _bool:
@@ -608,18 +568,15 @@ remote func beABirdToggle(_id,_bool):
 			type="dino"
 		rpcSetToBirds(_id,type) # for the server 
 		for peer in players:
-#			print("588 peer" + str(peer) + " " + str(_bool) )
-#			print(players[peer].id)
 			if players[peer].id != 1:
 				rpc_id(players[peer].id,"rpcSetToBirds",_id,type)
-#				print("should be called")
 				
 func _on_ButtonDe_pressed():
-	print("game language: de")
+#	print("game language: de")
 	TranslationServer.set_locale("de")
 	
 func _on_ButtonEn_pressed():
-	print("game language: en")
+#	print("game language: en")
 	TranslationServer.set_locale("en")
 
 func _on_ChoosePlayer_playerisabird(_bool):

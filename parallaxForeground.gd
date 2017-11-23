@@ -40,7 +40,6 @@ func genScale(_posY):
 	var myscale = Vector2(tmp,tmp)
 	return myscale
 
-
 func doNewSprite():
 	if backgroundGame or get_tree().is_network_server():
 		var choice

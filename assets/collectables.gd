@@ -7,11 +7,6 @@ var sounds = {
 	"meat":sound2,
 	"badge":sound1
 }
-onready var FlashMessage = preload("res://assets/flashMessage/FlashMessage.tscn")
-onready var control = get_tree().get_root().get_node("Control")
-onready var spriteNode = get_node("spriteNode")
-onready var game = control.get_node("game")
-onready var hud = game.get_node("hud")
 var isCollected = false
 var basePoints = 1000
 var foodValue = 25
@@ -22,18 +17,23 @@ var targetTopRight = Vector2(1042,-10)
 var targetBottomLeft = Vector2(1,820)
 var collectedPosTween = Tween.new()
 var deleteTimer = Timer.new()
-onready var soundPlayer = get_node("AudioStreamPlayer") #AudioStreamPlayer.new()
 var flashMessage
+
+onready var FlashMessage = preload("res://assets/flashMessage/FlashMessage.tscn")
+onready var control = get_tree().get_root().get_node("Control")
+onready var spriteNode = get_node("spriteNode")
+onready var game = control.get_node("game")
+onready var hud = game.get_node("hud")
+onready var soundPlayer = get_node("AudioStreamPlayer") #AudioStreamPlayer.new()
 
 func _tween_complete(_object, _key ):
 	deleteTimer.start()
+	
 func _breed_complete(_object):
 	print("breeding complete: ", _object)
-#	_object.
 	queue_free()
 
 func _ready():
-#	spriteNode.add_child(soundPlayer)
 	soundPlayer.stream = sounds[selectedCollectable]
 	soundPlayer.stream.loop = false
 	soundPlayer.volume_db = -12.0
@@ -58,12 +58,10 @@ func choice(_name):
 	spriteNode.get_node(_name+"Area").pause_mode=0
 	spriteNode.get_node(_name+"Area").set_visible(true)
 	spriteNode.get_node(_name+"Area/collectableShape").disabled=false
-	
 	if _name != "badge":
 		animatedSprite = get_node("spriteNode/"+_name+"Area/AnimatedSprite")
 		onCollectParticles = animatedSprite.get_node("onCollectParticles/Particles2D")
 		onCollectParticles.texture = animatedSprite.get_sprite_frames().get_frame("default",int(rand_range(0,2)))
-#	if _name == "badge":
 		
 func _process(delta):
 	position.x -= delta*game.fakeSpeed
@@ -71,8 +69,6 @@ func _process(delta):
 func _on_meatArea_body_entered( body ):
 	if get_tree().is_network_server():
 		if body.is_in_group("players") and !isCollected:
-			print("body entered 1@@@@@@: ", body.get_name())
-			print("body entered 2@@@@@@: ", body.playerName)
 			rpc("rpcEatFood",body.get_name(),body.playerName)
 			pass
 
@@ -81,13 +77,12 @@ sync func rpcEatFood(_playerId,_playerName):
 	var _playerNode = get_tree().get_root().get_node("Control/game/players/" + str(_playerId))
 	onCollectParticles.emitting=true
 	if !soundPlayer.is_playing():
-#		soundPlayer.play(0.0)
 		soundPlayer.play()
 	if _playerNode.hunger < foodValue and _playerNode.hunger>=0:
 		_playerNode.hunger -= foodValue
 	else:
 		_playerNode.hunger = 0
-	print("Player hunger is: ", _playerNode.hunger)
+#	print("Player hunger is: ", _playerNode.hunger)
 	flashMessage.showPointsAt(null,TranslationServer.translate("TASTY"),position,_playerName)
 	set_process(false)
 	isCollected = true
@@ -105,7 +100,6 @@ func _on_heartArea_body_entered( body ):
 			pass	
 
 sync func rpcScoreAdd(_value,_player):
-#	var collectable
 	if !soundPlayer.is_playing():
 			soundPlayer.play(0.0)
 	onCollectParticles.emitting = true
@@ -122,37 +116,21 @@ func _on_VisibilityNotifier2D_screen_exited():
 		queue_free()
 	else:
 		deleteTimer.start()
-	pass # replace with function body
 
 func _delete_timeout():
 	if is_inside_tree():
 		queue_free()
 
 sync func rpcActivateBadge(_playerNode):
-#	onCollectParticles.emitting=true
-#	if !soundPlayer.is_playing():
-##		soundPlayer.play(0.0)
-#		soundPlayer.play()
-#	if _playerNode.hunger < foodValue and _playerNode.hunger>=0:
-#		_playerNode.hunger -= foodValue
-#	else:
-#		_playerNode.hunger = 0
-#	flashMessage.showPointsAt(null,"Tasty!",position,_playerName)
 	set_process(false)
 	isCollected = true
 	get_node("spriteNode/badgeArea/Badges").breed()
 	if control.currentPlayer.id == int(_playerNode.get_name()):
-		print("player can be a bird now: " + str(control.currentPlayer))
+#		print("player can be a bird now: " + str(control.currentPlayer))
 		utils.config.set_value("player", "beabird", true)
 		utils.config.save(utils.CONFIG_PATH)
-		
-#	collectedPosTween.interpolate_property(self,"position",position,targetBottomLeft,.6, Tween.TRANS_QUART, Tween.EASE_IN_OUT)
-#	collectedPosTween.start()
-#	deleteTimer.start()
 	
 func _on_badgeArea_body_entered( body ):
-	pass # replace with function body
 	if get_tree().is_network_server():
 		if body.is_in_group("players") and !isCollected:
 			rpc("rpcActivateBadge",body)
-			pass	
