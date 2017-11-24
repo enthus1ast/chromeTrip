@@ -266,10 +266,10 @@ _sections_unfolded = [ "playback" ]
 
 [node name="ChoosePlayer" parent="." instance=ExtResource( 4 )]
 
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 72.0
-margin_bottom = 70.0
+margin_left = 950.0
+margin_top = 530.0
+margin_right = 1012.0
+margin_bottom = 590.0
 
 [connection signal="hide" from="." to="." method="_on_GameOverScreen_hide"]
 

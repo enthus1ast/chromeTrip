@@ -131,11 +131,11 @@ func _integrate_forces(state):
 				final_force.y = top_flyup_speed
 			elif(final_force.y < -top_flyup_speed):
 				final_force.y = -top_flyup_speed
-#		rset("slave_motion",final_force)
+		rset("slave_motion",final_force)
 		rset("slave_pos",state.get_transform())
 	else:
 		state.set_transform(slave_pos)
-#		final_force = slave_motion
+		final_force = slave_motion
 	state.set_linear_velocity(final_force)
 	
 func apply_force(state):
