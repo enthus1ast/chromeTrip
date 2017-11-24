@@ -130,7 +130,7 @@ func _connected_ok():
 	if currentPlayer.name == "":
 		currentPlayer.name ="unnamed"
 	currentPlayer.isReady = false
-	currentPlayer.type = utils.config.get_value("player", "isabird")
+	currentPlayer.type = utils.getPlayerType()
 	currentPlayer.id = get_tree().get_network_unique_id()
 	rpc_id(1, "checkServerVersion", currentPlayer.id)
 	rpc_id(1, "user_ready", currentPlayer)
