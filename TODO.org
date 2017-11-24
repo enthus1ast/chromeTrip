@@ -25,4 +25,5 @@ David
 Pinned godot versions:
 ** DONE 82ad05a20ef4420122b18eadf3835c4a8a49ba19 
   Working fine so far, some annoying engine outputs
-  
+** DONE 3a33725014169ce51d6ac581a4dce3b97a60da00
+  new debugger 
