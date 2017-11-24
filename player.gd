@@ -275,12 +275,14 @@ sync func killed(_id):
 
 sync func RPCreanimate(_id, atPosition):
 	var player = get_parent().get_node(str(_id))
-	player.powerUpPlayer.play("killProtected")
+	var transMatrix = Transform2D(Vector2(),Vector2(), atPosition)
+	player.alive = true
+	player.reviving = true
 	player.isKillProtected = true
+	player.powerUpPlayer.play("killProtected")
+	player.killprotectTimer.start()
 	player.set_collision_mask_bit(3, false) ## layer for obstacles
 	player.set_collision_mask_bit(4, false) ## layer for enemies
-	player.killprotectTimer.start()
-	var transMatrix = Transform2D(Vector2(),Vector2(), atPosition)
 	player.get_node("playerShape").disabled=false
 	player.get_node("playerShape").update()
 	if player.type == "dino":
@@ -291,18 +293,7 @@ sync func RPCreanimate(_id, atPosition):
 		player.get_node("Sprite/AnimationPlayer").play("birdFly")
 	player.slave_pos = transMatrix
 	player.hunger = 0
-	if is_network_master():
-		playerColShape.disabled=false
-		isKillProtected = true
-		alive = true
-		can_jump = true
-		grounded = false
-		position = atPosition
-		slave_pos = transMatrix
-		slave_motion = Vector2(0,0)
-		hunger = 0
-	player.alive = true
-	player.reviving = true
+	player.slave_motion = Vector2(0,0)
 
 func reanimate(atPosition):
 	rpc("RPCreanimate", get_name(), atPosition)

@@ -9,7 +9,7 @@ func doRespawn(collider):
 	if not collider.alive: return true
 	for player in get_tree().get_nodes_in_group("players"):
 		print(player)
-		if ! player.alive:
+		if !player.alive:
 			var newPos
 			if player.type == "dino":
 				newPos = Vector2(100, -400)
@@ -20,7 +20,6 @@ func doRespawn(collider):
 
 func _on_Area2D_body_shape_entered( body_id, body, body_shape, area_shape ):
 	if get_tree().is_network_server() and body.get_parent().get_name()=="players":
-#		print( body_id, body.get_name(), body_shape, area_shape, "body_shape entered respawn point")
 		doRespawn(body)
 	
 func _on_VisibilityNotifier2D_screen_exited():
