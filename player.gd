@@ -310,9 +310,9 @@ sync func showGameOverScreen():
 
 func kill():
 	# kills this player	
+	cameraNode.killedRumble()
 	if get_tree().is_network_server():
 		rpc("killed", get_name())
-		cameraNode.killedRumble()
 		if allPlayersKilled():
 			rpc("showGameOverScreen")
 			
