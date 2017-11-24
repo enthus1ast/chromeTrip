@@ -15,7 +15,7 @@ var acceleration = 10000
 var top_move_speed = 200
 var top_jump_speed = 800
 var jumpSound = load("res://sounds/jump.ogg")
-var top_fly_speed = 300
+var top_fly_speed = 280
 var top_flyup_speed = 400
 var killedSound = load("res://sounds/killed.ogg")
 var killprotectTimer = Timer.new()
@@ -66,8 +66,8 @@ func _ready():
 	killprotectTimer.connect("timeout", self, "_killprotectTimeout")
 	set_process_input(true)
 	if type == "bird":
-		gravity_scale = 11
-		linear_damp = 2.2
+		gravity_scale = 9
+		linear_damp = 1.5
 		rpc("playAnimation", "birdFly")
 	elif type == "dino":
 		rpc("playAnimation", "trexAnimRun")
