@@ -7,22 +7,22 @@ export sync var slave_hunger = 0 # hunger level
 sync var slave_pos = Transform2D()
 sync var slave_motion = Vector2()
 sync var alive = true
-
-var acceleration = 10000
-var top_move_speed_org = 200
-var top_move_speed = top_move_speed_org
-var top_jump_speed = 800
-var top_flyup_speed = 400
-var jumpSound = load("res://sounds/jump.ogg")
-var killedSound = load("res://sounds/killed.ogg")
 var readyToPlay = false # this gets set to true when the player has loaded the playscene
+var reviving = false
+
+var cameraNode
+var acceleration = 10000
+var top_move_speed = 200
+var top_jump_speed = 800
+var jumpSound = load("res://sounds/jump.ogg")
+var top_fly_speed = 300
+var top_flyup_speed = 400
+var killedSound = load("res://sounds/killed.ogg")
 var killprotectTimer = Timer.new()
 var isKillProtected = false
 var needForFood = 2# speed of getting hungry
 var inputsDisabled = false
 var type = "SET_ME_TYPE"
-var reviving = false
-var cameraNode
 
 # Movement Vars
 var directional_force = Vector2()
@@ -63,13 +63,14 @@ func _ready():
 		cameraNode = game.get_node("cameraNode")
 	add_child ( killprotectTimer )
 	killprotectTimer.wait_time = 3
-	killprotectTimer.connect("timeout",self,"_killprotectTimeout")
+	killprotectTimer.connect("timeout", self, "_killprotectTimeout")
 	set_process_input(true)
-	if type=="bird":
-		gravity_scale = 8
-		rpc("playAnimation","birdFly")
-	elif type =="dino":
-		rpc("playAnimation","trexAnimRun")
+	if type == "bird":
+		gravity_scale = 11
+		linear_damp = 2.2
+		rpc("playAnimation", "birdFly")
+	elif type == "dino":
+		rpc("playAnimation", "trexAnimRun")
 
 func rpcPowerUps(_id,_string):
 	get_parent().get_node(str(_id)).powerUpPlayer.play(_string)
@@ -117,16 +118,20 @@ func _integrate_forces(state):
 		directional_force = DIRECTION.ZERO  # +FOWARD_MOTION
 		apply_force(state)
 		final_force = state.get_linear_velocity() + (directional_force * acceleration)
-		if(final_force.x > top_move_speed):
-			final_force.x = top_move_speed
-		elif(final_force.x < -top_move_speed):
-			final_force.x = -top_move_speed
 		if(type == "dino"):
+			if(final_force.x > top_move_speed):
+				final_force.x = top_move_speed
+			elif(final_force.x < -top_move_speed):
+				final_force.x = -top_move_speed
 			if(final_force.y > top_jump_speed):
 				final_force.y = top_jump_speed
 			elif(final_force.y < -top_jump_speed):
 				final_force.y = -top_jump_speed
 		elif (type == "bird"):
+			if(final_force.x > top_fly_speed):
+				final_force.x = top_fly_speed
+			elif(final_force.x < -top_fly_speed):
+				final_force.x = -top_fly_speed
 			if(final_force.y > top_flyup_speed):
 				final_force.y = top_flyup_speed
 			elif(final_force.y < -top_flyup_speed):
