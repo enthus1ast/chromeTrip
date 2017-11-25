@@ -82,6 +82,9 @@ func backgroundGameFnc():
 	backgroundGame.show_behind_parent = true
 
 func _ready():
+	var fullscreen = utils.config.get_value("general", "fullscreen")
+	OS.set_window_fullscreen(fullscreen)	
+	
 	backgroundGameFnc()
 	seedInput.set_text(str(utils.config.get_value("player", "seed")))
 	

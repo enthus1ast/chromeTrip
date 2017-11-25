@@ -7,6 +7,7 @@ signal effectVolume
 onready var mute = get_node("Panel/GridContainer/VMute")
 onready var effects = get_node("Panel/GridContainer/VEffects")
 onready var music = get_node("Panel/GridContainer/VMusic")
+onready var fullscreen = get_node("Panel/GridContainer/VFullscreen")
 var first = true
 
 func _ready():
@@ -18,6 +19,10 @@ func _ready():
 		utils.toggleMuteChannel("Music",true)
 	else:
 		utils.toggleMuteChannel("Music",false)
+	
+	fullscreen.pressed = utils.config.get_value("general", "fullscreen")
+	
+	
 
 func _on_VMute_toggled( pressed ):
 	print(pressed)
@@ -50,3 +55,7 @@ func _on_VMusic_value_changed( value ):
 func _on_Back_pressed():
 	self.hide()
 	
+func _on_VFullscreen_toggled( pressed ):
+	utils.config.set_value("general", "fullscreen", pressed)
+	utils.config.save(utils.CONFIG_PATH)	
+	OS.set_window_fullscreen(pressed)
