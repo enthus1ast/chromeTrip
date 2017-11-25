@@ -4,6 +4,10 @@ importer="texture"
 type="StreamTexture"
 path="res://.import/vulkanFire.png-2f0ad6eabace26bfcd512f722e8f19a3.stex"
 
+[deps]
+
+source_md5="b2348798c64f55f4ab19908d45c0d0ec"
+
 [params]
 
 compress/mode=0

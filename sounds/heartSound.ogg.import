@@ -4,7 +4,11 @@ importer="ogg_vorbis"
 type="AudioStreamOGGVorbis"
 path="res://.import/heartSound.ogg-9f1cac283b64f1945a2d1c5ff36e20b1.oggstr"
 
+[deps]
+
+source_md5="fb29fd3b7bf1598d4e54df07a9ccb774"
+
 [params]
 
-loop=false
+loop=true
 loop_offset=0

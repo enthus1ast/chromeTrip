@@ -4,6 +4,10 @@ importer="texture"
 type="StreamTexture"
 path="res://.import/berg2.png-b2a580658155f9fc823a1c20d3baecd7.stex"
 
+[deps]
+
+source_md5="ecd656d3c3def4cfd6a07a880a0f9402"
+
 [params]
 
 compress/mode=0

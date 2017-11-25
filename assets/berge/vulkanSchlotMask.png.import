@@ -4,6 +4,10 @@ importer="texture"
 type="StreamTexture"
 path="res://.import/vulkanSchlotMask.png-6675b16660b33a033df43cc0c0f91f85.stex"
 
+[deps]
+
+source_md5="87d15fef52b739b3ffd7e9f76c965b7c"
+
 [params]
 
 compress/mode=0

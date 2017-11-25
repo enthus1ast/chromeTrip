@@ -2,9 +2,9 @@ extends Control
 var offsetX
 var offsetY = -50
 
-onready var Restartpoint = preload("res://restartPoint.tscn")
 onready var Obstacles = preload("res://assets/obstacles.tscn")
 onready var Enemys = preload("res://assets/enemys.tscn")
+onready var Restartpoint = preload("res://restartPoint.tscn")
 onready var Collectables = preload("res://assets/collectables.tscn")
 onready var Wolke = preload("res://Wolke.tscn")
 onready var viewportSize = get_viewport().size

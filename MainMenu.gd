@@ -4,9 +4,9 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	pass
-	TranslationServer.add_translation( load("res://raw/translation.de.translation"))
-	TranslationServer.add_translation( load("res://raw/translation.en.translation"))
-#	TranslationServer.add_translation( load("res://raw/translation.ja.translation"))
+	TranslationServer.add_translation( load("res://translation/translation.de.translation"))
+	TranslationServer.add_translation( load("res://translation/translation.en.translation"))
+#	TranslationServer.add_translation( load("res://translation/translation.ja.translation"))
 #	TranslationServer.set_locale("de")
 #	print("translation:", TranslationServer.translate("QUIT"))
 #	TranslationServer.set_locale("en")

@@ -4,6 +4,10 @@ importer="texture"
 type="StreamTexture"
 path="res://.import/100-offline-sprite.png-ab6fed078be2a46c42d837d51b641793.stex"
 
+[deps]
+
+source_md5="126bb0177752d9bcdaf27e9bd487a8ab"
+
 [params]
 
 compress/mode=0
@@ -11,7 +15,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

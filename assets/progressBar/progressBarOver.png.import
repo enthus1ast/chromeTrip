@@ -4,6 +4,10 @@ importer="texture"
 type="StreamTexture"
 path="res://.import/progressBarOver.png-0430763441c9d3a841567d87fbe63606.stex"
 
+[deps]
+
+source_md5="e5668f6799d06a9599d80a622c840831"
+
 [params]
 
 compress/mode=0

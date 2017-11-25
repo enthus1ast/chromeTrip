@@ -4,7 +4,11 @@ importer="ogg_vorbis"
 type="AudioStreamOGGVorbis"
 path="res://.import/killed.ogg-41da00366479936ec133ce74b0e68399.oggstr"
 
+[deps]
+
+source_md5="8cb4d1a182b5c889f0b94344e0203fa4"
+
 [params]
 
-loop=false
+loop=true
 loop_offset=0

@@ -4,18 +4,22 @@ importer="texture"
 type="StreamTexture"
 path="res://.import/ground.png-19dd19062ae149a099889071e7b87881.stex"
 
+[deps]
+
+source_md5="8f749f60bf1cc97add3509d6acb8f9bb"
+
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
-flags/repeat=1
-flags/filter=false
+flags/repeat=0
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=false
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 stream=false

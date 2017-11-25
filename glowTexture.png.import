@@ -4,6 +4,10 @@ importer="texture"
 type="StreamTexture"
 path="res://.import/glowTexture.png-71186880340bb725ce4faa05b3b590af.stex"
 
+[deps]
+
+source_md5="85c85a4850b74fd75456c5459331f28d"
+
 [params]
 
 compress/mode=0
@@ -12,8 +16,8 @@ compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=true
-flags/anisotropic=true
+flags/mipmaps=false
+flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false

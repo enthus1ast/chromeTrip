@@ -13,7 +13,7 @@ config_version=3
 config/name="chromeTrip"
 run/main_scene="res://lobby.tscn"
 boot_splash/image="res://splashScreen.png"
-config/icon="res://raw/chromeTrip.png"
+config/icon="res://assets/chromeTrip.png"
 
 [autoload]
 
@@ -50,9 +50,9 @@ ui_enter=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":
 
 [locale]
 
-translations=PoolStringArray( "res://raw/translation.csv" )
+translations=PoolStringArray( "res://translation/translation.csv" )
 translation_remaps={
-"res://raw/translation.csv": PoolStringArray(  )
+"res://translation/translation.csv": PoolStringArray(  )
 }
 locale_filter=[ 1, [ "de_DE", "en" ] ]
 

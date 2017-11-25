@@ -1,6 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://sounds/200-offline-sprite.png" type="Texture" id=1]
+[ext_resource path="res://200-offline-sprite.png" type="Texture" id=1]
+
 
 [sub_resource type="Animation" id=1]
 

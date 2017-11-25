@@ -4,6 +4,10 @@ importer="texture"
 type="StreamTexture"
 path="res://.import/SonneStrahl2.png-8121a0b62c1bd8d7fdeb1bb0acde7f58.stex"
 
+[deps]
+
+source_md5="004a7fb3070384e9f5f1aa9ec58029fb"
+
 [params]
 
 compress/mode=0

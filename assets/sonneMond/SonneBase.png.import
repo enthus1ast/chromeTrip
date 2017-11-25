@@ -4,6 +4,10 @@ importer="texture"
 type="StreamTexture"
 path="res://.import/SonneBase.png-2ba2bd9f84f49e8a579466a636a9f92f.stex"
 
+[deps]
+
+source_md5="403c08b9790df2b0c2286bb1854764fb"
+
 [params]
 
 compress/mode=0

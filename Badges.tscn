@@ -2,8 +2,8 @@
 
 [ext_resource path="res://Badges.gd" type="Script" id=1]
 [ext_resource path="res://100-offline-sprite.png" type="Texture" id=2]
-[ext_resource path="res://raw/eggUnten.png" type="Texture" id=3]
-[ext_resource path="res://raw/eggOben.png" type="Texture" id=4]
+[ext_resource path="res://assets/eggUnten.png" type="Texture" id=3]
+[ext_resource path="res://assets/eggOben.png" type="Texture" id=4]
 
 [sub_resource type="Animation" id=1]
 
