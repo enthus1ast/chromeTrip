@@ -7,7 +7,7 @@ type="Translation"
 
 files=[ "res://translation/translation.de.translation", "res://translation/translation.en.translation", "res://translation/translation.ja.translation" ]
 
-source_md5="74006993eb010361e3f5f7311f1e1c6a"
+source_md5="91c188665be2ca95530ab943ff568429"
 
 [params]
 

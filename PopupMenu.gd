@@ -1,15 +1,22 @@
 extends Control
 
 signal restartGame
-signal resetKeys # to reset the pressed keys
 
-sync func rpcSetPause(val):
-#	emit_signal("resetKeys")
+sync func rpcSetPause(val, playername):
 	get_tree().get_nodes_in_group("currentPlayer")[0].resetKeys()
+	print(val, " ", playername)
+	var pauseGameScreen = get_tree().get_root().get_node("Control/PauseGameScreen")
+#	if not is_network_master():
+	if val:
+		print("would show")
+		pauseGameScreen.setPlayerPaused(playername)
+	else:
+		pauseGameScreen.hide()
 	get_tree().set_pause(val)
 	
 func setPause(val):
-	rpc("rpcSetPause",val)
+	var playername = get_tree().get_nodes_in_group("currentPlayer")[0].playerName
+	rpc("rpcSetPause",val, playername)
 
 func showMenu():
 	setPause(true)
@@ -21,7 +28,6 @@ func hideMenu():
 
 func _ready():
 	set_process_input(true)
-	pass
 
 func _on_ButtonResume_pressed():
 	hideMenu()
@@ -47,3 +53,4 @@ func _input(event):
 			self.hideMenu()
 		else:
 			self.showMenu()
+				
