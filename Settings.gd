@@ -19,11 +19,8 @@ func _ready():
 		utils.toggleMuteChannel("Music",true)
 	else:
 		utils.toggleMuteChannel("Music",false)
-	
 	fullscreen.pressed = utils.config.get_value("general", "fullscreen")
 	
-	
-
 func _on_VMute_toggled( pressed ):
 	print(pressed)
 	utils.config.set_value("audio", "mute", pressed)
