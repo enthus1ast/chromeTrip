@@ -10,5 +10,5 @@ source_md5="8cb4d1a182b5c889f0b94344e0203fa4"
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
