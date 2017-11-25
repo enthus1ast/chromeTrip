@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://player.gd" type="Script" id=1]
-[ext_resource path="res://PlayerAnim.tscn" type="PackedScene" id=2]
+[ext_resource path="res://PlayerSprites.tscn" type="PackedScene" id=2]
 
 [sub_resource type="Gradient" id=1]
 
@@ -187,6 +187,8 @@ one_way_collision = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" parent="." instance=ExtResource( 2 )]
+
+position = Vector2( -2.2629, 29.6091 )
 
 [node name="Label" type="Label" parent="."]
 

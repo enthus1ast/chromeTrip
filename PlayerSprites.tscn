@@ -98,7 +98,7 @@ tracks/7/keys = {
 "values": [ 0.0, 360.0 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 
 length = 0.6
 loop = true
@@ -192,7 +192,7 @@ tracks/7/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=3]
 
 resource_name = "birdFly_choosePlayer"
 length = 0.6
@@ -640,6 +640,7 @@ tracks/0/keys = {
 
 [node name="Sprite" type="Sprite"]
 
+editor/display_folded = true
 position = Vector2( -2.2629, 29.6091 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 1 )
@@ -662,8 +663,8 @@ playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
 anims/birdAnimKilled = SubResource( 1 )
-anims/birdFly = SubResource( 3 )
-anims/birdFly_choosePlayer = SubResource( 11 )
+anims/birdFly = SubResource( 2 )
+anims/birdFly_choosePlayer = SubResource( 3 )
 anims/trexAnim = SubResource( 4 )
 anims/trexAnimDuck = SubResource( 5 )
 anims/trexAnimKilled = SubResource( 6 )
