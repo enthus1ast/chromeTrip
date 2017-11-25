@@ -58,6 +58,9 @@ onready var animPlayer = get_node("Sprite/AnimationPlayer")
 onready var powerUpPlayer = get_node("Sprite/AnimationPlayerPowerUps")
 onready var particleAnimPlayer = get_node("particleSystems/particleAnimPlayer")
 
+func resetKeys():
+	keys = [false,false,false,false]
+
 func _ready():
 	if game != null:
 		cameraNode = game.get_node("cameraNode")
@@ -71,6 +74,8 @@ func _ready():
 		rpc("playAnimation", "birdFly")
 	elif type == "dino":
 		rpc("playAnimation", "trexAnimRun")
+	if is_network_master():
+		add_to_group("currentPlayer")
 
 func rpcPowerUps(_id,_string):
 	get_parent().get_node(str(_id)).powerUpPlayer.play(_string)

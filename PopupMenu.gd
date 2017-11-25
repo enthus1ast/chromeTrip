@@ -1,8 +1,11 @@
 extends Control
 
 signal restartGame
+signal resetKeys # to reset the pressed keys
 
 sync func rpcSetPause(val):
+#	emit_signal("resetKeys")
+	get_tree().get_nodes_in_group("currentPlayer")[0].resetKeys()
 	get_tree().set_pause(val)
 	
 func setPause(val):
@@ -38,7 +41,6 @@ func _on_ButtonQuit_pressed():
 func _on_Settings_pressed():
 	get_tree().get_root().get_node("Control/menu/Settings").show()
 	
-
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		if self.visible:
