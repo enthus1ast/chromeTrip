@@ -522,5 +522,5 @@ WindowDialog/fonts/title_font = null
 WindowDialog/icons/close = null
 WindowDialog/icons/close_highlight = null
 WindowDialog/styles/panel = null
-_sections_unfolded = [ "Button", "CheckBox", "CheckBox/colors", "Fonts", "Fonts/fonts", "Label/colors", "LineEdit", "LineEdit/colors", "LineEdit/constants", "LineEdit/styles", "PanelContainer", "PanelContainer/styles" ]
+_sections_unfolded = [ "Button", "CheckBox", "CheckBox/colors", "Fonts", "Fonts/fonts", "Label/colors", "LineEdit", "LineEdit/colors", "LineEdit/styles", "PanelContainer", "PanelContainer/styles" ]
 

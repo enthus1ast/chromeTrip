@@ -5,7 +5,7 @@
 [ext_resource path="res://fonts/pixelate/SFPixelate-Bold.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://ButtonQuit.tscn" type="PackedScene" id=4]
 
-[sub_resource type="DynamicFont" id=1183]
+[sub_resource type="DynamicFont" id=1]
 
 size = 16
 use_mipmaps = false
@@ -27,6 +27,7 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 script = ExtResource( 1 )
+_sections_unfolded = [ "Focus" ]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 
@@ -44,7 +45,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 2 )
 alignment = 1
-_sections_unfolded = [ "Rect", "Theme" ]
+_sections_unfolded = [ "Focus", "Theme" ]
 
 [node name="ButtonNewGame" type="Button" parent="VBoxContainer"]
 
@@ -60,7 +61,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 1183 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.379899, 0.933594, 0.0364685, 1 )
 toggle_mode = false
 enabled_focus_mode = 2
@@ -68,7 +69,7 @@ shortcut = null
 group = null
 text = "NEW_GAME"
 flat = false
-_sections_unfolded = [ "Material", "Visibility", "custom_colors", "custom_constants", "custom_fonts" ]
+_sections_unfolded = [ "Focus", "Hint", "Material", "Visibility", "custom_colors", "custom_constants", "custom_fonts" ]
 
 [node name="Settings" type="Button" parent="VBoxContainer"]
 
@@ -84,7 +85,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 1183 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.816406, 0.787879, 0.0861053, 1 )
 toggle_mode = false
 enabled_focus_mode = 2
@@ -108,7 +109,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 1183 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.123688, 0.576657, 0.753906, 1 )
 toggle_mode = false
 enabled_focus_mode = 2

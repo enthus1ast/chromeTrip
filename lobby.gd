@@ -10,6 +10,7 @@ onready var chatInput = lobby.get_node("Container/chatInput/chatInput")
 onready var networkPanel = get_node("menu/networkPanel")
 onready var settingsPanel = get_node("menu/Settings")
 onready var mainMenu = get_node("menu/MainMenu")
+onready var mainMenuButtons = mainMenu.get_node("VBoxContainer").get_children()
 onready var nameInput = networkPanel.get_node("name")
 onready var highscore = get_node("menu/Highscore")
 onready var ipInput = networkPanel.get_node("connect/ip")
@@ -35,6 +36,7 @@ var backgroundGame = null
 var players = {}
 var player_name
 var alreadyRestarting  = false
+var listPos = 0 
 onready var currentPlayer = {
 	"id":null,
 	"name":"",
@@ -493,9 +495,42 @@ sync func prepareGame():
 		rpc("startGame")
 
 func _input(event):
-	if event.is_action_pressed("ui_enter") and chatInput.has_focus():
-		rpc("sendMessage",currentPlayer.name,chatInput.get_text())
-		sendMessage(currentPlayer.name,chatInput.get_text())
+	if event.get_class()=="InputEventKey":
+		# send chat message on enter
+		if event.is_action_released("ui_enter"):
+			if lobby.visible and chatInput.has_focus():
+				rpc("sendMessage",currentPlayer.name,chatInput.get_text())
+				sendMessage(currentPlayer.name,chatInput.get_text())
+		
+		# handle focus in mainmenu
+		if event.is_action_released("ui_up"):
+			releaseFocus(mainMenu)
+			mainMenuButtons[listPos].grab_focus()
+			if listPos<mainMenuButtons.size()-1:
+				listPos += 1
+			else:
+				listPos=0
+				
+		elif event.is_action_released("ui_down"):
+			releaseFocus(mainMenu)
+			mainMenuButtons[listPos].grab_focus()
+			if listPos==0:
+				listPos = mainMenuButtons.size()-1
+			else:
+				listPos-=1
+				
+		if event.is_action_released("ui_cancel"):
+			if lobby.visible:
+				_on_leaveLobbyButton_pressed()
+			elif networkPanel.visible or highscore.visible:
+				_on_back_pressed()
+
+func releaseFocus(_control):
+	var focusOwner = _control.get_focus_owner()
+	print(focusOwner)
+	if focusOwner!=null:
+		focusOwner.release_focus()
+
 
 func askForRestartGame():
 	rpc("restartGame")
