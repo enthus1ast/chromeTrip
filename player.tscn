@@ -188,8 +188,6 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" parent="." instance=ExtResource( 2 )]
 
-position = Vector2( -2.2629, 29.6091 )
-
 [node name="Label" type="Label" parent="."]
 
 anchor_left = 0.0

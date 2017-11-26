@@ -82,6 +82,9 @@ func backgroundGameFnc():
 	backgroundGame.show_behind_parent = true
 
 func _ready():
+	var fullscreen = utils.config.get_value("general", "fullscreen")
+	OS.set_window_fullscreen(fullscreen)	
+	
 	backgroundGameFnc()
 	seedInput.set_text(str(utils.config.get_value("player", "seed")))
 	
@@ -243,13 +246,12 @@ func _server_disconnected():
 	networkPanel.set_visible(true)
 	lobby.set_visible(false)
 	menu.set_visible(true)
-#	call_deferred("remove_child",game)
 	if has_node("game"):
 		game.free()
 	if !has_node("backgroundGame"):
 		backgroundGameFnc()
 	eNet.close_connection()
-	eNet = NetworkedMultiplayerENet.new() #workaround
+	eNet = NetworkedMultiplayerENet.new()
 	get_tree().set_network_peer(null)
 	players={}
 	clearList()
