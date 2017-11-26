@@ -182,6 +182,8 @@ func _ready():
 			config.set_value("audio", "effects", 100)
 		if not config.has_section_key("audio", "music"):
 			config.set_value("audio", "music", 100)						
+		if not config.has_section_key("general", "fullscreen"):
+			config.set_value("general", "fullscreen", false)
 		# Save the changes by overwriting the previous file
 		config.save(CONFIG_PATH)
 	else:
