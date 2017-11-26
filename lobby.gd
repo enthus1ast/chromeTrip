@@ -36,7 +36,6 @@ var backgroundGame = null
 var players = {}
 var player_name
 var alreadyRestarting  = false
-var listPos = 0 
 onready var currentPlayer = {
 	"id":null,
 	"name":"",
@@ -411,12 +410,6 @@ func _on_cancel_pressed():
 func _on_leaveLobbyButton_pressed():
 	leaveLobby()
 
-func _on_chatInput_focus_entered():
-	pass
-	
-func _on_chatInput_focus_exited():
-	pass
-
 func _on_sendButton_pressed():
 	rpc("sendMessage",currentPlayer.name,chatInput.get_text())
 	sendMessage(currentPlayer.name,chatInput.get_text())
@@ -501,36 +494,12 @@ func _input(event):
 			if lobby.visible and chatInput.has_focus():
 				rpc("sendMessage",currentPlayer.name,chatInput.get_text())
 				sendMessage(currentPlayer.name,chatInput.get_text())
-		
-		# handle focus in mainmenu
-		if event.is_action_released("ui_up"):
-			releaseFocus(mainMenu)
-			mainMenuButtons[listPos].grab_focus()
-			if listPos<mainMenuButtons.size()-1:
-				listPos += 1
-			else:
-				listPos=0
-				
-		elif event.is_action_released("ui_down"):
-			releaseFocus(mainMenu)
-			mainMenuButtons[listPos].grab_focus()
-			if listPos==0:
-				listPos = mainMenuButtons.size()-1
-			else:
-				listPos-=1
 				
 		if event.is_action_released("ui_cancel"):
 			if lobby.visible:
 				_on_leaveLobbyButton_pressed()
 			elif networkPanel.visible or highscore.visible:
 				_on_back_pressed()
-
-func releaseFocus(_control):
-	var focusOwner = _control.get_focus_owner()
-	print(focusOwner)
-	if focusOwner!=null:
-		focusOwner.release_focus()
-
 
 func askForRestartGame():
 	rpc("restartGame")

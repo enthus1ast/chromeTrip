@@ -124,6 +124,8 @@ _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 margin_top = 74.0
 text = "QUIT"
 
+[connection signal="visibility_changed" from="." to="." method="_on_PopupMenu_visibility_changed"]
+
 [connection signal="pressed" from="VBoxContainer/ButtonNewGame" to="." method="_on_ButtonNewGame_pressed"]
 
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
