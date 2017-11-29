@@ -1,11 +1,8 @@
 extends RigidBody2D
 
 var addFakeSpeed = false
-var dangerous = true
 
 sync var rock_slave_pos = Transform2D()
-sync var rock_slave_lin_vel = Vector2()
-sync var rock_slave_ang_vel = 0
 onready var shadowSprite = get_node("CollisionShape2D/shadow")
 
 func _ready():
@@ -17,7 +14,6 @@ func _on_body_entered( body ):
 	if get_tree().is_network_server():
 		if body.is_in_group("ground") and get_parent().get_name()=="rockShower":
 			addFakeSpeed = true
-			dangerous = false
 
 func _physics_process(delta):
 	if is_inside_tree() and get_tree().is_network_server():

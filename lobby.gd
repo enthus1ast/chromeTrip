@@ -91,7 +91,8 @@ func backgroundGameFnc():
 
 func _ready():
 	var fullscreen = utils.config.get_value("general", "fullscreen")
-	OS.set_window_fullscreen(fullscreen)	
+	OS.set_window_fullscreen(fullscreen)
+	TranslationServer.set_locale(str(utils.config.get_value("general", "language")))
 	
 	backgroundGameFnc()
 	seedInput.set_text(str(utils.config.get_value("player", "seed")))
@@ -592,10 +593,14 @@ remote func beABirdToggle(_id,_bool):
 func _on_ButtonDe_pressed():
 #	print("game language: de")
 	TranslationServer.set_locale("de")
+	utils.config.set_value("general", "language", "de")
+	utils.config.save(utils.CONFIG_PATH)
 	
 func _on_ButtonEn_pressed():
 #	print("game language: en")
 	TranslationServer.set_locale("en")
+	utils.config.set_value("general", "language", "en")
+	utils.config.save(utils.CONFIG_PATH)
 
 func _on_ChoosePlayer_playerisabird(_bool):
 	if get_tree().is_network_server():

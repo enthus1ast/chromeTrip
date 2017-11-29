@@ -280,7 +280,6 @@ _sections_unfolded = [ "Visibility" ]
 
 [node name="sprites" type="Node2D" parent="."]
 
-editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -388,6 +387,7 @@ __meta__ = {
 "ground",
 ]]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 3
 collision_mask = 1
@@ -410,6 +410,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="leftBlock" type="StaticBody2D" parent="."]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1

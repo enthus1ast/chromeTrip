@@ -15,7 +15,6 @@ var badgePropability = 800 # dice of 0..1024
 var badgeScore = 10000 # score needet to randomly drop badges
 var stage = 1 # each 5000 points one stage
 var nextLevel = 5000
-
 var placeholderScore
 var placeholderScoreSize
 var spriteWidth
@@ -24,6 +23,7 @@ var enemysCount = 12
 var wolkenMaxCount = 10
 var collectablesCount = 8
 var allDead = false
+var cheatsEnabled = true
 
 # cheatCodeChecker
 var tempKeyStore =""
@@ -268,7 +268,7 @@ func _on_Mute_toggled( pressed ):
 	
 
 func _input(event):
-	# just needed for cheat codes
+	# cheat codes
 	if event.get_class()=="InputEventKey" and !event.is_pressed():
 		if(OS.get_scancode_string(event.scancode).length() == 1):
 			var tmp
@@ -296,9 +296,10 @@ func cheatCode(_string):
 	############
 			
 remote func rpcServerExecCheat(_string):
-	rpc(_string+"Cheat")
+	if cheatsEnabled:
+		rpc(_string+"Cheat")
 	
 sync func showerCheat():
 	var rockShower = RockShower.instance()
-	add_child(rockShower)
+	get_tree().get_root().get_node("Control/game").add_child(rockShower)
 	rockShower.letItRain(1,5)
