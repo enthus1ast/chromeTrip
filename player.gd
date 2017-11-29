@@ -333,6 +333,10 @@ func disableInputs():
 func _on_player_body_shape_entered( body_id, body, body_shape, local_shape ):
 	if(body.has_node("obstacleShape") or body.has_node("enemyShape")) and alive and !isKillProtected:
 		kill()
+	
+	# Kill bird if it hits the ground
+	if(type == "bird" and body.is_in_group("ground")) and alive and !isKillProtected:
+		kill()
 
 func _on_player_body_shape_exited( body_id, body, body_shape, local_shape ):
 	pass # replace with function body

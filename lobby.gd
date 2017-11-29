@@ -25,6 +25,7 @@ onready var BackgroundGame = preload("res://backgroundGame.tscn")
 onready var warnPopup = get_node("menu/WarnPopup")
 onready var peerTypeInfo = get_node("networkHud/CanvasLayer/peerTypeInfo")
 onready var seedInput = get_node("menu/networkPanel/seed")
+onready var pingTimer = get_node("networkHud/Timer")
 
 var countdown
 var countdownActive = false
@@ -54,12 +55,18 @@ signal connection_success()
 signal connection_fail()
 signal pong
 
+func stopAndClearPing():
+	## stops ping timer and clears the graphik
+	pingTimer.stop()
+	pingTimeout.text = ""
+
 func leaveLobby():
 	networkPanel.set_visible(true)
 	lobby.set_visible(false)
 	get_tree().set_network_peer(null)
 	eNet.close_connection()
 	eNet = NetworkedMultiplayerENet.new()
+	stopAndClearPing()
 	players={}
 	clearList()
 	clearChat()
@@ -142,7 +149,7 @@ func _connected_ok():
 	lobby.set_visible(true)
 	dialogWaiting.set_visible(false)
 	isConnecting = false
-	get_node("networkHud/Timer").start()
+	pingTimer.start()
 	
 remote func user_ready(_player):
 	#server responding to Clients connect ok
@@ -251,6 +258,7 @@ func _server_disconnected():
 		game.free()
 	if !has_node("backgroundGame"):
 		backgroundGameFnc()
+	stopAndClearPing()	
 	eNet.close_connection()
 	eNet = NetworkedMultiplayerENet.new()
 	get_tree().set_network_peer(null)

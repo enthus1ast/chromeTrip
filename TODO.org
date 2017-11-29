@@ -1,7 +1,7 @@
 David
 ** DONE Highscore counter
 ** DONE Crypted highscore file
-** TODO Online highscore?
+** Online highscore?
 ** DONE Config file (ini)
   Fullscreen
  ok name
@@ -17,9 +17,20 @@ David
 ** DONE stage in highscore
 ** DONE disable collision on spawn/revive (kill protect)
 ** DONE Spiel anhalten beim pause drücken SP/MP
-** TODO player collision save spot eliminieren
+** player collision save spot eliminieren
 ** DONE dauer spring bug beim ersten mal 
 ** DONE be a bird ausblenden wenn kein bird (jetzt dauerhaft)
+** TODO background white alpha fix
+** multiple paralax layer for ground
+** DONE if connection lost stop ping
+** DONE vogel tod auf boden
+** DONE namen besser einrücken
+** cheat unter windows??
+
+** 32 bit linux
+** 32 bit window
+** itch bilder
+** itch video
 
 
 Pinned godot versions:
