@@ -5,9 +5,9 @@ type="Translation"
 
 [deps]
 
-files=[ "res://translation/translation.de.translation", "res://translation/translation.en.translation", "res://translation/translation.ja.translation" ]
+files=[ "res://translation/translation.de.translation", "res://translation/translation.en.translation" ]
 
-source_md5="91c188665be2ca95530ab943ff568429"
+source_md5="0c4717afe9cf8eec8b39573fe702ca6a"
 
 [params]
 

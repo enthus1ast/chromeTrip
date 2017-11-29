@@ -50,11 +50,13 @@ ui_enter=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":
 
 [locale]
 
-translations=PoolStringArray( "res://translation/translation.csv" )
 translation_remaps={
-
+"res://translation/translation.csv": PoolStringArray(  ),
+"res://translation/translation.de.translation": PoolStringArray(  ),
+"res://translation/translation.en.translation": PoolStringArray(  )
 }
 locale_filter=[ 1, [ "de_DE", "en" ] ]
+translations=PoolStringArray(  )
 
 [physics]
 
