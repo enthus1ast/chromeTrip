@@ -12,7 +12,7 @@ func _ready():
 
 func _on_body_entered( body ):
 	if get_tree().is_network_server():
-		if body.is_in_group("ground") and get_parent().get_name()=="rockShower":
+		if not body.is_in_group("players"):
 			addFakeSpeed = true
 
 func _physics_process(delta):

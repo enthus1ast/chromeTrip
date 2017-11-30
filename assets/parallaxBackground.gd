@@ -15,7 +15,7 @@ var canSpawn = true
 var isErrupting = false
 var activeVulkan = null
 
-var vulkanPosition = Vector2(517,283)
+var vulkanPosition = Vector2(517,300)
 
 #storeing a prebuild mountain collection in this scene
 func storeAvailableMountains():
