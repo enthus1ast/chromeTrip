@@ -144,12 +144,9 @@ func collectablesGen():
 	i = 0
 
 func badgesGen():
-#	print(str(score) + "/" + str(badgeScore))
 	if score < badgeScore  : return
 	var choice = rand_range(0,1024)
-	print("BADGE choise is:" + str(choice))
 	if choice > badgePropability:
-		print("CREATED A BADGE")
 		var pos = Vector2(rand_range(1024,2000)-collectablesNode.position.x,rand_range(10,330))
 		rpc("rpcBadge", pos, globalIdCounter)
 		globalIdCounter += 1

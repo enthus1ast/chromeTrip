@@ -18,7 +18,6 @@ func _on_Button_mouse_exited():
 	get_node("ButRestart/ImgRestart").modulate = "ffffff"
 
 func _on_GameOverScreen_visibility_changed():
-	print("visibility_changed")
 	if self.visible == true: # TODO?
 		get_node("AnimationPlayer").play("s")
 

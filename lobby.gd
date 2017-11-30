@@ -130,7 +130,6 @@ remote func ping(_id, _remoteTicks):
 	
 remote func pong(_id, _relayedTicks):
 	var timeout = (OS.get_ticks_msec ( ) - _relayedTicks) 
-	print("Received pong")
 	emit_signal("pong", timeout)
 	
 func _player_connected(playerId):
@@ -146,7 +145,7 @@ func _connected_ok():
 	currentPlayer.id = get_tree().get_network_unique_id()
 	rpc_id(1, "checkServerVersion", currentPlayer.id)
 	rpc_id(1, "user_ready", currentPlayer)
-	print("_connected_ok",currentPlayer.id)
+	print("connected ok",currentPlayer.id)
 	lobby.set_visible(true)
 	dialogWaiting.set_visible(false)
 	isConnecting = false
@@ -215,7 +214,7 @@ remote func startGame():
 			players[p].node.set_network_master(players[p].id)
 	if has_node("game"):
 		# maybe join  a running game
-		print("already there")
+		print("an instance of game is already running")
 		pass
 	else:
 		# only if there is no other game instance
@@ -281,7 +280,6 @@ remote func removeItemFromList(_id):
 		item.queue_free()
 	
 remote func updateList(_list):
-	print("updateList: ",_list)
 	for peer in _list:
 		addNewListItem(_list[peer])
 
@@ -399,8 +397,6 @@ func _on_sp_pressed():
 	players[id] = {}
 	players[id].name = currentPlayer.name
 	players[id].id = id
-	print("created sp game player id is:", id)
-	print("network id is:", get_tree().get_network_unique_id())
 	players[id].isReady = currentPlayer.isReady
 	currentPlayer.type = utils.getPlayerType()
 	players[id].type = currentPlayer.type
@@ -543,7 +539,6 @@ func _on_Timer_timeout():
 		rpc_id(1, "ping", get_tree().get_network_unique_id(), OS.get_ticks_msec() )
 
 func _on_AudioStreamPlayer_finished():
-#	print("Finished")
 	pass
 
 func _on_Settings_mute(val):
@@ -553,7 +548,6 @@ func _on_RichTextLabel_meta_clicked( meta ):
 	OS.shell_open(utils.DEVELOPER_URI)
 	
 func _on_seed_text_changed( text ):
-	print(text.hash())
 	utils.config.set_value("player", "seed", hash(text))		
 	utils.config.save(utils.CONFIG_PATH)	
 	
@@ -591,13 +585,11 @@ remote func beABirdToggle(_id,_bool):
 				rpc_id(players[peer].id,"rpcSetToBirds",_id,type)
 				
 func _on_ButtonDe_pressed():
-#	print("game language: de")
 	TranslationServer.set_locale("de")
 	utils.config.set_value("general", "language", "de")
 	utils.config.save(utils.CONFIG_PATH)
 	
 func _on_ButtonEn_pressed():
-#	print("game language: en")
 	TranslationServer.set_locale("en")
 	utils.config.set_value("general", "language", "en")
 	utils.config.save(utils.CONFIG_PATH)

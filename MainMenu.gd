@@ -3,11 +3,7 @@ extends Control
 func _ready():
 	TranslationServer.add_translation( load("res://translation/translation.de.translation"))
 	TranslationServer.add_translation( load("res://translation/translation.en.translation"))
-#	TranslationServer.add_translation( load("res://translation/translation.ja.translation"))
-#	TranslationServer.set_locale("de")
-#	print("translation:", TranslationServer.translate("QUIT"))
-#	TranslationServer.set_locale("en")
-#	print("translation:", TranslationServer.translate("QUIT"))	
+
 
 func _on_ButtonQuit_pressed():
 	get_tree().quit()
