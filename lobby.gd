@@ -500,7 +500,7 @@ func _input(event):
 				rpc("sendMessage",currentPlayer.name,chatInput.get_text())
 				sendMessage(currentPlayer.name,chatInput.get_text())
 				
-		if event.is_action_released("ui_cancel"):
+		if event.is_action_released("ui_cancel") and not has_node("game"):
 			if lobby.visible:
 				_on_leaveLobbyButton_pressed()
 			elif networkPanel.visible or highscore.visible:
