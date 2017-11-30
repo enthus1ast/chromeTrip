@@ -6,6 +6,7 @@
 
 [node name="parallaxBackground" type="Node2D"]
 
+editor/display_folded = true
 position = Vector2( 1, 1 )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
@@ -30,6 +31,8 @@ _sections_unfolded = [ "Material", "Offset", "Region", "Transform", "Visibility"
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="gebirge/Sprite1"]
 
+position = Vector2( -0.136111, 0 )
+scale = Vector2( 3.87707, 1 )
 rect = Rect2( -10, -10, 20, 20 )
 
 [node name="Sprite2" type="Sprite" parent="gebirge"]
@@ -45,6 +48,8 @@ _sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="gebirge/Sprite2"]
 
+position = Vector2( 11.4302, 0 )
+scale = Vector2( 2.14302, 1 )
 rect = Rect2( -10, -10, 20, 20 )
 
 [node name="Sprite3" type="Sprite" parent="gebirge"]
@@ -61,7 +66,8 @@ _sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="gebirge/Sprite3"]
 
-position = Vector2( 1.88602, -0.782471 )
+position = Vector2( 4.01236, -0.782471 )
+scale = Vector2( 1.21263, 1 )
 rect = Rect2( -10, -10, 20, 20 )
 
 [connection signal="screen_exited" from="gebirge/Sprite1/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

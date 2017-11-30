@@ -3,7 +3,7 @@
 [resource]
 
 code = "shader_type canvas_item;
-uniform float brightnessFac  : hint_range( -5.0, 5.0);
+uniform float brightnessFac : hint_range( -5.0, 5.0);
 uniform float saturationFac :hint_range( -5.0, 5.0);
 uniform float contrastFac : hint_range( -5.0, 5.0);
 mat4 brightnessMatrix( float brightness )

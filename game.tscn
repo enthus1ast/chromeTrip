@@ -87,10 +87,10 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/keys = {
-"times": PoolRealArray( 0, 15, 18.4, 28.2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 8.1, 13.8, 18.6, 27.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 1.0, 0.389, 0.389, 1.0 ]
+"values": [ 1.0, 1.0, 0.393073, 0.393073, 1.0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("shaderSpass:material:shader_param/contrastFac")
@@ -98,10 +98,10 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/keys = {
-"times": PoolRealArray( 0, 6.6, 15, 18.4, 28.2 ),
+"times": PoolRealArray( 0, 8.1, 13.8, 18.6, 27.3 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 1.0, 0.933, -0.43, -0.43, 1.0 ]
+"values": [ 1.0, 1.0, 0.344, 0.344, 1.0 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("shaderSpass:material:shader_param/brightnessFac")
@@ -109,10 +109,10 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/keys = {
-"times": PoolRealArray( 0, 15, 18.4, 28.2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 8.1, 13.8, 18.6, 27.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, -0.465, -0.465, 0.0 ]
+"values": [ 0.0, 0.0, -0.6, -0.6, 0.0 ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("sprites/background/Sonne:position")
@@ -120,7 +120,7 @@ tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/keys = {
-"times": PoolRealArray( 0, 12.2 ),
+"times": PoolRealArray( 0, 11.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 80.9996, 61.9997 ), Vector2( 82.9996, -127 ) ]
@@ -131,7 +131,7 @@ tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/keys = {
-"times": PoolRealArray( 0, 12.2 ),
+"times": PoolRealArray( 0, 11.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 82, -48 ), Vector2( 88, 62 ) ]
@@ -328,12 +328,10 @@ __meta__ = {
 
 [node name="constantMovement" type="Node2D" parent="sprites"]
 
-editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="ground" type="Node2D" parent="sprites/constantMovement"]
 
-editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_group_": true,
@@ -388,7 +386,6 @@ __meta__ = {
 "ground",
 ]]
 
-editor/display_folded = true
 input_pickable = false
 collision_layer = 3
 collision_mask = 1
