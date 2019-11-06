@@ -60,7 +60,7 @@ sync func newSprite(choice, flipped, pos):
 	sprite.set_region_rect(disabledSprites.get_node("Sprite"+str(choice)).get_region_rect())
 	parentNode.add_child(sprite)
 	sprite.position = pos
-	sprite.z = sprite.position.y
+	sprite.z_index = sprite.position.y
 	sprite.scale= genScale(sprite.position.y)
 	sprite.flip_h = flipped
 
